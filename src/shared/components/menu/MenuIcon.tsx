@@ -25,7 +25,8 @@ export default function MenuIcon() {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Divider orientation="vertical" flexItem />
       <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}

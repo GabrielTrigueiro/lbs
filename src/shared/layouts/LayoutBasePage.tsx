@@ -38,7 +38,6 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
         alignItems="center"
         gap={1}
         height={theme.spacing(smDown ? 6 : mdDown ? 8 : 12)} // tamanho do navBar
-
       >
         {smDown && (
           <IconButton onClick={toggleDrawerOpen}>
@@ -68,6 +67,7 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
           </Button>
         </Box>
       </Box>
+      
       <Box flex={1} overflow="auto" >
         {children}
       </Box>

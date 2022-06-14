@@ -23,6 +23,7 @@ import {
 import { useDrawerContext } from "../../contexts";
 import { useState } from "react";
 import MenuIcon from "./MenuIcon";
+import Logo from "../../../images/login/logo.svg";
 
 interface IListItemLinkProps {
   to: string;
@@ -31,7 +32,7 @@ interface IListItemLinkProps {
   onClick: (() => void) | undefined;
 }
 
-const drawerWidth = 250;
+const drawerWidth = 200;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -100,17 +101,22 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
     onClick?.();
   };
 
+  //icon effect
   return (
-    <ListItemButton selected={!!match} sx={{
-      height:60,
-      "&.Mui-selected": {
-        borderRight:"6px solid #E4DB00"
-      }
-    }}onClick={handleClick}>
-      <ListItemIcon >
-        <Icon sx={{fontSize:"2rem", color: match ? "#E4DB00" : "black" 
-        
-        }} >{icon}</Icon>
+    <ListItemButton
+      selected={!!match}
+      sx={{
+        height: 60,
+        "&.Mui-selected": {
+          borderRight: "6px solid #E4DB00",
+        },
+      }}
+      onClick={handleClick}
+    >
+      <ListItemIcon>
+        <Icon sx={{ fontSize: "2rem", color: match ? "#E4DB00" : "black" }}>
+          {icon}
+        </Icon>
       </ListItemIcon>
       <ListItemText primary={label} />
     </ListItemButton>
@@ -148,26 +154,35 @@ export const MenuLateral: React.FC = ({ children }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar sx={{backgroundColor:"#fff"}} >
-        <Toolbar sx={{height:"75px"}}>
-          <Typography component="h1" variant="h6" color="inherit" sx={{flexGrow:1}}>
-            IMAGE
-          </Typography>
-          <Divider orientation="vertical" flexItem />
-          <MenuIcon/>
+      <AppBar sx={{ backgroundColor: "#fff" }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            paddingLeft: 2,
+            paddingRight: 2,
+            height: "75px",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            alt="logo"
+            src={Logo}
+            component="img"
+            sx={{ width: 60, height: "100%" }}
+          ></Box>
+          <MenuIcon />
         </Toolbar>
       </AppBar>
-      
+
       <Drawer
         variant={smDown ? "temporary" : "permanent"}
         open={open}
         onClose={toggleDrawerOpen}
-
       >
         <DrawerHeader></DrawerHeader>
         <Divider />
-        <Box flex={1}sx={{mt:theme.spacing(15)}} >
-          <List component="nav" >
+        <Box flex={1} sx={{ mt: theme.spacing(1) }}>
+          <List component="nav">
             {drawerOptions.map((drawerOption) => (
               <ListItemLink
                 to={drawerOption.path}
@@ -179,37 +194,38 @@ export const MenuLateral: React.FC = ({ children }) => {
             ))}
           </List>
         </Box>
-        <Divider/>
         <Box>
-          <List>
-            <ListItem disablePadding sx={{ display: "block"}}>
-              <ListItemButton
-                onClick={handleDrawerOpenOrClose}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </ListItemIcon>
-                <ListItemText
-                  primary="Recolher menu"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </List>
+          <Divider></Divider>
+          <Button
+            onClick={handleDrawerOpenOrClose}
+            sx={{
+              padding: 2,
+              color: "#000",
+              width: "100%",
+              background: "#FFFFFF",
+              minHeight: 48,
+              px: 2.5,
+              minWidth: 0,
+              mr: open ? 3 : "auto",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContens: "center",
+                alignItems: "center",
+                borderStyle: "solid",
+                borderWidth: 2,
+                borderColor: "#000",
+              }}
+            >
+              {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </Box>
+          </Button>
         </Box>
       </Drawer>
-      
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {children}

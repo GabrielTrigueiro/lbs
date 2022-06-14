@@ -1,94 +1,104 @@
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import "./styles.css"
-import { Typography } from '@mui/material';
-
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import "./styles.css";
+import { Avatar, Box, createTheme, Typography } from "@mui/material";
 
 const TableStyled = styled(Table)({
-  fontWeight:'bold',
- borderSpacing: "0px 8px",
- borderCollapse: "separate",
- 'thead': {
-  borderSpacing: 0,
-}
- 
+  fontWeight: "bold",
+  borderSpacing: "0px 8px",
+  borderCollapse: "separate",
+  thead: {
+    borderSpacing: 0,
+  },
 });
 
 const TableBodyStyled = styled(TableBody)({
-  fontWeight:'bold',
+  fontWeight: "bold",
 });
-
 const TableHeaderStyled = styled(TableHead)({
-  fontWeight:'bold',
+  fontWeight: "bold",
 });
 const TableRowStyled = styled(TableRow)({
-  fontWeight:'bold',
-  padding:"10px",
-  backgroundColor:"#f1f1f1",
-  borderEndEndRadius:"10px",
-  
+  fontWeight: "bold",
+  padding: "10px",
+  backgroundColor: "#f1f1f1",
+  borderEndEndRadius: "10px",
 });
-
 const TableCellStyled = styled(TableCell)({
-  fontWeight:'bold',
+  fontWeight: "bold",
   borderColor: "transparent",
-  padding: "10px 16px"
+  padding: "10px 16px",
 });
 
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+const Clientes = [
+  {
+    id: 1,
+    nome: "Gabirel Trigueiro Fernandes",
+    email: "sdsdsds@gmail.com",
+    cpf: "12345678",
+    celular: 83911112222,
+    status: true,
+  },
+  {
+    id: 2,
+    nome: "mateus henrique oliveira",
+    email: "saaaaaas@gmail.com",
+    cpf: "12222222",
+    celular: 44444444,
+    status: false,
+  },
+  {
+    id: 1,
+    nome: "Gabirel Trigueiro Fernandes",
+    email: "sdsdsds@gmail.com",
+    cpf: "12345678",
+    celular: 83911112222,
+    status: true,
+  },
+  {
+    id: 2,
+    nome: "mateus henrique oliveira",
+    email: "saaaaaas@gmail.com",
+    cpf: "12222222",
+    celular: 44444444,
+    status: false,
+  },
 ];
 
 export const TableClients: React.FC = () => {
-
   return (
-    <TableContainer  >
-    <TableStyled sx={{ minWidth: 700 }} aria-label="customized table" >
-      <TableHeaderStyled>
-        <TableRow>
-          <TableCellStyled>Informações Basicas</TableCellStyled>
-          <TableCellStyled align="right">Numero Celular</TableCellStyled>
-          <TableCellStyled align="right">CPF</TableCellStyled>
-        </TableRow>
-      </TableHeaderStyled>
-      <TableBodyStyled>
-        
-        {rows.map((row) => (
-          <TableRowStyled  key={row.name} className="MuiTableRow-root" >
-            <TableCellStyled scope="row">
-                <Typography>
-                {row.name}
-                <Typography sx={{fontSize: "10px"}}>
-                {row.name}
-                </Typography>
-                </Typography>
-            </TableCellStyled>
-            <TableCellStyled align="right">{row.calories}</TableCellStyled>
-            <TableCellStyled align="right">{row.fat}</TableCellStyled>
-          </TableRowStyled>
-        ))}
-      </TableBodyStyled>
-    </TableStyled>
-  </TableContainer>
+    <TableContainer>
+      <TableStyled sx={{ minWidth: 700 }}>
+        <TableHeaderStyled>
+          <TableRow>
+            <TableCellStyled></TableCellStyled>
+            <TableCellStyled>Informações Básicas</TableCellStyled>
+            <TableCellStyled>Número de Celular</TableCellStyled>
+            <TableCellStyled>CPF</TableCellStyled>
+          </TableRow>
+        </TableHeaderStyled>
+        <TableBodyStyled>
+          {Clientes.map((row) => (
+            <TableRowStyled sx={{boxShadow:'inherit'}} className="MuiTableRow-root">
+              <TableCellStyled style={{borderLeftColor: row.status ? "#42FF00" : "#FF5555" }} sx={{ width: 30, mr: "15px" }}>
+                <Avatar />
+              </TableCellStyled>
+              <TableCellStyled>
+                <Box display="flex">
+                  <div>{row.nome}<div>{row.email}</div></div>
+                </Box>
+              </TableCellStyled>
+              <TableCellStyled>{row.celular}</TableCellStyled>
+              <TableCellStyled>{row.cpf}</TableCellStyled>
+            </TableRowStyled>
+          ))}
+        </TableBodyStyled>
+      </TableStyled>
+    </TableContainer>
   );
 };
