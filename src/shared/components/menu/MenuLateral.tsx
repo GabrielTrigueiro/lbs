@@ -168,7 +168,7 @@ export const MenuLateral: React.FC = ({ children }) => {
             alt="logo"
             src={Logo}
             component="img"
-            sx={{ width: 60, height: "100%" }}
+            sx={{ width: 50, height: "100%" }}
           ></Box>
           <MenuIcon />
         </Toolbar>

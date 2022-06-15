@@ -3,18 +3,15 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 
-export default function MenuIcon() {
+export default function MenuCliente() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,9 +21,8 @@ export default function MenuIcon() {
     setAnchorEl(null);
   };
   return (
-    <React.Fragment>
+    <>
       <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-      <Divider orientation="vertical" flexItem />
       <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -36,9 +32,7 @@ export default function MenuIcon() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 45, height: 45 }}>M</Avatar>
-            <Typography sx={{ minWidth: 100, color:"black"}}> Matheus </Typography>
-            <KeyboardArrowDownIcon/>
+            <MoreVertIcon/>
           </IconButton>
         </Tooltip>
       </Box>
@@ -78,31 +72,15 @@ export default function MenuIcon() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <EditIcon sx={{mr:1}} /> Status
         </MenuItem>
         <MenuItem>
-          <Avatar /> My account
-        </MenuItem>∫
-        <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
+          <PersonSearchIcon sx={{mr:1}} /> Perfil
         </MenuItem>
         <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
+          <DeleteIcon sx={{mr:1}}/> Deletar
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export const LightTheme = createTheme({
             secondary: '#6F6F6F',
         },
         background:{ 
-            default: '#ebedf0', //Funda da pagina
+            default: '#e6e6e6', //Fundo da pagina
             paper: '#F5F5F5', //cards
         },
     },

@@ -31,9 +31,9 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
   const { toggleDrawerOpen } = useDrawerContext();
 
   return (
-    <Box height="100%" display="flex" flexDirection="column" gap={1} >
+    <Box sx={{padding:"0px 90px"}} height="100%" display="flex" flexDirection="column" gap={1} >
       <Box
-        padding={1}
+        padding={0}
         display="flex"
         alignItems="center"
         gap={1}
@@ -60,8 +60,7 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
           <Button 
           variant="contained"
           startIcon={<Add/>}
-          sx={{height:"50px", marginRight:"20px", color:"black" }}
-          
+          sx={{height:"50px", color:"black" }}
           >
             {nameButton}
           </Button>
