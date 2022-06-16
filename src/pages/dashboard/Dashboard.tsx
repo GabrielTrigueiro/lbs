@@ -1,8 +1,16 @@
 import { TableClients } from "../../shared/components";
 import { LayoutBasePage } from "../../shared/layouts";
 import { Box, Icon, Typography, Grid, Stack, Pagination } from "@mui/material";
+import { useState } from "react";
 
 export const Dashboard = () => {
+  // const [data, setData] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // const getData =async () => {
+    
+  // }
+
   return (
     <LayoutBasePage titulo="Clientes" nameButton="Cadastrar clientes">
       <Box margin="10px" display="flex">
@@ -10,7 +18,6 @@ export const Dashboard = () => {
           <Grid sx={{ borderBottom: "4px solid #E4DB00" }}>
             <Typography variant="h5">Lista de Clientes</Typography>
           </Grid>
-
           <Grid
             justifyContent="flex-end"
             display="flex"
@@ -27,17 +34,14 @@ export const Dashboard = () => {
             </Box>
           </Grid>
         </Grid>
-        <Box
-          flexDirection="row"
-          display="flex"
-          gap={10}
-        ></Box>
+        <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
-      <Box sx={{padding:0}}>
+
+      <Box sx={{ padding: 0 }}>
         <TableClients />
       </Box>
 
-      <Box display='flex' justifyContent='flex-end'>
+      <Box display="flex" justifyContent="flex-end">
         <Stack>
           <Pagination count={4} variant="outlined" shape="rounded" />
         </Stack>

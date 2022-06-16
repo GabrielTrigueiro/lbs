@@ -13,7 +13,6 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-
 export default function MenuIcon() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -24,7 +23,7 @@ export default function MenuIcon() {
     setAnchorEl(null);
   };
   return (
-    <React.Fragment>
+    <>
       <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
       <Divider orientation="vertical" flexItem />
       <Tooltip title="Account settings">
@@ -82,7 +81,7 @@ export default function MenuIcon() {
         </MenuItem>
         <MenuItem>
           <Avatar /> My account
-        </MenuItem>∫
+        </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
@@ -103,6 +102,6 @@ export default function MenuIcon() {
           Logout
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }

@@ -142,7 +142,7 @@ const Drawer = styled(MuiDrawer, {
 
 export const MenuLateral: React.FC = ({ children }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { drawerOptions, toggleDrawerOpen } = useDrawerContext();

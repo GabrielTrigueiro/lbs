@@ -14,10 +14,8 @@ import ImageLogo from "../../images/login/logo.svg"
 import { InputAdornment, IconButton } from "@mui/material";
 import { AccountCircle, Lock, Visibility } from "@mui/icons-material";
 
-export const Login = () => {
+export const Login: React.FC = ({children}) => {
   const theme = useTheme();
-
-  let icon = <AccountCircle />;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

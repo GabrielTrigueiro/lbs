@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import { Avatar, Box } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuCliente from "./MenuCliente";
 
 const TableStyled = styled(Table)({
@@ -75,7 +74,7 @@ const Clientes = [
 export const TableClients: React.FC = () => {
   return (
     <TableContainer>
-      <TableStyled sx={{minWidth: 700 }}>
+      <TableStyled sx={{ minWidth: 700 }}>
         <TableHeaderStyled>
           <TableRow>
             <TableCellStyled></TableCellStyled>
@@ -91,7 +90,7 @@ export const TableClients: React.FC = () => {
               className="MuiTableRow-root"
             >
               <TableCellStyled
-                style={{ borderLeftColor: row.status ? "#42FF00" : "#FF5555" }}
+                style={{ borderLeftColor: row.status? "#42FF00" : "#FF5555" }}
                 sx={{ width: 30, mr: "15px" }}
               >
                 <Avatar />
@@ -106,8 +105,10 @@ export const TableClients: React.FC = () => {
               </TableCellStyled>
               <TableCellStyled>{row.celular}</TableCellStyled>
               <TableCellStyled>{row.cpf}</TableCellStyled>
-              <TableCellStyled sx={{display:'flex', justifyContent:'flex-end'}}>
-                <MenuCliente/>
+              <TableCellStyled
+                sx={{ display: "flex", justifyContent: "flex-end" }}
+              >
+                <MenuCliente />
               </TableCellStyled>
             </TableRowStyled>
           ))}
