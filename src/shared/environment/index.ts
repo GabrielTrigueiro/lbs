@@ -8,5 +8,7 @@ export const environment = {
 
     URL_FRONT: 'http://localhost:3000',
 
-    URL_BACK: 'http://localhost:8081'
+    URL_BACK: 'http://localhost:8081',
+
+    URL_API_CLIENT: 'http://localhost:8081/api/client',
 }
