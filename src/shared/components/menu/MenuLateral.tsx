@@ -92,15 +92,12 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
   onClick,
 }) => {
   const navigate = useNavigate();
-
   const resolvedPath = useResolvedPath(to);
   const match = useMatch({ path: resolvedPath.pathname, end: false });
-
   const handleClick = () => {
     navigate(to);
     onClick?.();
   };
-
   //icon effect
   return (
     <ListItemButton
