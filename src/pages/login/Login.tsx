@@ -8,17 +8,16 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 
-import Image from "../../images/login/login.jpg"
-import ImageLogo from "../../images/login/logo.svg"
+import Image from "../../images/login/login.jpg";
+import ImageLogo from "../../images/login/logo.svg";
 
 import { InputAdornment, IconButton } from "@mui/material";
 import { AccountCircle, Lock, Visibility } from "@mui/icons-material";
 import { useEffect } from "react";
 import { ClienteService } from "../../shared/services/api/client/ClientService";
 
-export const Login: React.FC = ({children}) => {
-  const theme = useTheme();
-
+export const Login: React.FC = ({ children }) => {
+  const theme = useTheme()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -27,7 +26,7 @@ export const Login: React.FC = ({children}) => {
       password: data.get("password"),
     });
   };
-
+ 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -82,7 +81,7 @@ export const Login: React.FC = ({children}) => {
               autoComplete="email"
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start" >
+                  <InputAdornment position="start">
                     <AccountCircle />
                   </InputAdornment>
                 ),
@@ -99,7 +98,9 @@ export const Login: React.FC = ({children}) => {
               autoComplete="current-password"
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start"> <Lock />
+                  <InputAdornment position="start">
+                    {" "}
+                    <Lock />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -113,10 +114,13 @@ export const Login: React.FC = ({children}) => {
             />
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link style={{
+                <Link
+                  style={{
                     color: "#000",
                   }}
-                  href="#" variant="body2">
+                  href="#"
+                  variant="body2"
+                >
                   {"Esqueci minha senha?"}
                 </Link>
               </Grid>
