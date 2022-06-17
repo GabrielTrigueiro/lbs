@@ -11,7 +11,8 @@ interface IAuth{
 
 export const auth = async (username: string, password: string): Promise<IAuth | Error>   => {
     try {
-        const {data} = await api.post(`/login`, {data: {username, password}} )
+        const {data} = await api.post(`/login`, {username, password})
+        console.log(data)
         if(data){
             return data
         }

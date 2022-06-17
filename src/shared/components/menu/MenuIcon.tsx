@@ -12,6 +12,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useAuthContext } from '../../contexts';
 
 export default function MenuIcon() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -22,6 +23,8 @@ export default function MenuIcon() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const { logout } = useAuthContext();
   return (
     <>
       <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -95,12 +98,14 @@ export default function MenuIcon() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+
+        <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
         </MenuItem>
+
       </Menu>
     </>
   );

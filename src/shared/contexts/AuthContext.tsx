@@ -1,6 +1,7 @@
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -18,7 +19,7 @@ const KEY_LOCAL_STORAGE_ACESS_TOKEN = "TOKEN";
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [acessToken, setAcessToken] = useState<string>();
-
+  
   useEffect(() => {
     const acessToken = localStorage.getItem(KEY_LOCAL_STORAGE_ACESS_TOKEN);
     if (acessToken) {
@@ -31,6 +32,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const handleLogin = useCallback(
     async (username: string, password: string) => {
       const result = await AuthService.auth(username, password);
+      console.log(result)
       if (result instanceof Error) {
         return result.message;
       } else {
@@ -59,3 +61,5 @@ export const AuthProvider: React.FC = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuthContext = () => useContext(AuthContext)

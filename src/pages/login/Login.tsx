@@ -1,151 +1,163 @@
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+import {
+  InputAdornment,
+  IconButton,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useAuthContext } from "../../shared/contexts";
+import { useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LockIcon from "@mui/icons-material/Lock";
+import Mulher from "../../images/login/Mulher.jpg";
 
-import Image from "../../images/login/login.jpg";
-import ImageLogo from "../../images/login/logo.svg";
-
-import { InputAdornment, IconButton } from "@mui/material";
-import { AccountCircle, Lock, Visibility } from "@mui/icons-material";
-import { useEffect } from "react";
-import { ClienteService } from "../../shared/services/api/client/ClientService";
+interface State {
+  password: string,
+  showPassword: boolean,
+  usuario: string,
+}
 
 export const Login: React.FC = ({ children }) => {
-  const theme = useTheme()
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+
+  //campo password
+  const [values, setValues] = useState({
+    password: "",
+    showPassword: false,
+    usuario: "",
+  });
+
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
     });
   };
- 
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
+  //autenticação com o back
+  const { isAuthenticated, login} = useAuthContext();
+  if (isAuthenticated) return <>{children}</>;
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <CssBaseline />
+    <Grid container>
       <Grid
+        xs={1}
+        sm={8}
+        md={8}
         item
-        xs={false}
-        sm={4}
-        md={7}
         sx={{
-          backgroundImage: `url(${Image})`,
+          height: "100vh",
+          backgroundImage: `url(${Mulher})`,
           backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
           backgroundSize: "cover",
           backgroundPosition: "right",
         }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      ></Grid>
+
+      <Grid
+        xs={11}
+        sm={4}
+        md={4}
+        item
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Box
           sx={{
-            my: theme.spacing(28),
-            mx: 4,
+            width: "80%",
+            height: "100%",
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <Typography
-            component="h1"
-            style={{
-              fontWeight: "bold",
-            }}
-            variant="h4"
-          >
+          <Typography fontSize={40} fontWeight={700} marginBottom={4}>
             Login
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Usuario"
-              name="email"
-              autoComplete="email"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
+          <TextField
+            type={'text'}
+            label="Usuário"
+            value={values.usuario}
+            onChange={handleChange("usuario")}
+            id="outlined-start-adornment"
+            sx={{ width: "100%", m: 1 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircleIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <FormControl sx={{ width: "100%", m: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={values.showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange("password")}
+              startAdornment={
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              }
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
               label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {" "}
-                    <Lock />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton aria-label="toggle password visibility">
-                      <Visibility />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
             />
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link
-                  style={{
-                    color: "#000",
-                  }}
-                  href="#"
-                  variant="body2"
-                >
-                  {"Esqueci minha senha?"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container alignItems="center" justifyContent="center">
-                <Button
-                  style={{
-                    borderRadius: 20,
-                    backgroundColor: "#E4DB00",
-                    color: "#000",
-                    width: theme.spacing(30),
-                    height: theme.spacing(5),
-                    fontSize: theme.spacing(2.2),
-                  }}
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 4, mb: 2 }}
-                >
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
+          </FormControl>
+          <Typography
+            color="text.secondary"
+            sx={{ alignSelf: "end" }}
+            marginBottom={4}
+          >
+            Esqueci minha senha?
+          </Typography>
+          <Button
+            onClick={()=>login(values.usuario, values.password)}
+            sx={{
+              fontSize:'24px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              height: 50,
+              width: "60%",
+              boxShadow: "none",
+              borderRadius: 10,
+              color: '#000000'
+            }}
+            variant="contained"
+          >
+            Login
+          </Button>
         </Box>
       </Grid>
     </Grid>
