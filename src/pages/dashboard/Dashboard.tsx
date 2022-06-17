@@ -1,15 +1,8 @@
 import { TableClients } from "../../shared/components";
 import { LayoutBasePage } from "../../shared/layouts";
 import { Box, Icon, Typography, Grid, Stack, Pagination } from "@mui/material";
-import { useState } from "react";
 
 export const Dashboard = () => {
-  // const [data, setData] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // const getData =async () => {
-    
-  // }
 
   return (
     <LayoutBasePage titulo="Clientes" nameButton="Cadastrar clientes">

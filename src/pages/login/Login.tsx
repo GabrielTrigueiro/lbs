@@ -13,6 +13,8 @@ import ImageLogo from "../../images/login/logo.svg"
 
 import { InputAdornment, IconButton } from "@mui/material";
 import { AccountCircle, Lock, Visibility } from "@mui/icons-material";
+import { useEffect } from "react";
+import { ClienteService } from "../../shared/services/api/client/ClientService";
 
 export const Login: React.FC = ({children}) => {
   const theme = useTheme();
@@ -25,6 +27,17 @@ export const Login: React.FC = ({children}) => {
       password: data.get("password"),
     });
   };
+
+  useEffect(()=>{
+    ClienteService.getAll()
+    .then((result)=>{
+      if(result instanceof Error){
+        alert(result.message)
+        return
+      }
+      console.log(result)
+    })
+  },[])
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

@@ -1,103 +1,76 @@
 import { api } from "../axios-config"
 
-interface IClient {
-    id: string,
-    name: string,
-    sex?: string,
-    rg?: string,
-    cpf: string,
-    indicacao?: [],
-    email: string,
-    telephone: Number,
-    cell: Number,
-    address?: string,
-    cityId?: Number,
-    city?: string,
-    uf?: string,
-    cep: Number,
-    neighborhood?: string,
-    number?: Number,
-    money?: Number,
-    dataNascimento?: Date,
-    lastSale: null,
-    createdAt?: null,
-    updatedAt?: null
-}
-
-interface IDetalheClient {
+interface IListagemBaseInfoClient {
     id: string,
     name: string,
     cpf: string,
     email: string,
-    cell: Number,
+    cell: number,
 }
 
-type TClientComTotalCount = {
-    data: IDetalheClient[]
+type TClientTotal = {
+    data: IListagemBaseInfoClient[]
 }
 
-
-const getAll = async(): Promise<TClientComTotalCount | Error> => {
+const getAll = async (): Promise<TClientTotal | Error>   => {
     try {
-        const { data } = await api.get('/api/client')
-        //sem paginate e sem filtro de busca
-        if (data){
-            return{
-                data,
-                //sem total count
-            }
+        const {data} = await api.get('http://localhost:8081/api/client')
+        if(data){
+            data
         }
-        return new Error('Erro ao Listar os registros :(')
+        return new Error('Erro ao listar os registros')
     } catch (error) {
         console.error(error)
-        return new Error((error as  { message: string }).message || 'Erro ao listar novos registros')
+        return new Error((error as {message: string}).message || 'Erro ao listar os registros')
     }
 }
-const getById = async(id: number): Promise<IDetalheClient | Error> => {
+const getByIDd = async (id: string): Promise<IListagemBaseInfoClient | Error>   => {
     try {
-        const { data } = await api.get(`/api/client/${id}`)
-        if (data){
-            return data
+        const {data} = await api.get(`http://localhost:8081/api/client${id}`)
+        if(data){
+            data
         }
-        return new Error('Erro ao consultar o registro T-T')
+        return new Error('Erro ao procurar o registro')
     } catch (error) {
         console.error(error)
-        return new Error((error as  { message: string }).message || 'Erro ao consultar o registro T-T')
+        return new Error((error as {message: string}).message || 'Erro ao procurar o registro')
     }
 }
-const create = async(dados: Omit<IDetalheClient, 'id'>): Promise<string | Error> => {
+const UpdateById = async (id: string, dados: IListagemBaseInfoClient): Promise<void | Error>   => {
     try {
-        const { data } = await api.post<IDetalheClient>('/api/client', dados)
-        if (data){ 
-            return data.id
+        await api.put(`http://localhost:8081/api/client${id}`, dados) 
+        return new Error('Erro ao atualiazar o registro')
+    } catch (error) {
+        console.error(error)
+        return new Error((error as {message: string}).message || 'Erro ao atualizar o registro')
+    }
+}
+const DeleteById = async (id: string): Promise<void | Error>   => {
+    try {
+        await api.delete(`http://localhost:8081/api/client${id}`) 
+        return new Error('Erro ao deletar o registro')
+    } catch (error) {
+        console.error(error)
+        return new Error((error as {message: string}).message || 'Erro ao deletar o registro')
+    }
+}
+const Create = async (dados: Omit<IListagemBaseInfoClient, 'id'>): Promise<Number | Error>   => {
+    try {
+        const {data} = await api.post<IListagemBaseInfoClient>(`http://localhost:8081/api/client`, dados)
+        if(data){
+            data.id
         }
-        return new Error('Erro ao criar o registro u-u')
+        return new Error('Erro ao criar o registro')
     } catch (error) {
         console.error(error)
-        return new Error((error as  { message: string }).message || 'Erro ao criar o registro u-u')
+        return new Error((error as {message: string}).message || 'Erro ao criar o registro')
     }
-}
-const updateById = async(id: string, dados: IDetalheClient): Promise<void | Error> => {
-    try {
-      await api.put<IDetalheClient>(`/api/client${id}`, dados)
-    } catch (error) {
-        console.error(error)
-        return new Error((error as {message: string}).message || 'Erro ao atualizar os dados do registro')
-    }
-}
-const deleById = async(id: string): Promise<void | Error> => {
-    try {
-        await api.delete<IDetalheClient>(`/api/client${id}`)
-      } catch (error) {
-          console.error(error)
-          return new Error((error as {message: string}).message || 'Erro ao deletar o registro')
-      }
 }
 
-export const ClientService = {
+export const ClienteService = {
     getAll,
-    getById,
-    create,
-    updateById,
-    deleById,
+    getByIDd,
+    UpdateById,
+    DeleteById,
+    Create,
 }

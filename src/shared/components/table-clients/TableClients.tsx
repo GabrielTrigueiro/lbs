@@ -17,7 +17,6 @@ const TableStyled = styled(Table)({
     borderSpacing: 0,
   },
 });
-
 const TableBodyStyled = styled(TableBody)({
   fontWeight: "bold",
 });
@@ -35,7 +34,6 @@ const TableCellStyled = styled(TableCell)({
   borderColor: "transparent",
   padding: "10px 16px",
 });
-
 const Clientes = [
   {
     id: 1,
@@ -72,6 +70,7 @@ const Clientes = [
 ];
 
 export const TableClients: React.FC = () => {
+
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
