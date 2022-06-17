@@ -1,6 +1,8 @@
 import { TableClients } from "../../shared/components";
 import { LayoutBasePage } from "../../shared/layouts";
 import { Box, Icon, Typography, Grid, Stack, Pagination } from "@mui/material";
+import { useEffect } from "react";
+import { ClienteService } from "../../shared/services/api/client/ClientService";
 
 export const Dashboard = () => {
 

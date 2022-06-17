@@ -8,6 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import { Avatar, Box } from "@mui/material";
 import MenuCliente from "./MenuCliente";
+import { useEffect, useState } from "react";
+import { ClienteService, IListagemBaseInfoClient } from "../../services/api/client/ClientService";
 
 const TableStyled = styled(Table)({
   fontWeight: "bold",
@@ -34,43 +36,22 @@ const TableCellStyled = styled(TableCell)({
   borderColor: "transparent",
   padding: "10px 16px",
 });
-const Clientes = [
-  {
-    id: 1,
-    nome: "Gabirel Trigueiro Fernandes",
-    email: "sdsdsds@gmail.com",
-    cpf: "12345678",
-    celular: 83911112222,
-    status: true,
-  },
-  {
-    id: 2,
-    nome: "mateus henrique oliveira",
-    email: "saaaaaas@gmail.com",
-    cpf: "12222222",
-    celular: 44444444,
-    status: false,
-  },
-  {
-    id: 1,
-    nome: "Gabirel Trigueiro Fernandes",
-    email: "sdsdsds@gmail.com",
-    cpf: "12345678",
-    celular: 83911112222,
-    status: true,
-  },
-  {
-    id: 2,
-    nome: "mateus henrique oliveira",
-    email: "saaaaaas@gmail.com",
-    cpf: "12222222",
-    celular: 44444444,
-    status: false,
-  },
-];
 
 export const TableClients: React.FC = () => {
+  
+  const [rows, setRows] = useState<IListagemBaseInfoClient[]>([])  
 
+  useEffect(()=>{
+    ClienteService.getAll()
+    .then((result)=>{
+      if(result instanceof Error){
+        alert(result.message)
+      } else{
+        setRows(result.data.data)
+      }
+    })
+  },[])
+ 
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
@@ -83,13 +64,13 @@ export const TableClients: React.FC = () => {
           </TableRow>
         </TableHeaderStyled>
         <TableBodyStyled>
-          {Clientes.map((row) => (
-            <TableRowStyled
+          {rows.map(row => (
+            <TableRowStyled key={row.id}
               sx={{ boxShadow: "inherit" }}
               className="MuiTableRow-root"
             >
               <TableCellStyled
-                style={{ borderLeftColor: row.status? "#42FF00" : "#FF5555" }}
+                // style={{ borderLeftColor: row.status? "#42FF00" : "#FF5555" }}
                 sx={{ width: 30, mr: "15px" }}
               >
                 <Avatar />
@@ -97,12 +78,12 @@ export const TableClients: React.FC = () => {
               <TableCellStyled>
                 <Box display="flex">
                   <div>
-                    {row.nome}
+                    {row.name}
                     <div>{row.email}</div>
                   </div>
                 </Box>
               </TableCellStyled>
-              <TableCellStyled>{row.celular}</TableCellStyled>
+              <TableCellStyled>{row.cell}</TableCellStyled>
               <TableCellStyled>{row.cpf}</TableCellStyled>
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}

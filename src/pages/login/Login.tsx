@@ -28,17 +28,6 @@ export const Login: React.FC = ({children}) => {
     });
   };
 
-  useEffect(()=>{
-    ClienteService.getAll()
-    .then((result)=>{
-      if(result instanceof Error){
-        alert(result.message)
-        return
-      }
-      console.log(result)
-    })
-  },[])
-
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
