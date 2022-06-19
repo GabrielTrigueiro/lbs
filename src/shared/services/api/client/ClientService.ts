@@ -1,11 +1,20 @@
 import { api } from "../axios-config"
 
 export interface IListagemBaseInfoClient {
-    id: string,
-    name: string,
-    cpf: string,
-    email: string,
-    cell: number,
+    id?: string,
+    address: string
+    cell: string
+    cep: string
+    city: string
+    cpf: string
+    email: string
+    name: string
+    neighborhood: string
+    number: string
+    rg: string
+    sex: string
+    telephone: string
+    uf: string
 }
 
 export interface IInfo {
@@ -57,20 +66,19 @@ const UpdateById = async (id: string, dados: IListagemBaseInfoClient): Promise<v
 }
 const DeleteById = async (id: string): Promise<void | Error>   => {
     try {
-        await api.delete(`https://localhost:8081/api/client${id}`) 
+        await api.delete(`http://localhost:8081/api/client${id}`) 
         return new Error('Erro ao deletar o registro')
     } catch (error) {
         console.error(error)
         return new Error((error as {message: string}).message || 'Erro ao deletar o registro')
     }
 }
-const Create = async (dados: Omit<IListagemBaseInfoClient, 'id'>): Promise<String | Error>   => {
+const Create = async (dados: IListagemBaseInfoClient): Promise<IInfo | Error |string >   => {
     try {
-        const {data} = await api.post<IListagemBaseInfoClient>(`https://localhost:8081/api/client`, dados)
-        if(data){
-            return data.id
-        }
-        return new Error('Erro ao criar o registro')
+        const data = await api.post<IInfo>(`http://localhost:8081/api/client`, dados)
+        
+        return data.data
+
     } catch (error) {
         console.error(error)
         return new Error((error as {message: string}).message || 'Erro ao criar o registro')
