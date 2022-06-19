@@ -13,6 +13,8 @@ import { Box } from "@mui/system";
 import { ReactNode, useState } from "react";
 import { useDrawerContext } from "../contexts";
 import Add from "@mui/icons-material/Add";
+import { boolean } from "yup";
+import { ButtonBaseLayout } from "./ButtonBaseLayout";
 
 interface ILayoutBasePageProps {
   titulo: string;
@@ -28,11 +30,6 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const theme = useTheme();
-
-  //abrir e fechar o modal
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const { toggleDrawerOpen } = useDrawerContext();
 
@@ -67,114 +64,104 @@ export const LayoutBasePage: React.FC<ILayoutBasePageProps> = ({
             {titulo}
           </Typography>
         </Box>
-        <Box alignItems="left">
-          <Button
-            onClick={handleOpen}
-            variant="contained"
-            startIcon={<Add />}
-            sx={{ height: "50px", color: "black" }}
+
+        <ButtonBaseLayout nameModalButton={nameButton}>
+          <Box
+            sx={{
+              //posição do modal
+              position: "absolute" as "absolute",
+              top: "45%",
+              left: "50%",
+              height: "80%",
+              width: "60%",
+              transform: "translate(-50%, -40%)",
+
+              //CSS estilo
+              borderRadius: 4,
+              bgcolor: "background.paper",
+              display: "flex",
+              flexDirection: "column",
+              padding: 5,
+            }}
           >
-            {nameButton}
-          </Button>
-        </Box>
+            <Typography
+              sx={{ fontWeight: "600", fontSize: "32px" }}
+              variant="h6"
+              component="h2"
+            >
+              {nameButton}
+            </Typography>
+            <TextField
+              sx={{ width: "100%" }}
+              label="Nome Completo"
+              type="text"
+              variant="standard"
+            />
+            <Box display={"flex"}>
+              <Box mt={2} width={"50%"}>
+                <TextField
+                  sx={{ mb: 2, width: "90%" }}
+                  label="Celular"
+                  type="number"
+                  variant="standard"
+                />
+                <TextField
+                  sx={{ mb: 2, width: "90%" }}
+                  label="Email"
+                  type="email"
+                  variant="standard"
+                />
+                <TextField
+                  sx={{ mb: 2, width: "90%" }}
+                  label="Endereço"
+                  type="text"
+                  variant="standard"
+                />
+                <TextField
+                  sx={{ mb: 2, width: "90%" }}
+                  label="CEP"
+                  type="text"
+                  variant="standard"
+                />
+              </Box>
+              <Box mt={2} flexDirection={"inherit"} width={"50%"}>
+                <TextField
+                  sx={{ mb: 2, width: "100%" }}
+                  label="CPF"
+                  type="number"
+                  variant="standard"
+                />
+                <TextField
+                  sx={{ mb: 2, width: "100%" }}
+                  label="Telefone"
+                  type="number"
+                  variant="standard"
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                height: "100%",
+                weight: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "end",
+              }}
+            >
+              <Button
+                sx={{ width: "200px", height: "60px" }}
+                variant={"contained"}
+              >
+                Salvar
+              </Button>
+            </Box>
+          </Box>
+        </ButtonBaseLayout>
       </Box>
 
       <Box flex={1} overflow="auto">
         {children}
       </Box>
-
-      <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            //posição do modal
-            position: "absolute" as "absolute",
-            top: "45%",
-            left: "50%",
-            height: "80%",
-            width: "60%",
-            transform: "translate(-50%, -40%)",
-
-            //CSS estilo
-            borderRadius: 4,
-            bgcolor: "background.paper",
-            display: "flex",
-            flexDirection: "column",
-            padding: 5,
-          }}
-        >
-          <Typography
-            sx={{ fontWeight: "600", fontSize: "32px" }}
-            variant="h6"
-            component="h2"
-          >
-            {nameButton}
-          </Typography>
-          <TextField
-            sx={{ width: "100%" }}
-            label="Nome Completo"
-            type="text"
-            variant="standard"
-          />
-          <Box display={"flex"}>
-            <Box mt={2} width={"50%"}>
-              <TextField
-                sx={{ mb: 2, width: "90%" }}
-                label="Celular"
-                type="number"
-                variant="standard"
-              />
-              <TextField
-                sx={{ mb: 2, width: "90%" }}
-                label="Email"
-                type="email"
-                variant="standard"
-              />
-              <TextField
-                sx={{ mb: 2, width: "90%" }}
-                label="Endereço"
-                type="text"
-                variant="standard"
-              />
-              <TextField
-                sx={{ mb: 2, width: "90%" }}
-                label="CEP"
-                type="text"
-                variant="standard"
-              />
-            </Box>
-            <Box mt={2} flexDirection={"inherit"} width={"50%"}>
-              <TextField
-                sx={{ mb: 2, width: "100%" }}
-                label="CPF"
-                type="number"
-                variant="standard"
-              />
-              <TextField
-                sx={{ mb: 2, width: "100%" }}
-                label="Telefone"
-                type="number"
-                variant="standard"
-              />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              height: "100%",
-              weight: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "end",
-            }}
-          >
-            <Button
-              sx={{ width: "200px", height: "60px" }}
-              variant={"contained"}
-            >
-              Salvar
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
     </Box>
   );
 };

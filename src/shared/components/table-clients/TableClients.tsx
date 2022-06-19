@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import { Avatar, Box } from "@mui/material";
-import MenuCliente from "./MenuCliente";
+import TableSubMenu from "./TableSubMenu";
 import { useEffect, useState } from "react";
 import { ClienteService, IListagemBaseInfoClient } from "../../services/api/client/ClientService";
 
@@ -88,7 +88,7 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <MenuCliente />
+                <TableSubMenu />
               </TableCellStyled>
             </TableRowStyled>
           ))}
