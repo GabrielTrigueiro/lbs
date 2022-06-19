@@ -1,13 +1,38 @@
 import { TableClients } from "../../shared/components";
 import { LayoutBasePage } from "../../shared/layouts";
-import { Box, Icon, Typography, Grid, Stack, Pagination } from "@mui/material";
+import {
+  Box,
+  Icon,
+  Typography,
+  Grid,
+  Stack,
+  Pagination,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
 import { CadastroClienteForm } from "../../shared/forms/CadastroClienteForm";
+import { ButtonBaseLayout } from "../../shared/layouts/ButtonBaseLayout";
 
 export const Dashboard = () => {
   return (
-    <LayoutBasePage titulo="Clientes" nameButton="Cadastrar clientes">
-      <CadastroClienteForm/>
-      {/* <Box margin="10px" display="flex">
+    <LayoutBasePage>
+      <Box
+        justifyContent={"space-between"}
+        padding={0}
+        display="flex"
+        alignItems="center"
+      >
+        <Typography
+          sx={{ margin: "40px 0px", fontWeight: 600, fontSize: "40px" }}
+        >
+          Clientes
+        </Typography>
+        <ButtonBaseLayout nameModalButton="Cadastrar Clientes">
+          <CadastroClienteForm />
+        </ButtonBaseLayout>
+      </Box>
+
+      <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
           <Grid sx={{ borderBottom: "4px solid #E4DB00" }}>
             <Typography variant="h5">Lista de Clientes</Typography>
@@ -39,7 +64,7 @@ export const Dashboard = () => {
         <Stack>
           <Pagination count={4} variant="outlined" shape="rounded" />
         </Stack>
-      </Box> */}
+      </Box>
     </LayoutBasePage>
   );
 };
