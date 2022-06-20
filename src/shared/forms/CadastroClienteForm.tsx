@@ -1,5 +1,6 @@
 import { RestorePageRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 import { Form } from "@unform/web";
 import { useEffect } from "react";
 import { ClienteService } from "../services";
@@ -30,20 +31,30 @@ const handleSave = (dados: ICadastroData) => {
 export const CadastroClienteForm: React.FC = () => {
   return (
     <Form onSubmit={(dados) => handleSave(dados)} >
-      <VTextField name="name"/>
-      <VTextField name="sex"/>
-      <VTextField name="rg"/>
-      <VTextField name="cpf"/>
-      <VTextField name="email"/>
-      <VTextField name="telephone"/>
-      <VTextField name="cell"/>
-      <VTextField name="cep"/>
-      <VTextField name="address"/>
-      <VTextField name="city"/>
-      <VTextField name="uf"/>
-      <VTextField name="neighborhood"/>
-      <VTextField name="number"/>
-      <Button type="submit" variant='contained'>Salvar</Button>
+      <Box display={'flex'} flexDirection={"column"}>
+        <Box display={'flex'} flex={1}>
+          <VTextField required label="Nome" name="name"/>
+          <VTextField required label="Sexo" name="sex"/>
+          <VTextField required label="RG" name="rg"/>
+          <VTextField required label="CPF" name="cpf"/>
+        </Box>
+        <Box display={'flex'} flex={1}>
+          <VTextField required label="Email" name="email"/>
+          <VTextField label="Número Fixo" name="telephone"/>
+          <VTextField required label="Celular" name="cell"/>
+        </Box>
+        <Box display={'flex'} flex={1}>
+          <VTextField required label="CEP" name="cep"/>
+          <VTextField required label="Endereço" name="address"/>
+          <VTextField required label="Cidade" name="city"/>
+        </Box>
+        <Box display={'flex'} flex={1}>
+          <VTextField required label="UF" name="uf"/>
+          <VTextField required label="Bairro" name="neighborhood"/>
+          <VTextField required label="Número Residência" name="number"/>
+        </Box>
+        <Button type="submit" variant='contained'>Salvar</Button>
+      </Box>
     </Form>
   );
 };

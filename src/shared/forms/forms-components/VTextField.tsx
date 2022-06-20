@@ -23,7 +23,9 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
     return(
         <TextField
             {...rest}
+            sx={{mr:2}}
 
+            variant="standard"
 
             error={!!error}
             helperText={error}

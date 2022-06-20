@@ -76,14 +76,14 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
 const Create = async (dados: IListagemBaseInfoClient): Promise<IInfo | Error |string >   => {
     try {
         const data = await api.post<IInfo>(`http://localhost:8081/api/client`, dados)
-        
         return data.data
-
     } catch (error) {
         console.error(error)
         return new Error((error as {message: string}).message || 'Erro ao criar o registro')
     }
 }
+
+
 
 export const ClienteService = {
     getAll,
