@@ -25,23 +25,27 @@ export const ButtonBaseLayout: React.FC<IButtonBaseLayout> = ({
         {nameModalButton}
       </Button>
 
-      <Modal onClose={handleClose} open={open}>
+      <Modal sx={{minWidth:1020}} onClose={handleClose} open={open}>
         <Box
         sx={{
           //posição do modal
           position: 'absolute' as 'absolute',
           top: '40%',
           left: '50%',
-          height:'90%',
-          width:'80%',
+          height: 500,
+          width: 1000,
           transform: 'translate(-50%, -40%)',
 
           //CSS estilo
-          borderRadius:4,
+          borderRadius:1,
+          borderColor:'transparent',
           bgcolor: 'background.paper',
           display:'flex',
           flexDirection:'column',
-          padding:5
+          padding:1,
+
+          alignItems:'center',
+          justifyContent:'center'
         }}>
           {children}
         </Box>

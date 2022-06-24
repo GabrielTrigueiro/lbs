@@ -1,7 +1,7 @@
 import { api } from "../axios-config"
 
 export interface IListagemBaseInfoClient {
-    id?: string,
+    id: string,
     address: string
     cell: string
     cep: string
@@ -64,9 +64,9 @@ const UpdateById = async (id: string, dados: IListagemBaseInfoClient): Promise<v
         return new Error((error as {message: string}).message || 'Erro ao atualizar o registro')
     }
 }
-const DeleteById = async (id: string): Promise<void | Error>   => {
+const DeleteById = async (id: string): Promise<string | Error>   => {
     try {
-        await api.delete(`http://localhost:8081/api/client${id}`) 
+        await api.delete(`http://localhost:8081/api/client/${id}`) 
         return new Error('Erro ao deletar o registro')
     } catch (error) {
         console.error(error)
@@ -82,8 +82,6 @@ const Create = async (dados: IListagemBaseInfoClient): Promise<IInfo | Error |st
         return new Error((error as {message: string}).message || 'Erro ao criar o registro')
     }
 }
-
-
 
 export const ClienteService = {
     getAll,

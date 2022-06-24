@@ -7,9 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./styles.css";
 import { Avatar, Box } from "@mui/material";
-import TableSubMenu from "./TableSubMenu";
+import {TableSubMenu} from "./TableSubMenu";
 import { useEffect, useState } from "react";
-import { ClienteService, IListagemBaseInfoClient } from "../../services/api/client/ClientService";
+import {
+  ClienteService,
+  IListagemBaseInfoClient,
+} from "../../services/api/client/ClientService";
 
 const TableStyled = styled(Table)({
   fontWeight: "bold",
@@ -38,20 +41,18 @@ const TableCellStyled = styled(TableCell)({
 });
 
 export const TableClients: React.FC = () => {
-  
-  const [rows, setRows] = useState<IListagemBaseInfoClient[]>([])  
+  const [rows, setRows] = useState<IListagemBaseInfoClient[]>([]);
 
-  useEffect(()=>{
-    ClienteService.getAll()
-    .then((result)=>{
-      if(result instanceof Error){
-        alert(result.message)
-      } else{
-        setRows(result.data.data)
+  useEffect(() => {
+    ClienteService.getAll().then((result) => {
+      if (result instanceof Error) {
+        alert(result.message);
+      } else {
+        setRows(result.data.data);
       }
-    })
-  },[])
- 
+    });
+  }, []); //atualiza o componente de lista toda vez que algo é mudado
+
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
@@ -64,8 +65,9 @@ export const TableClients: React.FC = () => {
           </TableRow>
         </TableHeaderStyled>
         <TableBodyStyled>
-          {rows.map(row => (
-            <TableRowStyled key={row.id}
+          {rows.map((row) => (
+            <TableRowStyled
+              key={row.id}
               sx={{ boxShadow: "inherit" }}
               className="MuiTableRow-root"
             >
@@ -88,7 +90,7 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu />
+                <TableSubMenu idCliente={row.id}/>
               </TableCellStyled>
             </TableRowStyled>
           ))}

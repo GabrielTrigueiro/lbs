@@ -23,10 +23,11 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
     return(
         <TextField
             {...rest}
-            sx={{mr:2}}
+            autoComplete="off"
 
             variant="standard"
-
+            size="small"
+            
             error={!!error}
             helperText={error}
             defaultValue={defaultValue}

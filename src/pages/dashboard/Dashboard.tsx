@@ -7,8 +7,6 @@ import {
   Grid,
   Stack,
   Pagination,
-  useMediaQuery,
-  Button,
 } from "@mui/material";
 import { CadastroClienteForm } from "../../shared/forms/CadastroClienteForm";
 import { ButtonBaseLayout } from "../../shared/layouts/ButtonBaseLayout";

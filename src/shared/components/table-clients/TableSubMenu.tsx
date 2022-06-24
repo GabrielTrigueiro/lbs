@@ -9,8 +9,13 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { ClienteService } from '../../services';
 
-export default function TableSubMenu() {
+type ClienteId = {
+  idCliente: string;
+}
+
+export const TableSubMenu: React.FC<ClienteId> = (props: ClienteId) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -19,6 +24,11 @@ export default function TableSubMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleDelete = (id: string) =>{
+    console.log( ClienteService.DeleteById(id))
+  }
+
   return (
     <>
       <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -71,13 +81,13 @@ export default function TableSubMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <EditIcon sx={{mr:1}} /> Status
+          <EditIcon sx={{mr:1}} /> Editar
         </MenuItem>
         <MenuItem>
           <PersonSearchIcon sx={{mr:1}} /> Perfil
         </MenuItem>
-        <MenuItem>
-          <DeleteIcon sx={{mr:1}}/> Deletar
+        <MenuItem onClick={()=>handleDelete(props.idCliente)}>
+          <DeleteIcon/> Deletar
         </MenuItem>
       </Menu>
     </>

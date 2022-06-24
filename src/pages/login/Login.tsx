@@ -9,23 +9,25 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuthContext } from "../../shared/contexts";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LockIcon from "@mui/icons-material/Lock";
 import Mulher from "../../images/login/Mulher.jpg";
+import { green } from "@mui/material/colors";
+import Logo from "../../images/login/logo.svg";
 
 interface State {
-  password: string,
-  showPassword: boolean,
-  usuario: string,
+  password: string;
+  showPassword: boolean;
+  usuario: string;
 }
 
 export const Login: React.FC = ({ children }) => {
-
-  //campo password
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
@@ -50,8 +52,30 @@ export const Login: React.FC = ({ children }) => {
     event.preventDefault();
   };
 
+  //login loading
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const timer = useRef<number>();
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
+  const handleButtonClick = () => {
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
+      timer.current = window.setTimeout(() => {
+        setSuccess(true);
+        setLoading(false);
+      }, 2000);
+    }
+  };
+
   //autenticação com o back
-  const { isAuthenticated, login} = useAuthContext();
+  const { isAuthenticated, login } = useAuthContext();
   if (isAuthenticated) return <>{children}</>;
   return (
     <Grid container>
@@ -75,11 +99,19 @@ export const Login: React.FC = ({ children }) => {
         md={4}
         item
         sx={{
+          bgcolor: "#fff",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
+        <Box
+          position={"absolute"}
+          alt="logo"
+          src={Logo}
+          component="img"
+          sx={{ width: 80, height: 80, top: 5, right: 20 }}
+        ></Box>
         <Box
           sx={{
             width: "80%",
@@ -94,7 +126,8 @@ export const Login: React.FC = ({ children }) => {
             Login
           </Typography>
           <TextField
-            type={'text'}
+            autoComplete="off"
+            type={"text"}
             label="Usuário"
             value={values.usuario}
             onChange={handleChange("usuario")}
@@ -111,6 +144,7 @@ export const Login: React.FC = ({ children }) => {
           <FormControl sx={{ width: "100%", m: 1 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
             <OutlinedInput
+              autoComplete="off"
               id="outlined-adornment-password"
               type={values.showPassword ? "text" : "password"}
               value={values.password}
@@ -142,22 +176,40 @@ export const Login: React.FC = ({ children }) => {
           >
             Esqueci minha senha?
           </Typography>
+
           <Button
-            onClick={()=>login(values.usuario, values.password)}
+            onClick={() => {
+              login(values.usuario, values.password);
+              handleButtonClick();
+            }}
+            disabled={loading}
             sx={{
-              fontSize:'24px',
-              fontStyle: 'normal',
+              fontSize: "24px",
+              fontStyle: "normal",
               fontWeight: 500,
               height: 50,
               width: "60%",
               boxShadow: "none",
               borderRadius: 10,
-              color: '#000000'
+              color: "#000000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             variant="contained"
           >
             Login
           </Button>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                top: '71.2%',
+                position:'absolute',
+                color: '#E4DB00',
+              }}
+            />
+          )}
         </Box>
       </Grid>
     </Grid>
