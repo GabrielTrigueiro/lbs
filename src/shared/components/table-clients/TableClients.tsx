@@ -13,7 +13,7 @@ import {
   ClienteService,
   IListagemBaseInfoClient,
 } from "../../services/api/client/ClientService";
-import { EditarCadastroCliente } from "../../forms/EditarCadastroCliente";
+import { EditarCadastroCliente } from "../../forms/formularios-cliente/EditarCadastroCliente";
 
 const TableStyled = styled(Table)({
   fontWeight: "bold",

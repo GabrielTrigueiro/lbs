@@ -1,2 +1,2 @@
-export * from './dashboard/Dashboard'
+export * from './clientes-page/ClientListPage'
 export * from "./login/Login"

@@ -6,19 +6,16 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import {
   Icon,
-  Typography,
   CssBaseline,
   List,
   useMediaQuery,
   ListItemText,
   ListItemIcon,
   ListItemButton,
-  ListItem,
   Divider,
   Toolbar,
   Box,
   Button,
-  IconButton,
 } from "@mui/material";
 import { useDrawerContext } from "../../contexts";
 import { useState } from "react";
@@ -178,7 +175,7 @@ export const MenuLateral: React.FC = ({ children }) => {
       >
         <DrawerHeader></DrawerHeader>
         <Divider />
-        <Box flex={1} sx={{ mt: theme.spacing(1) }}>
+        <Box flex={1} sx={{ mt: theme.spacing(1)}}>
           <List component="nav">
             {drawerOptions.map((drawerOption) => (
               <ListItemLink

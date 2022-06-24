@@ -1,8 +1,8 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
-import { ClienteService } from "../services";
-import { VTextField } from "./forms-components/VTextField";
+import { ClienteService } from "../../services";
+import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 
 interface ICadastroData {
@@ -26,7 +26,7 @@ const handleSave = (dados: ICadastroData) => {
   ClienteService.Create(dados).then(console.log).catch(console.error);
 };
 
-export const CadastroClienteForm: React.FC = () => {
+export const EditarCadastroCliente: React.FC = () => {
   return (
     <Form
       className="Form-Cadastro-Cliente"
@@ -39,7 +39,7 @@ export const CadastroClienteForm: React.FC = () => {
       >
         <Box display={"flex"} flex={1}>
           <Box flex={1}>
-            <Typography>Dados Cadastrais</Typography>
+            <Typography m={1}>Dados Cadastrais</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField required label="Nome" name="name" />
               <VTextField required label="Sexo" name="sex" />
@@ -48,7 +48,7 @@ export const CadastroClienteForm: React.FC = () => {
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography>Informações de Contato</Typography>
+            <Typography m={1}>Informações de Contato</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField required label="Email" name="email" />
               <VTextField label="Número Fixo" name="telephone" />

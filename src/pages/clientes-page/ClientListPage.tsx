@@ -8,10 +8,10 @@ import {
   Stack,
   Pagination,
 } from "@mui/material";
-import { CadastroClienteForm } from "../../shared/forms/CadastroClienteForm";
+import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
 import { ButtonBaseLayout } from "../../shared/layouts/ButtonBaseLayout";
 
-export const Dashboard = () => {
+export const ClientListPage = () => {
   return (
     <LayoutBasePage>
       <Box
