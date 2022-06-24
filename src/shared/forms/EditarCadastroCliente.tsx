@@ -26,7 +26,7 @@ const handleSave = (dados: ICadastroData) => {
   ClienteService.Create(dados).then(console.log).catch(console.error);
 };
 
-export const CadastroClienteForm: React.FC = () => {
+export const EditarCadastroCliente: React.FC = () => {
   return (
     <Form
       className="Form-Cadastro-Cliente"

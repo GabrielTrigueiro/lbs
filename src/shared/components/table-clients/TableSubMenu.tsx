@@ -10,12 +10,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { ClienteService } from '../../services';
+import { Modal } from '@mui/material';
 
 type ClienteId = {
   idCliente: string;
 }
 
-export const TableSubMenu: React.FC<ClienteId> = (props: ClienteId) => {
+export const TableSubMenu: React.FC<ClienteId> = ({children, idCliente}) => {
+  
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,8 +31,10 @@ export const TableSubMenu: React.FC<ClienteId> = (props: ClienteId) => {
     setAnchorEl(null);
   };
 
-  const handleDelete = (id: string) =>{
-    console.log( ClienteService.DeleteById(id))
+  const handleDelete = (id: string) => ClienteService.DeleteById(id)
+
+  const handleEdit = () => {
+
   }
 
   return (
@@ -80,16 +88,42 @@ export const TableSubMenu: React.FC<ClienteId> = (props: ClienteId) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem onClick={handleModalOpen}>
           <EditIcon sx={{mr:1}} /> Editar
         </MenuItem>
         <MenuItem>
           <PersonSearchIcon sx={{mr:1}} /> Perfil
         </MenuItem>
-        <MenuItem onClick={()=>handleDelete(props.idCliente)}>
+        <MenuItem onClick={()=>handleDelete(idCliente)}>
           <DeleteIcon/> Deletar
         </MenuItem>
       </Menu>
+
+      <Modal sx={{minWidth:1020}} onClose={handleModalClose} open={modalOpen}>
+        <Box
+        sx={{
+          //posição do modal
+          position: 'absolute' as 'absolute',
+          top: '40%',
+          left: '50%',
+          height: 500,
+          width: 1000,
+          transform: 'translate(-50%, -40%)',
+
+          //CSS estilo
+          borderRadius:1,
+          borderColor:'transparent',
+          bgcolor: 'background.paper',
+          display:'flex',
+          flexDirection:'column',
+          padding:1,
+
+          alignItems:'center',
+          justifyContent:'center'
+        }}>
+          {children}
+        </Box>
+      </Modal>
     </>
   );
 }

@@ -13,6 +13,7 @@ import {
   ClienteService,
   IListagemBaseInfoClient,
 } from "../../services/api/client/ClientService";
+import { EditarCadastroCliente } from "../../forms/EditarCadastroCliente";
 
 const TableStyled = styled(Table)({
   fontWeight: "bold",
@@ -90,7 +91,7 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu idCliente={row.id}/>
+                <TableSubMenu idCliente={row.id}><EditarCadastroCliente/></TableSubMenu>
               </TableCellStyled>
             </TableRowStyled>
           ))}
