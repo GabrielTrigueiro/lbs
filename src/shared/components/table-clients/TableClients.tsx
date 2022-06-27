@@ -11,7 +11,7 @@ import {TableSubMenu} from "./TableSubMenu";
 import { useEffect, useState } from "react";
 import {
   ClienteService,
-  IListagemBaseInfoClient,
+  IInfoClient,
 } from "../../services/api/client/ClientService";
 import { EditarCadastroCliente } from "../../forms/formularios-cliente/EditarCadastroCliente";
 
@@ -42,7 +42,7 @@ const TableCellStyled = styled(TableCell)({
 });
 
 export const TableClients: React.FC = () => {
-  const [rows, setRows] = useState<IListagemBaseInfoClient[]>([]);
+  const [rows, setRows] = useState<IInfoClient[]>([]);
 
   useEffect(() => {
     ClienteService.getAll().then((result) => {
@@ -91,7 +91,7 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu idCliente={row.id}><EditarCadastroCliente/></TableSubMenu>
+                <TableSubMenu client={row}><EditarCadastroCliente client={row}/></TableSubMenu>
               </TableCellStyled>
             </TableRowStyled>
           ))}

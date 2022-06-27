@@ -141,7 +141,9 @@ export const Login: React.FC = ({ children }) => {
               ),
             }}
           />
-          <FormControl sx={{ width: "100%", m: 1 }} variant="outlined">
+          <FormControl 
+            sx={{ width: "100%", m: 1 }} 
+            variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
             <OutlinedInput
               autoComplete="off"
@@ -199,17 +201,15 @@ export const Login: React.FC = ({ children }) => {
             variant="contained"
           >
             Login
-          </Button>
-          {loading && (
+            {loading && (
             <CircularProgress
               size={24}
               sx={{
-                top: '71.2%',
-                position:'absolute',
                 color: '#E4DB00',
               }}
             />
           )}
+          </Button>
         </Box>
       </Grid>
     </Grid>

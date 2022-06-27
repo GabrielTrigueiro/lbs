@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
-import { ClienteService } from "../../services";
+import { ClienteService, IInfoClient } from "../../services";
 import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 
@@ -26,9 +26,9 @@ const handleSave = (dados: ICadastroData) => {
   ClienteService.Create(dados).then(console.log).catch(console.error);
 };
 
-export const EditarCadastroCliente: React.FC = () => {
+export const EditarCadastroCliente: React.FC<{client: IInfoClient}> = ({client}) => {
   return (
-    <Form
+    <Form initialData={client}
       className="Form-Cadastro-Cliente"
       onSubmit={(dados) => handleSave(dados)}
     >

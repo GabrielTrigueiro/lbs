@@ -9,19 +9,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import { ClienteService } from '../../services';
+import { ClienteService, IInfoClient } from '../../services';
 import { Modal } from '@mui/material';
 
-type ClienteId = {
-  idCliente: string;
-}
 
-export const TableSubMenu: React.FC<ClienteId> = ({children, idCliente}) => {
+
+
+
+export const TableSubMenu: React.FC<{client: IInfoClient}> = ({children, client}) => {
   
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,10 +30,8 @@ export const TableSubMenu: React.FC<ClienteId> = ({children, idCliente}) => {
     setAnchorEl(null);
   };
 
-  const handleDelete = (id: string) => ClienteService.DeleteById(id)
-
-  const handleEdit = () => {
-
+  const handleDeleteUser = () => {
+    ClienteService.DeleteById(client.id)
   }
 
   return (
@@ -94,7 +91,7 @@ export const TableSubMenu: React.FC<ClienteId> = ({children, idCliente}) => {
         <MenuItem>
           <PersonSearchIcon sx={{mr:1}} /> Perfil
         </MenuItem>
-        <MenuItem onClick={()=>handleDelete(idCliente)}>
+        <MenuItem onClick={handleDeleteUser}>
           <DeleteIcon/> Deletar
         </MenuItem>
       </Menu>

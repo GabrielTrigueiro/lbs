@@ -1,6 +1,6 @@
 import { api } from "../axios-config"
 
-export interface IListagemBaseInfoClient {
+export interface IInfoClient {
     id: string,
     address: string
     cell: string
@@ -18,7 +18,7 @@ export interface IListagemBaseInfoClient {
 }
 
 export interface IInfo {
-    data: IListagemBaseInfoClient[],
+    data: IInfoClient[],
     message: string,
     errors: string,
     success: boolean
@@ -43,7 +43,7 @@ const getAll = async (): Promise<TClientTotal | Error>   => {
         return new Error((error as {message: string}).message || 'Erro ao listar os registros')
     }
 }
-const getByIDd = async (id: string): Promise<IListagemBaseInfoClient | Error>   => {
+const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
     try {
         const {data} = await api.get(`https://localhost:8081/api/client${id}`)
         if(data){
@@ -55,7 +55,7 @@ const getByIDd = async (id: string): Promise<IListagemBaseInfoClient | Error>   
         return new Error((error as {message: string}).message || 'Erro ao procurar o registro')
     }
 }
-const UpdateById = async (id: string, dados: IListagemBaseInfoClient): Promise<void | Error>   => {
+const UpdateById = async (id: string, dados: IInfoClient): Promise<string | Error>   => {
     try {
         await api.put(`https://localhost:8081/api/client${id}`, dados) 
         return new Error('Erro ao atualiazar o registro')
@@ -64,7 +64,7 @@ const UpdateById = async (id: string, dados: IListagemBaseInfoClient): Promise<v
         return new Error((error as {message: string}).message || 'Erro ao atualizar o registro')
     }
 }
-const DeleteById = async (id: string): Promise<string | Error>   => {
+const DeleteById = async (id: string): Promise<void | Error>   => {
     try {
         await api.delete(`http://localhost:8081/api/client/${id}`) 
         return new Error('Erro ao deletar o registro')
@@ -73,7 +73,7 @@ const DeleteById = async (id: string): Promise<string | Error>   => {
         return new Error((error as {message: string}).message || 'Erro ao deletar o registro')
     }
 }
-const Create = async (dados: IListagemBaseInfoClient): Promise<IInfo | Error |string >   => {
+const Create = async (dados: IInfoClient): Promise<IInfo | Error |string >   => {
     try {
         const data = await api.post<IInfo>(`http://localhost:8081/api/client`, dados)
         return data.data

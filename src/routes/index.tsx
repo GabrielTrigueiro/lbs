@@ -9,14 +9,14 @@ export const AppRoutes = () => {
   useEffect(() => {
     setDrawerOption([
       {
-        label: "Pagina Inicial",
+        label: "Clientes",
         icon: "home",
         path: "/pagina-inicial/clientes",
       },
       {
-        label: "Pagina Inicial",
+        label: "Colaboradores",
         icon: "assignment_ind_rounded",
-        path: "/pagina-inicial/coloaboradores",
+        path: "/pagina-inicial/colaboradores",
       },
     ]);
   }, []);
@@ -25,8 +25,8 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/pagina-inicial/clientes" element={<ClientListPage />} />
-      <Route path="/pagina-inicial/coloaboradores" element={<div>oi</div>} />
-      <Route path="*" element={<Navigate to="/pagina-inicial" />} />
+      <Route path="/pagina-inicial/colaboradores" element={<div>oi</div>} />
+      <Route path="*" element={<Navigate to="/pagina-inicial/clientes" />} />
     </Routes>
   );
 };
