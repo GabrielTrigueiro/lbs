@@ -43,16 +43,18 @@ const TableCellStyled = styled(TableCell)({
 
 export const TableClients: React.FC = () => {
   const [rows, setRows] = useState<IInfoClient[]>([]);
+  
+  useEffect(() => {update()}, []);
 
-  useEffect(() => {
+  const update = () => {
     ClienteService.getAll().then((result) => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
         setRows(result.data.data);
       }
-    });
-  }, []); //atualiza o componente de lista toda vez que algo é mudado
+    })
+  }
 
   return (
     <TableContainer>
@@ -91,7 +93,7 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu client={row}><EditarCadastroCliente client={row}/></TableSubMenu>
+                <TableSubMenu update={()=>update()} client={row}><EditarCadastroCliente client={row}/></TableSubMenu>
               </TableCellStyled>
             </TableRowStyled>
           ))}

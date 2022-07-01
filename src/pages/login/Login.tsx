@@ -74,7 +74,6 @@ export const Login: React.FC = ({ children }) => {
     }
   };
 
-  //autenticação com o back
   const { isAuthenticated, login } = useAuthContext();
   if (isAuthenticated) return <>{children}</>;
   return (

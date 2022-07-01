@@ -24,7 +24,8 @@ export default function MenuIcon() {
     setAnchorEl(null);
   };
 
-  const { logout } = useAuthContext();
+  const { logout, dados } = useAuthContext();
+
   return (
     <>
       <Box sx={{height:'100%', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -39,7 +40,7 @@ export default function MenuIcon() {
             aria-expanded={open ? 'true' : undefined}
           >
             <Avatar sx={{ width: 45, height: 45 }}>M</Avatar>
-            <Typography sx={{ minWidth: 100, color:"black"}}> Matheus </Typography>
+            <Typography sx={{ minWidth: 100, color:"black"}}> {dados?.name} </Typography>
             <KeyboardArrowDownIcon/>
           </IconButton>
         </Tooltip>

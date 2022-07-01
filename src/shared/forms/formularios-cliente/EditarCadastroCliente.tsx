@@ -22,15 +22,17 @@ interface ICadastroData {
   uf: string;
 }
 
-const handleSave = (dados: ICadastroData) => {
-  ClienteService.Create(dados).then(console.log).catch(console.error);
-};
 
 export const EditarCadastroCliente: React.FC<{client: IInfoClient}> = ({client}) => {
+
+  const handleEdit = () =>{
+    if(client.id)
+    ClienteService.UpdateById(client.id, client)
+  }
   return (
     <Form initialData={client}
       className="Form-Cadastro-Cliente"
-      onSubmit={(dados) => handleSave(dados)}
+      onSubmit={handleEdit}
     >
       <Box
         display={"flex"}

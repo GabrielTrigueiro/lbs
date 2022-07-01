@@ -12,11 +12,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { ClienteService, IInfoClient } from '../../services';
 import { Modal } from '@mui/material';
 
-
-
-
-
-export const TableSubMenu: React.FC<{client: IInfoClient}> = ({children, client}) => {
+export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = ({children, client, update}) => {
   
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
@@ -31,7 +27,10 @@ export const TableSubMenu: React.FC<{client: IInfoClient}> = ({children, client}
   };
 
   const handleDeleteUser = () => {
-    ClienteService.DeleteById(client.id)
+    if(client.id)
+    ClienteService.DeleteById(client.id).then(result => {
+      update()
+    })
   }
 
   return (

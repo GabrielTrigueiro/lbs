@@ -7,27 +7,38 @@ import {
   useState,
 } from "react";
 import { AuthService } from "../services/api/auth/AuthService";
+import jwt from "jwt-decode"
 
 interface IAuthContext {
   isAuthenticated: boolean;
+  dados?: IUser
   logout: () => void;
   login: (username: string, password: string) => Promise<string | void>;
 }
-const AuthContext = createContext({} as IAuthContext);
 
+interface IUser {
+  name: string
+  role: string[]
+  image?: string
+  sub: string //id do usuário
+}
+const AuthContext = createContext({} as IAuthContext);
 const KEY_LOCAL_STORAGE_ACESS_TOKEN = "TOKEN";
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [acessToken, setAcessToken] = useState<string>();
+  const [dados, setDados] = useState<IUser>();
   
   useEffect(() => {
     const acessToken = localStorage.getItem(KEY_LOCAL_STORAGE_ACESS_TOKEN);
     if (acessToken) {
+      console.log(jwt(acessToken))
+      setDados(jwt(acessToken))
       setAcessToken(JSON.parse(acessToken));
     } else {
       setAcessToken(undefined);
     }
-  });
+  }, [acessToken]);
 
   const handleLogin = useCallback(
     async (username: string, password: string) => {
@@ -55,7 +66,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login: handleLogin, logout: handleLogout }}
+      value={{ dados ,isAuthenticated, login: handleLogin, logout: handleLogout }}
     >
       {children}
     </AuthContext.Provider>
