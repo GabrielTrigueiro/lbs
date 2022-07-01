@@ -5,6 +5,7 @@ import { ClienteService, IInfoClient } from "../../services";
 import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 import * as Yup from "yup";
+import { useVForm } from "../forms-components/UseVForm";
 
 interface ICadastroInfo {
 
@@ -28,49 +29,45 @@ interface ICadastroInfo {
 const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
 
   name: Yup.string().required('O nome é obrigatóro'),
-  cpf: Yup.number().required('O cpf é obrigatório'),
+  cpf: Yup.number().required('O cpf é obrigatório').typeError('Digite apenas números'),
   sex: Yup.string().required('O campo é obrigatório'),
-  rg: Yup.number().required('O RG é obrigatório'),
+  rg: Yup.number().required('O RG é obrigatório').typeError('Digite apenas números'),
 
   address:Yup.string().required('Endereço é obrigatório'),
-  cep: Yup.number().required('CEP é obrigatório'),
+  cep: Yup.number().required('CEP é obrigatório').typeError('Digite apenas números'),
   city: Yup.string().min(3, 'No minimo 3 caracteres').required('Cidade é obrigatório'),
   neighborhood: Yup.string().required('Bairro é obrigatório'),
-  number: Yup.number().required('Número é obrigatório'),
+  number: Yup.number().required('Número é obrigatório').typeError('Digite apenas números'),
   uf: Yup.string().required('Estado é obrgatório'),
 
-  email: Yup.string().email().required('Email é obrigatório'),
-  cell: Yup.number().required('Celular é obrigatório'),
-  telephone: Yup.number(),
+  email: Yup.string().email('Digite um email válido').required('Email é obrigatório'),
+  cell: Yup.number().required('Celular é obrigatório').typeError('Digite apenas números'),
+  telephone: Yup.number().typeError('Digite apenas números'),
   
 })
 export const CadastroClienteForm: React.FC = () => {
 
+  const {formRef} = useVForm()
+
   const handleSave = (dados: ICadastroInfo) => {
-    
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
       console.log(dadosValidados)
       ClienteService.Create(dadosValidados)
     })
-    .catch((err: Yup.ValidationError)=>{
-      alert('aaaaaaaaaa')
+    .catch((erros: Yup.ValidationError)=>{
+      const validandoErros: {[key:string]: string} = {}
+      erros.inner.forEach(erros =>{
+        if(!erros.path)return
+        validandoErros[erros.path] = erros.message
+      })
+      formRef.current?.setErrors(validandoErros)
     })
-
-      // ClienteService.Create(dados)
-      // .then(({success, message}) => {
-      //   if (success){
-      //     alert(message)
-      //   }else{
-      //     alert(message)
-      //   }
-      // })
   };
-
-  
 
   return (
     <Form
+      ref={formRef}
       className="Form-Cadastro-Cliente"
       onSubmit={(dados) => handleSave(dados)}
     >
