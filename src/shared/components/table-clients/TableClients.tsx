@@ -13,6 +13,7 @@ import {
   ClienteService,
   IInfoClient,
 } from "../../services/api/client/ClientService";
+import { CadastroClienteForm } from "../../forms/formularios-cliente/CadastroClienteForm";
 import { EditarCadastroCliente } from "../../forms/formularios-cliente/EditarCadastroCliente";
 
 const TableStyled = styled(Table)({
@@ -41,21 +42,8 @@ const TableCellStyled = styled(TableCell)({
   padding: "10px 16px",
 });
 
-export const TableClients: React.FC = () => {
-  const [rows, setRows] = useState<IInfoClient[]>([]);
+export const TableClients: React.FC<{lista: IInfoClient[], update: ()=>void}> = ({lista, update}) => {
   
-  useEffect(() => {update()}, []);
-
-  const update = () => {
-    ClienteService.getAll().then((result) => {
-      if (result instanceof Error) {
-        alert(result.message);
-      } else {
-        setRows(result.data.data);
-      }
-    })
-  }
-
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
@@ -68,7 +56,7 @@ export const TableClients: React.FC = () => {
           </TableRow>
         </TableHeaderStyled>
         <TableBodyStyled>
-          {rows.map((row) => (
+          {lista.map((row) => (
             <TableRowStyled
               key={row.id}
               sx={{ boxShadow: "inherit" }}
@@ -93,7 +81,11 @@ export const TableClients: React.FC = () => {
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu update={()=>update()} client={row}><EditarCadastroCliente client={row}/></TableSubMenu>
+
+                <TableSubMenu update={()=>update()} client={row}>
+                  <EditarCadastroCliente update={update} client={row}/>
+                </TableSubMenu>
+
               </TableCellStyled>
             </TableRowStyled>
           ))}

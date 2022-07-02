@@ -2,37 +2,42 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
 import { ClienteService, IInfoClient } from "../../services";
+import { useVForm } from "../forms-components/UseVForm";
 import { VTextField } from "../forms-components/VTextField";
+import { cadastroSchema } from "./CadastroClienteForm";
 import "./styles.css";
+import * as Yup from "yup";
 
-interface ICadastroData {
-  id: string;
-  address: string;
-  cell: string;
-  cep: string;
-  city: string;
-  cpf: string;
-  email: string;
-  name: string;
-  neighborhood: string;
-  number: string;
-  rg: string;
-  sex: string;
-  telephone: string;
-  uf: string;
-}
+export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>void}> = ({client, update}) => {
 
+  const {formRef} = useVForm()
 
-export const EditarCadastroCliente: React.FC<{client: IInfoClient}> = ({client}) => {
-
-  const handleEdit = () =>{
-    if(client.id)
-    ClienteService.UpdateById(client.id, client)
+  const handleEdit = (dados: IInfoClient) =>{
+    cadastroSchema.validate(dados,{abortEarly:false})
+    .then((dadosValidados)=>{
+      if(dados.id)
+      ClienteService.UpdateById(dados.id, dados).then(result => {
+      update()
+      })
+    })
+    .catch((erros: Yup.ValidationError)=>{
+      const validandoErros: {[key:string]: string} = {}
+      erros.inner.forEach(erros =>{
+        if(!erros.path)return
+        validandoErros[erros.path] = erros.message
+      })
+      formRef.current?.setErrors(validandoErros)
+    })
   }
+
   return (
     <Form initialData={client}
+      ref={formRef}
       className="Form-Cadastro-Cliente"
-      onSubmit={handleEdit}
+      onSubmit={(dados)=>{
+        dados.id = client.id
+        handleEdit(dados)
+      }}
     >
       <Box
         display={"flex"}

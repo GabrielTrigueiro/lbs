@@ -22,11 +22,13 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
 
     return(
         <TextField
+            InputProps={{ style: { fontSize: 12 } }}
+            InputLabelProps={{ style: { fontSize: 12 } }}
+
             {...rest}
             autoComplete="off"
 
             variant="standard"
-            size="small"
             
             error={!!error}
             helperText={error}

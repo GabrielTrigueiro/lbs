@@ -10,8 +10,23 @@ import {
 } from "@mui/material";
 import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
 import { ButtonBaseLayout } from "../../shared/layouts/ButtonBaseLayout";
+import { useEffect, useState } from "react";
+import { ClienteService, IInfoClient } from "../../shared/services";
 
-export const ClientListPage = () => {
+export const ClientListPage: React.FC = () => {
+
+  const [rows, setRows] = useState<IInfoClient[]>([]);
+  useEffect(() => {update()}, []);
+  const update = () => {
+    ClienteService.getAll().then((result) => {
+      if (result instanceof Error) {
+        alert(result.message);
+      } else {
+        setRows(result.data.data);
+      }
+    })
+  }
+
   return (
     <LayoutBasePage>
       <Box
@@ -26,7 +41,7 @@ export const ClientListPage = () => {
           Clientes
         </Typography>
         <ButtonBaseLayout nameModalButton="Cadastrar Clientes">
-          <CadastroClienteForm />
+          <CadastroClienteForm update={update}/>
         </ButtonBaseLayout>
       </Box>
 
@@ -55,7 +70,7 @@ export const ClientListPage = () => {
       </Box>
 
       <Box sx={{ padding: 0 }}>
-        <TableClients />
+        <TableClients update={update} lista={rows} />
       </Box>
 
       <Box display="flex" justifyContent="flex-end">

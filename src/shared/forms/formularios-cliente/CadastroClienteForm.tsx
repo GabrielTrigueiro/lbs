@@ -7,7 +7,7 @@ import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 
-interface ICadastroInfo {
+export interface ICadastroInfo {
 
   cpf: number;
   name: string;
@@ -26,7 +26,7 @@ interface ICadastroInfo {
   telephone?: number;
 }
 
-const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
+export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
 
   name: Yup.string().required('O nome é obrigatóro'),
   cpf: Yup.number().required('O cpf é obrigatório').typeError('Digite apenas números'),
@@ -45,15 +45,15 @@ const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   telephone: Yup.number().typeError('Digite apenas números'),
   
 })
-export const CadastroClienteForm: React.FC = () => {
+export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
 
   const {formRef} = useVForm()
-
   const handleSave = (dados: ICadastroInfo) => {
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
-      console.log(dadosValidados)
-      ClienteService.Create(dadosValidados)
+      ClienteService.Create(dadosValidados).then(result => {
+        update()
+      })
     })
     .catch((erros: Yup.ValidationError)=>{
       const validandoErros: {[key:string]: string} = {}

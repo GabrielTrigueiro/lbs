@@ -59,7 +59,7 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
 }
 const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>   => {
   
-    return  await api.put(`https://localhost:8081/api/client${id}`, dados)
+    return  await api.put<IInfoClient>(`http://localhost:8081/api/client/${id}`, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
