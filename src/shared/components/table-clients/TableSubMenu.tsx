@@ -16,6 +16,7 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -101,7 +102,7 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
           position: 'absolute' as 'absolute',
           top: '40%',
           left: '50%',
-          height: 500,
+          height: 600,
           width: 1000,
           transform: 'translate(-50%, -40%)',
 

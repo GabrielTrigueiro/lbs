@@ -78,7 +78,7 @@ export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
       >
         <Box display={"flex"} flex={1}>
           <Box flex={1}>
-            <Typography m={1}>Dados Cadastrais</Typography>
+            <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField label="Nome" name="name" />
               <VTextField label="Sexo" name="sex" />
@@ -87,7 +87,7 @@ export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography m={1}>Informações de Contato</Typography>
+            <Typography fontWeight={'bold'} m={1}>Informações de Contato</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField label="Email" name="email" />
               <VTextField label="Número Fixo" name="telephone" />
@@ -97,7 +97,7 @@ export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
         </Box>
 
         <Box flex={1}>
-          <Typography m={1}>Informações de Endereço</Typography>
+          <Typography fontWeight={'bold'} m={1}>Informações de Endereço</Typography>
           <Box display={"flex"}>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField label="UF" name="uf" />
@@ -110,7 +110,7 @@ export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
               <VTextField label="Número Residência" name="number" />
             </Box>
           </Box>
-          <Box m={2} display={"flex"} justifyContent={"center"}>
+          <Box m={2} flex={1} display={"flex"} justifyContent={"center"} alignItems={'center'}>
             <Button sx={{color:'#000'}} type="submit" variant="contained">
               Salvar
             </Button>

@@ -46,7 +46,7 @@ export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>v
       >
         <Box display={"flex"} flex={1}>
           <Box flex={1}>
-            <Typography m={1}>Dados Cadastrais</Typography>
+            <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField required label="Nome" name="name" />
               <VTextField required label="Sexo" name="sex" />
@@ -55,7 +55,7 @@ export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>v
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography m={1}>Informações de Contato</Typography>
+            <Typography fontWeight={'bold'} m={1}>Informações de Contato</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField required label="Email" name="email" />
               <VTextField label="Número Fixo" name="telephone" />
@@ -65,7 +65,7 @@ export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>v
         </Box>
 
         <Box flex={1}>
-          <Typography m={1}>Informações de Endereço</Typography>
+          <Typography fontWeight={'bold'} m={1}>Informações de Endereço</Typography>
           <Box display={"flex"}>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField required label="UF" name="uf" />
@@ -78,7 +78,7 @@ export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>v
               <VTextField required label="Número Residência" name="number" />
             </Box>
           </Box>
-          <Box m={2} display={"flex"} justifyContent={"center"}>
+          <Box m={2} flex={1} display={"flex"} justifyContent={"center"} alignItems={'center'}>
             <Button sx={{color:'#000'}} type="submit" variant="contained">
               Salvar
             </Button>

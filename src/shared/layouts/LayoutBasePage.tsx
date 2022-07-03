@@ -1,20 +1,5 @@
-import {
-  Icon,
-  IconButton,
-  Typography,
-  useTheme,
-  useMediaQuery,
-  Theme,
-  Button,
-  TextField,
-  Modal,
-} from "@mui/material";
 import { Box } from "@mui/system";
 import { ReactNode, useState } from "react";
-import { useDrawerContext } from "../contexts";
-import Add from "@mui/icons-material/Add";
-import { boolean } from "yup";
-import { ButtonBaseLayout } from "./ButtonBaseLayout";
 
 interface ILayoutBasePageProps {
   barraDeFerramentas?: ReactNode;
