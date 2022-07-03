@@ -30,7 +30,6 @@ interface IListItemLinkProps {
 }
 
 const drawerWidth = 200;
-
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -39,7 +38,6 @@ const openedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowX: "hidden",
 });
-
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -51,7 +49,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `calc(${theme.spacing(9)} + 1px)`,
   },
 });
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -81,7 +78,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
 const ListItemLink: React.FC<IListItemLinkProps> = ({
   to,
   icon,
@@ -116,7 +112,6 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
     </ListItemButton>
   );
 };
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -175,7 +170,7 @@ export const MenuLateral: React.FC = ({ children }) => {
       >
         <DrawerHeader></DrawerHeader>
         <Divider />
-        <Box flex={1} sx={{ mt: theme.spacing(1)}}>
+        <Box flex={1} sx={{ mt: theme.spacing(20) }}>
           <List component="nav">
             {drawerOptions.map((drawerOption) => (
               <ListItemLink

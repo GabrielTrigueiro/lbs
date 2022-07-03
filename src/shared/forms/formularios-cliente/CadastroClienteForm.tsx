@@ -52,6 +52,7 @@ export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
       ClienteService.Create(dadosValidados).then(result => {
+        
         update()
       })
     })

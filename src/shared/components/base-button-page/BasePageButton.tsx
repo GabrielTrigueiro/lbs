@@ -2,12 +2,13 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { Box } from "@mui/system";
 import { useState } from "react";
 import Add from "@mui/icons-material/Add";
+import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 
 interface IButtonBaseLayout {
   nameModalButton: string;
 }
 
-export const ButtonBaseLayout: React.FC<IButtonBaseLayout> = ({
+export const BasePageButton: React.FC<IButtonBaseLayout> = ({
   children,
   nameModalButton,
 }) => {
@@ -56,27 +57,11 @@ export const ButtonBaseLayout: React.FC<IButtonBaseLayout> = ({
         </Box>
       </Modal>
 
-      <Dialog
-        open={confirm}
-        onClose={handleConfirm}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Confirmação"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Deseja realmente fechar?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleConfirm}>Continuar</Button>
-          <Button onClick={() => { handleConfirm(); handleModal(); }}>
-            Fechar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ConfirmationButton
+        dialog={handleConfirm}
+        modal={handleModal}
+        status={confirm}
+      />
     </Box>
   );
 };

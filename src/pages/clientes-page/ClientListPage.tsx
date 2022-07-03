@@ -9,7 +9,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
-import { ButtonBaseLayout } from "../../shared/layouts/ButtonBaseLayout";
+import { BasePageButton } from "../../shared/components/base-button-page/BasePageButton";
 import { useEffect, useState } from "react";
 import { ClienteService, IInfoClient } from "../../shared/services";
 
@@ -40,9 +40,9 @@ export const ClientListPage: React.FC = () => {
         >
           Clientes
         </Typography>
-        <ButtonBaseLayout nameModalButton="Cadastrar Clientes">
+        <BasePageButton nameModalButton="Cadastrar Clientes">
           <CadastroClienteForm update={update}/>
-        </ButtonBaseLayout>
+        </BasePageButton>
       </Box>
 
       <Box margin="0px" display="flex">
