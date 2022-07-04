@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import Add from "@mui/icons-material/Add";
@@ -6,22 +6,25 @@ import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 
 interface IButtonBaseLayout {
   nameModalButton: string;
+  modal: ()=>void
+  statusModal: boolean
+  statusDialog: boolean
+  dialog: ()=>void
 }
 
 export const BasePageButton: React.FC<IButtonBaseLayout> = ({
   children,
   nameModalButton,
+  dialog,
+  modal,
+  statusModal,
+  statusDialog
 }) => {
-  const [modal, setModal] = useState<true | false>(false);
-  const handleModal = () => { modal ? setModal(false) : setModal(true) }
-
-  const [confirm, setConfirm] = useState<true | false>(false);
-  const handleConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
   
   return (
     <Box alignItems="left">
       <Button
-        onClick={handleModal}
+        onClick={modal}
         variant="contained"
         startIcon={<Add />}
         sx={{ height: "50px", color: "black" }}
@@ -29,7 +32,7 @@ export const BasePageButton: React.FC<IButtonBaseLayout> = ({
         {nameModalButton}
       </Button>
 
-      <Modal sx={{minWidth:1020}} onClose={handleConfirm} open={modal}>
+      <Modal sx={{minWidth:1020}} onClose={dialog} open={statusModal}>
         <Box
         sx={{
           overflow:'auto',
@@ -58,9 +61,9 @@ export const BasePageButton: React.FC<IButtonBaseLayout> = ({
       </Modal>
 
       <ConfirmationButton
-        dialog={handleConfirm}
-        modal={handleModal}
-        status={confirm}
+        dialog={dialog}
+        modal={modal}
+        status={statusDialog}
       />
     </Box>
   );

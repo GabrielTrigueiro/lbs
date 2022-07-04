@@ -27,6 +27,12 @@ export const ClientListPage: React.FC = () => {
     })
   }
 
+  const [modal, setModal] = useState<true | false>(false);
+  const handleModal = () => { modal ? setModal(false) : setModal(true) }
+
+  const [confirm, setConfirm] = useState<true | false>(false);
+  const handleConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
+
   return (
     <LayoutBasePage>
       <Box
@@ -40,8 +46,16 @@ export const ClientListPage: React.FC = () => {
         >
           Clientes
         </Typography>
-        <BasePageButton nameModalButton="Cadastrar Clientes">
-          <CadastroClienteForm update={update}/>
+        <BasePageButton
+          statusDialog={confirm}
+          statusModal={modal}
+          dialog={handleConfirm}
+          modal={handleModal}
+          nameModalButton="Cadastrar Clientes"
+        >
+          <CadastroClienteForm
+            modal={handleModal}
+            update={update}/>
         </BasePageButton>
       </Box>
 

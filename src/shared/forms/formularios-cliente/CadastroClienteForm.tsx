@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
-import { ClienteService, IInfoClient } from "../../services";
+import { ClienteService } from "../../services";
 import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 import * as Yup from "yup";
@@ -45,14 +45,23 @@ export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   telephone: Yup.number().typeError('Digite apenas números'),
   
 })
-export const CadastroClienteForm: React.FC<{update: ()=>void}> = ({update}) => {
+export const CadastroClienteForm: React.FC<{
+  update: ()=>void,
+  modal: ()=>void,
+  }> = ({update, modal}) => {
+
+  const close = () =>{
+    modal();
+  }
 
   const {formRef} = useVForm()
   const handleSave = (dados: ICadastroInfo) => {
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
       ClienteService.Create(dadosValidados).then(result => {
-        
+        //fechar o modal que só fecha com handle confirm
+        alert("Cliente cadastrado com sucesso!!!")
+        close()
         update()
       })
     })
