@@ -9,14 +9,28 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { ClienteService, IInfoClient } from '../../services';
-import { Modal } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal } from '@mui/material';
+import { ConfirmationButton } from '../confirmation-button/ConfirmationButton';
 
-export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = ({children, client, update}) => {
-  
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
-  
+export const TableSubMenu: React.FC<{
+  client: IInfoClient
+
+  statusModal: boolean
+  statusDialog: boolean
+
+  update: ()=> void
+  dialog: ()=>void
+  modal: ()=>void
+}> = ({
+  children,
+  client,
+  update,
+  dialog,
+  modal,
+  statusDialog,
+  statusModal,
+}) => {
+    
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -59,7 +73,6 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
           elevation: 0,
           sx: {
             overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
             '& .MuiAvatar-root': {
               width: 32,
@@ -75,7 +88,6 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
@@ -84,7 +96,7 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleModalOpen}>
+        <MenuItem onClick={modal}>
           <EditIcon sx={{mr:1}} /> Editar
         </MenuItem>
         <MenuItem>
@@ -95,7 +107,7 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
         </MenuItem>
       </Menu>
 
-      <Modal sx={{minWidth:1020}} onClose={handleModalClose} open={modalOpen}>
+      <Modal sx={{minWidth:1020}} onClose={dialog} open={statusModal}>
         <Box
         sx={{
           //posição do modal
@@ -120,6 +132,31 @@ export const TableSubMenu: React.FC<{update: ()=> void ,client: IInfoClient}> = 
           {children}
         </Box>
       </Modal>
+
+      <Dialog
+      open={statusDialog}
+      onClose={dialog}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Confirmação"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Deseja realmente fechar?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={dialog}>Continuar</Button>
+        <Button
+          onClick={() => {
+            {dialog()};
+            {modal()};
+          }}
+        >
+          Fechar
+        </Button>
+      </DialogActions>
+    </Dialog>
     </>
   );
 }

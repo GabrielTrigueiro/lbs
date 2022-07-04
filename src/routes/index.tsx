@@ -16,7 +16,7 @@ export const AppRoutes = () => {
       {
         label: "Colaboradores",
         icon: "assignment_ind_rounded",
-        path: "/pagina-inicial/colaboradores",
+        path: "/pagina-inicial/fornecedores",
       },
     ]);
   }, []);
@@ -25,7 +25,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/pagina-inicial/clientes" element={<ClientListPage />} />
-      <Route path="/pagina-inicial/colaboradores" element={<div>oi</div>} />
+      <Route path="/pagina-inicial/fornecedores" element={<div>oi</div>} />
       <Route path="*" element={<Navigate to="/pagina-inicial/clientes" />} />
     </Routes>
   );

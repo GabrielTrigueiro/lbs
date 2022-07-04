@@ -59,7 +59,6 @@ export const CadastroClienteForm: React.FC<{
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
       ClienteService.Create(dadosValidados).then(result => {
-        //fechar o modal que só fecha com handle confirm
         alert("Cliente cadastrado com sucesso!!!")
         close()
         update()

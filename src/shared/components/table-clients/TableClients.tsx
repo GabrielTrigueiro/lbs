@@ -42,8 +42,18 @@ const TableCellStyled = styled(TableCell)({
   padding: "10px 16px",
 });
 
-export const TableClients: React.FC<{lista: IInfoClient[], update: ()=>void}> = ({lista, update}) => {
+
+export const TableClients: React.FC<{
+  lista: IInfoClient[],
+  update: ()=>void,
+}> = ({lista, update}) => {
+
+  const [editModal, setEditModal] = useState<true | false>(false);
+  const handleEditModal = () => { editModal ? setEditModal(false) : setEditModal(true) }
   
+  const [confirm, setConfirm] = useState<true | false>(false);
+  const handleEditConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
+
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
@@ -82,8 +92,20 @@ export const TableClients: React.FC<{lista: IInfoClient[], update: ()=>void}> = 
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
 
-                <TableSubMenu update={()=>update()} client={row}>
-                  <EditarCadastroCliente update={update} client={row}/>
+                <TableSubMenu
+                update={()=>update()}
+                client={row}
+
+                dialog={handleEditConfirm}
+                modal={handleEditModal}
+                statusDialog={confirm}
+                statusModal={editModal}
+                >
+                  <EditarCadastroCliente
+                    modal={handleEditModal}
+                    update={update}
+                    client={row}
+                  />
                 </TableSubMenu>
 
               </TableCellStyled>

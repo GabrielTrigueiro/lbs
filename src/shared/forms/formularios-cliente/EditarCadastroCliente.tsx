@@ -8,7 +8,11 @@ import { cadastroSchema } from "./CadastroClienteForm";
 import "./styles.css";
 import * as Yup from "yup";
 
-export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>void}> = ({client, update}) => {
+export const EditarCadastroCliente: React.FC<{
+  client: IInfoClient,
+  update: ()=>void
+  modal: ()=>void,
+}> = ({client, update, modal}) => {
 
   const {formRef} = useVForm()
 
@@ -17,6 +21,8 @@ export const EditarCadastroCliente: React.FC<{client: IInfoClient, update: ()=>v
     .then((dadosValidados)=>{
       if(dados.id)
       ClienteService.UpdateById(dados.id, dados).then(result => {
+      alert("Cliente editado com sucesso!!!")
+      modal()
       update()
       })
     })

@@ -12,9 +12,12 @@ import {
   Stack,
   Pagination,
 } from "@mui/material";
+import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 
 export const ClientListPage: React.FC = () => {
 
+  const [isLoading, setIsLoading] = useState(true)
+ 
   const [rows, setRows] = useState<IInfoClient[]>([]);
   useEffect(() => {update()}, []);
   const update = () => {
@@ -22,6 +25,7 @@ export const ClientListPage: React.FC = () => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
+        setIsLoading(false)
         setRows(result.data.data);
       }
     })
@@ -33,6 +37,7 @@ export const ClientListPage: React.FC = () => {
   const [confirm, setConfirm] = useState<true | false>(false);
   const handleConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
 
+  if (isLoading) return <ClientListPageSkeleton/>
   return (
     <LayoutBasePage>
       <Box
@@ -58,7 +63,6 @@ export const ClientListPage: React.FC = () => {
             update={update}/>
         </BasePageButton>
       </Box>
-
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
           <Grid sx={{ borderBottom: "4px solid #E4DB00" }}>
@@ -82,11 +86,9 @@ export const ClientListPage: React.FC = () => {
         </Grid>
         <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
-
       <Box sx={{ padding: 0 }}>
         <TableClients update={update} lista={rows} />
       </Box>
-
       <Box display="flex" justifyContent="flex-end">
         <Stack>
           <Pagination count={4} variant="outlined" shape="rounded" />
