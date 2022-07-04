@@ -1,20 +1,16 @@
-import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import "./styles.css";
 import { Avatar, Box } from "@mui/material";
-import {TableSubMenu} from "./TableSubMenu";
-import { useEffect, useState } from "react";
-import {
-  ClienteService,
-  IInfoClient,
-} from "../../services/api/client/ClientService";
-import { CadastroClienteForm } from "../../forms/formularios-cliente/CadastroClienteForm";
-import { EditarCadastroCliente } from "../../forms/formularios-cliente/EditarCadastroCliente";
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
+import { EditarCadastroCliente } from "../../../forms";
+import { IInfoClient } from "../../../services";
+import { TableSubMenu } from "./TableSubMenu";
+import "./styles.css";
 
 const TableStyled = styled(Table)({
   fontWeight: "bold",
@@ -42,17 +38,19 @@ const TableCellStyled = styled(TableCell)({
   padding: "10px 16px",
 });
 
-
 export const TableClients: React.FC<{
-  lista: IInfoClient[],
-  update: ()=>void,
-}> = ({lista, update}) => {
-
+  lista: IInfoClient[];
+  update: () => void;
+}> = ({ lista, update }) => {
   const [editModal, setEditModal] = useState<true | false>(false);
-  const handleEditModal = () => { editModal ? setEditModal(false) : setEditModal(true) }
-  
+  const handleEditModal = () => {
+    editModal ? setEditModal(false) : setEditModal(true);
+  };
+
   const [confirm, setConfirm] = useState<true | false>(false);
-  const handleEditConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
+  const handleEditConfirm = () => {
+    confirm ? setConfirm(false) : setConfirm(true);
+  };
 
   return (
     <TableContainer>
@@ -91,15 +89,13 @@ export const TableClients: React.FC<{
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-
                 <TableSubMenu
-                update={()=>update()}
-                client={row}
-
-                dialog={handleEditConfirm}
-                modal={handleEditModal}
-                statusDialog={confirm}
-                statusModal={editModal}
+                  update={() => update()}
+                  client={row}
+                  dialog={handleEditConfirm}
+                  modal={handleEditModal}
+                  statusDialog={confirm}
+                  statusModal={editModal}
                 >
                   <EditarCadastroCliente
                     modal={handleEditModal}
@@ -107,7 +103,6 @@ export const TableClients: React.FC<{
                     client={row}
                   />
                 </TableSubMenu>
-
               </TableCellStyled>
             </TableRowStyled>
           ))}
