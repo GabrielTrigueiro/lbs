@@ -1,6 +1,5 @@
 import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
 import Add from "@mui/icons-material/Add";
 import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 

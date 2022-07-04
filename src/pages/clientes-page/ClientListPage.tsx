@@ -1,5 +1,9 @@
 import { TableClients } from "../../shared/components";
 import { LayoutBasePage } from "../../shared/layouts";
+import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
+import { BasePageButton } from "../../shared/components/base-page-button/BasePageButton";
+import { useEffect, useState } from "react";
+import { ClienteService, IInfoClient } from "../../shared/services";
 import {
   Box,
   Icon,
@@ -8,10 +12,6 @@ import {
   Stack,
   Pagination,
 } from "@mui/material";
-import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
-import { BasePageButton } from "../../shared/components/base-button-page/BasePageButton";
-import { useEffect, useState } from "react";
-import { ClienteService, IInfoClient } from "../../shared/services";
 
 export const ClientListPage: React.FC = () => {
 
