@@ -6,10 +6,7 @@ export const SearchInput = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
+    backgroundColor: alpha('#e6e6e6', 0.15),
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -17,7 +14,6 @@ export const SearchInput = () => {
       width: "auto",
     },
   }));
-
   const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
@@ -27,7 +23,6 @@ export const SearchInput = () => {
     alignItems: "center",
     justifyContent: "center",
   }));
-
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
     "& .MuiInputBase-input": {
@@ -37,7 +32,7 @@ export const SearchInput = () => {
       transition: theme.transitions.create("width"),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
-        width: "12ch",
+        width: "0ch",
         "&:focus": {
           width: "20ch",
         },
@@ -48,7 +43,7 @@ export const SearchInput = () => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon />
+        <SearchIcon/>
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"

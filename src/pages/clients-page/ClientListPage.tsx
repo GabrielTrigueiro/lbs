@@ -64,9 +64,9 @@ export const ClientListPage: React.FC = () => {
       </Box>
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
-          <Grid display={'flex'}>
-            <Typography sx={{ borderBottom: "4px solid #E4DB00" }} variant="h5">Lista de Clientes</Typography>
-            <SearchInput />
+          <Grid display={'flex'} sx={{ borderBottom: "4px solid #E4DB00" }}>
+            <Typography variant="h5">Lista de Clientes</Typography>
+            <Box position={'relative'} bottom={3}><SearchInput/></Box>
           </Grid>
           <Grid
             justifyContent="flex-end"
