@@ -1,3 +1,2 @@
-export * from "./clientes-page"
-export * from "./colaboradores-page"
+export * from "./clients-page"
 export * from "./login"

@@ -21,18 +21,18 @@ export interface IInfoClient {
     telephone?: number;
 }
 
-export interface IInfo {
+export interface IClientPackage {
     data: IInfoClient[],
     message: string,
     errors: string,
     success: boolean
 }
 
-export type TClientTotal = {
-    data: IInfo
+export type TAllClientList = {
+    data: IClientPackage
 }
 
-const getAll = async (): Promise<TClientTotal | Error>   => {
+const getAll = async (): Promise<TAllClientList | Error>   => {
     try {
         const {data} = await api.get('/api/client')
         if(data){
@@ -84,7 +84,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
 }
 const Create = async (dados: IInfoClient): Promise<any>   => {
 
-    return await api.post<IInfo>(`http://localhost:8081/api/client`, dados)
+    return await api.post<IClientPackage>(`http://localhost:8081/api/client`, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
