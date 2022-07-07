@@ -1,8 +1,8 @@
 export const environment = {
     
-    LIMITE_DE_LINHAS: 10,
+    url_back: 'http://localhost:8081',
 
-    URL_FRONT: 'https://localhost:3000',
+    url_client: 'http://localhost:8081/api/client',
+    url_client_id:'',
 
-    URL_BACK: 'http://localhost:8081',
 }

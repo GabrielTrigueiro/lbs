@@ -3,7 +3,7 @@ import { environment } from "../../../environment";
 import { responseInterceptor } from "./interceptadores/responseInterceptor";
 
 const api = axios.create({
-    baseURL:environment.URL_BACK,
+    baseURL:environment.url_back
     // headers: {Authorization: `Bearer ${JSON.parse(localStorage.getItem('TOKEN') || '')}`}
 })
 

@@ -1,4 +1,5 @@
 import { AxiosError } from "axios"
+import { environment } from "../../../environment";
 import { api } from "../axios-config"
 
 export interface IInfoClient {
@@ -34,7 +35,7 @@ export type TAllClientList = {
 
 const getAll = async (): Promise<TAllClientList | Error>   => {
     try {
-        const {data} = await api.get('/api/client')
+        const {data} = await api.get(environment.url_client)
         if(data){
             return{
                 data
