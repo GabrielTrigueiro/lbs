@@ -3,41 +3,42 @@ import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/Cada
 import { BasePageButton } from "../../shared/components/client-components/base-page-button/BasePageButton";
 import { useEffect, useState } from "react";
 import { ClienteService, IInfoClient } from "../../shared/services";
-import {
-  Box,
-  Icon,
-  Typography,
-  Grid,
-  Stack,
-  Pagination,
-} from "@mui/material";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import { TableClients } from "../../shared/components/client-components/table-clients";
+import { Box, Icon, Typography, Grid, Stack, Pagination} from "@mui/material";
+import { SearchInput } from "../../shared/components/search";
 
 export const ClientListPage: React.FC = () => {
 
-  const [isLoading, setIsLoading] = useState(true)
- 
+  const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IInfoClient[]>([]);
-  useEffect(() => {update()}, []);
+  const [confirm, setConfirm] = useState<true | false>(false);
+  const [modal, setModal] = useState<true | false>(false);
+
+  const handleModal = () => {
+    modal ? setModal(false) : setModal(true);
+  };
+
+  const handleConfirm = () => {
+    confirm ? setConfirm(false) : setConfirm(true);
+  };
+  useEffect(() => {
+    update();
+  }, []);
+
   const update = () => {
     ClienteService.getAll().then((result) => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
-        setIsLoading(false)
+        setIsLoading(false);
         setRows(result.data.data);
       }
-    })
-  }
+    });
+  };
 
-  const [modal, setModal] = useState<true | false>(false);
-  const handleModal = () => { modal ? setModal(false) : setModal(true) }
 
-  const [confirm, setConfirm] = useState<true | false>(false);
-  const handleConfirm = () => { confirm ? setConfirm(false) : setConfirm(true) }
-
-  if (isLoading) return <ClientListPageSkeleton/>
+  if (isLoading) return <ClientListPageSkeleton />;
   return (
     <LayoutBasePage>
       <Box
@@ -58,15 +59,14 @@ export const ClientListPage: React.FC = () => {
           modal={handleModal}
           nameModalButton="Cadastrar Clientes"
         >
-          <CadastroClienteForm
-            modal={handleModal}
-            update={update}/>
+          <CadastroClienteForm modal={handleModal} update={update} />
         </BasePageButton>
       </Box>
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
-          <Grid sx={{ borderBottom: "4px solid #E4DB00" }}>
-            <Typography variant="h5">Lista de Clientes</Typography>
+          <Grid display={'flex'}>
+            <Typography sx={{ borderBottom: "4px solid #E4DB00" }} variant="h5">Lista de Clientes</Typography>
+            <SearchInput />
           </Grid>
           <Grid
             justifyContent="flex-end"
