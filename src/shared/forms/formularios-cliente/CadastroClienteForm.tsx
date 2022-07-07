@@ -25,7 +25,6 @@ export interface ICadastroInfo {
   email: string;
   telephone?: number;
 }
-
 export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
 
   name: Yup.string().required('O nome é obrigatóro'),
@@ -47,11 +46,11 @@ export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
 })
 export const CadastroClienteForm: React.FC<{
   update: ()=>void,
-  modal: ()=>void,
-  }> = ({update, modal}) => {
+  handleModal: ()=>void,
+  }> = ({update, handleModal}) => {
 
   const close = () =>{
-    modal();
+    handleModal();
   }
 
   const {formRef} = useVForm()

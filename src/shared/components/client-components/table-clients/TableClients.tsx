@@ -7,7 +7,6 @@ import TableRow from "@mui/material/TableRow";
 import { Avatar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
-import { EditarCadastroCliente } from "../../../forms";
 import { IInfoClient } from "../../../services";
 import { TableSubMenu } from "./TableSubMenu";
 import "./styles.css";
@@ -42,15 +41,6 @@ export const TableClients: React.FC<{
   lista: IInfoClient[];
   update: () => void;
 }> = ({ lista, update }) => {
-  const [editModal, setEditModal] = useState<true | false>(false);
-  const handleEditModal = () => {
-    editModal ? setEditModal(false) : setEditModal(true);
-  };
-
-  const [confirm, setConfirm] = useState<true | false>(false);
-  const handleEditConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true);
-  };
 
   return (
     <TableContainer>
@@ -89,20 +79,7 @@ export const TableClients: React.FC<{
               <TableCellStyled
                 sx={{ display: "flex", justifyContent: "flex-end" }}
               >
-                <TableSubMenu
-                  update={() => update()}
-                  client={row}
-                  dialog={handleEditConfirm}
-                  modal={handleEditModal}
-                  statusDialog={confirm}
-                  statusModal={editModal}
-                >
-                  <EditarCadastroCliente
-                    modal={handleEditModal}
-                    update={update}
-                    client={row}
-                  />
-                </TableSubMenu>
+                <TableSubMenu update={update} client={row}/>
               </TableCellStyled>
             </TableRowStyled>
           ))}

@@ -1,4 +1,3 @@
-export * from "./client-components/base-page-button/BasePageButton"
 export * from "./client-components/confirmation-button/ConfirmationButton"
 export * from "./client-components/menu/MenuIcon"
 export * from "./client-components/menu/MenuLateral"

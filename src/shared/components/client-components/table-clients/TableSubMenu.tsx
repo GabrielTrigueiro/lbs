@@ -18,27 +18,28 @@ import {
   DialogTitle,
   Modal,
 } from "@mui/material";
+import { EditarCadastroCliente } from "../../../forms";
+import { useState } from "react";
+import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 
 export const TableSubMenu: React.FC<{
   client: IInfoClient;
+  update: () => void
+}> = ({ client, update }) => {
 
-  statusModal: boolean;
-  statusDialog: boolean;
+  const [editModal, setEditModal] = useState<true | false>(false);
+  const handleEditModal = () => {
+    editModal ? setEditModal(false) : setEditModal(true);
+  };
 
-  update: () => void;
-  dialog: () => void;
-  modal: () => void;
-}> = ({
-  children,
-  client,
-  update,
-  dialog,
-  modal,
-  statusDialog,
-  statusModal,
-}) => {
+  const [confirm, setConfirm] = useState<true | false>(false);
+  const handleEditConfirm = () => {
+    confirm ? setConfirm(false) : setConfirm(true);
+  };
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -109,7 +110,7 @@ export const TableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={modal}>
+        <MenuItem onClick={handleEditModal}>
           <EditIcon sx={{ mr: 1 }} /> Editar
         </MenuItem>
         <MenuItem>
@@ -120,7 +121,7 @@ export const TableSubMenu: React.FC<{
         </MenuItem>
       </Menu>
 
-      <Modal sx={{ minWidth: 1020 }} onClose={dialog} open={statusModal}>
+      <Modal sx={{ minWidth: 1020 }} onClose={handleEditConfirm} open={editModal}>
         <Box
           sx={{
             //posição do modal
@@ -141,40 +142,17 @@ export const TableSubMenu: React.FC<{
 
             alignItems: "center",
             justifyContent: "center",
-          }}
-        >
-          {children}
+        }}>
+          <EditarCadastroCliente  client={client} update={update}/>
         </Box>
       </Modal>
 
-      <Dialog
-        open={statusDialog}
-        onClose={dialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Confirmação"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Deseja realmente fechar?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={dialog}>Continuar</Button>
-          <Button
-            onClick={() => {
-              {
-                dialog();
-              }
-              {
-                modal();
-              }
-            }}
-          >
-            Fechar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ConfirmationButton 
+        confirmMessage="Deseja salvar as alterações?"
+        confirmStatus={confirm}
+        handleDialog={handleEditConfirm}
+        handleModal={handleEditModal}
+      />
     </>
   );
 };

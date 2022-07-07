@@ -11,8 +11,7 @@ import * as Yup from "yup";
 export const EditarCadastroCliente: React.FC<{
   client: IInfoClient,
   update: ()=>void
-  modal: ()=>void,
-}> = ({client, update, modal}) => {
+}> = ({client, update}) => {
 
   const {formRef} = useVForm()
 
@@ -22,7 +21,6 @@ export const EditarCadastroCliente: React.FC<{
       if(dados.id)
       ClienteService.UpdateById(dados.id, dados).then(result => {
       alert("Cliente editado com sucesso!!!")
-      modal()
       update()
       })
     })
