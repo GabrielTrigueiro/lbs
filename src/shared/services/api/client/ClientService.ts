@@ -21,18 +21,15 @@ export interface IInfoClient {
     email: string;
     telephone?: number;
 }
-
 export interface IClientPackage {
     data: IInfoClient[],
     message: string,
     errors: string,
     success: boolean
 }
-
 export type TAllClientList = {
     data: IClientPackage
 }
-
 const getAll = async (): Promise<TAllClientList | Error>   => {
     try {
         const {data} = await api.get(environment.url_client)
@@ -48,7 +45,7 @@ const getAll = async (): Promise<TAllClientList | Error>   => {
 }
 const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
     try {
-        const {data} = await api.get(`https://localhost:8081/api/client${id}`)
+        const {data} = await api.get( environment.url_client + `${id}`)
         if(data){
             return data
         }
@@ -60,7 +57,7 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
 }
 const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>   => {
   
-    return  await api.put<IInfoClient>(`http://localhost:8081/api/client/${id}`, dados)
+    return  await api.put<IInfoClient>(environment.url_client + `${id}`, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -72,7 +69,7 @@ const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>
       })
 }
 const DeleteById = async (id: string): Promise<void | Error>   => {
-    return await api.delete(`http://localhost:8081/api/client/${id}`)
+    return await api.delete(environment.url_client + `${id}`)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -85,7 +82,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
 }
 const Create = async (dados: IInfoClient): Promise<any>   => {
 
-    return await api.post<IClientPackage>(`http://localhost:8081/api/client`, dados)
+    return await api.post<IClientPackage>(environment.url_client, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -96,7 +93,6 @@ const Create = async (dados: IInfoClient): Promise<any>   => {
         console.error(err)
       })
 }
-
 export const ClienteService = {
     getAll,
     getByIDd,
