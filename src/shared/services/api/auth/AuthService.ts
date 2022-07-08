@@ -1,3 +1,4 @@
+import { environment } from "../../../environment"
 import { api } from "../axios-config"
 
 export type TClientTotal = {
@@ -11,7 +12,7 @@ interface IAuth{
 
 export const auth = async (username: string, password: string): Promise<IAuth | Error>   => {
     try {
-        const {data} = await api.post(`/login`, {username, password})
+        const {data} = await api.post(environment.url_login, {username, password})
         console.log(data)
         if(data){
             return data
