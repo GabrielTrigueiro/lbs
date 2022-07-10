@@ -22,7 +22,7 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
 
     return(
         <TextField
-
+            sx={{margin:1}}
             {...rest}
             autoComplete="off"
 

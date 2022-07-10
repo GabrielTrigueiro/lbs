@@ -6,6 +6,9 @@ import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
+import { VSelectField } from "../forms-components/VSelectField";
+
+import {Gender} from "../forms-components/VSelectptions"
 
 export interface ICadastroInfo {
 
@@ -89,7 +92,7 @@ export const CadastroClienteForm: React.FC<{
             <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField label="Nome" name="name" />
-              <VTextField label="Sexo" name="sex" />
+              <VSelectField name="sex" options={Gender}></VSelectField>
               <VTextField label="RG" name="rg" />
               <VTextField label="CPF" name="cpf" />
             </Box>
