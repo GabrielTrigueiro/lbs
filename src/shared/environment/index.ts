@@ -1,5 +1,5 @@
 
-export const URL = 'http://45.90.223.164:8081'
+export const URL = 'https://api.lbs.bitbeelabs.tech'
 
 export const environment = {
 

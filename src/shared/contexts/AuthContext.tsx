@@ -32,7 +32,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const acessToken = localStorage.getItem(KEY_LOCAL_STORAGE_ACESS_TOKEN);
     if (acessToken) {
-      console.log(jwt(acessToken))
       setDados(jwt(acessToken))
       setAcessToken(JSON.parse(acessToken));
     } else {
@@ -43,7 +42,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const handleLogin = useCallback(
     async (username: string, password: string) => {
       const result = await AuthService.auth(username, password);
-      console.log(result)
       if (result instanceof Error) {
         return result.message;
       } else {

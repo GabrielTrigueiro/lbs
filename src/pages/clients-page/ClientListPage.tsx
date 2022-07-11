@@ -68,7 +68,7 @@ export const ClientListPage: React.FC = () => {
           <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
             <Typography variant="h5">Lista de Clientes</Typography>
             <Box position={"relative"} bottom={3}>
-              <SearchInput />
+              <SearchInput/>
             </Box>
           </Grid>
           <Grid

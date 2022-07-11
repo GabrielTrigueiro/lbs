@@ -30,7 +30,7 @@ export interface IClientPackage {
 export type TAllClientList = {
     data: IClientPackage
 }
-const getAll = async (): Promise<TAllClientList | Error>   => {
+const getAll = async (filter = ''): Promise<TAllClientList | Error>   => {
     try {
         const {data} = await api.get(environment.url_client)
         if(data){
@@ -51,7 +51,6 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
         }
         return new Error('Erro ao procurar o registro')
     } catch (error) {
-        console.error(error)
         return new Error((error as {message: string}).message || 'Erro ao procurar o registro')
     }
 }

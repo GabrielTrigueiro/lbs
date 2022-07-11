@@ -13,13 +13,11 @@ interface IAuth{
 export const auth = async (username: string, password: string): Promise<IAuth | Error>   => {
     try {
         const {data} = await api.post(environment.url_login, {username, password})
-        console.log(data)
         if(data){
             return data
         }
         return new Error('Erro ao criar o registro')
     } catch (error) {
-        console.error(error)
         return new Error((error as {message: string}).message || 'Erro ao criar o registro')
     }
 }

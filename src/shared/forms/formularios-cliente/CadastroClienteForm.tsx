@@ -92,7 +92,8 @@ export const CadastroClienteForm: React.FC<{
             <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
             <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
               <VTextField label="Nome" name="name" />
-              <VSelectField name="sex" options={Gender}></VSelectField>
+              {/* <VSelectField name="sex" options={Gender}></VSelectField> */}
+              <VTextField label="Genero" name="sex" />
               <VTextField label="RG" name="rg" />
               <VTextField label="CPF" name="cpf" />
             </Box>
