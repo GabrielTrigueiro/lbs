@@ -1,6 +1,5 @@
 import { alpha, styled, InputBase } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from "react";
 
 export const SearchInput = () => {
 
@@ -41,20 +40,12 @@ export const SearchInput = () => {
     },
   }));
 
-  //FUNÇÃO SEARCH
-   const [searchTerm, setSearchTerm] = useState('')
-   
-  //TÉRMINO DA FUNÇÃO SEARCH
-
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon/>
       </SearchIconWrapper>
       <StyledInputBase
-
-        onChange={event => {setSearchTerm(event.target.value)}}
-
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
       />

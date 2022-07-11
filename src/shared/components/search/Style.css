@@ -1,0 +1,53 @@
+.SearchInput {
+    display: flex;
+}
+.Search input {
+    background-color: white;
+    border: 0;
+    border-radius: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-size: 18px;
+    padding: 15px;
+    height: 30px;
+    width: 300px;
+}
+.SearchIcon {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    display: grid;
+    place-items: center;
+}
+.SearchIcon{
+    font-size: 30px;
+}
+input:focus {
+    outline: none;
+}
+.DadosResult {
+  margin-top: 5px;
+  width: 330px;
+  height: 200px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.DadosResult::-webkit-scrollbar {
+  display: none;
+}
+.DadosResult .DataItem {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+.DataItem {
+  margin-left: 10px;
+}
+p:hover {
+  background-color: lightgrey;
+}
+
