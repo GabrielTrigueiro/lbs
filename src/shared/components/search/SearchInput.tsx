@@ -41,9 +41,9 @@ export const SearchInput = () => {
   }));
 
   return (
-    <Search>
+    <Search sx={{bottom:2}}>
       <SearchIconWrapper>
-        <SearchIcon/>
+        <SearchIcon sx={{color:'#3d3d3d'}}/>
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"

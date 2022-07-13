@@ -12,7 +12,7 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useAuthContext } from "../../../contexts";
+import { useAuthContext } from "../../contexts";
 
 export default function MenuIcon() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -36,22 +36,20 @@ export default function MenuIcon() {
           textAlign: "center",
         }}
       >
-        <Divider orientation="vertical" flexItem />
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 45, height: 45 }}>M</Avatar>
-            <Typography sx={{ padding: 1, minWidth: 100, color: "black" }}>
+            <Avatar sx={{ width: "2rem", height: "2rem" }}>M</Avatar>
+            <Typography sx={{ padding: 1, minWidth: 100, color: "#fff", fontSize:"12px"}}>
               {" "}
               {dados?.name}{" "}
             </Typography>
-            <KeyboardArrowDownIcon />
+            <KeyboardArrowDownIcon sx={{color:'#fff'}}/>
           </IconButton>
         </Tooltip>
       </Box>

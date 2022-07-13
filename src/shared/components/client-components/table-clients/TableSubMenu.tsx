@@ -55,10 +55,10 @@ export const TableSubMenu: React.FC<{
   };
 
   return (
-    <>
+    <Box>
       <Box
         sx={{
-          height: "100%",
+          marginTop:'4px',
           display: "flex",
           alignItems: "center",
           textAlign: "center",
@@ -153,6 +153,6 @@ export const TableSubMenu: React.FC<{
         handleDialog={handleEditConfirm}
         handleModal={handleEditModal}
       />
-    </>
+    </Box>
   );
 };

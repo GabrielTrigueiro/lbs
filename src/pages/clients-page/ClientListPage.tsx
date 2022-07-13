@@ -57,19 +57,34 @@ export const ClientListPage: React.FC = () => {
         display="flex"
         alignItems="center"
       >
-        <Typography sx={{ margin: "40px 0px", fontWeight: 600, fontSize: "40px" }}> Clientes </Typography>
-        <Button onClick={handleModal} variant="contained" startIcon={<Add />} sx={{ height: "50px", color: "black" }}>
-          Cadastrar Cliente
+        <Typography sx={{
+          margin: "40px 0px",
+          fontWeight: 600,
+          fontSize: "35px",
+          color:"#575a61"
+        }}> Clientes </Typography>
+        <Button
+          onClick={handleModal}
+          variant="contained"
+          startIcon={<Add />}
+          sx={{ height: 45, width: 200,color: "#494b4f" }}
+        >
+          <Typography
+            fontSize={"12px"}
+            sx={{fontWeight:'bold'}}
+          >
+            Cadastrar Clientes
+          </Typography>
         </Button>
       </Box>
 
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
           <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
-            <Typography variant="h5">Lista de Clientes</Typography>
+            <Typography sx={{color:'#3d3d3d', fontSize:'18px'}} variant="h5">Lista de Clientes</Typography>
             <Box position={"relative"} bottom={3}>
-              {/* <SearchInput/> */}
-              <SearchInputTeste placeHolder="Pesquisar..." dados={rows}/>
+              <SearchInput/>
+              {/* <SearchInputTeste placeHolder="Pesquisar..." dados={rows}/> */}
             </Box>
           </Grid>
           <Grid

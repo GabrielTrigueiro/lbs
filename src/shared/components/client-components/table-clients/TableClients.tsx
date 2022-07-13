@@ -12,7 +12,6 @@ import { TableSubMenu } from "./TableSubMenu";
 import "./styles.css";
 
 const TableStyled = styled(Table)({
-  fontWeight: "bold",
   borderSpacing: "0px 8px",
   borderCollapse: "separate",
   thead: {
@@ -20,19 +19,17 @@ const TableStyled = styled(Table)({
   },
 });
 const TableBodyStyled = styled(TableBody)({
-  fontWeight: "bold",
+
 });
 const TableHeaderStyled = styled(TableHead)({
-  fontWeight: "bold",
+
 });
 const TableRowStyled = styled(TableRow)({
-  fontWeight: "bold",
   padding: "10px",
-  backgroundColor: "#f1f1f1",
+  backgroundColor: "#fff",
   borderEndEndRadius: "10px",
 });
 const TableCellStyled = styled(TableCell)({
-  fontWeight: "bold",
   borderColor: "transparent",
   padding: "10px 16px",
 });
@@ -48,9 +45,9 @@ export const TableClients: React.FC<{
         <TableHeaderStyled>
           <TableRow>
             <TableCellStyled></TableCellStyled>
-            <TableCellStyled>Informações Básicas</TableCellStyled>
-            <TableCellStyled>Número de Celular</TableCellStyled>
-            <TableCellStyled>CPF</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>Informações Básicas</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>Número de Celular</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>CPF</TableCellStyled>
           </TableRow>
         </TableHeaderStyled>
         <TableBodyStyled>
@@ -68,16 +65,16 @@ export const TableClients: React.FC<{
               </TableCellStyled>
               <TableCellStyled>
                 <Box display="flex">
-                  <div>
-                    {row.name}
-                    <div>{row.email}</div>
-                  </div>
+                  <Box>
+                    <Box sx={{fontWeight:'500'}}>{row.name}</Box>
+                    <Box sx={{color:'#575a61', fontSize:'12px'}}>{row.email}</Box>
+                  </Box>
                 </Box>
               </TableCellStyled>
-              <TableCellStyled>{row.cell}</TableCellStyled>
-              <TableCellStyled>{row.cpf}</TableCellStyled>
+              <TableCellStyled  sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
+              <TableCellStyled  sx={{fontWeight:'500'}}>{row.cpf}</TableCellStyled>
               <TableCellStyled
-                sx={{ display: "flex", justifyContent: "flex-end" }}
+                sx={{display: "flex", justifyContent: "flex-end", alignContent:"center" }}
               >
                 <TableSubMenu update={update} client={row}/>
               </TableCellStyled>

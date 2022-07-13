@@ -1,5 +1,5 @@
 export * from "./client-components/confirmation-button/ConfirmationButton"
-export * from "./client-components/menu/MenuIcon"
-export * from "./client-components/menu/MenuLateral"
+export * from "./menu/MenuIcon"
+export * from "./menu/MenuLateral"
 export * from "./client-components/table-clients/TableClients"
 export * from "./client-components/table-clients/TableSubMenu"

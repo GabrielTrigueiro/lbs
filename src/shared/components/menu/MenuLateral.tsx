@@ -5,8 +5,8 @@ import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useDrawerContext } from "../../../contexts";
-import Logo from "../../../../images/login/logo.svg";
+import { useDrawerContext } from "../../contexts";
+import Logo from "../../../images/login/logo.svg";
 import MenuIcon from "./MenuIcon";
 import {
   Box,
@@ -28,7 +28,6 @@ interface IListItemLinkProps {
   label: string;
   onClick: (() => void) | undefined;
 }
-
 const drawerWidth = 200;
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -44,9 +43,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(9)} + 1px)`,
+  width: `calc(${theme.spacing(8)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(9)} + 1px)`,
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -57,7 +56,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -108,7 +106,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
           {icon}
         </Icon>
       </ListItemIcon>
-      <ListItemText primary={label} />
+      <ListItemText className="TextIcon" primary={label} />
     </ListItemButton>
   );
 };
@@ -119,6 +117,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  borderColor: "transparent",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -130,12 +129,11 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const MenuLateral: React.FC = ({ children }) => {
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
-
   const { drawerOptions, toggleDrawerOpen } = useDrawerContext();
-
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
@@ -143,22 +141,23 @@ export const MenuLateral: React.FC = ({ children }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar sx={{ backgroundColor: "#fff" }}>
+      <AppBar sx={{ backgroundColor: "#575A61", boxShadow:'none' }}>
         <Toolbar
           disableGutters
           sx={{
-            paddingLeft: 2,
+            paddingLeft: 0,
             paddingRight: 2,
-            height: "75px",
             justifyContent: "space-between",
           }}
         >
-          <Box
-            alt="logo"
-            src={Logo}
-            component="img"
-            sx={{ width: 50, height: "100%" }}
-          ></Box>
+          <Box sx={{height: "100%", display:'flex'}}>
+            <Box
+              sx={{bgcolor:'#348', width: 65, height: "100%" }}
+            ></Box>
+            <Box
+              sx={{bgcolor:'#E4DB00' ,width: 65, height: "100%"}}
+            ></Box>
+          </Box>
           <MenuIcon />
         </Toolbar>
       </AppBar>
@@ -169,11 +168,10 @@ export const MenuLateral: React.FC = ({ children }) => {
         onClose={toggleDrawerOpen}
       >
         <DrawerHeader></DrawerHeader>
-        <Divider />
         <Box flex={1} sx={{ mt: theme.spacing(20) }}>
           <List component="nav">
             {drawerOptions.map((drawerOption) => (
-              <ListItemLink
+              <ListItemLink 
                 to={drawerOption.path}
                 key={drawerOption.path}
                 icon={drawerOption.icon}
@@ -184,14 +182,14 @@ export const MenuLateral: React.FC = ({ children }) => {
           </List>
         </Box>
         <Box>
-          <Divider></Divider>
+         
           <Button
             onClick={handleDrawerOpenOrClose}
             sx={{
               padding: 2,
               color: "#000",
               width: "100%",
-              background: "#FFFFFF",
+              background: "#fff",
               minHeight: 48,
               px: 2.5,
               minWidth: 0,

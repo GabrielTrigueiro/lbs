@@ -1,6 +1,21 @@
 import {createTheme} from '@mui/material'
 
 export const LightTheme = createTheme({
+    components: {
+        MuiToolbar: {
+            styleOverrides: {
+                root: {
+                    height: 60
+                },
+                regular: {
+                    minHeight: 20,
+                    "@media (min-width: 600px)": {
+                        minHeight: 0
+                    }
+                }
+            }
+        },
+    },
     palette:{
         primary:{
             //cores de botões
@@ -14,8 +29,12 @@ export const LightTheme = createTheme({
             secondary: '#6F6F6F',
         },
         background:{ 
-            default: '#e6e6e6', //Fundo da pagina
-            paper: '#F5F5F5', //cards
+            default: '#f0f5f8', //Fundo da pagina
+            paper: '#fff', //cards
         },
     },
+    typography: {
+        fontFamily: 'Poppins',
+    },
+    
 });
