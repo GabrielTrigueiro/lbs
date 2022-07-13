@@ -22,15 +22,13 @@ export const ClientListPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [rows, setRows] = useState<IInfoClient[]>([])
-  
   const [confirm, setConfirm] = useState<true | false>(false);
-  const handleConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true)
-  }
-
   const [modal, setModal] = useState<true | false>(false);
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
+  }
+  const handleConfirm = () => {
+    confirm ? setConfirm(false) : setConfirm(true)
   }
 
   useEffect(() => {

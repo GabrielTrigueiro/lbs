@@ -1,8 +1,15 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { useAuthContext } from "../../shared/contexts"
+import { useEffect, useRef, useState } from "react"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import LockIcon from "@mui/icons-material/Lock"
+import Mulher from "../../images/login/Mulher.jpg"
+import Logo from "../../images/login/logo.svg"
 import {
   InputAdornment,
   IconButton,
@@ -10,72 +17,71 @@ import {
   InputLabel,
   OutlinedInput,
   CircularProgress,
-  Alert,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAuthContext } from "../../shared/contexts";
-import { useEffect, useRef, useState } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LockIcon from "@mui/icons-material/Lock";
-import Mulher from "../../images/login/Mulher.jpg";
-import { green } from "@mui/material/colors";
-import Logo from "../../images/login/logo.svg";
+} from "@mui/material"
 
 interface State {
-  password: string;
-  showPassword: boolean;
-  usuario: string;
+  password: string
+  showPassword: boolean
+  usuario: string
 }
 
 export const Login: React.FC = ({ children }) => {
+
   const [values, setValues] = useState({
     password: "",
     showPassword: false,
     usuario: "",
-  });
+  })
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
-
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value })
+  }
   const handleClickShowPassword = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
-    });
-  };
+    })
+  }
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   //login loading
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const timer = useRef<number>();
+  const [loading, setLoading] = useState(false)
+
+  const [success, setSuccess] = useState(false)
+
+  const timer = useRef<number>()
 
   useEffect(() => {
     return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+      clearTimeout(timer.current)
+    }
+  }, [])
 
   const handleButtonClick = () => {
     if (!loading) {
-      setSuccess(false);
-      setLoading(true);
+      setSuccess(false)
+      setLoading(true)
       timer.current = window.setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-      }, 2000);
+        setSuccess(true)
+        setLoading(false)
+      }, 2000)
     }
-  };
+  }
 
-  const { isAuthenticated, login } = useAuthContext();
-  if (isAuthenticated) return <>{children}</>;
+  const { isAuthenticated, login } = useAuthContext()
+
+  const HandleLogin = (usuario: string, senha: string) => {
+    login(usuario, senha)
+    handleButtonClick()
+  }
+  
+  if (isAuthenticated) return <>{children}</>
+
   return (
     <Grid container>
       <Grid
@@ -129,6 +135,12 @@ export const Login: React.FC = ({ children }) => {
             type={"text"}
             label="Usuário"
             value={values.usuario}
+
+            onKeyDown={ (e) => {
+              if (e.key === "Enter"){
+                HandleLogin(values.usuario, values.password)
+              }}}
+             
             onChange={handleChange("usuario")}
             id="outlined-start-adornment"
             sx={{ width: "100%", m: 1 }}
@@ -150,6 +162,10 @@ export const Login: React.FC = ({ children }) => {
               type={values.showPassword ? "text" : "password"}
               value={values.password}
               onChange={handleChange("password")}
+              onKeyDown={ (e) => {
+                if (e.key === "Enter"){
+                  HandleLogin(values.usuario, values.password)
+                }}}
               startAdornment={
                 <InputAdornment position="start">
                   <LockIcon />
@@ -177,12 +193,8 @@ export const Login: React.FC = ({ children }) => {
           >
             Esqueci minha senha?
           </Typography>
-
           <Button
-            onClick={() => {
-              login(values.usuario, values.password);
-              handleButtonClick();
-            }}
+            onClick={() => HandleLogin(values.usuario, values.password)}
             disabled={loading}
             sx={{
               fontSize: "24px",
@@ -212,5 +224,5 @@ export const Login: React.FC = ({ children }) => {
         </Box>
       </Grid>
     </Grid>
-  );
-};
+  )
+}

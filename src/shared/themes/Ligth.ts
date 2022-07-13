@@ -18,11 +18,12 @@ export const LightTheme = createTheme({
     },
     palette:{
         primary:{
-            //cores de botões
             main: '#E4DB00',
-            dark: '#E4DB00'[800],
-            light: '#E4DB00'[500],
-            contrastText: '#ffffff',
+        },
+        secondary:{
+            main: '##5348',
+            light: '##575a61',
+            dark: '##575a61',
         },
         text: {
             primary:'#000',
@@ -36,5 +37,12 @@ export const LightTheme = createTheme({
     typography: {
         fontFamily: 'Poppins',
     },
-    
-});
+})
+
+export const FontsColors = createTheme ({
+    palette:{
+        primary:{
+            main: '##5348',
+        }
+    }
+})
