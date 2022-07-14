@@ -6,7 +6,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Avatar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
 import { IInfoClient } from "../../../services";
 import { TableSubMenu } from "./TableSubMenu";
 import "./styles.css";

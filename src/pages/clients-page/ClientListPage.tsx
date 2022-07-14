@@ -14,7 +14,7 @@ import {
   Button,
   Modal,
 } from "@mui/material";
-import { SearchInput, SearchInputTeste } from "../../shared/components/search";
+import { SearchInput } from "../../shared/components/search";
 import { Add } from "@mui/icons-material";
 import { ConfirmationButton } from "../../shared/components";
 

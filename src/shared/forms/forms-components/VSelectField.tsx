@@ -1,35 +1,50 @@
-import React, { useRef, useEffect } from "react";
-import ReactSelect, { Props as SelectProps } from "react-select";
-import { useField } from "@unform/core";
+import { useEffect, useState } from 'react'
 
-interface Props extends SelectProps {
-  name: string;
+import { useField } from '@unform/core'
+import { FormControl, MenuItem, Select, SelectProps } from '@mui/material'
+
+interface IOptionSelect {
+    label: string
+    value: number
 }
 
-export const VSelectField: React.FC<Props> = ({ name, ...rest }) => {
-  const { fieldName, defaultValue, registerField } = useField(name);
+interface Props  extends SelectProps {
+    name: string
+}
 
-  const selectRef = useRef(null);
+/**
+ * Select component for Unform (without React Select)
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+ */
+export const VSelectField: React.FC<Props> = ({ name, ...rest }) => {
+  
+  const { fieldName, registerField, defaultValue } = useField(name)
+
+  const [value, setValue] = useState<string>(defaultValue || '')
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: selectRef.current,
-      getValue: (ref) => ref.state.value,
-      setValue: (ref, value) => {
-        ref.select.setValue(value || null);
-      },
-      clearValue: (ref) => {
-        ref.select.clearValue();
-      }
-    });
-  }, [fieldName, registerField]);
+      getValue: () => value,
+      setValue: (_, newValue) => setValue(newValue)
+    })
+  }, [fieldName, registerField, value])
 
-  return(
-    <ReactSelect
-      ref={selectRef}
-      defaultValue={defaultValue}
-      {...rest}
-    />
+  return (
+    <div>
+    <FormControl>
+        <Select
+            value={value}
+            defaultValue={defaultValue}
+            onChange={e => setValue(e.target.value as string)}
+            {...rest}
+        >
+            <MenuItem value={'msma'} >msma</MenuItem>
+            <MenuItem value={'aaaa'} >aaaa</MenuItem>
+            <MenuItem value={'vvvv'} >vvvv</MenuItem>
+        </Select>
+    </FormControl>
+    </div>
   )
-};
+}   
