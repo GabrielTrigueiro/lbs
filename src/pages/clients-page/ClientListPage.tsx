@@ -82,7 +82,6 @@ export const ClientListPage: React.FC = () => {
             <Typography sx={{color:'#3d3d3d', fontSize:'18px'}} variant="h5">Lista de Clientes</Typography>
             <Box position={"relative"} bottom={3}>
               <SearchInput/>
-              {/* <SearchInputTeste placeHolder="Pesquisar..." dados={rows}/> */}
             </Box>
           </Grid>
           <Grid

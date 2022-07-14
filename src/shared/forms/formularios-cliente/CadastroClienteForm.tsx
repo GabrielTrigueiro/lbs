@@ -54,6 +54,7 @@ export const CadastroClienteForm: React.FC<{
   }
 
   const {formRef} = useVForm()
+
   const handleSave = (dados: ICadastroInfo) => {
     cadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
@@ -74,82 +75,81 @@ export const CadastroClienteForm: React.FC<{
   };
 
   return (
-    // <Form
-    //   ref={formRef}
-    //   className="Form-Cadastro-Cliente"
-    //   onSubmit={(dados) => console.log(dados)}
-    // >
-    //   <Box
-    //     display={"flex"}
-    //     flexDirection={"column"}
-    //     height={"100%"}
-    //   >
-    //     <Box display={"flex"} flex={1}>
-    //       <Box flex={1}>
-    //         <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Nome" name="name" />
-             
-    //           <VSelectField name="sex" label="Gênero"/>
-
-    //           <VTextField label="RG" name="rg" />
-    //           <VTextField label="CPF" name="cpf" />
-    //         </Box>
-    //       </Box>
-    //       <Box flex={1}>
-    //         <Typography fontWeight={'bold'} m={1}>Informações de Contato</Typography>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Email" name="email" />
-    //           <VTextField label="Número Fixo" name="telephone" />
-    //           <VTextField label="Celular" name="cell" />
-    //         </Box>
-    //       </Box>
-    //     </Box>
-
-    //     <Box flex={1}>
-    //       <Typography fontWeight={'bold'} m={1}>Informações de Endereço</Typography>
-    //       <Box display={"flex"}>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="UF" name="uf" />
-    //           <VTextField label="CEP" name="cep" />
-    //           <VTextField label="Endereço" name="address" />
-    //         </Box>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Cidade" name="city" />
-    //           <VTextField label="Bairro" name="neighborhood" />
-    //           <VTextField label="Número Residência" name="number" />
-    //         </Box>
-    //       </Box>
-    //       <Box m={2} flex={1} display={"flex"} justifyContent={"center"} alignItems={'center'}>
-    //         <Button sx={{color:'#000'}} type="submit" variant="contained">
-    //           Salvar
-    //         </Button>
-    //       </Box>
-    //     </Box>
-    //   </Box>
-    // </Form>
-
     <Form
       ref={formRef}
       className="Form-Cadastro-Cliente"
       onSubmit={(dados) => console.log(dados)}
     >
       <Box
-        height={70}
-        width={'100%'}
-
-        bgcolor={'#575A61'}
-
-        display={'flex'}
-        alignItems={'center'}
-        paddingLeft={3}
+        display={"flex"}
+        flexDirection={"column"}
+        height={"100%"}
       >
-        <Typography sx={{fontWeight:'500', fontSize:'25px', color:'#fff'}} >Cadastrar Cliente</Typography>
-      </Box>
-
-      <Box>
+        <Box display={"flex"} flex={1}>
+          <Box flex={1}>
+            <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
+            <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
+              <VTextField label="Nome" name="name" />
         
+              <VSelectField name="sex" label="Gênero" listOption={Gender}/>
+
+              <VTextField label="RG" name="rg" />
+              <VTextField label="CPF" name="cpf" />
+            </Box>
+          </Box>
+          <Box flex={1}>
+            <Typography fontWeight={'bold'} m={1}>Informações de Contato</Typography>
+            <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
+              <VTextField label="Email" name="email" />
+              <VTextField label="Número Fixo" name="telephone" />
+              <VTextField label="Celular" name="cell" />
+            </Box>
+          </Box>
+        </Box>
+        <Box flex={1}>
+          <Typography fontWeight={'bold'} m={1}>Informações de Endereço</Typography>
+          <Box display={"flex"}>
+            <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
+              <VTextField label="UF" name="uf" />
+              <VTextField label="CEP" name="cep" />
+              <VTextField label="Endereço" name="address" />
+            </Box>
+            <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
+              <VTextField label="Cidade" name="city" />
+              <VTextField label="Bairro" name="neighborhood" />
+              <VTextField label="Número Residência" name="number" />
+            </Box>
+          </Box>
+          <Box m={2} flex={1} display={"flex"} justifyContent={"center"} alignItems={'center'}>
+            <Button sx={{color:'#000'}} type="submit" variant="contained">
+              Salvar
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Form>
+
+    // <Form
+    //   ref={formRef}
+    //   className="Form-Cadastro-Cliente"
+    //   onSubmit={(dados) => console.log(dados)}
+    // >
+    //   <Box
+    //     height={70}
+    //     width={'100%'}
+
+    //     bgcolor={'#575A61'}
+
+    //     display={'flex'}
+    //     alignItems={'center'}
+    //     paddingLeft={3}
+    //   >
+    //     <Typography sx={{fontWeight:'500', fontSize:'25px', color:'#fff'}} >Cadastrar Cliente</Typography>
+    //   </Box>
+
+    //   <Box>
+        
+    //   </Box>
+    // </Form>
   );
 };

@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react'
-
 import { useField } from '@unform/core'
 import { FormControl, MenuItem, Select, SelectProps } from '@mui/material'
 
-interface IOptionSelect {
-    label: string
-    value: number
+interface IOption {
+  label: string
+  value: number
 }
 
 interface Props  extends SelectProps {
     name: string
+    listOption: IOption[]
 }
 
-/**
- * Select component for Unform (without React Select)
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
- */
-export const VSelectField: React.FC<Props> = ({ name, ...rest }) => {
+export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
   
   const { fieldName, registerField, defaultValue } = useField(name)
 
@@ -36,15 +31,16 @@ export const VSelectField: React.FC<Props> = ({ name, ...rest }) => {
     <FormControl>
         <Select
             value={value}
+
             defaultValue={defaultValue}
             onChange={e => setValue(e.target.value as string)}
             {...rest}
         >
-            <MenuItem value={'msma'} >msma</MenuItem>
-            <MenuItem value={'aaaa'} >aaaa</MenuItem>
-            <MenuItem value={'vvvv'} >vvvv</MenuItem>
+          {listOption.map(row => (
+            <MenuItem key={row.value} value={row.label}>{row.label}</MenuItem>
+          ))}            
         </Select>
     </FormControl>
     </div>
   )
-}   
+}
