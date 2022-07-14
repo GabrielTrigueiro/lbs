@@ -1,0 +1,18 @@
+pipeline{
+
+    stages{
+        stage("build front"){
+            echo"primeiro"
+
+        }
+
+        stage("build front"){
+            echo"segundo"
+        }
+
+        stage("build front"){
+            echo"terceiro"
+        }
+        
+    }
+}
