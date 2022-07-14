@@ -122,17 +122,16 @@ export const ClientListPage: React.FC = () => {
           position: 'absolute' as 'absolute',
           top: '40%',
           left: '50%',
-          height: 600,
-          width: 1000,
+          height: '500px',
+          width: '700px',
           transform: 'translate(-50%, -40%)',
 
           //CSS estilo
-          borderRadius:1,
-          borderColor:'transparent',
+          borderRadius:0,
           bgcolor: 'background.paper',
           display:'flex',
           flexDirection:'column',
-          padding:1,
+          padding:0,
 
           alignItems:'center',
           justifyContent:'center'
