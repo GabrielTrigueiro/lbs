@@ -24,9 +24,12 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
         <TextField
             {...rest}
             autoComplete="off"
-
-            variant="standard"
             
+            variant="standard"
+
+            inputProps={{style: {fontSize: 12}}}
+            InputLabelProps={{style: {fontSize: 12}}}
+
             error={!!error}
             helperText={error}
             defaultValue={defaultValue}

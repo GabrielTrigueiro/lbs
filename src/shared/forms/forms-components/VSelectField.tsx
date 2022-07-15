@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useField } from '@unform/core'
-import { FormControl, MenuItem, Select, SelectProps, Typography } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, SelectProps, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
 interface IOption {
@@ -29,21 +29,31 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
 
   return (
     <div>
-    <FormControl>
-      <Box display={'flex'}>
-        <Typography>Genero</Typography>
+    <FormControl sx={{display:'flex'}}>
+      
+        <InputLabel
+          variant='standard'
+          id='genero'
+          sx={{fontSize:'12px'}}
+        >
+            Genero
+        </InputLabel>
         <Select
-            value={value}
+          labelId='genero'
+          label='Genero'
+          value={value}
+          defaultValue={defaultValue}
 
-            defaultValue={defaultValue}
-            onChange={e => setValue(e.target.value as string)}
-            {...rest}
+          variant={'standard'}
+
+          onChange={e => setValue(e.target.value as string)}
+          {...rest}
         >
           {listOption.map(row => (
-            <MenuItem key={row.value} value={row.label}>{row.label}</MenuItem>
+            <MenuItem sx={{fontSize:'12px'}} key={row.value} value={row.label}>{row.label}</MenuItem>
           ))}            
         </Select>
-      </Box>
+      
     </FormControl>
     </div>
   )

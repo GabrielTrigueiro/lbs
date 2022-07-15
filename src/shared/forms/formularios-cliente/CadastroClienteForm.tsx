@@ -145,15 +145,9 @@ export const CadastroClienteForm: React.FC<{
       ref={formRef}
       className="Form-Cadastro-Cliente"
       onSubmit={(dados) => console.log(dados)}
+      
     >
-      <Box
-        height={'100%'}
-        width={'100%'}
-        className="Conteiner-Interior-Geral"
-
-        display={'flex'}
-        flexDirection={'column'}
-      >
+      <Box className="Conteiner-Interior-Geral">
         <Box
           height={70}
           width={"100%"}
@@ -169,21 +163,26 @@ export const CadastroClienteForm: React.FC<{
 
         <Box
           className="Container-Interior-Formulario"
-          bgcolor={'#888'}
           flex={1}
         >
 
           <Box display={'flex'} justifyContent={'space-around'}>
             <Box
+              className="Form-Interior-Top"
               display={'flex'}
               flexDirection={'column'}
-              >
-              <VTextField label="Nome" name="name" />
-              <VSelectField sx={{width:'150px'}} name="sex" label="Gênero" listOption={Gender}/>
+            >
+              <VTextField label="Nome" name="name"/>
+              <VSelectField
+                sx={{ height:'30px'}}
+                name="sex" label="Gênero"
+                listOption={Gender}
+              />
               <VTextField label="RG" name="rg" />
               <VTextField label="CPF" name="cpf" />
             </Box>
             <Box
+              className="Form-Interior-Top"
               display={'flex'}
               flexDirection={'column'}
             >
