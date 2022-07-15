@@ -87,67 +87,17 @@ export const CadastroClienteForm: React.FC<{
   };
 
   return (
-    // <Form
-    //   ref={formRef}
-    //   className="Form-Cadastro-Cliente"
-    //   onSubmit={(dados) => console.log(dados)}
-    // >
-    //   <Box
-    //     display={"flex"}
-    //     flexDirection={"column"}
-    //     height={"100%"}
-    //   >
-    //     <Box display={"flex"} flex={1}>
-    //       <Box flex={1}>
-    //         <Typography fontWeight={'bold'} m={1}>Dados Cadastrais</Typography>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Nome" name="name" />
-
-    //           <VSelectField name="sex" label="Gênero" listOption={Gender}/>
-
-    //           <VTextField label="RG" name="rg" />
-    //           <VTextField label="CPF" name="cpf" />
-    //         </Box>
-    //       </Box>
-    //       <Box flex={1}>
-    //         <Typography fontWeight={'bold'} m={1}>Informações de Contato</Typography>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Email" name="email" />
-    //           <VTextField label="Número Fixo" name="telephone" />
-    //           <VTextField label="Celular" name="cell" />
-    //         </Box>
-    //       </Box>
-    //     </Box>
-    //     <Box flex={1}>
-    //       <Typography fontWeight={'bold'} m={1}>Informações de Endereço</Typography>
-    //       <Box display={"flex"}>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="UF" name="uf" />
-    //           <VTextField label="CEP" name="cep" />
-    //           <VTextField label="Endereço" name="address" />
-    //         </Box>
-    //         <Box m={1} flex={1} display={"flex"} flexDirection={"column"}>
-    //           <VTextField label="Cidade" name="city" />
-    //           <VTextField label="Bairro" name="neighborhood" />
-    //           <VTextField label="Número Residência" name="number" />
-    //         </Box>
-    //       </Box>
-    //       <Box m={2} flex={1} display={"flex"} justifyContent={"center"} alignItems={'center'}>
-    //         <Button sx={{color:'#000'}} type="submit" variant="contained">
-    //           Salvar
-    //         </Button>
-    //       </Box>
-    //     </Box>
-    //   </Box>
-    // </Form>
-
     <Form
       ref={formRef}
       className="Form-Cadastro-Cliente"
       onSubmit={(dados) => console.log(dados)}
-      
     >
-      <Box className="Conteiner-Interior-Geral">
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        height={"100%"}
+        className="Conteiner-Interior-Geral"
+      >
         <Box
           height={70}
           width={"100%"}
@@ -156,26 +106,24 @@ export const CadastroClienteForm: React.FC<{
           alignItems={"center"}
           paddingLeft={3}
         >
-          <Typography sx={{ fontWeight: "500", fontSize: "25px", color: "#fff" }}>
+          <Typography
+            sx={{ fontWeight: "500", fontSize: "25px", color: "#fff" }}
+          >
             Cadastrar Cliente
           </Typography>
         </Box>
-
-        <Box
-          className="Container-Interior-Formulario"
-          flex={1}
-        >
-
-          <Box display={'flex'} justifyContent={'space-around'}>
+        <Box className="Container-Interior-Formulario">
+          <Box display={"flex"} justifyContent={"space-around"}>
             <Box
               className="Form-Interior-Top"
-              display={'flex'}
-              flexDirection={'column'}
+              display={"flex"}
+              flexDirection={"column"}
             >
-              <VTextField label="Nome" name="name"/>
+              <VTextField label="Nome" name="name" />
               <VSelectField
-                sx={{ height:'30px'}}
-                name="sex" label="Gênero"
+                sx={{ height: "30px" }}
+                name="sex"
+                label="Gênero"
                 listOption={Gender}
               />
               <VTextField label="RG" name="rg" />
@@ -183,15 +131,46 @@ export const CadastroClienteForm: React.FC<{
             </Box>
             <Box
               className="Form-Interior-Top"
-              display={'flex'}
-              flexDirection={'column'}
+              display={"flex"}
+              flexDirection={"column"}
             >
               <VTextField label="Email" name="email" />
               <VTextField label="Número Fixo" name="telephone" />
               <VTextField label="Celular" name="cell" />
             </Box>
           </Box>
+          <Box flex={1}>
+            <Typography sx={{m:2, fontWeight:'500'}}>Informações de Endereço</Typography>
+            <Box display={"flex"} justifyContent={"space-around"}>
+              <Box className="Form-Interior-Bottom">
+                <VTextField label="UF" name="uf" />
+                <VTextField label="CEP" name="cep" />
+                <VTextField label="Endereço" name="address" />
+                <VTextField label="Cidade" name="city" />
+              </Box>
+              <Box className="Form-Interior-Bottom">
+                <VTextField label="Bairro" name="neighborhood" />
+                <VTextField label="Número Residência" name="number" />
 
+                <Box className="Container-Botoes">
+                  <Button
+                    sx={{ color: "#000", width:100}}
+                    type="submit"
+                    variant="contained"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    sx={{ color: "#000", width:100}}
+                    type="submit"
+                    variant="contained"
+                  >
+                    Salvar
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Form>

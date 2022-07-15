@@ -28,33 +28,20 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
   }, [fieldName, registerField, value])
 
   return (
-    <div>
     <FormControl sx={{display:'flex'}}>
-      
-        <InputLabel
-          variant='standard'
-          id='genero'
-          sx={{fontSize:'12px'}}
-        >
-            Genero
-        </InputLabel>
-        <Select
-          labelId='genero'
-          label='Genero'
+        <InputLabel sx={{fontSize:'12px'}} variant='standard'>Genero</InputLabel>
+        <Select 
+          size='small'
           value={value}
           defaultValue={defaultValue}
-
           variant={'standard'}
-
           onChange={e => setValue(e.target.value as string)}
           {...rest}
         >
           {listOption.map(row => (
-            <MenuItem sx={{fontSize:'12px'}} key={row.value} value={row.label}>{row.label}</MenuItem>
+            <MenuItem  sx={{fontSize:'12px'}} value={row.label}>{row.label}</MenuItem>
           ))}            
         </Select>
-      
     </FormControl>
-    </div>
   )
 }
