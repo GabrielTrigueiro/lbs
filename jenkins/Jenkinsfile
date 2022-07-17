@@ -1,18 +1,46 @@
-pipeline{
-
-    stages{
-        stage("build front"){
-            echo"primeiro"
-
+pipeline {
+    agent {
+        docker{
+        image 'node:16.13.1-alpine'
+        args '-p 3000:3000'
         }
-
-        stage("build front"){
-            echo"segundo"
+    }
+    environment {
+        CI = 'true'
+        npm_config_cache = 'npm-cache'
+    }
+    stages {
+        stage('Build'){
+            steps{
+                sh 'yarn install'
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh 'yarn build'
+            }
         }
-
-        stage("build front"){
-            echo"terceiro"
+        stage('Deliver') {
+            agent none
+            steps {
+                sh "/bin/rm -rf build.tar.gz"    
+                sh "tar -zcf  build.tar.gz build"
+                sshPublisher(
+                    continueOnError: false, 
+                    failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                        configName: "sever-vps",
+                        verbose: true,
+                        transfers: [
+                            sshTransfer(execCommand: "/bin/rm -rf /home/lbs.bitbeelabs.tech/public_html"),
+                            sshTransfer(sourceFiles: "build.tar.gz"),
+                            sshTransfer(execCommand: "mkdir /home/lbs.bitbeelabs.tech/public_html"),
+                            sshTransfer(execCommand: "mv build.tar.gz /home/lbs.bitbeelabs.tech/public_html"),
+                            sshTransfer(execCommand: "tar -zxvf /home/lbs.bitbeelabs.tech/public_html/build.tar.gz -C /home/lbs.bitbeelabs.tech/public_html"),
+                            ]
+                        )
+                    ]
+                )
+            }
+            
         }
-        
     }
 }
