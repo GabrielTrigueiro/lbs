@@ -35,6 +35,7 @@ pipeline {
                             sshTransfer(execCommand: "mkdir /home/lbs.bitbeelabs.tech/public_html"),
                             sshTransfer(execCommand: "mv build.tar.gz /home/lbs.bitbeelabs.tech/public_html"),
                             sshTransfer(execCommand: "tar -zxvf /home/lbs.bitbeelabs.tech/public_html/build.tar.gz -C /home/lbs.bitbeelabs.tech/public_html"),
+                            sshTransfer(execCommand: "service nginx restart"),
                             ]
                         )
                     ]
