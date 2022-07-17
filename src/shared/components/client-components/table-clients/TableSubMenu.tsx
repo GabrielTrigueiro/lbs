@@ -9,15 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { ClienteService, IInfoClient } from "../../../services";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Modal,
-} from "@mui/material";
+import { Modal } from "@mui/material";
 import { EditarCadastroCliente } from "../../../forms";
 import { useState } from "react";
 import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
@@ -28,21 +20,25 @@ export const TableSubMenu: React.FC<{
 }> = ({ client, update }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
+
   const handleEditModal = () => {
     editModal ? setEditModal(false) : setEditModal(true);
   };
 
   const [confirm, setConfirm] = useState<true | false>(false);
+
   const handleEditConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true);
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -104,21 +100,16 @@ export const TableSubMenu: React.FC<{
               height: 10,
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
+              p: 1
             },
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleEditModal}>
-          <EditIcon sx={{ mr: 1 }} /> Editar
-        </MenuItem>
-        <MenuItem>
-          <PersonSearchIcon sx={{ mr: 1 }} /> Perfil
-        </MenuItem>
-        <MenuItem onClick={handleDeleteUser}>
-          <DeleteIcon /> Deletar
-        </MenuItem>
+        <MenuItem onClick={handleEditModal}> Editar </MenuItem>
+        <MenuItem> Detalhes </MenuItem>
+        <MenuItem onClick={handleDeleteUser}> Apagar </MenuItem>
       </Menu>
 
       <Modal sx={{ minWidth: 1020 }} onClose={handleEditConfirm} open={editModal}>

@@ -28,13 +28,11 @@ export const ConfirmationButton: React.FC<IConfirm> = ({
     >
       <DialogTitle id="alert-dialog-title">{"Confirmação"}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {confirmStatus}
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">{confirmStatus}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleDialog}>Continuar</Button>
         <Button
+          sx={{backgroundColor:'#E4DB00', color: '#000'}}
           onClick={() => {
             {handleDialog()};
             {handleModal()};
@@ -42,6 +40,7 @@ export const ConfirmationButton: React.FC<IConfirm> = ({
         >
           Fechar
         </Button>
+        <Button sx={{backgroundColor:'#E4DB00', color: '#000'}} onClick={handleDialog}>Continuar</Button>
       </DialogActions>
     </Dialog>
   );

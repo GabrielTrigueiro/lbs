@@ -31,6 +31,7 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
     <FormControl sx={{display:'flex'}}>
         <InputLabel sx={{fontSize:'12px'}} variant='standard'>Genero</InputLabel>
         <Select 
+        sx={{fontSize:'12px'}}
           size='small'
           value={value}
           defaultValue={defaultValue}

@@ -9,62 +9,44 @@ import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
 
 export interface ICadastroInfo {
-  cpf: number;
-  name: string;
-  rg: number;
-  sex: string;
+  cpf: number
+  name: string
+  rg: number
+  sex: string
 
-  address: string;
-  cep: number;
-  city: string;
-  uf: string;
-  neighborhood: string;
-  number: number;
+  address: string
+  cep: number
+  city: string
+  uf: string
+  neighborhood: string
+  number: number
 
-  cell: number;
-  email: string;
-  telephone?: number;
+  cell: number
+  email: string
+  telephone?: number
 }
 export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   name: Yup.string().required("O nome é obrigatóro"),
-  cpf: Yup.number()
-    .required("O cpf é obrigatório")
-    .typeError("Digite apenas números"),
+  cpf: Yup.number().required("O cpf é obrigatório").typeError("Digite apenas números"),
   sex: Yup.string().required("O campo é obrigatório"),
-  rg: Yup.number()
-    .required("O RG é obrigatório")
-    .typeError("Digite apenas números"),
+  rg: Yup.number().required("O RG é obrigatório").typeError("Digite apenas números"),
 
   address: Yup.string().required("Endereço é obrigatório"),
-  cep: Yup.number()
-    .required("CEP é obrigatório")
-    .typeError("Digite apenas números"),
-  city: Yup.string()
-    .min(3, "No minimo 3 caracteres")
-    .required("Cidade é obrigatório"),
+  cep: Yup.number().required("CEP é obrigatório").typeError("Digite apenas números"),
+  city: Yup.string().min(3, "No minimo 3 caracteres").required("Cidade é obrigatório"),
   neighborhood: Yup.string().required("Bairro é obrigatório"),
-  number: Yup.number()
-    .required("Número é obrigatório")
-    .typeError("Digite apenas números"),
+  number: Yup.number().required("Número é obrigatório").typeError("Digite apenas números"),
   uf: Yup.string().required("Estado é obrgatório"),
 
-  email: Yup.string()
-    .email("Digite um email válido")
-    .required("Email é obrigatório"),
-  cell: Yup.number()
-    .required("Celular é obrigatório")
-    .typeError("Digite apenas números"),
+  email: Yup.string().email("Digite um email válido").required("Email é obrigatório"),
+  cell: Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
   telephone: Yup.number().typeError("Digite apenas números"),
-});
-export const CadastroClienteForm: React.FC<{
-  update: () => void;
-  handleModal: () => void;
-}> = ({ update, handleModal }) => {
-  const close = () => {
-    handleModal();
-  };
+})
 
-  const { formRef } = useVForm();
+export const CadastroClienteForm: React.FC<{ update: () => void, handleModal: () => void }> = ({ update, handleModal }) => {
+  const close = () => { handleModal()}
+
+  const { formRef } = useVForm()
 
   const handleSave = (dados: ICadastroInfo) => {
     cadastroSchema
@@ -90,7 +72,7 @@ export const CadastroClienteForm: React.FC<{
     <Form
       ref={formRef}
       className="Form-Cadastro-Cliente"
-      onSubmit={(dados) => console.log(dados)}
+      onSubmit={(dados) => handleSave(dados)}
     >
       <Box
         display={"flex"}
@@ -140,7 +122,7 @@ export const CadastroClienteForm: React.FC<{
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography sx={{m:2, fontWeight:'500'}}>Informações de Endereço</Typography>
+            <Typography sx={{mt:4, ml:2,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField label="UF" name="uf" />
@@ -153,15 +135,16 @@ export const CadastroClienteForm: React.FC<{
                 <VTextField label="Número Residência" name="number" />
 
                 <Box className="Container-Botoes">
-                  <Button
-                    sx={{ color: "#000", width:100}}
+                  <Button 
+                    sx={{ color: "#fff", width:100, backgroundColor:'#575A61'}}
                     type="submit"
                     variant="contained"
+                    onClick={close}
                   >
                     Cancelar
                   </Button>
                   <Button
-                    sx={{ color: "#000", width:100}}
+                    sx={{ color: "#fff", width:100, backgroundColor:'#575A61'}}
                     type="submit"
                     variant="contained"
                   >
