@@ -17,12 +17,6 @@ const TableStyled = styled(Table)({
     borderSpacing: 0,
   },
 });
-const TableBodyStyled = styled(TableBody)({
-
-});
-const TableHeaderStyled = styled(TableHead)({
-
-});
 const TableRowStyled = styled(TableRow)({
   padding: "10px",
   backgroundColor: "#fff",
@@ -41,15 +35,15 @@ export const TableClients: React.FC<{
   return (
     <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
-        <TableHeaderStyled>
+        <TableHead>
           <TableRow>
             <TableCellStyled></TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Informações Básicas</TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Número de Celular</TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>CPF</TableCellStyled>
           </TableRow>
-        </TableHeaderStyled>
-        <TableBodyStyled>
+        </TableHead>
+        <TableBody>
           {lista.map((row) => (
             <TableRowStyled
               key={row.id}
@@ -79,7 +73,7 @@ export const TableClients: React.FC<{
               </TableCellStyled>
             </TableRowStyled>
           ))}
-        </TableBodyStyled>
+        </TableBody>
       </TableStyled>
     </TableContainer>
   );

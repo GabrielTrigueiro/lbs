@@ -1,5 +1,5 @@
 import { LayoutBasePage } from "../../shared/layouts";
-import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/CadastroClienteForm";
+import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/ClienteForm";
 import { useEffect, useState } from "react";
 import { ClienteService, IInfoClient } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
@@ -135,7 +135,10 @@ export const ClientListPage: React.FC = () => {
           alignItems:'center',
           justifyContent:'center'
         }}>
-          <CadastroClienteForm update={update} handleModal={handleModal}/>
+          <CadastroClienteForm
+          type={"register"}
+          update={update}
+          handleModal={handleModal}/>
         </Box>
       </Modal>
 

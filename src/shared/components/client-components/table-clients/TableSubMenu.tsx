@@ -1,7 +1,4 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -10,7 +7,7 @@ import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { ClienteService, IInfoClient } from "../../../services";
 import { Modal } from "@mui/material";
-import { EditarCadastroCliente } from "../../../forms";
+import { CadastroClienteForm } from "../../../forms";
 import { useState } from "react";
 import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 
@@ -21,19 +18,19 @@ export const TableSubMenu: React.FC<{
 
   const [editModal, setEditModal] = useState<true | false>(false);
 
-  const handleEditModal = () => {
-    editModal ? setEditModal(false) : setEditModal(true);
-  };
-
   const [confirm, setConfirm] = useState<true | false>(false);
-
-  const handleEditConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true);
-  };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
+
+  const handleEditModal = () => {
+    editModal ? setEditModal(false) : setEditModal(true);
+  };
+
+  const handleEditConfirm = () => {
+    confirm ? setConfirm(false) : setConfirm(true);
+  };  
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -115,26 +112,30 @@ export const TableSubMenu: React.FC<{
       <Modal sx={{ minWidth: 1020 }} onClose={handleEditConfirm} open={editModal}>
         <Box
           sx={{
-            //posição do modal
-            position: "absolute" as "absolute",
-            top: "40%",
-            left: "50%",
-            height: 600,
-            width: 1000,
-            transform: "translate(-50%, -40%)",
+          overflow:'auto',
+          //posição do modal
+          position: 'absolute' as 'absolute',
+          top: '40%',
+          left: '50%',
+          height: '500px',
+          width: '700px',
+          transform: 'translate(-50%, -40%)',
 
-            //CSS estilo
-            borderRadius: 1,
-            borderColor: "transparent",
-            bgcolor: "background.paper",
-            display: "flex",
-            flexDirection: "column",
-            padding: 1,
+          //CSS estilo
+          borderRadius:0,
+          bgcolor: 'background.paper',
+          display:'flex',
+          flexDirection:'column',
+          padding:0,
 
-            alignItems: "center",
-            justifyContent: "center",
+          alignItems:'center',
+          justifyContent:'center'
         }}>
-          <EditarCadastroCliente  client={client} update={update}/>
+          <CadastroClienteForm
+          type={'edit'}
+          update={update}
+          handleModal={handleEditModal}
+          client={client}/>
         </Box>
       </Modal>
 

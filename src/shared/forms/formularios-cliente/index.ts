@@ -1,2 +1,1 @@
-export * from "./CadastroClienteForm"
-export * from "./EditarCadastroCliente"
+export * from "./ClienteForm"

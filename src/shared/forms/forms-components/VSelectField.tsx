@@ -15,9 +15,9 @@ interface Props  extends SelectProps {
 
 export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
   
-  const { fieldName, registerField, defaultValue } = useField(name)
+  const { fieldName, registerField, defaultValue, error } = useField(name)
 
-  const [value, setValue] = useState<string>(defaultValue || '')
+  const [value, setValue] = useState<string>('')
 
   useEffect(() => {
     registerField({
@@ -37,10 +37,11 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
           defaultValue={defaultValue}
           variant={'standard'}
           onChange={e => setValue(e.target.value as string)}
+          error={!!error}
           {...rest}
         >
           {listOption.map(row => (
-            <MenuItem  sx={{fontSize:'12px'}} value={row.label}>{row.label}</MenuItem>
+            <MenuItem key={row.value}  sx={{fontSize:'12px'}} value={row.label}>{row.label}</MenuItem>
           ))}            
         </Select>
     </FormControl>

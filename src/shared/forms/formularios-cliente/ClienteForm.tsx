@@ -1,12 +1,13 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
-import { ClienteService } from "../../services";
+import { ClienteService, IInfoClient } from "../../services";
 import { VTextField } from "../forms-components/VTextField";
 import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
+import { useState } from "react";
 
 export interface ICadastroInfo {
   cpf: number
@@ -25,6 +26,7 @@ export interface ICadastroInfo {
   email: string
   telephone?: number
 }
+
 export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   name: Yup.string().required("O nome é obrigatóro"),
   cpf: Yup.number().required("O cpf é obrigatório").typeError("Digite apenas números"),
@@ -43,7 +45,12 @@ export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   telephone: Yup.number().typeError("Digite apenas números"),
 })
 
-export const CadastroClienteForm: React.FC<{ update: () => void, handleModal: () => void }> = ({ update, handleModal }) => {
+export const CadastroClienteForm: React.FC<{
+  update: () => void,
+  handleModal: () => void
+  client?: IInfoClient
+  type: string
+}> = ({ update, handleModal, client, type }) => {
   const close = () => { handleModal()}
 
   const { formRef } = useVForm()
@@ -66,13 +73,54 @@ export const CadastroClienteForm: React.FC<{ update: () => void, handleModal: ()
         });
         formRef.current?.setErrors(validandoErros);
       });
-  };
+  }
+
+  const handleEdit = (dados: IInfoClient) =>{
+    cadastroSchema.validate(dados,{abortEarly:false})
+    .then((dadosValidados)=>{
+      if(dados.id)
+      ClienteService.UpdateById(dados.id, dados).then(result => {
+      alert("Cliente editado com sucesso!!!")
+      update()
+      })
+    })
+    .catch((erros: Yup.ValidationError)=>{
+      const validandoErros: {[key:string]: string} = {}
+      erros.inner.forEach(erros =>{
+        if(!erros.path)return
+        validandoErros[erros.path] = erros.message
+      })
+      formRef.current?.setErrors(validandoErros)
+    })
+  }
+
+  const handleSubmit = (dados: ICadastroInfo | IInfoClient) => {
+    if(type === 'edit'){
+      handleEdit(dados)
+    }else{
+      handleSave(dados)
+    }
+  }
+
+  const [cepData, setCepData] = useState('')
+
+  function getCEP (cep:string) {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => {
+        setCepData(data)
+      })
+  }
 
   return (
     <Form
+      initialData={client}
       ref={formRef}
       className="Form-Cadastro-Cliente"
-      onSubmit={(dados) => handleSave(dados)}
+      onSubmit={(dados) => {
+        dados.id = client?.id
+        handleSubmit(dados)
+      }}
     >
       <Box
         display={"flex"}
@@ -126,7 +174,7 @@ export const CadastroClienteForm: React.FC<{ update: () => void, handleModal: ()
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField label="UF" name="uf" />
-                <VTextField label="CEP" name="cep" />
+                <VTextField label="CEP" name="cep"/>
                 <VTextField label="Endereço" name="address" />
                 <VTextField label="Cidade" name="city" />
               </Box>
