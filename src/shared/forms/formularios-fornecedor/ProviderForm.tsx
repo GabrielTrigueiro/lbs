@@ -1,69 +1,67 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Form } from "@unform/web";
-import { ClienteService, IInfoClient } from "../../services";
 import { VTextField } from "../forms-components/VTextField";
-import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
-import { Gender, VSelectField } from "../forms-components";
+import { IInfoProvider, ProviderService } from "../../services/api/providers/ProviderService";
+import "./styles.css"
 
-export interface IClienteCadastroInfo {
-  cpf: number
-  name: string
-  rg: number
-  sex: string
+export interface IProviderCadastroInfo {
+    code: number
+    name: string
+    cnpj: string
 
-  address: string
-  cep: number
-  city: string
-  uf: string
-  neighborhood: string
-  number: number
+    contact: number
+    email: string
+    telephone: number
+    cell: number
 
-  cell: number
-  email: string
-  telephone?: number
-
-  isActive?: boolean
+    cep:number
+    address: string
+    cityId?: string
+    city: string
+    uf: string
+    neighborhood: string
+    number: number
 }
 
-export const ClienteCadastroSchema: Yup.SchemaOf<IClienteCadastroInfo> = Yup.object().shape({
-  name: Yup.string().required("O nome é obrigatóro"),
-  cpf: Yup.number().required("O cpf é obrigatório").typeError("Digite apenas números"),
-  sex: Yup.string().required("O campo é obrigatório"),
-  rg: Yup.number().required("O RG é obrigatório").typeError("Digite apenas números"),
+export const ProviderCadastroSchema: Yup.SchemaOf<IProviderCadastroInfo> = Yup.object().shape({
+    code: Yup.number().required("O id é obrigatório"),
+    name: Yup.string().required("O nome é obrigatóro"),
+    cnpj: Yup.string().required("O CNPJ é obrigatório").typeError("Digite apenas números"),
 
-  address: Yup.string().required("Endereço é obrigatório"),
-  cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
-  city: Yup.string().min(3, "No minimo 3 caracteres").required("Cidade é obrigatório"),
-  neighborhood: Yup.string().required("Bairro é obrigatório"),
-  number: Yup.number().required("Número é obrigatório").typeError("Digite apenas números"),
-  uf: Yup.string().required("Estado é obrigatório"),
+    contact: Yup.number().required("O Campo é obrigatório"),
+    email: Yup.string().required("Email orbigatório"),
+    telephone:Yup.number().required("Telefone é obrigatório"),
+    cell:Yup.number().required("Celular é obrigatório"),
 
-  email: Yup.string().email("Digite um email válido").required("Email é obrigatório"),
-  cell: Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
-  telephone: Yup.number().typeError("Digite apenas números"),
-
-  isActive: Yup.boolean()
+    cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
+    address: Yup.string().required("Endereço é obrigatório"),
+    cityId: Yup.string().required("O id é obrigatório"),
+    city: Yup.string().required("A cidade é obrigatório"),
+    uf: Yup.string().required("O estado é obrigatório"),
+    neighborhood: Yup.string().required("O bairro é obrigatório"),
+    number: Yup.number().required("O Número é obrigatório"),
+  
 })
 
-export const CadastroClienteForm: React.FC<{
+export const ProviderForm: React.FC<{
   update: () => void,
   handleModal: () => void
-  client?: IInfoClient
+  provider?: IInfoProvider
   type: string
-}> = ({ update, handleModal, client, type }) => {
+}> = ({ update, handleModal, provider, type }) => {
   const close = () => { handleModal()}
 
   const { formRef } = useVForm()
 
-  const handleSave = (dados: IClienteCadastroInfo) => {
-    ClienteCadastroSchema
+  const handleSave = (dados: IProviderCadastroInfo) => {
+    ProviderCadastroSchema
       .validate(dados, { abortEarly: false })
       .then((dadosValidados) => {
-        ClienteService.Create(dadosValidados).then((result) => {
-          alert("Cliente cadastrado com sucesso!!!");
+        ProviderService.Create(dadosValidados).then((result) => {
+          alert("Fornecedor cadastrado com sucesso!!!");
           close();
           update();
         });
@@ -78,12 +76,12 @@ export const CadastroClienteForm: React.FC<{
       });
   }
 
-  const handleEdit = (dados: IInfoClient) =>{
-    ClienteCadastroSchema.validate(dados,{abortEarly:false})
+  const handleEdit = (dados: IInfoProvider) =>{
+    ProviderCadastroSchema.validate(dados,{abortEarly:false})
     .then((dadosValidados)=>{
       if(dados.id)
-      ClienteService.UpdateById(dados.id, dados).then(result => {
-      alert("Cliente editado com sucesso!!!")
+      ProviderService.UpdateById(dados.id, dados).then(result => {
+      alert("Fornecedor editado com sucesso!!!")
       update()
       })
     })
@@ -97,7 +95,7 @@ export const CadastroClienteForm: React.FC<{
     })
   }
 
-  const handleSubmit = (dados: IClienteCadastroInfo | IInfoClient) => {
+  const handleSubmit = (dados: IProviderCadastroInfo | IInfoProvider) => {
     if(type === 'edit'){
       handleEdit(dados)
     }else{
@@ -119,14 +117,13 @@ export const CadastroClienteForm: React.FC<{
     })
   }
 
-
   return (
     <Form
-      initialData={client}
+      initialData={provider}
       ref={formRef}
-      className="Form-Cadastro-Cliente"
+      className="Form-Provider"
       onSubmit={(dados) => {
-        dados.id = client?.id
+        dados.id = provider?.id
         handleSubmit(dados)
       }}
     >
@@ -134,7 +131,7 @@ export const CadastroClienteForm: React.FC<{
         display={"flex"}
         flexDirection={"column"}
         height={"100%"}
-        className="Conteiner-Interior-Geral"
+        className="Container-Interior-Geral"
       >
         <Box
           height={70}
@@ -147,7 +144,7 @@ export const CadastroClienteForm: React.FC<{
           <Typography
             sx={{ fontWeight: "500", fontSize: "25px", color: "#fff" }}
           >
-            Cadastrar Cliente
+            Cadastrar Fornecedor
           </Typography>
         </Box>
         <Box className="Container-Interior-Formulario">
@@ -157,23 +154,18 @@ export const CadastroClienteForm: React.FC<{
               display={"flex"}
               flexDirection={"column"}
             >
+              <VTextField label="Código" name="code" />
               <VTextField label="Nome" name="name" />
-              <VSelectField
-                sx={{ height: "30px" }}
-                name="sex"
-                label="Gênero"
-                listOption={Gender}
-              />
-              <VTextField label="RG" name="rg" />
-              <VTextField label="CPF" name="cpf" />
+              <VTextField label="CNPJ" name="cnpj" />
             </Box>
             <Box
               className="Form-Interior-Top"
               display={"flex"}
               flexDirection={"column"}
             >
+              <VTextField label="Contato" name="contact" />
               <VTextField label="Email" name="email" />
-              <VTextField label="Número Fixo" name="telephone" />
+              <VTextField label="Fixo" name="telephone" />
               <VTextField label="Celular" name="cell" />
             </Box>
           </Box>
@@ -182,15 +174,16 @@ export const CadastroClienteForm: React.FC<{
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField label="UF" name="uf" />
-                <VTextField label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField label="Endereço" name="address"/>
                 <VTextField label="Cidade" name="city"/>
+                <VTextField label="Id Cidade" name="cityId" />
               </Box>
               <Box className="Form-Interior-Bottom">
+                <VTextField label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField label="Bairro" name="neighborhood" />
                 <VTextField label="Número Residência" name="number" />
 
-                <Box className="Container-Botoes">
+                <Box className="Container-Botoes-Provider">
                   <Button 
                     sx={{ color: "#fff", width:100, backgroundColor:'#575A61'}}
                     type="submit"

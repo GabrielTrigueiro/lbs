@@ -1,16 +1,19 @@
 import { AxiosError } from "axios"
+import { environment } from "../../../environment"
 import { api } from "../axios-config"
 
 export interface IInfoProvider {
     id?: string
     code: number
     name: string
+    cnpj: string
 
     contact: number
     email: string
     telephone: number
     cell: number
 
+    cep: number
     address: string
     cityId?: string
     city: string
@@ -30,7 +33,7 @@ export type TAllProviderList = {
 
 const getAll = async (): Promise<TAllProviderList | Error>   => {
     try {
-        const {data} = await api.get('/api/provider')
+        const {data} = await api.get(environment.url_provider)
         if(data){
             return{
                 data
@@ -43,7 +46,7 @@ const getAll = async (): Promise<TAllProviderList | Error>   => {
 }
 const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     try {
-        const {data} = await api.get(`https://localhost:8081/api/provider${id}`)
+        const {data} = await api.get(environment.url_provider + `${id}`)
         if(data){
             return data
         }
@@ -55,7 +58,7 @@ const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
 }
 const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Error>   => {
   
-    return  await api.put<IInfoProvider>(`http://localhost:8081/api/provider/${id}`, dados)
+    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -67,7 +70,7 @@ const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Erro
       })
 }
 const DeleteById = async (id: string): Promise<void | Error>   => {
-    return await api.delete(`http://localhost:8081/api/provider/${id}`)
+    return await api.delete(environment.url_provider + `${id}`)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -80,7 +83,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
 }
 const Create = async (dados: IInfoProvider): Promise<any>   => {
 
-    return await api.post<IProviderPackage>(`http://localhost:8081/api/provider`, dados)
+    return await api.post<IProviderPackage>(environment.url_provider, dados)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data

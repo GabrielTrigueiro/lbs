@@ -30,7 +30,6 @@ export const ClientListPage: React.FC = () => {
   const handleConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true)
   }
-
   useEffect(() => {
     update();
   }, [])

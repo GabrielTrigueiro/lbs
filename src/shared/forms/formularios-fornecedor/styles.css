@@ -1,0 +1,34 @@
+.Form-Provider{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+.Container-Interior-Formulario{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.Form-Interior-Top{
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+}
+.Form-Interior-Bottom{
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+}
+.Container-Botoes{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4rem;
+    margin-left: 6rem;
+}
+.Container-Botoes-Provider{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+    margin-left: 6rem;
+}
