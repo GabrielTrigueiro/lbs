@@ -107,7 +107,8 @@ export const CadastroClienteForm: React.FC<{
 
   function getCepData (ev: any) {
     const {value} = ev.target
-    fetch(`https://viacep.com.br/ws/${value}/json/`)
+    const cep = value?.replace(/[^0-9]/g, '')
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data)

@@ -1,4 +1,4 @@
-export * from "./client-components/confirmation-button/ConfirmationButton"
+export * from "./confirmation-button/ConfirmationButton"
 export * from "./menu/MenuIcon"
 export * from "./menu/MenuLateral"
 export * from "./client-components/table-clients/TableClients"

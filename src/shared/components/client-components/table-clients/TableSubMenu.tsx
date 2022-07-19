@@ -9,7 +9,7 @@ import { ClienteService, IInfoClient } from "../../../services";
 import { Modal } from "@mui/material";
 import { CadastroClienteForm } from "../../../forms";
 import { useState } from "react";
-import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
+import { ConfirmationButton } from "../../confirmation-button/ConfirmationButton";
 
 export const TableSubMenu: React.FC<{
   client: IInfoClient;

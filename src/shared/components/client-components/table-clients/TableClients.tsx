@@ -33,7 +33,7 @@ export const TableClients: React.FC<{
 }> = ({ lista, update }) => {
 
   return (
-    <TableContainer>
+    <TableContainer className="oi">
       <TableStyled sx={{ minWidth: 700 }}>
         <TableHead>
           <TableRow>
