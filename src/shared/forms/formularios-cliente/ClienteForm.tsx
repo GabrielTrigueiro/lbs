@@ -7,7 +7,6 @@ import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
-import { useState } from "react";
 
 export interface ICadastroInfo {
   cpf: number
@@ -25,6 +24,8 @@ export interface ICadastroInfo {
   cell: number
   email: string
   telephone?: number
+
+  isActive?: boolean
 }
 
 export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
@@ -34,15 +35,17 @@ export const cadastroSchema: Yup.SchemaOf<ICadastroInfo> = Yup.object().shape({
   rg: Yup.number().required("O RG é obrigatório").typeError("Digite apenas números"),
 
   address: Yup.string().required("Endereço é obrigatório"),
-  cep: Yup.number().required("CEP é obrigatório").typeError("Digite apenas números"),
+  cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
   city: Yup.string().min(3, "No minimo 3 caracteres").required("Cidade é obrigatório"),
   neighborhood: Yup.string().required("Bairro é obrigatório"),
   number: Yup.number().required("Número é obrigatório").typeError("Digite apenas números"),
-  uf: Yup.string().required("Estado é obrgatório"),
+  uf: Yup.string().required("Estado é obrigatório"),
 
   email: Yup.string().email("Digite um email válido").required("Email é obrigatório"),
   cell: Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
   telephone: Yup.number().typeError("Digite apenas números"),
+
+  isActive: Yup.boolean()
 })
 
 export const CadastroClienteForm: React.FC<{
@@ -102,15 +105,19 @@ export const CadastroClienteForm: React.FC<{
     }
   }
 
-  const [cepData, setCepData] = useState('')
-
-  function getCEP (cep:string) {
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then(response => response.json())
-      .then(data => {
-        setCepData(data)
-      })
+  function getCepData (ev: any) {
+    const {value} = ev.target
+    fetch(`https://viacep.com.br/ws/${value}/json/`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      formRef.current?.setFieldValue('city', `${data.localidade}`)
+      formRef.current?.setFieldValue('uf', `${data.uf}`)
+      formRef.current?.setFieldValue('address', `${data.logradouro}`)
+      formRef.current?.setFieldValue('neighborhood', `${data.bairro}`)
+    })
   }
+
 
   return (
     <Form
@@ -174,9 +181,9 @@ export const CadastroClienteForm: React.FC<{
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField label="UF" name="uf" />
-                <VTextField label="CEP" name="cep"/>
-                <VTextField label="Endereço" name="address" />
-                <VTextField label="Cidade" name="city" />
+                <VTextField label="CEP" name="cep" onBlur={getCepData}/>
+                <VTextField label="Endereço" name="address"/>
+                <VTextField label="Cidade" name="city"/>
               </Box>
               <Box className="Form-Interior-Bottom">
                 <VTextField label="Bairro" name="neighborhood" />

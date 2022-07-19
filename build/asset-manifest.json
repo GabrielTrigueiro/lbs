@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.63cb5794.css",
+    "main.js": "/static/js/main.e1dcdddf.js",
+    "static/media/Mulher.jpg": "/static/media/Mulher.e6d75c72918bed0df700.jpg",
+    "static/media/logo.svg": "/static/media/logo.f3e0b3a2c8d408239b14e9524f49edd4.svg",
+    "index.html": "/index.html",
+    "main.63cb5794.css.map": "/static/css/main.63cb5794.css.map",
+    "main.e1dcdddf.js.map": "/static/js/main.e1dcdddf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.63cb5794.css",
+    "static/js/main.e1dcdddf.js"
+  ]
+}

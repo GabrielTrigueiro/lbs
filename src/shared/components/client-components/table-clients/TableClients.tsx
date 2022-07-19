@@ -51,7 +51,7 @@ export const TableClients: React.FC<{
               className="MuiTableRow-root"
             >
               <TableCellStyled
-                // style={{ borderLeftColor: row.status? "#42FF00" : "#FF5555" }}
+                style={{ borderLeftColor: row.isActive ? "#42FF00" : "#FF5555" }}
                 sx={{ width: 30, mr: "15px" }}
               >
                 <Avatar />

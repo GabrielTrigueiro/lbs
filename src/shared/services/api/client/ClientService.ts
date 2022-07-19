@@ -20,6 +20,8 @@ export interface IInfoClient {
     cell: number;
     email: string;
     telephone?: number;
+
+    isActive?: boolean
 }
 export interface IClientPackage {
     data: IInfoClient[],
@@ -30,7 +32,7 @@ export interface IClientPackage {
 export type TAllClientList = {
     data: IClientPackage
 }
-const getAll = async (filter = ''): Promise<TAllClientList | Error>   => {
+const getAll = async (filter = ''): Promise<TAllClientList | Error> => {
     try {
         const {data} = await api.get(environment.url_client)
         if(data){
@@ -43,7 +45,7 @@ const getAll = async (filter = ''): Promise<TAllClientList | Error>   => {
         return new Error((error as {message: string}).message || 'Erro ao listar os registros')
     }
 }
-const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
+const getByIDd = async (id: string): Promise<IInfoClient | Error> => {
     try {
         const {data} = await api.get( environment.url_client + `${id}`)
         if(data){
@@ -54,7 +56,7 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error>   => {
         return new Error((error as {message: string}).message || 'Erro ao procurar o registro')
     }
 }
-const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>   => {
+const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error> => {
   
     return  await api.put<IInfoClient>(environment.url_client + `${id}`, dados)
     .then(data => {
@@ -67,7 +69,7 @@ const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>
         console.error(err)
       })
 }
-const DeleteById = async (id: string): Promise<void | Error>   => {
+const DeleteById = async (id: string): Promise<void | Error> => {
     return await api.delete(environment.url_client + `${id}`)
     .then(data => {
         if (data instanceof AxiosError){
@@ -79,7 +81,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
         console.error(err)
       })
 }
-const Create = async (dados: IInfoClient): Promise<any>   => {
+const Create = async (dados: IInfoClient): Promise<any | Error> => {
 
     return await api.post<IClientPackage>(environment.url_client, dados)
     .then(data => {
@@ -92,6 +94,7 @@ const Create = async (dados: IInfoClient): Promise<any>   => {
         console.error(err)
       })
 }
+
 export const ClienteService = {
     getAll,
     getByIDd,

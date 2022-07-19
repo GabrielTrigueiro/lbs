@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useField } from '@unform/core'
-import { FormControl, InputLabel, MenuItem, Select, SelectProps, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { FormControl, InputLabel, MenuItem, Select, SelectProps } from '@mui/material'
 
 interface IOption {
   label: string
@@ -17,7 +16,7 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
   
   const { fieldName, registerField, defaultValue, error } = useField(name)
 
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<string>(defaultValue||'')
 
   useEffect(() => {
     registerField({
