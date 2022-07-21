@@ -1,9 +1,12 @@
 import { LayoutBasePage } from "../../shared/layouts";
 import { CadastroClienteForm } from "../../shared/forms/formularios-cliente/ClienteForm";
 import { useEffect, useState } from "react";
-import { ClienteService, IInfoClient } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import { TableClients } from "../../shared/components/client-components/table-clients";
+import { SearchInput} from "../../shared/components/search";
+import { Add } from "@mui/icons-material";
+import { ConfirmationButton } from "../../shared/components";
+import { ClienteService, IInfoClient, IPagination } from "../../shared/services";
 import {
   Box,
   Icon,
@@ -13,63 +16,73 @@ import {
   Pagination,
   Button,
   Modal,
+  TextField,
 } from "@mui/material";
-import { SearchInput } from "../../shared/components/search";
-import { Add } from "@mui/icons-material";
-import { ConfirmationButton } from "../../shared/components";
 
 export const ClientListPage: React.FC = () => {
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [rows, setRows] = useState<IInfoClient[]>([])
+  const [value, setValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [rows, setRows] = useState<IInfoClient[]>([]);
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
-  }
+  };
   const handleConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true)
-  }
+    confirm ? setConfirm(false) : setConfirm(true);
+  };
+
   useEffect(() => {
     update();
-  }, [])
+  }, [value]);
+
   const update = () => {
-    ClienteService.getAll().then((result) => {
+    ClienteService.getAll(ClientPaginationConf).then((result) => {
       if (result instanceof Error) {
-        alert(result.message)
+        alert(result.message);
       } else {
-        setIsLoading(false)
-        setRows(result.data.data)
+        setIsLoading(false);
+        setRows(result.data.data);
       }
-    })
-  }
+    });
+  };
+
+  let ClientPaginationConf: IPagination = {
+    page: 0,
+    pageSize: 10,
+    param: "name",
+    sortDiresction: "DESC",
+    sortField: "name",
+    value: value,
+  };
 
   if (isLoading) return <ClientListPageSkeleton />;
   return (
     <LayoutBasePage>
-
       <Box
         justifyContent={"space-between"}
         padding={0}
         display="flex"
         alignItems="center"
       >
-        <Typography sx={{
-          margin: "40px 0px",
-          fontWeight: 600,
-          fontSize: "35px",
-          color:"#575a61"
-        }}> Clientes </Typography>
+        <Typography
+          sx={{
+            margin: "40px 0px",
+            fontWeight: 600,
+            fontSize: "35px",
+            color: "#575a61",
+          }}
+        >
+          {" "}
+          Clientes{" "}
+        </Typography>
         <Button
           onClick={handleModal}
           variant="contained"
           startIcon={<Add />}
-          sx={{ height: 45, width: 200,color: "#494b4f" }}
+          sx={{ height: 45, width: 200, color: "#494b4f" }}
         >
-          <Typography
-            fontSize={"12px"}
-            sx={{fontWeight:'bold'}}
-          >
+          <Typography fontSize={"12px"} sx={{ fontWeight: "bold" }}>
             Cadastrar Clientes
           </Typography>
         </Button>
@@ -78,9 +91,14 @@ export const ClientListPage: React.FC = () => {
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
           <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
-            <Typography sx={{color:'#3d3d3d', fontSize:'18px'}} variant="h5">Lista de Clientes</Typography>
+            <Typography
+              sx={{ color: "#3d3d3d", fontSize: "18px" }}
+              variant="h5"
+            >
+              Lista de Clientes
+            </Typography>
             <Box position={"relative"} bottom={3}>
-              <SearchInput/>
+              <SearchInput change={(value)=>{setValue(value.target.value)}}/>
             </Box>
           </Grid>
           <Grid
@@ -106,48 +124,49 @@ export const ClientListPage: React.FC = () => {
         <TableClients update={update} lista={rows} />
       </Box>
 
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="flex-end" mt={1}>
         <Stack>
           <Pagination count={4} variant="outlined" shape="rounded" />
         </Stack>
       </Box>
 
-      <Modal sx={{minWidth:1020}} onClose={handleConfirm} open={modal}>
+      <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
         <Box
-        sx={{
-          overflow:'auto',
-          //posição do modal
-          position: 'absolute' as 'absolute',
-          top: '40%',
-          left: '50%',
-          height: '500px',
-          width: '700px',
-          transform: 'translate(-50%, -40%)',
+          sx={{
+            overflow: "auto",
+            //posição do modal
+            position: "absolute" as "absolute",
+            top: "40%",
+            left: "50%",
+            height: "500px",
+            width: "700px",
+            transform: "translate(-50%, -40%)",
 
-          //CSS estilo
-          borderRadius:0,
-          bgcolor: 'background.paper',
-          display:'flex',
-          flexDirection:'column',
-          padding:0,
+            //CSS estilo
+            borderRadius: 0,
+            bgcolor: "background.paper",
+            display: "flex",
+            flexDirection: "column",
+            padding: 0,
 
-          alignItems:'center',
-          justifyContent:'center'
-        }}>
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <CadastroClienteForm
-          type={"register"}
-          update={update}
-          handleModal={handleModal}/>
+            type={"register"}
+            update={update}
+            handleModal={handleModal}
+          />
         </Box>
       </Modal>
 
-      <ConfirmationButton 
+      <ConfirmationButton
         confirmMessage="Deseja realmente fechar?"
         handleDialog={handleConfirm}
         handleModal={handleModal}
         confirmStatus={confirm}
       />
-
     </LayoutBasePage>
   );
 };

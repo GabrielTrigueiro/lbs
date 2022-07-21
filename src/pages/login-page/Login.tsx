@@ -1,15 +1,11 @@
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import Box from "@mui/material/Box"
-import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
-import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { useAuthContext } from "../../shared/contexts"
 import { useEffect, useRef, useState } from "react"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import LockIcon from "@mui/icons-material/Lock"
 import Mulher from "../../images/login/Mulher.jpg"
 import Logo from "../../images/login/logo.svg"
+import { VisibilityOff, Visibility } from "@mui/icons-material"
 import {
   InputAdornment,
   IconButton,
@@ -17,6 +13,10 @@ import {
   InputLabel,
   OutlinedInput,
   CircularProgress,
+  Box,
+  Button,
+  Grid,
+  TextField,
 } from "@mui/material"
 
 interface State {

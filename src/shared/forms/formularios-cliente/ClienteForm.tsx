@@ -111,7 +111,6 @@ export const CadastroClienteForm: React.FC<{
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       formRef.current?.setFieldValue('city', `${data.localidade}`)
       formRef.current?.setFieldValue('uf', `${data.uf}`)
       formRef.current?.setFieldValue('address', `${data.logradouro}`)

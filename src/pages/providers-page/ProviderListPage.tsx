@@ -9,6 +9,7 @@ import { LayoutBasePage } from "../../shared/layouts";
 import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
 
 export const ProviderListPage: React.FC = () => {
+  
 
   const [isLoading, setIsLoading] = useState(true)
   const [rows, setRows] = useState<IInfoProvider[]>([])
@@ -73,7 +74,7 @@ export const ProviderListPage: React.FC = () => {
               Lista de Fornecedores
             </Typography>
             <Box position={"relative"} bottom={3}>
-              <SearchInput />
+              {/* <SearchInput /> */}
             </Box>
           </Grid>
           <Grid

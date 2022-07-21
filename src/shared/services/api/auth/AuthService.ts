@@ -5,9 +5,12 @@ export type TClientTotal = {
     username: string,
     password: string,
 }
-
-interface IAuth{
+interface ITokenProps {
+    type: string
     acessToken: string
+}
+export interface IAuth{
+    acessToken: ITokenProps
 }
 
 export const auth = async (username: string, password: string): Promise<IAuth | Error>   => {

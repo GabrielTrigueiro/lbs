@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { environment } from "../../../environment"
+import { environment, TokenConfig } from "../../../environment"
 import { api } from "../axios-config"
 
 export interface IInfoProvider {
@@ -29,11 +29,11 @@ export interface IProviderPackage {
 }
 export type TAllProviderList = {
     data: IProviderPackage
-} 
+}
 
 const getAll = async (): Promise<TAllProviderList | Error>   => {
     try {
-        const {data} = await api.get(environment.url_provider)
+        const {data} = await api.get(environment.url_provider, TokenConfig)
         if(data){
             return{
                 data
@@ -46,7 +46,7 @@ const getAll = async (): Promise<TAllProviderList | Error>   => {
 }
 const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     try {
-        const {data} = await api.get(environment.url_provider + `${id}`)
+        const {data} = await api.get(environment.url_provider + `${id}`, TokenConfig)
         if(data){
             return data
         }
@@ -58,7 +58,7 @@ const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
 }
 const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Error>   => {
   
-    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados)
+    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -70,7 +70,7 @@ const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Erro
       })
 }
 const DeleteById = async (id: string): Promise<void | Error>   => {
-    return await api.delete(environment.url_provider + `${id}`)
+    return await api.delete(environment.url_provider + `${id}`, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -83,7 +83,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
 }
 const Create = async (dados: IInfoProvider): Promise<any>   => {
 
-    return await api.post<IProviderPackage>(environment.url_provider, dados)
+    return await api.post<IProviderPackage>(environment.url_provider, dados, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data

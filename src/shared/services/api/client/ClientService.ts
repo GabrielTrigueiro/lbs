@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { environment } from "../../../environment";
+import { environment, TokenConfig } from "../../../environment";
 import { api } from "../axios-config"
 
 export interface IInfoClient {
@@ -29,25 +29,42 @@ export interface IClientPackage {
     errors: string,
     success: boolean
 }
+
+interface IClientSearch {
+    numberOfPages: number
+    actualPage: number
+    totalElements: number
+    hasNext: boolean
+    data: IInfoClient[]
+}
+
+export interface IPagination {
+    page: number
+    pageSize: number
+    sortField: string
+    sortDiresction: string
+    param: string
+    value: string
+}
 export type TAllClientList = {
     data: IClientPackage
 }
-const getAll = async (filter = ''): Promise<TAllClientList | Error> => {
-    try {
-        const {data} = await api.get(environment.url_client)
-        if(data){
-            return{
-                data
-            }
+const getAll = async (dados: IPagination): Promise<any | Error> => {
+    
+    return await api.post<IClientSearch>(environment.url_search, dados, TokenConfig)
+    .then(data => {
+        if(data instanceof AxiosError){
+            return data
         }
-        return new Error('Erro ao listar os registros')
-    } catch (error) {
-        return new Error((error as {message: string}).message || 'Erro ao listar os registros')
-    }
+        return data
+    })
+    .catch(err => {
+        console.error(err)
+    })
 }
 const getByIDd = async (id: string): Promise<IInfoClient | Error> => {
     try {
-        const {data} = await api.get( environment.url_client + `${id}`)
+        const {data} = await api.get( environment.url_client + `${id}`, TokenConfig)
         if(data){
             return data
         }
@@ -58,7 +75,7 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error> => {
 }
 const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error> => {
   
-    return  await api.put<IInfoClient>(environment.url_client + `${id}`, dados)
+    return  await api.put<IInfoClient>(environment.url_client + `${id}`, dados, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -70,7 +87,7 @@ const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>
       })
 }
 const DeleteById = async (id: string): Promise<void | Error> => {
-    return await api.delete(environment.url_client + `${id}`)
+    return await api.delete(environment.url_client + `${id}`, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -83,7 +100,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
 }
 const Create = async (dados: IInfoClient): Promise<any | Error> => {
 
-    return await api.post<IClientPackage>(environment.url_client, dados)
+    return await api.post<IClientPackage>(environment.url_client, dados, TokenConfig)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
