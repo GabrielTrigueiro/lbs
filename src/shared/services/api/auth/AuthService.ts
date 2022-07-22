@@ -9,34 +9,25 @@ export type TClientTotal = {
 
 export interface IAuth{
     acessToken: string
+    type: string
+    message: string
+    isAuthenticated: boolean
 }
 
-export const auth = async (username: string, password: string): Promise<any | IAuth | Error>   => {
-    // try {
-    //     const {data} = await api.post(environment.url_login, {username, password})
-    //     console.log(data);
-        
-    //     if(data){
-    //         return data
-    //     }
-    //     return new Error('Erro ao criar o registro')
-    // } catch (error) {
-    //     return new Error((error as {message: string}).message || 'Erro ao criar o registro')
-    // }
+export const auth = async (username: string, password: string): Promise<any | AxiosError>   => {
 
     return await api.post(environment.url_login, {username, password})
     .then(data => {
         if(data instanceof AxiosError){
             console.log('errou o login')
-            return data.message
+            return data
         }
-        console.log(data.data)
+        console.log('1')
         return data.data
     })
     .catch(err => {
         console.error(err)
     })
-
 }
 
 export const AuthService = {

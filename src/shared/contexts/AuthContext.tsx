@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { AxiosError } from "axios";
 
 interface IUser {
   name: string
@@ -41,16 +42,21 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const handleLogin = useCallback(
     async (username: string, password: string) => {
-      const result = await AuthService.auth(username, password);
-      if (result instanceof Error) {
-        return result.message;
-      } else {
-        localStorage.setItem(
-          'Acess_Token',
-          JSON.stringify(result.acessToken)
-        );
-        setAcessToken(result.acessToken);
-      }
+      await AuthService.auth(username, password)
+      .then( result => {
+        if (result instanceof AxiosError) {
+          console.log('3');
+          console.log(result.response?.data.message)
+          return result.message;
+        }else{
+          localStorage.setItem(
+            'Acess_Token',
+            JSON.stringify(result.acessToken)
+          );
+          console.log('4');
+          setAcessToken(result.acessToken);
+        }
+      })     
     },
     []
   );

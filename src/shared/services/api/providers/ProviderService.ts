@@ -34,7 +34,7 @@ export type TAllProviderList = {
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     //trocar pra provider
-    return await api.post<IClientSearch>(environment.url_Client_search, dados, TokenConfig)
+    return await api.post<IClientSearch>(environment.url_provider_search, dados, TokenConfig)
     .then(data => {
         if(data instanceof AxiosError){
             return data
