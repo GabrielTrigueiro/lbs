@@ -6,7 +6,7 @@ import { TableClients } from "../../shared/components/client-components/table-cl
 import { SearchInput} from "../../shared/components/search";
 import { Add } from "@mui/icons-material";
 import { ConfirmationButton } from "../../shared/components";
-import { ClienteService, IInfoClient, IPagination } from "../../shared/services";
+import { ClienteService, IClientSearch, IInfoClient, IReceivePagination, ISendPagination } from "../../shared/services";
 import {
   Box,
   Icon,
@@ -16,7 +16,6 @@ import {
   Pagination,
   Button,
   Modal,
-  TextField,
 } from "@mui/material";
 
 export const ClientListPage: React.FC = () => {
@@ -25,17 +24,16 @@ export const ClientListPage: React.FC = () => {
   const [rows, setRows] = useState<IInfoClient[]>([]);
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
+
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
   };
   const handleConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true);
   };
-
   useEffect(() => {
     update();
   }, [value]);
-
   const update = () => {
     ClienteService.getAll(ClientPaginationConf).then((result) => {
       if (result instanceof Error) {
@@ -47,7 +45,7 @@ export const ClientListPage: React.FC = () => {
     });
   };
 
-  let ClientPaginationConf: IPagination = {
+  let ClientPaginationConf: ISendPagination = {
     page: 0,
     pageSize: 10,
     param: "name",
@@ -55,6 +53,7 @@ export const ClientListPage: React.FC = () => {
     sortField: "name",
     value: value,
   };
+
 
   if (isLoading) return <ClientListPageSkeleton />;
   return (
@@ -126,7 +125,7 @@ export const ClientListPage: React.FC = () => {
 
       <Box display="flex" justifyContent="flex-end" mt={1}>
         <Stack>
-          <Pagination count={4} variant="outlined" shape="rounded" />
+          <Pagination count={1} variant="outlined" shape="rounded" />
         </Stack>
       </Box>
 

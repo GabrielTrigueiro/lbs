@@ -49,7 +49,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           'Acess_Token',
           JSON.stringify(result.acessToken)
         );
-        setAcessToken(result.acessToken.acessToken);
+        setAcessToken(result.acessToken);
       }
     },
     []

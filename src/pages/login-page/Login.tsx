@@ -80,8 +80,7 @@ export const Login: React.FC = ({ children }) => {
     handleButtonClick()
   }
   
-  if (isAuthenticated) return <>{children}</>
-
+  if (isAuthenticated) return<>{children}</>
   return (
     <Grid container>
       <Grid

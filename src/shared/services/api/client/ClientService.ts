@@ -30,7 +30,7 @@ export interface IClientPackage {
     success: boolean
 }
 
-interface IClientSearch {
+export interface IClientSearch {
     numberOfPages: number
     actualPage: number
     totalElements: number
@@ -38,7 +38,7 @@ interface IClientSearch {
     data: IInfoClient[]
 }
 
-export interface IPagination {
+export interface ISendPagination {
     page: number
     pageSize: number
     sortField: string
@@ -46,12 +46,19 @@ export interface IPagination {
     param: string
     value: string
 }
+
+export interface IReceivePagination{
+    numberOfPages:number
+    actualPage: number
+    hasNext: boolean
+}
+
 export type TAllClientList = {
     data: IClientPackage
 }
-const getAll = async (dados: IPagination): Promise<any | Error> => {
+const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     
-    return await api.post<IClientSearch>(environment.url_search, dados, TokenConfig)
+    return await api.post<IClientSearch>(environment.url_Client_search, dados, TokenConfig)
     .then(data => {
         if(data instanceof AxiosError){
             return data

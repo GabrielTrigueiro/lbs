@@ -5,17 +5,16 @@ export type TClientTotal = {
     username: string,
     password: string,
 }
-interface ITokenProps {
-    type: string
-    acessToken: string
-}
+
 export interface IAuth{
-    acessToken: ITokenProps
+    acessToken: string
 }
 
 export const auth = async (username: string, password: string): Promise<IAuth | Error>   => {
     try {
         const {data} = await api.post(environment.url_login, {username, password})
+        console.log(data);
+        
         if(data){
             return data
         }

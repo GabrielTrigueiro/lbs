@@ -5,7 +5,8 @@ export const environment = {
 
     url_back: URL,
     url_login: URL + `/login`,
-    url_search: URL + `/api/client/search/`,
+    url_Client_search: URL + `/api/client/search/`,
+    // url_Provider_search: URL + `/api/client/search/`,
     url_client:  URL + `/api/client/`,
     url_provider: URL + `/api/provider/`,
 }
