@@ -6,11 +6,12 @@ import { SearchInput } from "../../shared/components/search";
 import { TableProviders } from "../../shared/components/table-colaboradores/TableProviders";
 import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
+import { ISendPagination } from "../../shared/services";
 import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
 
 export const ProviderListPage: React.FC = () => {
   
-
+  const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true)
   const [rows, setRows] = useState<IInfoProvider[]>([])
   const [confirm, setConfirm] = useState<true | false>(false);
@@ -23,9 +24,9 @@ export const ProviderListPage: React.FC = () => {
   }
   useEffect(() => {
     update();
-  }, [])
+  }, [value])
   const update = () => {
-    ProviderService.getAll().then((result) => {
+    ProviderService.getAll(ProviderPaginationConf).then((result) => {
       if (result instanceof Error) {
         alert(result.message)
       } else {
@@ -34,6 +35,15 @@ export const ProviderListPage: React.FC = () => {
       }
     })
   }
+
+  let ProviderPaginationConf: ISendPagination = {
+    page: 0,
+    pageSize: 10,
+    param: "name",
+    sortDiresction: "DESC",
+    sortField: "name",
+    value: value,
+  };
 
   return (
     <LayoutBasePage>
@@ -74,7 +84,7 @@ export const ProviderListPage: React.FC = () => {
               Lista de Fornecedores
             </Typography>
             <Box position={"relative"} bottom={3}>
-              {/* <SearchInput /> */}
+              <SearchInput change={(value)=>{setValue(value.target.value)}}/>
             </Box>
           </Grid>
           <Grid

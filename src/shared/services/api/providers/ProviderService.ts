@@ -1,6 +1,7 @@
 import { AxiosError } from "axios"
 import { environment, TokenConfig } from "../../../environment"
 import { api } from "../axios-config"
+import { IClientSearch, ISendPagination } from "../client"
 
 export interface IInfoProvider {
     id?: string
@@ -31,18 +32,18 @@ export type TAllProviderList = {
     data: IProviderPackage
 }
 
-const getAll = async (): Promise<TAllProviderList | Error>   => {
-    try {
-        const {data} = await api.get(environment.url_provider, TokenConfig)
-        if(data){
-            return{
-                data
-            }
+const getAll = async (dados: ISendPagination): Promise<any | Error> => {
+    //trocar pra provider
+    return await api.post<IClientSearch>(environment.url_Client_search, dados, TokenConfig)
+    .then(data => {
+        if(data instanceof AxiosError){
+            return data
         }
-        return new Error('Erro ao listar os registros')
-    } catch (error) {
-        return new Error((error as {message: string}).message || 'Erro ao carregar página.')
-    }
+        return data
+    })
+    .catch(err => {
+        console.error(err)
+    })
 }
 const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     try {
