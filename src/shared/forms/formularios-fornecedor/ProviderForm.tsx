@@ -153,34 +153,34 @@ export const ProviderForm: React.FC<{
               display={"flex"}
               flexDirection={"column"}
             >
-              <VTextField label="Código" name="code" />
-              <VTextField label="Nome" name="name" />
-              <VTextField label="CNPJ" name="cnpj" />
+              <VTextField sx={{mt:1}} label="Código" name="code" />
+              <VTextField sx={{mt:1}} label="Nome" name="name" />
+              <VTextField sx={{mt:1}} label="CNPJ" name="cnpj" />
             </Box>
             <Box
               className="Form-Interior-Top"
               display={"flex"}
               flexDirection={"column"}
             >
-              <VTextField label="Contato" name="contact" />
-              <VTextField label="Email" name="email" />
-              <VTextField label="Fixo" name="telephone" />
-              <VTextField label="Celular" name="cell" />
+              <VTextField sx={{mt:1}} label="Contato" name="contact" />
+              <VTextField sx={{mt:1}} label="Email" name="email" />
+              <VTextField sx={{mt:1}} label="Fixo" name="telephone" />
+              <VTextField sx={{mt:1}} label="Celular" name="cell" />
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography sx={{mt:4, ml:2,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
+            <Typography sx={{mt:2, ml:5,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
-                <VTextField label="UF" name="uf" />
-                <VTextField label="Endereço" name="address"/>
-                <VTextField label="Cidade" name="city"/>
-                <VTextField label="Id Cidade" name="cityId" />
+                <VTextField sx={{mt:1}} label="UF" name="uf" />
+                <VTextField sx={{mt:1}} label="Endereço" name="address"/>
+                <VTextField sx={{mt:1}} label="Cidade" name="city"/>
+                <VTextField sx={{mt:1}} label="Id Cidade" name="cityId" />
               </Box>
               <Box className="Form-Interior-Bottom">
-                <VTextField label="CEP" name="cep" onBlur={getCepData}/>
-                <VTextField label="Bairro" name="neighborhood" />
-                <VTextField label="Número Residência" name="number" />
+                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <VTextField sx={{mt:1}} label="Bairro" name="neighborhood" />
+                <VTextField sx={{mt:1}} label="Número Residência" name="number" />
 
                 <Box className="Container-Botoes-Provider">
                   <Button 

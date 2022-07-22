@@ -106,8 +106,8 @@ export const ProviderListPage: React.FC = () => {
           position: 'absolute' as 'absolute',
           top: '40%',
           left: '50%',
-          height: '500px',
-          width: '700px',
+          height: "550px",
+          width: "800px",
           transform: 'translate(-50%, -40%)',
 
           //CSS estilo

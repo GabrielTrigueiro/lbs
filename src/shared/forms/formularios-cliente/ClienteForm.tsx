@@ -156,38 +156,38 @@ export const CadastroClienteForm: React.FC<{
               display={"flex"}
               flexDirection={"column"}
             >
-              <VTextField label="Nome" name="name" />
+              <VTextField sx={{mt:1}} label="Nome" name="name" />
               <VSelectField
-                sx={{ height: "30px" }}
+                sx={{ height: "30px" , mt:1}}
                 name="sex"
                 label="Gênero"
                 listOption={Gender}
               />
-              <VTextField label="RG" name="rg" />
-              <VTextField label="CPF" name="cpf" />
+              <VTextField sx={{mt:1}} label="RG" name="rg" />
+              <VTextField sx={{mt:1}} label="CPF" name="cpf" />
             </Box>
             <Box
               className="Form-Interior-Top"
               display={"flex"}
               flexDirection={"column"}
             >
-              <VTextField label="Email" name="email" />
-              <VTextField label="Número Fixo" name="telephone" />
-              <VTextField label="Celular" name="cell" />
+              <VTextField sx={{mt:1}} label="Email" name="email" />
+              <VTextField sx={{mt:1}} label="Número Fixo" name="telephone" />
+              <VTextField sx={{mt:1}} label="Celular" name="cell" />
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography sx={{mt:4, ml:2,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
+            <Typography sx={{mt:4, ml:5,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
-                <VTextField label="UF" name="uf" />
-                <VTextField label="CEP" name="cep" onBlur={getCepData}/>
-                <VTextField label="Endereço" name="address"/>
-                <VTextField label="Cidade" name="city"/>
+                <VTextField sx={{mt:1}} label="UF" name="uf" />
+                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <VTextField sx={{mt:1}} label="Endereço" name="address"/>
+                <VTextField sx={{mt:1}} label="Cidade" name="city"/>
               </Box>
               <Box className="Form-Interior-Bottom">
-                <VTextField label="Bairro" name="neighborhood" />
-                <VTextField label="Número Residência" name="number" />
+                <VTextField sx={{mt:1}} label="Bairro" name="neighborhood" />
+                <VTextField sx={{mt:1}} label="Número Residência" name="number" />
 
                 <Box className="Container-Botoes">
                   <Button 
