@@ -68,14 +68,7 @@ export const CadastroClienteForm: React.FC<{
           update();
         });
       })
-      .catch((erros: Yup.ValidationError) => {
-        const validandoErros: { [key: string]: string } = {};
-        erros.inner.forEach((erros) => {
-          if (!erros.path) return;
-          validandoErros[erros.path] = erros.message;
-        });
-        formRef.current?.setErrors(validandoErros);
-      });
+      
   }
 
   const handleEdit = (dados: IInfoClient) =>{

@@ -52,7 +52,9 @@ export const TesteSnackBar: React.FC = ({children}) => {
                     autoHideDuration={4000}
                     onClose={handleClose}
                 >
-                    <Alert severity={snack.color} sx={{ width: '200px' }}>
+                    <Alert 
+                    sx={{width: '200px', display:'flex', alignItems:'center'}}
+                    severity={snack.color}>
                         <Typography>{snack.message}</Typography>
                     </Alert>
                 </Snackbar>

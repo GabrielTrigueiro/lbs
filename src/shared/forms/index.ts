@@ -1,3 +1,3 @@
 export * from "./forms-components"
-export * from "./formularios-cliente"
-export * from "./formularios-fornecedor"
+export * from "./form-client"
+export * from "./form-provider"

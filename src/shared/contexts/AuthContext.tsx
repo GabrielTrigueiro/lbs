@@ -31,9 +31,7 @@ export const Acess_Token = "Acess_Token";
 export const AuthProvider: React.FC = ({ children }) => {
 
   const [acessToken, setAcessToken] = useState<string>();
-
   const [dados, setDados] = useState<IUser>();
-
   const {snack, setSnack} = useContext(SnackbarContext);
   
   useEffect(() => {
@@ -45,6 +43,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       setAcessToken(undefined)
     }
   }, [acessToken])
+
   const handleLogin = useCallback(
     async (username: string, password: string) => {
       await AuthService.auth(username, password)
@@ -66,10 +65,12 @@ export const AuthProvider: React.FC = ({ children }) => {
     },
     []
   );
+
   const handleLogout = useCallback(() => {
     localStorage.removeItem(Acess_Token);
     setAcessToken(undefined);
   }, []);
+  
   const isAuthenticated = useMemo(() => acessToken !== undefined, [acessToken]);
   return (
     <AuthContext.Provider
