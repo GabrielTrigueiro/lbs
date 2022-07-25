@@ -19,10 +19,8 @@ export const auth = async (username: string, password: string): Promise<any | Ax
     return await api.post(environment.url_login, {username, password})
     .then(data => {
         if(data instanceof AxiosError){
-            console.log('errou o login')
             return data
         }
-        console.log('1')
         return data.data
     })
     .catch(err => {

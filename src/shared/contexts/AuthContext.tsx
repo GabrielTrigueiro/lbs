@@ -1,5 +1,6 @@
 import { AuthService } from "../services/api/auth/AuthService";
 import jwt from "jwt-decode"
+import { AxiosError } from "axios";
 import {
   createContext,
   useCallback,
@@ -8,7 +9,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { AxiosError } from "axios";
+import { Snack, SnackbarContext } from "./NotificationContext";
 
 interface IUser {
   name: string
@@ -24,50 +25,52 @@ interface IAuthContext {
 }
 
 const AuthContext = createContext({} as IAuthContext);
+
 export const Acess_Token = "Acess_Token";
 
 export const AuthProvider: React.FC = ({ children }) => {
+
   const [acessToken, setAcessToken] = useState<string>();
+
   const [dados, setDados] = useState<IUser>();
+
+  const {snack, setSnack} = useContext(SnackbarContext);
   
   useEffect(() => {
     const acessToken = localStorage.getItem(Acess_Token);
     if (acessToken) {
       setDados(jwt(acessToken))
-      setAcessToken(`Bearer ${acessToken}`);
+      setAcessToken(`Bearer ${acessToken}`)
     } else {
-      setAcessToken(undefined);
+      setAcessToken(undefined)
     }
-  }, [acessToken]);
-
+  }, [acessToken])
   const handleLogin = useCallback(
     async (username: string, password: string) => {
       await AuthService.auth(username, password)
       .then( result => {
         if (result instanceof AxiosError) {
-          console.log('3');
+          //tratar erro aqui
+          console.log(result)
           console.log(result.response?.data.message)
-          return result.message;
-        }else{
+          setSnack(new Snack({message: result.response?.data.message, color:'error', open: true}))
+      }else{
+          setSnack(new Snack({message: 'Login realizado com sucesso', color:'success', open: true}))
           localStorage.setItem(
             'Acess_Token',
             JSON.stringify(result.acessToken)
           );
-          console.log('4');
           setAcessToken(result.acessToken);
         }
       })     
     },
     []
   );
-
   const handleLogout = useCallback(() => {
     localStorage.removeItem(Acess_Token);
     setAcessToken(undefined);
   }, []);
-
   const isAuthenticated = useMemo(() => acessToken !== undefined, [acessToken]);
-
   return (
     <AuthContext.Provider
       value={{ dados ,isAuthenticated, login: handleLogin, logout: handleLogout }}
