@@ -151,7 +151,11 @@ export const CadastroClienteForm: React.FC<{
             >
               <VTextField sx={{mt:1}} label="Nome" name="name" />
               <VSelectField
-                sx={{ height: "30px" , mt:1}}
+                sx={{ 
+                  height: "30px" , 
+                  mt:1,
+                  fontSize:'12px'
+                }}
                 name="sex"
                 label="Gênero"
                 listOption={Gender}
