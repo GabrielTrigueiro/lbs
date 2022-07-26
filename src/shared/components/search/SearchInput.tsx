@@ -2,6 +2,7 @@ import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -37,16 +38,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "0ch",
-      "&:focus": {
-        width: "20ch",
-      },
+      width: "0ch", "&:focus": { width: "20ch"},
     },
   },
 }));
 
 
 export const SearchInput: React.FC<{change: (text:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}> = ({change}) => {
+
+  const [ wide, setWide ] = useState<number>(0)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
