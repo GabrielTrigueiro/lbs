@@ -152,7 +152,7 @@ export const MenuLateral: React.FC = ({ children }) => {
         >
           <Box sx={{height: "100%", display:'flex'}}>
             <Box
-              sx={{bgcolor:'#348', width: 65, height: "100%" }}
+              sx={{bgcolor:'transparent', width: 65, height: "100%" }}
             ></Box>
             <Box
               sx={{bgcolor:'#E4DB00' ,width: 65, height: "100%"}}
