@@ -27,22 +27,22 @@ export interface IProviderCadastroInfo {
 }
 
 export const ProviderCadastroSchema: Yup.SchemaOf<IProviderCadastroInfo> = Yup.object().shape({
-    code: Yup.number().required("O id é obrigatório"),
+    code: Yup.number().required("O id é obrigatório").typeError("Digite apenas números"),
     name: Yup.string().required("O nome é obrigatóro"),
     cnpj: Yup.string().required("O CNPJ é obrigatório").typeError("Digite apenas números"),
 
-    contact: Yup.number().required("O Campo é obrigatório"),
+    contact: Yup.number().required("O Campo é obrigatório").typeError("Digite apenas números"),
     email: Yup.string().required("Email orbigatório"),
-    telephone:Yup.number().required("Telefone é obrigatório"),
-    cell:Yup.number().required("Celular é obrigatório"),
+    telephone:Yup.number().required("Telefone é obrigatório").typeError("Digite apenas números"),
+    cell:Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
 
     cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
     address: Yup.string().required("Endereço é obrigatório"),
-    cityId: Yup.string().required("O id é obrigatório"),
+    cityId: Yup.string().required("O id é obrigatório").typeError("Digite apenas números"),
     city: Yup.string().required("A cidade é obrigatório"),
     uf: Yup.string().required("O estado é obrigatório"),
     neighborhood: Yup.string().required("O bairro é obrigatório"),
-    number: Yup.number().required("O Número é obrigatório"),
+    number: Yup.number().required("O Número é obrigatório").typeError("Digite apenas números"),
   
 })
 
@@ -134,6 +134,7 @@ export const ProviderForm: React.FC<{
       >
         <Box
           height={70}
+          minHeight={70}
           width={"100%"}
           bgcolor={"#575A61"}
           display={"flex"}
@@ -169,7 +170,7 @@ export const ProviderForm: React.FC<{
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography sx={{mt:2, ml:5,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
+            <Typography sx={{mt:2, ml:11,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField sx={{mt:1}} label="UF" name="uf" />

@@ -27,8 +27,8 @@ export const VTextField: React.FC<TVTextField> = ({name, ...rest}) => {
             
             variant="standard"
 
-            inputProps={{style: {fontSize: 12}}}
-            InputLabelProps={{style: {fontSize: 12}}}
+            inputProps={{style: {fontSize: 16, marginTop: 1}}}
+            InputLabelProps={{style: {fontSize: 16}}}
 
             error={!!error}
             helperText={error}

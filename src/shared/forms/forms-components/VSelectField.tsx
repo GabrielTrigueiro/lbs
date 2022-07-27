@@ -27,10 +27,10 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
   }, [fieldName, registerField, value])
 
   return (
-    <FormControl sx={{display:'flex',fontSize:'12px'}}>
-        <InputLabel sx={{fontSize:'12px'}} variant='standard'>Genero</InputLabel>
+    <FormControl sx={{display:'flex',fontSize:16, mt:1}}>
+        <InputLabel sx={{fontSize:16}} variant='standard'>Genero</InputLabel>
         <Select 
-        sx={{fontSize:'12px'}}
+        sx={{fontSize:16}}
           value={value}
           defaultValue={defaultValue}
           variant={'standard'}
@@ -39,7 +39,7 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
           {...rest}
         >
           {listOption.map(row => (
-            <MenuItem key={row.value}  sx={{fontSize:'12px'}} value={row.label}>{row.label}</MenuItem>
+            <MenuItem key={row.value}  sx={{fontSize:16}} value={row.label}>{row.label}</MenuItem>
           ))}            
         </Select>
     </FormControl>

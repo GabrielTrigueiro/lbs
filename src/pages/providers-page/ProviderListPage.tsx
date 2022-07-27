@@ -111,24 +111,24 @@ export const ProviderListPage: React.FC = () => {
       <Modal sx={{minWidth:1020}} onClose={handleConfirm} open={modal}>
         <Box
         sx={{
-          overflow:'auto',
+          overflow: "auto",
           //posição do modal
-          position: 'absolute' as 'absolute',
-          top: '40%',
-          left: '50%',
-          height: "550px",
-          width: "800px",
-          transform: 'translate(-50%, -40%)',
+          position: "absolute" as "absolute",
+          top: "40%",
+          left: "50%",
+          height: "600px",
+          width: "1000px",
+          transform: "translate(-50%, -40%)",
 
           //CSS estilo
-          borderRadius:0,
-          bgcolor: 'background.paper',
-          display:'flex',
-          flexDirection:'column',
-          padding:0,
+          borderRadius: 0,
+          bgcolor: "background.paper",
+          display: "flex",
+          flexDirection: "column",
+          padding: 0,
 
-          alignItems:'center',
-          justifyContent:'center'
+          alignItems: "center",
+          justifyContent: "center",
         }}>
           <ProviderForm
           type={"register"}

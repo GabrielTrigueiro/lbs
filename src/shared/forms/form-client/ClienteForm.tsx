@@ -7,6 +7,7 @@ import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
+import { useState } from "react";
 
 export interface IClienteCadastroInfo {
   cpf: number
@@ -51,9 +52,10 @@ export const ClienteCadastroSchema: Yup.SchemaOf<IClienteCadastroInfo> = Yup.obj
 export const CadastroClienteForm: React.FC<{
   update: () => void,
   handleModal: () => void
+  tittle: string
   client?: IInfoClient
   type: string
-}> = ({ update, handleModal, client, type }) => {
+}> = ({ update, handleModal, client, type, tittle}) => {
   const close = () => { handleModal()}
 
   const { formRef } = useVForm()
@@ -68,7 +70,14 @@ export const CadastroClienteForm: React.FC<{
           update();
         });
       })
-      
+      .catch((erros: Yup.ValidationError)=>{
+        const validandoErros: {[key:string]: string} = {}
+        erros.inner.forEach(erros =>{
+          if(!erros.path)return
+          validandoErros[erros.path] = erros.message
+        })
+        formRef.current?.setErrors(validandoErros)
+      })
   }
 
   const handleEdit = (dados: IInfoClient) =>{
@@ -111,7 +120,6 @@ export const CadastroClienteForm: React.FC<{
     })
   }
 
-
   return (
     <Form
       initialData={client}
@@ -129,6 +137,7 @@ export const CadastroClienteForm: React.FC<{
         className="Conteiner-Interior-Geral"
       >
         <Box
+          minHeight={70}
           height={70}
           width={"100%"}
           bgcolor={"#575A61"}
@@ -139,7 +148,7 @@ export const CadastroClienteForm: React.FC<{
           <Typography
             sx={{ fontWeight: "500", fontSize: "25px", color: "#fff" }}
           >
-            Cadastrar Cliente
+            {tittle}
           </Typography>
         </Box>
         <Box className="Container-Interior-Formulario">
@@ -153,8 +162,7 @@ export const CadastroClienteForm: React.FC<{
               <VSelectField
                 sx={{ 
                   height: "30px" , 
-                  mt:1,
-                  fontSize:'12px'
+                  fontSize:16
                 }}
                 name="sex"
                 label="Gênero"
@@ -174,7 +182,7 @@ export const CadastroClienteForm: React.FC<{
             </Box>
           </Box>
           <Box flex={1}>
-            <Typography sx={{mt:4, ml:5,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
+            <Typography sx={{mt:4, ml:11,fontWeight:'500', color: '#575A61'}}>Informações de Endereço</Typography>
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField sx={{mt:1}} label="UF" name="uf" />

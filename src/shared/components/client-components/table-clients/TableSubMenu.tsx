@@ -23,8 +23,6 @@ export const TableSubMenu: React.FC<{
 
   const [delet, setDelet] = useState<true | false>(false);
 
-  const [status, setStatus] = useState<boolean>();
-
   const open = Boolean(anchorEl);
 
   const handleEditModal = () => {
@@ -43,9 +41,41 @@ export const TableSubMenu: React.FC<{
     setAnchorEl(null);
   };
 
+  // const [teste, setTeste] = useState<IInfoClient>({
+  //   cpf: client.cpf,
+  //   name: client.name,
+  //   rg: client.rg,
+  //   sex: client.sex,
+
+  //   address: client.address,
+  //   cep: client.cep,
+  //   city: client.city,
+  //   uf: client.uf,
+  //   neighborhood: client.neighborhood,
+  //   number: client.number,
+
+  //   cell: client.cell,
+  //   email: client.email,
+  //   telephone: client.telephone,
+
+  //   isActive: false
+  // })
+  
+  // const handleStatus = (dados: IInfoClient) =>{
+  //   if(dados.id){
+  //     setTeste(dados)
+  //     ClienteService.UpdateById(dados.id, teste)
+  //     .then(result => {
+  //       console.log('viado')
+  //       update()
+  //     })
+  //   }
+  // }
+
   const handleDeleteUser = () => {
     if (client.id)
-      ClienteService.DeleteById(client.id).then((result) => {
+      ClienteService.DeleteById(client.id)
+      .then((result) => {
         update();
       });
   };
@@ -125,8 +155,8 @@ export const TableSubMenu: React.FC<{
             position: "absolute" as "absolute",
             top: "40%",
             left: "50%",
-            height: "550px",
-            width: "800px",
+            height: "600px",
+            width: "1000px",
             transform: "translate(-50%, -40%)",
 
             //CSS estilo
@@ -145,6 +175,7 @@ export const TableSubMenu: React.FC<{
             update={update}
             handleModal={handleEditModal}
             client={client}
+            tittle={'Editar Cliente'}
           />
         </Box>
       </Modal>

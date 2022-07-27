@@ -137,8 +137,8 @@ export const ClientListPage: React.FC = () => {
             position: "absolute" as "absolute",
             top: "40%",
             left: "50%",
-            height: "550px",
-            width: "800px",
+            height: "600px",
+            width: "1000px",
             transform: "translate(-50%, -40%)",
 
             //CSS estilo
@@ -153,6 +153,7 @@ export const ClientListPage: React.FC = () => {
           }}
         >
           <CadastroClienteForm
+            tittle={'Cadastrar Cliente'}
             type={"register"}
             update={update}
             handleModal={handleModal}

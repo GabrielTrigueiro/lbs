@@ -23,6 +23,5 @@
 .Container-Botoes{
     display: flex;
     justify-content: space-around;
-    margin-top: 4rem;
-    margin-left: 6rem;
+    
 }
