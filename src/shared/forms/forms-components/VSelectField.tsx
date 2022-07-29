@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useField } from '@unform/core'
-import { FormControl, InputLabel, MenuItem, Select, SelectProps } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectProps,
+} from '@mui/material'
 
 interface IOption {
   label: string
@@ -12,9 +18,18 @@ interface Props  extends SelectProps {
     listOption: IOption[]
 }
 
-export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
+export const VSelectField: React.FC<Props> = ({
+  listOption,
+  name,
+  ...rest
+}) => {
   
-  const { fieldName, registerField, defaultValue, error } = useField(name)
+  const {
+    fieldName,
+    registerField,
+    defaultValue,
+    error
+  } = useField(name)
 
   const [value, setValue] = useState<string>(defaultValue||'')
 
@@ -28,9 +43,11 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
 
   return (
     <FormControl sx={{display:'flex',fontSize:16, mt:1}}>
-        <InputLabel sx={{fontSize:16}} variant='standard'>Genero</InputLabel>
+        <InputLabel sx={{fontSize:16}} variant='standard'>
+          Genero
+        </InputLabel>
         <Select 
-        sx={{fontSize:16}}
+          sx={{fontSize:16}}
           value={value}
           defaultValue={defaultValue}
           variant={'standard'}
@@ -39,7 +56,12 @@ export const VSelectField: React.FC<Props> = ({listOption ,name, ...rest }) => {
           {...rest}
         >
           {listOption.map(row => (
-            <MenuItem key={row.value}  sx={{fontSize:16}} value={row.label}>{row.label}</MenuItem>
+            <MenuItem
+              key={row.value}
+              sx={{fontSize:16}}
+              value={row.label}>
+                {row.label}
+            </MenuItem>
           ))}            
         </Select>
     </FormControl>
