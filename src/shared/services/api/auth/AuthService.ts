@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { environment } from "../../../environment"
+import { environment, TokenConfig } from "../../../environment"
 import { api } from "../axios-config"
 
 export type TClientTotal = {

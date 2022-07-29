@@ -1,4 +1,3 @@
-
 export const URL = 'https://api.lbs.bitbeelabs.tech'
 
 export const environment = {
@@ -13,6 +12,7 @@ export const environment = {
 
 export const TokenConfig = {
     headers:{
-        Authorization: `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+        Authorization: 
+        `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
     }
-} 
+}

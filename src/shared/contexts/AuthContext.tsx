@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { Snack, SnackbarContext } from "./NotificationContext";
+import { TokenConfig } from "../environment";
 
 interface IUser {
   name: string
@@ -32,13 +33,22 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const [acessToken, setAcessToken] = useState<string>();
   const [dados, setDados] = useState<IUser>();
-  const {snack, setSnack} = useContext(SnackbarContext);
+  const {setSnack} = useContext(SnackbarContext);  
   
   useEffect(() => {
-    const acessToken = localStorage.getItem(Acess_Token);
+    // const TokenDeAcesso = localStorage.getItem(Acess_Token);
+    console.log('ussefect');
+    console.log(localStorage.getItem("Acess_Token"))
+    // const config ={
+    //   headers: {
+    //       Authorization: 'Bearer ' + localStorage.getItem("Acess_Token")   
+    //   }
+    // }
+
     if (acessToken) {
       setDados(jwt(acessToken))
-      setAcessToken(`Bearer ${acessToken}`)
+      console.log('setando token da reposta no state');
+      setAcessToken(acessToken)
     } else {
       setAcessToken(undefined)
     }
@@ -49,22 +59,25 @@ export const AuthProvider: React.FC = ({ children }) => {
       await AuthService.auth(username, password)
       .then( result => {
         if (result instanceof AxiosError) {
-          //tratar erro aqui
-          console.log(result)
-          console.log(result.response?.data.message)
-          setSnack(new Snack({message: result.response?.data.message, color:'error', open: true}))
+          setSnack(new Snack({
+            message: result.response?.data.message,
+            color:'error',
+            open: true}))
       }else{
-          setSnack(new Snack({message: 'Login realizado com sucesso', color:'success', open: true}))
+          setSnack(new Snack({
+            message: 'Login realizado com sucesso',
+            color:'success',
+            open: true
+          }))
+          console.log('setando no local storage o valor do token');
           localStorage.setItem(
-            'Acess_Token',
-            JSON.stringify(result.acessToken)
+            'Acess_Token', JSON.stringify(result.acessToken)
           );
+          console.log(localStorage.getItem('Acess_Token'))
           setAcessToken(result.acessToken);
         }
       })     
-    },
-    []
-  );
+    },[]);
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem(Acess_Token);
