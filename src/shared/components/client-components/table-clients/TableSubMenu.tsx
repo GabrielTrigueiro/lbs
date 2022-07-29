@@ -50,15 +50,16 @@ export const TableSubMenu: React.FC<{
       });
   };
 
-  const handleSwippe = (e:IInfoClient) => {
-    if(e.id)
-      ClienteService.UpdateById(e.id, e).then(result => {
-      update()
-      })
-  }
+  const [teste, setTeste] = useState<IInfoClient>()
 
-  function teste () {
-    return !client.isActive
+  const functionTeste = (e:IInfoClient) => {
+    if(e.id){
+      console.log(e.isActive)
+      e.isActive = !e.isActive
+      console.log(e.isActive)
+      ClienteService.UpdateById(e.id, e)
+      update()
+    }
   }
 
   return (
@@ -119,7 +120,9 @@ export const TableSubMenu: React.FC<{
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={handleEditModal}> Editar </MenuItem>
-        <MenuItem onClick={()=>{teste();handleSwippe(client)}}> Alterar Status </MenuItem>
+        <MenuItem onClick={()=>functionTeste(client)}>
+          Alterar Status
+        </MenuItem>
         <MenuItem> Detalhes </MenuItem>
         <MenuItem onClick={()=>setDelet(true)}> Apagar </MenuItem>
       </Menu>
