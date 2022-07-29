@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import { Snack, SnackbarContext } from "./NotificationContext";
-import { TokenConfig } from "../environment";
 
 interface IUser {
   name: string
@@ -22,7 +21,8 @@ interface IAuthContext {
   isAuthenticated: boolean;
   dados?: IUser
   logout: () => void;
-  login: (username: string, password: string) => Promise<string | void>;
+  login: (username: string, password: string) => 
+  Promise<string | void>;
 }
 
 const AuthContext = createContext({} as IAuthContext);
@@ -39,11 +39,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     // const TokenDeAcesso = localStorage.getItem(Acess_Token);
     console.log('ussefect');
     console.log(localStorage.getItem("Acess_Token"))
-    // const config ={
-    //   headers: {
-    //       Authorization: 'Bearer ' + localStorage.getItem("Acess_Token")   
-    //   }
-    // }
 
     if (acessToken) {
       setDados(jwt(acessToken))
@@ -84,10 +79,17 @@ export const AuthProvider: React.FC = ({ children }) => {
     setAcessToken(undefined);
   }, []);
   
-  const isAuthenticated = useMemo(() => acessToken !== undefined, [acessToken]);
+  const isAuthenticated = useMemo(() => 
+    acessToken !== undefined, [acessToken]
+  );
+
   return (
     <AuthContext.Provider
-      value={{ dados ,isAuthenticated, login: handleLogin, logout: handleLogout }}
+      value={{
+        dados,
+        isAuthenticated,
+        login: handleLogin,
+        logout: handleLogout }}
     >
       {children}
     </AuthContext.Provider>

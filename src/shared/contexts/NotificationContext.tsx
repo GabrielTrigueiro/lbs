@@ -23,22 +23,35 @@ type SnackDefaultValue = {
     setSnack: React.Dispatch<React.SetStateAction<Snack>>
 };
 
-export const SnackbarContext = createContext<SnackDefaultValue>({snack: new Snack({open: false}), setSnack: () => {}})
+export const SnackbarContext = createContext<SnackDefaultValue>({
+    snack: new Snack({open: false}),
+    setSnack: () => {}
+})
 
 export const TesteSnackBar: React.FC = ({children}) => {
 
     const [snack, setSnack] = useState(new Snack({open: false}));
 
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-          return;
-        }
+    const handleClose = (
+        event?: React.SyntheticEvent | Event,
+        reason?: string) => {
+            if (reason === 'clickaway') {
+                return;
+            }
+            setSnack(new Snack({color: snack.color, open:false}));
+        };
     
-        setSnack(new Snack({color: snack.color, open:false}));
-    };
-    
-    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,ref,){
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />})
+    const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+        function Alert(props,ref,){
+        return(
+            <MuiAlert
+                elevation={6}
+                ref={ref}
+                variant="filled"
+                {...props}
+            />
+        )
+    })
     
     return (
         <SnackbarContext.Provider value={{snack, setSnack}}>
@@ -53,7 +66,12 @@ export const TesteSnackBar: React.FC = ({children}) => {
                     onClose={handleClose}
                 >
                     <Alert 
-                    sx={{width: '200px', display:'flex', alignItems:'center'}}
+                    sx={{
+                        width: '200px',
+                        display:'flex',
+                        alignItems:'center'
+                    }}
+                    onClose={handleClose}
                     severity={snack.color}>
                         <Typography>{snack.message}</Typography>
                     </Alert>
