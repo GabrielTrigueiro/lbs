@@ -36,7 +36,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const {setSnack} = useContext(SnackbarContext);  
   
   useEffect(() => {
-    // const TokenDeAcesso = localStorage.getItem(Acess_Token);
+    const acessToken = localStorage.getItem(Acess_Token);
     console.log('ussefect');
     console.log(localStorage.getItem("Acess_Token"))
 

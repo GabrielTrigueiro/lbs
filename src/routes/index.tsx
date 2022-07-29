@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ClientListPage } from "../pages";
+import { ClientListPage, Login } from "../pages";
 import { ProviderListPage } from "../pages/providers-page";
 import { useDrawerContext } from "../shared/contexts";
 
@@ -25,9 +25,9 @@ export const AppRoutes = () => {
   
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/pagina-inicial/clientes" element={<ClientListPage />} />
       <Route path="/pagina-inicial/fornecedores" element={<ProviderListPage/>} />
-      <Route path="*" element={<Navigate to="/pagina-inicial/clientes" />} />
     </Routes>
   );
 };

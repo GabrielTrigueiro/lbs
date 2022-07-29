@@ -15,6 +15,7 @@ export const TableSubMenu: React.FC<{
   client: IInfoClient;
   update: () => void;
 }> = ({ client, update }) => {
+
   const [editModal, setEditModal] = useState<true | false>(false);
 
   const [confirm, setConfirm] = useState<true | false>(false);
@@ -41,37 +42,6 @@ export const TableSubMenu: React.FC<{
     setAnchorEl(null);
   };
 
-  // const [teste, setTeste] = useState<IInfoClient>({
-  //   cpf: client.cpf,
-  //   name: client.name,
-  //   rg: client.rg,
-  //   sex: client.sex,
-
-  //   address: client.address,
-  //   cep: client.cep,
-  //   city: client.city,
-  //   uf: client.uf,
-  //   neighborhood: client.neighborhood,
-  //   number: client.number,
-
-  //   cell: client.cell,
-  //   email: client.email,
-  //   telephone: client.telephone,
-
-  //   isActive: false
-  // })
-  
-  // const handleStatus = (dados: IInfoClient) =>{
-  //   if(dados.id){
-  //     setTeste(dados)
-  //     ClienteService.UpdateById(dados.id, teste)
-  //     .then(result => {
-  //       console.log('viado')
-  //       update()
-  //     })
-  //   }
-  // }
-
   const handleDeleteUser = () => {
     if (client.id)
       ClienteService.DeleteById(client.id)
@@ -79,6 +49,17 @@ export const TableSubMenu: React.FC<{
         update();
       });
   };
+
+  const handleSwippe = (e:IInfoClient) => {
+    if(e.id)
+      ClienteService.UpdateById(e.id, e).then(result => {
+      update()
+      })
+  }
+
+  function teste () {
+    return !client.isActive
+  }
 
   return (
     <Box>
@@ -138,7 +119,7 @@ export const TableSubMenu: React.FC<{
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={handleEditModal}> Editar </MenuItem>
-        <MenuItem> Alterar Status </MenuItem>
+        <MenuItem onClick={()=>{teste();handleSwippe(client)}}> Alterar Status </MenuItem>
         <MenuItem> Detalhes </MenuItem>
         <MenuItem onClick={()=>setDelet(true)}> Apagar </MenuItem>
       </Menu>
