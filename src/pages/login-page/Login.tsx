@@ -24,7 +24,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 interface State {
   password: string

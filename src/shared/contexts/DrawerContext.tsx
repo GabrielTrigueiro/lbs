@@ -32,7 +32,7 @@ export const DrawerProvider: React.FC = ({ children }) => {
   const handleSetDrawerOptions = useCallback((newDrawerOptions: IDrawerOption[]) => {
     setDrawerOptions(newDrawerOptions);
   }, []);
-
+  
   return (
     <DrawerContext.Provider value={{ isDrawerOpen,setDrawerOption: handleSetDrawerOptions , drawerOptions, toggleDrawerOpen }}>
       {children}

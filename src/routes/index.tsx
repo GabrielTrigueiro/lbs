@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ClientListPage, Login } from "../pages";
 import { ProviderListPage } from "../pages/providers-page";
-import { useDrawerContext } from "../shared/contexts";
+import { useAuthContext, useDrawerContext } from "../shared/contexts";
 
 export const AppRoutes = () => {
+
   const { setDrawerOption } = useDrawerContext();
 
   useEffect(() => {
@@ -22,8 +23,7 @@ export const AppRoutes = () => {
     ]);
   }, []);
 
-  
-  return (
+    return (
     <Routes>
       <Route
         path="/login"
@@ -36,6 +36,10 @@ export const AppRoutes = () => {
       <Route
         path="/pagina-inicial/fornecedores"
         element={<ProviderListPage/>}
+      />
+      <Route
+        path="*"
+        element={<Navigate to="/pagina-inicial/clientes" />}
       />
     </Routes>
   );
