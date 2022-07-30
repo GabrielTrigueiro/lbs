@@ -24,6 +24,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material"
+import { useLocation, useNavigate } from "react-router-dom"
 
 interface State {
   password: string
@@ -31,6 +32,17 @@ interface State {
 }
 
 export const Login: React.FC = ({ children }) => {
+
+  const timer = useRef<number>()
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const { isAuthenticated, login } = useAuthContext()
+  const {setSnack} = useContext(SnackbarContext);
+  const [values, setValues] = useState({
+    password: "",
+    usuario: "",
+    showPassword: false,
+  })
 
   const handleClickShowPassword = () => {
     setValues({
@@ -45,20 +57,11 @@ export const Login: React.FC = ({ children }) => {
     event.preventDefault()
   }
   
-  const timer = useRef<number>()
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const { isAuthenticated, login } = useAuthContext()
-  const {setSnack} = useContext(SnackbarContext);
-  const [values, setValues] = useState({
-    password: "",
-    usuario: "",
-    showPassword: false,
-  })
-  
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (prop: keyof State) => (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
       setValues({ ...values, [prop]: event.target.value })
-  }
+    }
 
   const formRef = useRef<FormHandles>(null);
 
@@ -90,7 +93,6 @@ export const Login: React.FC = ({ children }) => {
     .then((dadosValidados) => {
       login(dados.usuario, dados.password)
       handleButtonClick()
-
     })
     .catch((erros: Yup.ValidationError) => {
       setSnack(new Snack({
@@ -178,7 +180,9 @@ export const Login: React.FC = ({ children }) => {
               id="outlined-start-adornment"
               sx={{ width: "100%", m: 1 }}
             >
-              <InputLabel htmlFor="outlined-adornment-user">Usuario</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-user">
+                Usuario
+              </InputLabel>
               <VLoginOutlinedInput
                 name="usuario"
                 autoComplete="off"
@@ -197,7 +201,9 @@ export const Login: React.FC = ({ children }) => {
             <FormControl 
               sx={{ width: "100%", m: 1 }} 
               variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password">
+                Senha
+              </InputLabel>
               <VLoginOutlinedInput
                 name="password"
                 autoComplete="off"
@@ -218,7 +224,10 @@ export const Login: React.FC = ({ children }) => {
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {
+                        values.showPassword ? 
+                        <VisibilityOff /> : <Visibility />
+                      }
                     </IconButton>
                   </InputAdornment>
                 }

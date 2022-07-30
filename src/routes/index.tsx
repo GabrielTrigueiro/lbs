@@ -25,9 +25,18 @@ export const AppRoutes = () => {
   
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/pagina-inicial/clientes" element={<ClientListPage />} />
-      <Route path="/pagina-inicial/fornecedores" element={<ProviderListPage/>} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+      <Route
+        path="/pagina-inicial/clientes"
+        element={<ClientListPage />}
+      />
+      <Route
+        path="/pagina-inicial/fornecedores"
+        element={<ProviderListPage/>}
+      />
     </Routes>
   );
 };
