@@ -51,7 +51,7 @@ export const ClientListPage: React.FC = () => {
   const handleChange = (
     event: React.ChangeEvent<unknown>, value: number
   ) => {
-    // update()
+    update()
     setActualPage(value);
     console.log(actualpage)
   };
