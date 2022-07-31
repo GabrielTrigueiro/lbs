@@ -25,7 +25,7 @@ export const ClientListPage: React.FC = () => {
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
   const [pages, setPages] = useState<number>(0)
-  const [actualpage, setActualPage] = useState<number>(2)
+  const [actualpage, setActualPage] = useState<number>(0)
 
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
@@ -48,8 +48,16 @@ export const ClientListPage: React.FC = () => {
     });
   };
 
+  const handleChange = (
+    event: React.ChangeEvent<unknown>, value: number
+  ) => {
+    // update()
+    setActualPage(value);
+    console.log(actualpage)
+  };
+
   let ClientPaginationConf: ISendPagination = {
-    page: 0,
+    page: actualpage,
     pageSize: 5,
     param: "name",
     sortDiresction: "DESC",
@@ -130,7 +138,9 @@ export const ClientListPage: React.FC = () => {
             count={pages}
             variant="outlined"
             shape="circular" 
+            defaultPage={0}
             page={actualpage}
+            onChange={handleChange}
           />
         </Stack>
       </Box>
