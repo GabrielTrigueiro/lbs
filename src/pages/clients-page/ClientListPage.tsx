@@ -24,6 +24,8 @@ export const ClientListPage: React.FC = () => {
   const [rows, setRows] = useState<IInfoClient[]>([]);
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
+  const [pages, setPages] = useState<number>(0)
+  const [actualpage, setActualPage] = useState<number>(2)
 
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
@@ -40,6 +42,7 @@ export const ClientListPage: React.FC = () => {
         alert(result.message);
       } else {
         setIsLoading(false);
+        setPages(result.data.numberOfPages)
         setRows(result.data.data);
       }
     });
@@ -47,13 +50,12 @@ export const ClientListPage: React.FC = () => {
 
   let ClientPaginationConf: ISendPagination = {
     page: 0,
-    pageSize: 10,
+    pageSize: 5,
     param: "name",
     sortDiresction: "DESC",
     sortField: "name",
     value: value,
   };
-
 
   if (isLoading) return <ClientListPageSkeleton />;
   return (
@@ -72,8 +74,7 @@ export const ClientListPage: React.FC = () => {
             color: "#575a61",
           }}
         >
-          {" "}
-          Clientes{" "}
+          Clientes
         </Typography>
         <Button
           onClick={handleModal}
@@ -125,7 +126,12 @@ export const ClientListPage: React.FC = () => {
 
       <Box display="flex" justifyContent="flex-end" mt={1}>
         <Stack>
-          <Pagination count={1} variant="outlined" shape="rounded" />
+          <Pagination
+            count={pages}
+            variant="outlined"
+            shape="circular" 
+            page={actualpage}
+          />
         </Stack>
       </Box>
 
