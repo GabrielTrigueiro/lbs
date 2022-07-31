@@ -35,7 +35,7 @@ export const ClientListPage: React.FC = () => {
   };
   useEffect(() => {
     update();
-  }, [value]);
+  }, [value, actualpage]);
   const update = () => {
     ClienteService.getAll(ClientPaginationConf).then((result) => {
       if (result instanceof Error) {
@@ -44,6 +44,7 @@ export const ClientListPage: React.FC = () => {
         setIsLoading(false);
         setPages(result.data.numberOfPages)
         setRows(result.data.data);
+        console.log(actualpage)
       }
     });
   };
@@ -51,9 +52,7 @@ export const ClientListPage: React.FC = () => {
   const handleChange = (
     event: React.ChangeEvent<unknown>, value: number
   ) => {
-    setActualPage(value);
-    update()
-    console.log(actualpage)
+    setActualPage(value-1);
   };
 
   let ClientPaginationConf: ISendPagination = {
@@ -138,8 +137,7 @@ export const ClientListPage: React.FC = () => {
             count={pages}
             variant="outlined"
             shape="circular" 
-            defaultPage={0}
-            page={actualpage}
+            page={actualpage+1}
             onChange={handleChange}
           />
         </Stack>
