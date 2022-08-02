@@ -38,7 +38,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "0ch", "&:focus": { width: "20ch"},
+      width: "0ch",
+      "&:focus": { width: "20ch"},
     },
   },
 }));
@@ -47,16 +48,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const SearchInput: React.FC<{change: (text:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}> = ({change}) => {
 
   const [ wide, setWide ] = useState<number>(0)
+  const [ word, setWord ] = useState<string>('')
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1}}>
       <Search> 
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
-          onChange={ value => change(value)}
-          placeholder="Search…"
+          onChange={
+            value => {
+              change(value);
+              setWord(value.target.value);
+            }
+          }
+          placeholder="Pesquisar…"
           inputProps={{ "aria-label": "search" }}
         />
       </Search>

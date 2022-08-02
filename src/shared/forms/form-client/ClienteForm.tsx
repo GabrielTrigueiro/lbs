@@ -7,8 +7,8 @@ import "./styles.css";
 import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
 export interface IClienteCadastroInfo {
   cpf: number
   name: string
@@ -30,21 +30,63 @@ export interface IClienteCadastroInfo {
 }
 
 export const ClienteCadastroSchema: Yup.SchemaOf<IClienteCadastroInfo> = Yup.object().shape({
-  name: Yup.string().required("O nome é obrigatóro"),
-  cpf: Yup.number().required("O cpf é obrigatório").typeError("Digite apenas números"),
-  sex: Yup.string().required("O campo é obrigatório"),
-  rg: Yup.number().required("O RG é obrigatório").typeError("Digite apenas números"),
+  name:
+  Yup.string()
+  .required("O nome é obrigatóro"),
 
-  address: Yup.string().required("Endereço é obrigatório"),
-  cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
-  city: Yup.string().min(3, "No minimo 3 caracteres").required("Cidade é obrigatório"),
-  neighborhood: Yup.string().required("Bairro é obrigatório"),
-  number: Yup.number().required("Número é obrigatório").typeError("Digite apenas números"),
-  uf: Yup.string().required("Estado é obrigatório"),
+  cpf:
+  Yup.number()
+  .required("O cpf é obrigatório")
+  .typeError("Digite apenas números"),
 
-  email: Yup.string().email("Digite um email válido").required("Email é obrigatório"),
-  cell: Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
-  telephone: Yup.number().typeError("Digite apenas números"),
+  sex: Yup.string()
+  .required("O campo é obrigatório"),
+
+  rg: Yup.number()
+  .required("O RG é obrigatório")
+  .typeError("Digite apenas números"),
+
+  address:
+  Yup.string()
+  .required("Endereço é obrigatório"),
+
+  cep:
+  Yup.number()
+  .min(8, "É necessário 8 digitos")
+  .required("CEP é obrigatório")
+  .typeError("Digite apenas números"),
+
+  city:
+  Yup.string()
+  .min(3, "No minimo 3 caracteres")
+  .required("Cidade é obrigatório"),
+
+  neighborhood:
+  Yup.string()
+  .required("Bairro é obrigatório"),
+
+  number:
+  Yup.number()
+  .required("Número é obrigatório")
+  .typeError("Digite apenas números"),
+
+  uf:
+  Yup.string()
+  .required("Estado é obrigatório"),
+
+  email:
+  Yup.string()
+  .email("Digite um email válido")
+  .required("Email é obrigatório"),
+
+  cell:
+  Yup.number()
+  .required("Celular é obrigatório")
+  .typeError("Digite apenas números"),
+
+  telephone:
+  Yup.number()
+  .typeError("Digite apenas números"),
 
   isActive: Yup.boolean()
 })
@@ -56,16 +98,21 @@ export const CadastroClienteForm: React.FC<{
   client?: IInfoClient
   type: string
 }> = ({ update, handleModal, client, type, tittle}) => {
-  const close = () => { handleModal()}
 
+  const close = () => { handleModal()}
   const { formRef } = useVForm()
+  const {setSnack} = useContext(SnackbarContext);  
 
   const handleSave = (dados: IClienteCadastroInfo) => {
     ClienteCadastroSchema
       .validate(dados, { abortEarly: false })
       .then((dadosValidados) => {
         ClienteService.Create(dadosValidados).then((result) => {
-          alert("Cliente cadastrado com sucesso!!!");
+          setSnack(new Snack({
+            message: "Cliente cadastrado com sucesso!!!",
+            color:'success',
+            open: true
+          }))
           close();
           update();
         });
@@ -178,7 +225,8 @@ export const CadastroClienteForm: React.FC<{
             >
               <VTextField sx={{mt:1}} label="Email" name="email" />
               <VTextField sx={{mt:1}} label="Número Fixo" name="telephone" />
-              <VTextField sx={{mt:1}} label="Celular" name="cell" />
+              <VTextField sx={{mt:1}} label="Celular" name="cell"/>
+              
             </Box>
           </Box>
           <Box flex={1}>

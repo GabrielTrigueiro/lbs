@@ -16,7 +16,7 @@ export const AppRoutes = () => {
         path: "/pagina-inicial/clientes",
       },
       {
-        label: "Colaboradores",
+        label: "Fornecedores",
         icon: "account_box_icon",
         path: "/pagina-inicial/fornecedores",
       },

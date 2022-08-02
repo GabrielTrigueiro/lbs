@@ -30,9 +30,11 @@ export const ClientListPage: React.FC = () => {
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
   };
+
   const handleConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true);
   };
+
   useEffect(() => {
     update();
   }, [value, actualpage]);
