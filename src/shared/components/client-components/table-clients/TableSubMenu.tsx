@@ -10,6 +10,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { CadastroClienteForm, IClienteCadastroInfo } from "../../../forms";
 import { useState } from "react";
 import { ConfirmationButton } from "../../confirmation-button/ConfirmationButton";
+import { DialogConfirm } from "../../confirmation-button/DialogConfirm";
 
 export const TableSubMenu: React.FC<{
   client: IInfoClient;
@@ -23,6 +24,8 @@ export const TableSubMenu: React.FC<{
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const [delet, setDelet] = useState<true | false>(false);
+
+  const [dialogState, setDialogState] = useState<boolean>(false);
 
   const open = Boolean(anchorEl);
 
@@ -50,15 +53,15 @@ export const TableSubMenu: React.FC<{
       });
   };
 
-  const [teste, setTeste] = useState<IInfoClient>()
-
   const functionTeste = (e:IInfoClient) => {
     if(e.id){
       console.log(e.isActive)
       e.isActive = !e.isActive
       console.log(e.isActive)
       ClienteService.UpdateById(e.id, e)
-      update()
+      .then((result) => {
+        update();
+      });
     }
   }
 
@@ -119,12 +122,18 @@ export const TableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleEditModal}> Editar </MenuItem>
-        <MenuItem onClick={()=>functionTeste(client)}>
+        <MenuItem onClick={handleEditModal}>
+          Editar
+        </MenuItem>
+        <MenuItem onClick={()=>setDialogState(true)}>
           Alterar Status
         </MenuItem>
-        <MenuItem> Detalhes </MenuItem>
-        <MenuItem onClick={()=>setDelet(true)}> Apagar </MenuItem>
+        <MenuItem>
+          Detalhes
+        </MenuItem>
+        <MenuItem onClick={()=>setDelet(true)}>
+          Apagar
+        </MenuItem>
       </Menu>
 
       <Modal
@@ -202,6 +211,13 @@ export const TableSubMenu: React.FC<{
           </Button>
         </DialogActions>
       </Dialog>
+      
+      <DialogConfirm
+        dialogState={dialogState}
+        setDialogState={()=>setDialogState(false)}
+        dialogMessage={'Confirmar alteração?'}
+        handleSomething={()=>functionTeste(client)}
+      />
     </Box>
   );
 };
