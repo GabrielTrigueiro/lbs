@@ -16,29 +16,42 @@ export const ProviderListPage: React.FC = () => {
   const [rows, setRows] = useState<IInfoProvider[]>([])
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
+  const [pages, setPages] = useState<number>(0)
+  const [actualpage, setActualPage] = useState<number>(0)
+
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
   }
+
   const handleConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true)
   }
+
+  const handleChange = (
+    event: React.ChangeEvent<unknown>, value: number
+  ) => {
+    setActualPage(value-1);
+  };
+
   useEffect(() => {
     update();
-  }, [value])
+  }, [value, actualpage])
+
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
       if (result instanceof Error) {
         alert(result.message)
       } else {
         setIsLoading(false)
+        setPages(result.data.numberOfPages)
         setRows(result.data.data)
       }
     })
   }
 
   let ProviderPaginationConf: ISendPagination = {
-    page: 0,
-    pageSize: 10,
+    page: actualpage,
+    pageSize: 3,
     param: "name",
     sortDiresction: "DESC",
     sortField: "name",
@@ -102,9 +115,15 @@ export const ProviderListPage: React.FC = () => {
         <TableProviders update={update} lista={rows} />
       </Box>
 
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="flex-end" mt={1}>
         <Stack>
-          <Pagination count={4} variant="outlined" shape="rounded" />
+          <Pagination
+            count={pages}
+            variant="outlined"
+            shape="circular" 
+            page={actualpage+1}
+            onChange={handleChange}
+          />
         </Stack>
       </Box>
 
