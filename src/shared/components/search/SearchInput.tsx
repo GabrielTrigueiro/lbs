@@ -54,7 +54,7 @@ export const SearchInput: React.FC<{change: (text:React.ChangeEvent<HTMLInputEle
     <Box sx={{ flexGrow: 1}}>
       <Search> 
         <SearchIconWrapper>
-          <SearchIcon />
+          <SearchIcon sx={{color:'#575A61'}} />
         </SearchIconWrapper>
         <StyledInputBase
           onChange={
