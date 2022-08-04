@@ -16,7 +16,7 @@ export interface IAuth{
 
 export const auth = async (username: string, password: string): Promise<any | AxiosError>   => {
 
-    return await api.post(environment.url_login, {username, password})
+    return await api.post(environment.url_login, {username, password}, TokenConfig)
     .then(data => {
         if(data instanceof AxiosError){
             return data

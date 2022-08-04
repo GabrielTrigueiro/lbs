@@ -64,7 +64,7 @@ export const DialogConfirm: React.FC<props> = ({
               handleSomething();
             }}
           >
-            Alterar
+            Continuar
           </Button>
         </DialogActions>
       </Box>

@@ -49,9 +49,10 @@ export const ProviderCadastroSchema: Yup.SchemaOf<IProviderCadastroInfo> = Yup.o
 export const ProviderForm: React.FC<{
   update: () => void,
   handleModal: () => void
+  tittle:string
   provider?: IInfoProvider
   type: string
-}> = ({ update, handleModal, provider, type }) => {
+}> = ({ update, handleModal, provider, type, tittle }) => {
   const close = () => { handleModal()}
 
   const { formRef } = useVForm()
@@ -144,7 +145,7 @@ export const ProviderForm: React.FC<{
           <Typography
             sx={{ fontWeight: "500", fontSize: "25px", color: "#fff" }}
           >
-            Cadastrar Fornecedor
+            {tittle}
           </Typography>
         </Box>
         <Box className="Container-Interior-Formulario">

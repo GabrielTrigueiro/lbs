@@ -3,7 +3,7 @@ import { Box, Typography, Button, Grid, Icon, Pagination, Stack, Modal } from "@
 import { useEffect, useState } from "react";
 import { ConfirmationButton } from "../../shared/components";
 import { SearchInput } from "../../shared/components/search";
-import { TableProviders } from "../../shared/components/table-colaboradores/TableProviders";
+import { TableProviders } from "../../shared/components/table-fornecedores/TableProviders";
 import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
 import { ISendPagination } from "../../shared/services";
@@ -131,6 +131,7 @@ export const ProviderListPage: React.FC = () => {
           justifyContent: "center",
         }}>
           <ProviderForm
+          tittle="Cadastrar Fornecedor"
           type={"register"}
           update={update}
           handleModal={handleModal}/>

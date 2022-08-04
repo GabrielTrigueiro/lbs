@@ -10,6 +10,7 @@ import {
   Avatar,
   Box,
 } from "@mui/material";
+import { ProvidersSubMenu } from "./ProvidersSubMenu";
 
 
 const TableStyled = styled(Table)({
@@ -83,7 +84,7 @@ export const TableProviders: React.FC<{
                   alignContent: "center",
                 }}
               >
-                {/* <TableSubMenu update={update} client={row} /> */}
+                <ProvidersSubMenu update={update} provider={row} />
               </TableCellStyled>
             </TableRowStyled>
           ))}

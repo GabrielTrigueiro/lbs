@@ -10,8 +10,9 @@ import { useState } from "react";
 import { IInfoProvider, ProviderService } from "../../services/api/providers/ProviderService";
 import { ProviderForm } from "../../forms";
 import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
+import { DialogConfirm } from "../confirmation-button/DialogConfirm";
 
-export const TableSubMenu: React.FC<{
+export const ProvidersSubMenu: React.FC<{
   provider: IInfoProvider;
   update: () => void
 }> = ({ provider, update }) => {
@@ -21,6 +22,8 @@ export const TableSubMenu: React.FC<{
   const [confirm, setConfirm] = useState<true | false>(false);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const [delet, setDelet] = useState<true | false>(false);
 
   const open = Boolean(anchorEl);
 
@@ -42,7 +45,8 @@ export const TableSubMenu: React.FC<{
 
   const handleDeleteProvider = () => {
     if (provider.id)
-      ProviderService.DeleteById(provider.id).then((result) => {
+      ProviderService.DeleteById(provider.id)
+      .then((result) => {
         update();
       });
   };
@@ -104,9 +108,15 @@ export const TableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleEditModal}> Editar </MenuItem>
-        <MenuItem> Detalhes </MenuItem>
-        <MenuItem onClick={handleDeleteProvider}> Apagar </MenuItem>
+        <MenuItem onClick={handleEditModal}>
+          Editar
+        </MenuItem>
+        <MenuItem>
+          Detalhes
+        </MenuItem>
+        <MenuItem onClick={()=>setDelet(true)}>
+          Apagar
+        </MenuItem>
       </Menu>
 
       <Modal sx={{ minWidth: 1020 }} onClose={handleEditConfirm} open={editModal}>
@@ -135,9 +145,17 @@ export const TableSubMenu: React.FC<{
           type={'edit'}
           update={update}
           handleModal={handleEditModal}
-          provider={provider}/>
+          provider={provider}
+          tittle={'Editar Fornecedor'}/>
         </Box>
       </Modal>
+
+      <DialogConfirm
+        dialogMessage="Remover fornecedor?"
+        dialogState={delet}
+        handleSomething={handleDeleteProvider}
+        setDialogState={()=>setDelet(false)}
+      />
 
       <ConfirmationButton
         confirmMessage="Deseja salvar as alterações?"
