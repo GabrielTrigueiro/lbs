@@ -42,7 +42,7 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
         return data
     })
     .catch(err => {
-        console.log('erro no getAll')
+        // console.log('erro no getAll')
         console.error(err)
     })
 }

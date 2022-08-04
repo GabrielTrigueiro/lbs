@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Box, Typography, Button, Grid, Icon, Pagination, Stack, Modal } from "@mui/material";
+import { Box, Typography, Button, Grid, Icon, Pagination, Stack, Modal, SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ConfirmationButton } from "../../shared/components";
 import { SearchInput } from "../../shared/components/search";
@@ -18,6 +18,8 @@ export const ProviderListPage: React.FC = () => {
   const [modal, setModal] = useState<true | false>(false);
   const [pages, setPages] = useState<number>(0)
   const [actualpage, setActualPage] = useState<number>(0)
+  const [pageSize, setPageSize] = useState<number>(3)
+  const [selectContent, setSelectContent] = useState('');
 
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
@@ -35,7 +37,7 @@ export const ProviderListPage: React.FC = () => {
 
   useEffect(() => {
     update();
-  }, [value, actualpage])
+  }, [value, actualpage, pageSize])
 
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
@@ -49,9 +51,15 @@ export const ProviderListPage: React.FC = () => {
     })
   }
 
+  const selectChange = (event: SelectChangeEvent) => {
+    setSelectContent(event.target.value as string);
+    const translate = parseInt(event.target.value as string)
+    setPageSize(translate)
+  };
+
   let ProviderPaginationConf: ISendPagination = {
     page: actualpage,
-    pageSize: 3,
+    pageSize: pageSize,
     param: "name",
     sortDiresction: "DESC",
     sortField: "name",
@@ -106,6 +114,20 @@ export const ProviderListPage: React.FC = () => {
             flex={1}
             sx={{ borderBottom: "3px solid #D9D9D9" }}
           >
+            <FormControl sx={{width:'100px', ml:1, mb:0.5}} size="small">
+              <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectContent}
+                label="nº itens"
+                onChange={selectChange}
+              >
+                <MenuItem value={3}>Três</MenuItem>
+                <MenuItem value={5}>Cinco</MenuItem>
+                <MenuItem value={10}>Dez</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Box flexDirection="row" display="flex" gap={10}></Box>

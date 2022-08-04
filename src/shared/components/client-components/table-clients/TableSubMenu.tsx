@@ -55,9 +55,7 @@ export const TableSubMenu: React.FC<{
 
   const functionTeste = (e:IInfoClient) => {
     if(e.id){
-      console.log(e.isActive)
       e.isActive = !e.isActive
-      console.log(e.isActive)
       ClienteService.UpdateById(e.id, e)
       .then((result) => {
         update();

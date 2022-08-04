@@ -16,16 +16,23 @@ import {
   Pagination,
   Button,
   Modal,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export const ClientListPage: React.FC = () => {
+
   const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IInfoClient[]>([]);
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
   const [pages, setPages] = useState<number>(0)
+  const [pageSize, setPageSize] = useState<number>(3)
   const [actualpage, setActualPage] = useState<number>(0)
+  const [selectContent, setSelectContent] = useState('');
 
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
@@ -37,7 +44,8 @@ export const ClientListPage: React.FC = () => {
 
   useEffect(() => {
     update();
-  }, [value, actualpage]);
+  }, [value, actualpage, pageSize]);
+
   const update = () => {
     ClienteService.getAll(ClientPaginationConf).then((result) => {
       if (result instanceof Error) {
@@ -46,7 +54,6 @@ export const ClientListPage: React.FC = () => {
         setIsLoading(false);
         setPages(result.data.numberOfPages)
         setRows(result.data.data);
-        console.log(actualpage)
       }
     });
   };
@@ -55,15 +62,21 @@ export const ClientListPage: React.FC = () => {
     event: React.ChangeEvent<unknown>, value: number
   ) => {
     setActualPage(value-1);
-  };
+  };  
 
   let ClientPaginationConf: ISendPagination = {
     page: actualpage,
-    pageSize: 5,
+    pageSize: pageSize,
     param: "name",
     sortDiresction: "DESC",
     sortField: "name",
     value: value,
+  };
+
+  const selectChange = (event: SelectChangeEvent) => {
+    setSelectContent(event.target.value as string);
+    const translate = parseInt(event.target.value as string)
+    setPageSize(translate)
   };
 
   if (isLoading) return <ClientListPageSkeleton />;
@@ -113,6 +126,7 @@ export const ClientListPage: React.FC = () => {
           <Grid
             justifyContent="flex-end"
             display="flex"
+            alignItems={'center'}
             flex={1}
             sx={{ borderBottom: "3px solid #D9D9D9" }}
           >
@@ -124,6 +138,20 @@ export const ClientListPage: React.FC = () => {
               <Icon sx={{ color: "#FF5555" }}>circle</Icon>
               <Typography variant="subtitle1">Inativo</Typography>
             </Box>
+            <FormControl sx={{width:'100px', ml:1, mb:0.5}} size="small">
+              <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectContent}
+                label="nº itens"
+                onChange={selectChange}
+              >
+                <MenuItem value={3}>Três</MenuItem>
+                <MenuItem value={5}>Cinco</MenuItem>
+                <MenuItem value={10}>Dez</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Box flexDirection="row" display="flex" gap={10}></Box>

@@ -37,12 +37,12 @@ export const AuthProvider: React.FC = ({ children }) => {
   
   useEffect(() => {
     const acessToken = localStorage.getItem(Acess_Token);
-    console.log('ussefect');
-    console.log(localStorage.getItem("Acess_Token"))
+    // console.log('ussefect');
+    // console.log(localStorage.getItem("Acess_Token"))
 
     if (acessToken) {
       setDados(jwt(acessToken))
-      console.log('setando token da reposta no state');
+      // console.log('setando token da reposta no state');
       setAcessToken(acessToken)
     } else {
       setAcessToken(undefined)
@@ -64,11 +64,11 @@ export const AuthProvider: React.FC = ({ children }) => {
             color:'success',
             open: true
           }))
-          console.log('setando no local storage o valor do token');
+          // console.log('setando no local storage o valor do token');
           localStorage.setItem(
             'Acess_Token', JSON.stringify(result.acessToken)
           );
-          console.log(localStorage.getItem('Acess_Token'))
+          // console.log(localStorage.getItem('Acess_Token'))
           setAcessToken(result.acessToken);
         }
       })     
