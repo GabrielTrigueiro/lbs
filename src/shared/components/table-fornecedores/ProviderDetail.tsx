@@ -1,7 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { borderColor } from "@mui/system";
 import React, { useState } from "react";
-import { IInfoClient } from "../../services";
 import { IInfoProvider } from "../../services/api/providers/ProviderService";
 import { SearchInput } from "../search";
 
@@ -9,10 +8,10 @@ interface props {
   close: () => void;
   state: boolean;
   tittle: string;
-  thisClient: IInfoClient;
+  thisProvider: IInfoProvider;
 }
 
-export const ClientDetail: React.FC<props> = ({ close, state, tittle, thisClient }) => {
+export const ProviderDetail: React.FC<props> = ({ close, state, tittle, thisProvider: thisProvider }) => {
 
     const [searchValue, setSearchValue] = useState<string>("");
     let fontSizeContainerDados = 16
@@ -66,15 +65,13 @@ export const ClientDetail: React.FC<props> = ({ close, state, tittle, thisClient
             }}
           >
             <Box flex={1}>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.name}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.sex}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.rg}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.cpf}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.name}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.cnpj}</Typography>
             </Box>
             <Box flex={1}>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.email}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.telephone}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.cell}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.email}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.telephone}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.cell}</Typography>
             </Box>
           </Box>
           <Box
@@ -85,14 +82,14 @@ export const ClientDetail: React.FC<props> = ({ close, state, tittle, thisClient
             }}
           >
             <Box flex={1}>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.uf}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.city}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.cep}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.uf}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.city}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.cep}</Typography>
             </Box>
             <Box flex={1}>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.neighborhood}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.address}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.number}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.neighborhood}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.address}</Typography>
+                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisProvider.number}</Typography>
             </Box>
           </Box>
         </Box>

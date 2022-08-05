@@ -19,15 +19,10 @@ export const TableSubMenu: React.FC<{
 }> = ({ client, update }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
-
   const [confirm, setConfirm] = useState<true | false>(false);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const [delet, setDelet] = useState<true | false>(false);
-
   const [dialogState, setDialogState] = useState<boolean>(false);
-
   const [detailState, setDetailState] = useState<boolean>(false)
 
   const open = Boolean(anchorEl);

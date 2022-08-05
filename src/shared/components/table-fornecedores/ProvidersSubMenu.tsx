@@ -11,6 +11,7 @@ import { IInfoProvider, ProviderService } from "../../services/api/providers/Pro
 import { ProviderForm } from "../../forms";
 import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
 import { DialogConfirm } from "../confirmation-button/DialogConfirm";
+import { ProviderDetail } from "./ProviderDetail";
 
 export const ProvidersSubMenu: React.FC<{
   provider: IInfoProvider;
@@ -18,12 +19,11 @@ export const ProvidersSubMenu: React.FC<{
 }> = ({ provider, update }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
-
   const [confirm, setConfirm] = useState<true | false>(false);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const [delet, setDelet] = useState<true | false>(false);
+  const [detailState, setDetailState] = useState<boolean>(false)
+
 
   const open = Boolean(anchorEl);
 
@@ -111,7 +111,7 @@ export const ProvidersSubMenu: React.FC<{
         <MenuItem onClick={handleEditModal}>
           Editar
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={()=> setDetailState(true)}>
           Detalhes
         </MenuItem>
         <MenuItem onClick={()=>setDelet(true)}>
@@ -162,6 +162,13 @@ export const ProvidersSubMenu: React.FC<{
         confirmStatus={confirm}
         handleDialog={handleEditConfirm}
         handleModal={handleEditModal}
+      />
+
+      <ProviderDetail
+      close={()=>setDetailState(false)}
+      state={detailState}
+      thisProvider={provider}
+      tittle={'Dados do Fornecedor'}
       />
     </Box>
   );

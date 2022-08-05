@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { Box, Typography, Button, Grid, Icon, Pagination, Stack, Modal, SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ConfirmationButton } from "../../shared/components";
 import { SearchInput } from "../../shared/components/search";
@@ -8,54 +7,66 @@ import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
 import { ISendPagination } from "../../shared/services";
 import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Icon,
+  Pagination,
+  Stack,
+  Modal,
+  SelectChangeEvent,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 export const ProviderListPage: React.FC = () => {
-  
   const [value, setValue] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true)
-  const [rows, setRows] = useState<IInfoProvider[]>([])
+  const [isLoading, setIsLoading] = useState(true);
+  const [rows, setRows] = useState<IInfoProvider[]>([]);
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modal, setModal] = useState<true | false>(false);
-  const [pages, setPages] = useState<number>(0)
-  const [actualpage, setActualPage] = useState<number>(0)
-  const [pageSize, setPageSize] = useState<number>(3)
-  const [selectContent, setSelectContent] = useState('');
+  const [pages, setPages] = useState<number>(0);
+  const [actualpage, setActualPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(3);
+  const [selectContent, setSelectContent] = useState("");
 
   const handleModal = () => {
     modal ? setModal(false) : setModal(true);
-  }
+  };
 
   const handleConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true)
-  }
+    confirm ? setConfirm(false) : setConfirm(true);
+  };
 
-  const handleChange = (
-    event: React.ChangeEvent<unknown>, value: number
-  ) => {
-    setActualPage(value-1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setActualPage(value - 1);
   };
 
   useEffect(() => {
     update();
-  }, [value, actualpage, pageSize])
+  }, [value, actualpage, pageSize]);
 
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
       if (result instanceof Error) {
-        alert(result.message)
+        alert(result.message);
       } else {
-        setIsLoading(false)
-        setPages(result.data.numberOfPages)
-        setRows(result.data.data)
+        setIsLoading(false);
+        setPages(result.data.numberOfPages);
+        setRows(result.data.data);
       }
-    })
-  }
+    });
+  };
 
   const selectChange = (event: SelectChangeEvent) => {
     setSelectContent(event.target.value as string);
-    const translate = parseInt(event.target.value as string)
-    setActualPage(0)
-    setPageSize(translate)
+    const translate = parseInt(event.target.value as string);
+    setActualPage(0);
+    setPageSize(translate);
   };
 
   let ProviderPaginationConf: ISendPagination = {
@@ -106,7 +117,11 @@ export const ProviderListPage: React.FC = () => {
               Lista de Fornecedores
             </Typography>
             <Box position={"relative"} bottom={3}>
-              <SearchInput change={(value)=>{setValue(value.target.value)}}/>
+              <SearchInput
+                change={(value) => {
+                  setValue(value.target.value);
+                }}
+              />
             </Box>
           </Grid>
           <Grid
@@ -115,7 +130,7 @@ export const ProviderListPage: React.FC = () => {
             flex={1}
             sx={{ borderBottom: "3px solid #D9D9D9" }}
           >
-            <FormControl sx={{width:'100px', ml:1, mb:0.5}} size="small">
+            <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
               <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -133,7 +148,7 @@ export const ProviderListPage: React.FC = () => {
         </Grid>
         <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
-      
+
       <Box sx={{ padding: 0 }}>
         <TableProviders update={update} lista={rows} />
       </Box>
@@ -143,50 +158,51 @@ export const ProviderListPage: React.FC = () => {
           <Pagination
             count={pages}
             variant="outlined"
-            shape="circular" 
-            page={actualpage+1}
+            shape="circular"
+            page={actualpage + 1}
             onChange={handleChange}
           />
         </Stack>
       </Box>
 
-      <Modal sx={{minWidth:1020}} onClose={handleConfirm} open={modal}>
+      <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
         <Box
-        sx={{
-          overflow: "auto",
-          //posição do modal
-          position: "absolute" as "absolute",
-          top: "40%",
-          left: "50%",
-          height: "600px",
-          width: "1000px",
-          transform: "translate(-50%, -40%)",
+          sx={{
+            overflow: "auto",
+            //posição do modal
+            position: "absolute" as "absolute",
+            top: "40%",
+            left: "50%",
+            height: "600px",
+            width: "1000px",
+            transform: "translate(-50%, -40%)",
 
-          //CSS estilo
-          borderRadius: 0,
-          bgcolor: "background.paper",
-          display: "flex",
-          flexDirection: "column",
-          padding: 0,
+            //CSS estilo
+            borderRadius: 0,
+            bgcolor: "background.paper",
+            display: "flex",
+            flexDirection: "column",
+            padding: 0,
 
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <ProviderForm
-          tittle="Cadastrar Fornecedor"
-          type={"register"}
-          update={update}
-          handleModal={handleModal}/>
+            tittle="Cadastrar Fornecedor"
+            type={"register"}
+            update={update}
+            handleModal={handleModal}
+          />
         </Box>
       </Modal>
 
-      <ConfirmationButton 
+      <ConfirmationButton
         confirmMessage="Deseja realmente fechar?"
         handleDialog={handleConfirm}
         handleModal={handleModal}
         confirmStatus={confirm}
       />
-
     </LayoutBasePage>
   );
 };
