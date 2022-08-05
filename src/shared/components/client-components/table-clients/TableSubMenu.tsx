@@ -11,6 +11,7 @@ import { CadastroClienteForm, IClienteCadastroInfo } from "../../../forms";
 import { useState } from "react";
 import { ConfirmationButton } from "../../confirmation-button/ConfirmationButton";
 import { DialogConfirm } from "../../confirmation-button/DialogConfirm";
+import { ClientDetail } from "../ClientDetail";
 
 export const TableSubMenu: React.FC<{
   client: IInfoClient;
@@ -26,6 +27,8 @@ export const TableSubMenu: React.FC<{
   const [delet, setDelet] = useState<true | false>(false);
 
   const [dialogState, setDialogState] = useState<boolean>(false);
+
+  const [detailState, setDetailState] = useState<boolean>(false)
 
   const open = Boolean(anchorEl);
 
@@ -86,6 +89,7 @@ export const TableSubMenu: React.FC<{
           </IconButton>
         </Tooltip>
       </Box>
+      
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -126,7 +130,7 @@ export const TableSubMenu: React.FC<{
         <MenuItem onClick={()=>setDialogState(true)}>
           Alterar Status
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={()=> setDetailState(true)}>
           Detalhes
         </MenuItem>
         <MenuItem onClick={()=>setDelet(true)}>
@@ -215,6 +219,13 @@ export const TableSubMenu: React.FC<{
         setDialogState={()=>setDialogState(false)}
         dialogMessage={'Confirmar alteração?'}
         handleSomething={()=>functionTeste(client)}
+      />
+
+      <ClientDetail
+        close={()=>setDetailState(false)}
+        state={detailState}
+        thisClient={client}
+        tittle={'Dados do Cliente'}
       />
     </Box>
   );

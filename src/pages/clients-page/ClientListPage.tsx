@@ -19,6 +19,7 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  TablePagination,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
