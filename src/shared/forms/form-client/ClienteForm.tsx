@@ -132,7 +132,12 @@ export const CadastroClienteForm: React.FC<{
     .then((dadosValidados)=>{
       if(dados.id)
       ClienteService.UpdateById(dados.id, dados).then(result => {
-      alert("Cliente editado com sucesso!!!")
+        setSnack(new Snack({
+          message: 'Atualização realizada com sucesso',
+          color:'success',
+          open: true
+        }))
+      close()
       update()
       })
     })

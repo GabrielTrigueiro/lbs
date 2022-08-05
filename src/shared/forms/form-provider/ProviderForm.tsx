@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { useVForm } from "../forms-components/UseVForm";
 import { IInfoProvider, ProviderService } from "../../services/api/providers/ProviderService";
 import "./styles.css"
+import { useContext } from "react";
+import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
 
 export interface IProviderCadastroInfo {
     code: number
@@ -56,6 +58,7 @@ export const ProviderForm: React.FC<{
   const close = () => { handleModal()}
 
   const { formRef } = useVForm()
+  const {setSnack} = useContext(SnackbarContext);  
 
   const handleSave = (dados: IProviderCadastroInfo) => {
     ProviderCadastroSchema
@@ -82,7 +85,12 @@ export const ProviderForm: React.FC<{
     .then((dadosValidados)=>{
       if(dados.id)
       ProviderService.UpdateById(dados.id, dados).then(result => {
-      alert("Fornecedor editado com sucesso!!!")
+        setSnack(new Snack({
+          message: 'Atualização realizada com sucesso',
+          color:'success',
+          open: true
+        }))
+      close()
       update()
       })
     })
