@@ -54,6 +54,7 @@ export const ProviderListPage: React.FC = () => {
   const selectChange = (event: SelectChangeEvent) => {
     setSelectContent(event.target.value as string);
     const translate = parseInt(event.target.value as string)
+    setActualPage(0)
     setPageSize(translate)
   };
 
