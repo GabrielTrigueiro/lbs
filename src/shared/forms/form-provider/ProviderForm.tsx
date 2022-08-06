@@ -8,6 +8,7 @@ import { IInfoProvider, ProviderService } from "../../services/api/providers/Pro
 import "./styles.css"
 import { useContext } from "react";
 import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
+import { PhoneImput } from "../forms-components/PhoneImput";
 
 export interface IProviderCadastroInfo {
     code: number
@@ -175,7 +176,7 @@ export const ProviderForm: React.FC<{
               <VTextField sx={{mt:1}} label="Contato" name="contact" />
               <VTextField sx={{mt:1}} label="Email" name="email" />
               <VTextField sx={{mt:1}} label="Fixo" name="telephone" />
-              <VTextField sx={{mt:1}} label="Celular" name="cell" />
+              <PhoneImput sx={{mt:1}} label="Celular" name="cell" />
             </Box>
           </Box>
           <Box flex={1}>

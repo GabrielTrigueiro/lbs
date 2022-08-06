@@ -9,6 +9,7 @@ import { useVForm } from "../forms-components/UseVForm";
 import { Gender, VSelectField } from "../forms-components";
 import { useContext, useState } from "react";
 import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
+import { PhoneImput } from "../forms-components/PhoneImput";
 export interface IClienteCadastroInfo {
   cpf: number
   name: string
@@ -230,7 +231,7 @@ export const CadastroClienteForm: React.FC<{
             >
               <VTextField sx={{mt:1}} label="Email" name="email" />
               <VTextField sx={{mt:1}} label="Número Fixo" name="telephone" />
-              <VTextField sx={{mt:1}} label="Celular" name="cell"/>
+              <PhoneImput sx={{mt:1}} label="Celular" name="cell"/>
               
             </Box>
           </Box>
