@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { environment, TokenConfig } from "../../../environment"
+import { environment } from "../../../environment"
 import { api } from "../axios-config"
 
 export type TClientTotal = {
@@ -16,7 +16,7 @@ export interface IAuth{
 
 export const auth = async (username: string, password: string): Promise<any | AxiosError>   => {
 
-    return await api.post(environment.url_login, {username, password}, TokenConfig)
+    return await api.post(environment.url_login, {username, password})
     .then(data => {
         if(data instanceof AxiosError){
             return data

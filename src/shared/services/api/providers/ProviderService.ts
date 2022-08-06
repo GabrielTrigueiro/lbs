@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { environment, TokenConfig } from "../../../environment"
+import { environment } from "../../../environment"
 import { api } from "../axios-config"
 import { IClientSearch, ISendPagination } from "../client"
 
@@ -33,8 +33,13 @@ export type TAllProviderList = {
 }
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
-    //trocar pra provider
-    return await api.post<IClientSearch>(environment.url_provider_search, dados, TokenConfig)
+    const token = {
+       headers:{
+         Authorization: 
+         `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+        }
+    }
+    return await api.post<IClientSearch>(environment.url_provider_search, dados, token)
     .then(data => {
         if(data instanceof AxiosError){
             return data
@@ -42,13 +47,18 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
         return data
     })
     .catch(err => {
-        // console.log('erro no getAll')
         console.error(err)
     })
 }
 const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
     try {
-        const {data} = await api.get(environment.url_provider + `${id}`, TokenConfig)
+        const {data} = await api.get(environment.url_provider + `${id}`, token)
         if(data){
             return data
         }
@@ -59,8 +69,13 @@ const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     }
 }
 const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Error>   => {
-  
-    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados, TokenConfig)
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -72,7 +87,13 @@ const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Erro
       })
 }
 const DeleteById = async (id: string): Promise<void | Error>   => {
-    return await api.delete(environment.url_provider + `${id}`, TokenConfig)
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return await api.delete(environment.url_provider + `${id}`, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -84,8 +105,13 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
       })
 }
 const Create = async (dados: IInfoProvider): Promise<any>   => {
-
-    return await api.post<IProviderPackage>(environment.url_provider, dados, TokenConfig)
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return await api.post<IProviderPackage>(environment.url_provider, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
