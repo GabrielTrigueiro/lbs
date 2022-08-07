@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { ConfirmationButton } from "../../shared/components";
 import { SearchInput } from "../../shared/components/search";
-import { TableProviders } from "../../shared/components/table-fornecedores/TableProviders";
+import { TableProviders } from "../../shared/components/provider-components/TableProviders";
 import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
 import { ISendPagination } from "../../shared/services";
