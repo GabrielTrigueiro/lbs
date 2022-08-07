@@ -168,7 +168,7 @@ export const CadastroClienteForm: React.FC<{
     .then((res) => res.json())
     .catch(err =>{
       console.log('erro no fetch')
-      console.log(err)
+      // console.log(err)
     })
     .then((data) => {
       if(data.localidade === undefined){
@@ -184,8 +184,8 @@ export const CadastroClienteForm: React.FC<{
       }
     })
     .catch(err => {
-      console.log('quantidade de digitos invalida')
-      console.log(err)
+      console.log('cep n encontrado')
+      // console.log(err)
     })
   }
 
@@ -256,7 +256,7 @@ export const CadastroClienteForm: React.FC<{
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField sx={{mt:1}} label="UF" name="uf" />
-                <CepInput sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField sx={{mt:1}} label="Endereço" name="address"/>
                 <VTextField sx={{mt:1}} label="Cidade" name="city"/>
               </Box>

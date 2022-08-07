@@ -205,7 +205,7 @@ export const ProviderForm: React.FC<{
                 <VTextField sx={{mt:1}} label="Id Cidade" name="cityId" />
               </Box>
               <Box className="Form-Interior-Bottom">
-                <CepInput sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField sx={{mt:1}} label="Bairro" name="neighborhood" />
                 <VTextField sx={{mt:1}} label="Número Residência" name="number" />
 

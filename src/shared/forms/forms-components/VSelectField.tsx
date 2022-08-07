@@ -49,7 +49,7 @@ export const VSelectField: React.FC<Props> = ({
         <Select 
           sx={{fontSize:16}}
           value={value}
-          defaultValue={defaultValue}
+          defaultValue={value}
           variant={'standard'}
           onChange={e => setValue(e.target.value as string)}
           error={!!error}
