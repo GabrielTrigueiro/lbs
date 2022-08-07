@@ -10,6 +10,8 @@ import { Gender, VSelectField } from "../forms-components";
 import { useContext, useState } from "react";
 import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
 import { PhoneImput } from "../forms-components/PhoneImput";
+import { CepInput } from "../forms-components/CepInput";
+
 export interface IClienteCadastroInfo {
   cpf: number
   name: string
@@ -165,11 +167,26 @@ export const CadastroClienteForm: React.FC<{
     const cep = value?.replace(/[^0-9]/g, '')
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then((res) => res.json())
+    .catch(err =>{
+      console.log('erro no fetch')
+      console.log(err)
+    })
     .then((data) => {
-      formRef.current?.setFieldValue('city', `${data.localidade}`)
-      formRef.current?.setFieldValue('uf', `${data.uf}`)
-      formRef.current?.setFieldValue('address', `${data.logradouro}`)
-      formRef.current?.setFieldValue('neighborhood', `${data.bairro}`)
+      if(data.localidade === undefined){
+        formRef.current?.setFieldValue('city', '')
+        formRef.current?.setFieldValue('uf', '')
+        formRef.current?.setFieldValue('address', '')
+        formRef.current?.setFieldValue('neighborhood', '')
+      }else{
+        formRef.current?.setFieldValue('city', `${data.localidade}`)
+        formRef.current?.setFieldValue('uf', `${data.uf}`)
+        formRef.current?.setFieldValue('address', `${data.logradouro}`)
+        formRef.current?.setFieldValue('neighborhood', `${data.bairro}`)
+      }
+    })
+    .catch(err => {
+      console.log('quantidade de digitos invalida')
+      console.log(err)
     })
   }
 
@@ -240,7 +257,7 @@ export const CadastroClienteForm: React.FC<{
             <Box display={"flex"} justifyContent={"space-around"}>
               <Box className="Form-Interior-Bottom">
                 <VTextField sx={{mt:1}} label="UF" name="uf" />
-                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <CepInput sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField sx={{mt:1}} label="Endereço" name="address"/>
                 <VTextField sx={{mt:1}} label="Cidade" name="city"/>
               </Box>

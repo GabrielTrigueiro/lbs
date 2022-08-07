@@ -1,0 +1,43 @@
+import { TextField, TextFieldProps } from "@mui/material";
+import { useField } from "@unform/core";
+import { useEffect, useState } from "react";
+import formatarCep from "./CepFormat";
+
+type TVTextField = TextFieldProps & {
+    name: string
+}
+
+export const CepInput: React.FC<TVTextField> = ({name, ...rest}) => {
+
+    const {clearError, defaultValue, error, fieldName, registerField} = useField(name)
+
+    const [value, setValue] = useState<string>(defaultValue || '')
+
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            getValue: () => value,
+            setValue: (_, newValue) => setValue(newValue) ,
+        })
+    } , [registerField, fieldName, value])
+
+    return(
+        <TextField
+            {...rest}
+            autoComplete="off"
+            
+            variant="standard"
+
+            inputProps={{style: {fontSize: 16, marginTop: 1}}}
+            InputLabelProps={{style: {fontSize: 16}}}
+
+            error={!!error}
+            helperText={error}
+            defaultValue={defaultValue}
+            onKeyDown={()=> error? clearError() : undefined}
+
+            value={value}
+            onChange={e => setValue(formatarCep(e.target.value))}
+        />
+  )
+};
