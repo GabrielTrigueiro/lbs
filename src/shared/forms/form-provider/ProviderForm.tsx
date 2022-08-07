@@ -9,6 +9,7 @@ import "./styles.css"
 import { useContext } from "react";
 import { Snack, SnackbarContext } from "../../contexts/NotificationContext";
 import { PhoneImput } from "../forms-components/PhoneImput";
+import { CepInput } from "../forms-components/CepInput";
 
 export interface IProviderCadastroInfo {
     code: number
@@ -39,7 +40,7 @@ export const ProviderCadastroSchema: Yup.SchemaOf<IProviderCadastroInfo> = Yup.o
     telephone:Yup.number().required("Telefone é obrigatório").typeError("Digite apenas números"),
     cell:Yup.number().required("Celular é obrigatório").typeError("Digite apenas números"),
 
-    cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório").typeError("Digite apenas números"),
+    cep: Yup.number().min(8, "É necessário 8 digitos").required("CEP é obrigatório"),
     address: Yup.string().required("Endereço é obrigatório"),
     cityId: Yup.string().required("O id é obrigatório").typeError("Digite apenas números"),
     city: Yup.string().required("A cidade é obrigatório"),
@@ -118,11 +119,26 @@ export const ProviderForm: React.FC<{
     const cep = value?.replace(/[^0-9]/g, '')
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
     .then((res) => res.json())
+    .catch(err =>{
+      console.log('erro no fetch')
+      console.log(err)
+    })
     .then((data) => {
-      formRef.current?.setFieldValue('city', `${data.localidade}`)
-      formRef.current?.setFieldValue('uf', `${data.uf}`)
-      formRef.current?.setFieldValue('address', `${data.logradouro}`)
-      formRef.current?.setFieldValue('neighborhood', `${data.bairro}`)
+      if(data.localidade === undefined){
+        formRef.current?.setFieldValue('city', '')
+        formRef.current?.setFieldValue('uf', '')
+        formRef.current?.setFieldValue('address', '')
+        formRef.current?.setFieldValue('neighborhood', '')
+      }else{
+        formRef.current?.setFieldValue('city', `${data.localidade}`)
+        formRef.current?.setFieldValue('uf', `${data.uf}`)
+        formRef.current?.setFieldValue('address', `${data.logradouro}`)
+        formRef.current?.setFieldValue('neighborhood', `${data.bairro}`)
+      }
+    })
+    .catch(err => {
+      console.log('quantidade de digitos invalida')
+      console.log(err)
     })
   }
 
@@ -189,7 +205,7 @@ export const ProviderForm: React.FC<{
                 <VTextField sx={{mt:1}} label="Id Cidade" name="cityId" />
               </Box>
               <Box className="Form-Interior-Bottom">
-                <VTextField sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
+                <CepInput sx={{mt:1}} label="CEP" name="cep" onBlur={getCepData}/>
                 <VTextField sx={{mt:1}} label="Bairro" name="neighborhood" />
                 <VTextField sx={{mt:1}} label="Número Residência" name="number" />
 

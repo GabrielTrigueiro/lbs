@@ -4,7 +4,7 @@ export default function formatarCep(cep:string) {
       cep = cep.substring(0, 8);
     }
     if (cep.length > 5) {
-      cep = cep.replace(/(\d{5})(.*)/, '$1-$2');
+      cep = cep.replace(/(\d{5})(.*)/, '$1 $2');
     }
     return cep;
   }

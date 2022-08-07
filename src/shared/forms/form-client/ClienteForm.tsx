@@ -56,8 +56,7 @@ export const ClienteCadastroSchema: Yup.SchemaOf<IClienteCadastroInfo> = Yup.obj
   cep:
   Yup.number()
   .min(8, "É necessário 8 digitos")
-  .required("CEP é obrigatório")
-  .typeError("Digite apenas números"),
+  .required("CEP é obrigatório"),
 
   city:
   Yup.string()
