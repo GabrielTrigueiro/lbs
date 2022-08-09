@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ClientListPage, Login } from "../pages";
 import { ProviderListPage } from "../pages/providers-page";
+import { MenuLateral } from "../shared/components";
 import { useAuthContext, useDrawerContext } from "../shared/contexts";
 
 export const AppRoutes = () => {
@@ -25,22 +26,11 @@ export const AppRoutes = () => {
 
     return (
     <Routes>
-      <Route
-        path="/login"
-        element={<Login />}
-      />
-      <Route
-        path="/pagina-inicial/clientes"
-        element={<ClientListPage />}
-      />
-      <Route
-        path="/pagina-inicial/fornecedores"
-        element={<ProviderListPage/>}
-      />
-      <Route
-        path="*"
-        element={<Navigate to="/pagina-inicial/clientes" />}
-      />
+      <Route path="/login" element={<Login />}/>
+      <Route path="/pagina-inicial" element={<MenuLateral/>}>
+        <Route path="clientes" element={<ClientListPage />}/>
+        <Route path="fornecedores" element={<ProviderListPage/>}/>
+      </Route>
     </Routes>
   );
 };

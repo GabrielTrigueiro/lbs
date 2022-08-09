@@ -12,6 +12,7 @@ import "./styles.css"
 import * as Yup from "yup";
 import { FormHandles } from "@unform/core"
 import { SnackbarContext, Snack } from "../../shared/contexts/NotificationContext"
+import { Navigate } from "react-router-dom";
 import {
   InputAdornment,
   IconButton,
@@ -24,14 +25,13 @@ import {
   Grid,
   TextField,
 } from "@mui/material"
-import { Navigate } from "react-router-dom"
 
 interface State {
   password: string
   usuario: string
 }
 
-export const Login: React.FC = ({ children }) => {
+export const Login: React.FC = () => {
 
   const timer = useRef<number>()
   const [loading, setLoading] = useState(false)
@@ -117,7 +117,7 @@ export const Login: React.FC = ({ children }) => {
     }
   }, [])
   
-  if (isAuthenticated) return<>{children}</>
+  if (isAuthenticated) return <Navigate replace to="/pagina-inicial/clientes"/>
   return (
     <Grid container>
       <Grid

@@ -12,15 +12,15 @@ export const App = () => {
       <AuthProvider>
         <AppThemeProvider>
         
-            <Login>
+            
               <DrawerProvider>
                 <BrowserRouter>
-                  <MenuLateral>
+                  
                     <AppRoutes />
-                  </MenuLateral>
+                  
                 </BrowserRouter>
               </DrawerProvider>
-            </Login>
+            
           
         </AppThemeProvider>
       </AuthProvider>

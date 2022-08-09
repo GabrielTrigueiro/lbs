@@ -4,15 +4,14 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import { useState } from "react";
-import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useDrawerContext } from "../../contexts";
-import Logo from "../../../images/login/logo.svg";
+import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import { useAuthContext, useDrawerContext } from "../../contexts";
 import MenuIcon from "./MenuIcon";
+import { Navigate } from "react-router-dom";
 import {
   Box,
   Button,
   CssBaseline,
-  Divider,
   Icon,
   List,
   ListItemButton,
@@ -134,10 +133,11 @@ export const MenuLateral: React.FC = ({ children }) => {
   const [open, setOpen] = useState(false);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { drawerOptions, toggleDrawerOpen } = useDrawerContext();
+  const { isAuthenticated, login } = useAuthContext()
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
-
+  if (!isAuthenticated) return <Navigate replace to="/login"/>
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -215,7 +215,7 @@ export const MenuLateral: React.FC = ({ children }) => {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {children}
+        <Outlet/>
       </Box>
     </Box>
   );
