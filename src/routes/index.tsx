@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { ClientListPage, Login } from "../pages";
 import { ProviderListPage } from "../pages/providers-page";
 import { MenuLateral } from "../shared/components";
@@ -25,12 +25,15 @@ export const AppRoutes = () => {
   }, []);
 
     return (
-    <Routes>
-      <Route path="/login" element={<Login />}/>
-      <Route path="/pagina-inicial" element={<MenuLateral/>}>
-        <Route path="clientes" element={<ClientListPage />}/>
-        <Route path="fornecedores" element={<ProviderListPage/>}/>
-      </Route>
-    </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/pagina-inicial" element={<MenuLateral/>}>
+            <Route path="clientes" element={<ClientListPage />}/>
+            <Route path="fornecedores" element={<ProviderListPage/>}/>
+          </Route>
+          <Route path='/' element={<Navigate replace to="/pagina-inicial"/>}/>
+        </Routes>
+      </BrowserRouter>
   );
 };

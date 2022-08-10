@@ -11,17 +11,9 @@ export const App = () => {
     <TesteSnackBar>
       <AuthProvider>
         <AppThemeProvider>
-        
-            
-              <DrawerProvider>
-                <BrowserRouter>
-                  
-                    <AppRoutes />
-                  
-                </BrowserRouter>
-              </DrawerProvider>
-            
-          
+          <DrawerProvider>
+            <AppRoutes />
+          </DrawerProvider>
         </AppThemeProvider>
       </AuthProvider>
     </TesteSnackBar>
