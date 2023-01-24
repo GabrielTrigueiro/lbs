@@ -190,20 +190,6 @@ export const Login: React.FC = () => {
             <Button className={styles.button}
               type="submit"
               disabled={loading}
-              // sx={{
-              //   mt:1,
-              //   fontSize: "24px",
-              //   fontStyle: "normal",
-              //   fontWeight: 500,
-              //   height: 50,
-              //   width: "60%",
-              //   boxShadow: "none",
-              //   borderRadius: 10,
-              //   color: "#000000",
-              //   display: "flex",
-              //   alignItems: "center",
-              //   justifyContent: "center",
-              // }}
               variant="contained"
             >
               Login
