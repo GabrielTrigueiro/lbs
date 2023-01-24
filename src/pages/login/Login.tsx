@@ -8,7 +8,7 @@ import Logo from "../../images/login/logo.svg"
 import { VisibilityOff, Visibility } from "@mui/icons-material"
 import { VLoginOutlinedInput } from "../../shared/forms"
 import { Form } from "@unform/web"
-import "./styles.css"
+import styles from "./Login.module.scss"
 import * as Yup from "yup";
 import { FormHandles } from "@unform/core"
 import { SnackbarContext, Snack } from "../../shared/contexts/NotificationContext"
@@ -174,7 +174,7 @@ export const Login: React.FC = () => {
           <Form
             ref={formRef}
             onSubmit={(dados) => HandleLogin(dados)}
-            className="form-login"
+            className={styles.login}
           >
             <FormControl
               id="outlined-start-adornment"
