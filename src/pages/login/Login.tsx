@@ -124,15 +124,8 @@ export const Login: React.FC = () => {
       <Grid className={styles.container_formulario}>
         <image className={styles.logo}/>
         <Box className={styles.formulario}>
-          <Typography className={styles.titulo}>
-            Login
-          </Typography>
-
-          <Form
-            ref={formRef}
-            onSubmit={(dados) => HandleLogin(dados)}
-            className={styles.login}
-          >
+          <Typography className={styles.titulo}>Login</Typography>
+          <Form ref={formRef} onSubmit={(dados) => HandleLogin(dados)} className={styles.login}>
             <FormControl className={styles.login_input}  id="outlined-start-adornment">
               <InputLabel htmlFor="outlined-adornment-user">
                 Usuario
@@ -187,11 +180,7 @@ export const Login: React.FC = () => {
               />
             </FormControl>
 
-            <Button className={styles.button}
-              type="submit"
-              disabled={loading}
-              variant="contained"
-            >
+            <Button className={styles.button} type="submit" disabled={loading} variant="contained">
               Login
               {loading && (
               <CircularProgress
