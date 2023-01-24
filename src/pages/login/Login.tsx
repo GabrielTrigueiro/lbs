@@ -8,7 +8,7 @@ import Logo from "../../images/login/logo.svg"
 import { VisibilityOff, Visibility } from "@mui/icons-material"
 import { VLoginOutlinedInput } from "../../shared/forms"
 import { Form } from "@unform/web"
-import styles from "./Login.module.scss"
+import styles from "../../styles/Login/Login.module.scss"
 import * as Yup from "yup";
 import { FormHandles } from "@unform/core"
 import { SnackbarContext, Snack } from "../../shared/contexts/NotificationContext"
@@ -119,55 +119,12 @@ export const Login: React.FC = () => {
   
   if (isAuthenticated) return <Navigate replace to="/pagina-inicial/clientes"/>
   return (
-    <Grid container>
-      <Grid
-        xs={1}
-        sm={8}
-        md={8}
-        item
-        sx={{
-          height: "100vh",
-          backgroundImage: `url(${Mulher})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "right",
-        }}
-      ></Grid>
-
-      <Grid
-        xs={11}
-        sm={4}
-        md={4}
-        item
-        sx={{
-          bgcolor: "#fff",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          position={"absolute"}
-          alt="logo"
-          src={Logo}
-          component="img"
-          sx={{ width: 80, height: 80, top: 5, right: 20 }}
-        ></Box>
-        <Box
-          sx={{
-            width: "80%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Typography
-            fontSize={40}
-            fontWeight={700}
-            marginBottom={4}
-          >
+    <Grid className={styles.container}>
+      <image className={styles.imagem}/>
+      <Grid className={styles.container_formulario}>
+        <image className={styles.logo}/>
+        <Box className={styles.formulario}>
+          <Typography className={styles.titulo}>
             Login
           </Typography>
 
@@ -176,10 +133,7 @@ export const Login: React.FC = () => {
             onSubmit={(dados) => HandleLogin(dados)}
             className={styles.login}
           >
-            <FormControl
-              id="outlined-start-adornment"
-              sx={{ width: "100%", m: 1 }}
-            >
+            <FormControl className={styles.login_input}  id="outlined-start-adornment">
               <InputLabel htmlFor="outlined-adornment-user">
                 Usuario
               </InputLabel>
@@ -198,9 +152,7 @@ export const Login: React.FC = () => {
               />
               </FormControl>
             
-            <FormControl 
-              sx={{ width: "100%", m: 1 }} 
-              variant="outlined">
+            <FormControl className={styles.login_input} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
                 Senha
               </InputLabel>
@@ -235,23 +187,23 @@ export const Login: React.FC = () => {
               />
             </FormControl>
 
-            <Button
+            <Button className={styles.button}
               type="submit"
               disabled={loading}
-              sx={{
-                mt:1,
-                fontSize: "24px",
-                fontStyle: "normal",
-                fontWeight: 500,
-                height: 50,
-                width: "60%",
-                boxShadow: "none",
-                borderRadius: 10,
-                color: "#000000",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              // sx={{
+              //   mt:1,
+              //   fontSize: "24px",
+              //   fontStyle: "normal",
+              //   fontWeight: 500,
+              //   height: 50,
+              //   width: "60%",
+              //   boxShadow: "none",
+              //   borderRadius: 10,
+              //   color: "#000000",
+              //   display: "flex",
+              //   alignItems: "center",
+              //   justifyContent: "center",
+              // }}
               variant="contained"
             >
               Login

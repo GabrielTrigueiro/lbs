@@ -1,0 +1,74 @@
+@import "../GlobalVariables.module.scss";
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.imagem{
+    flex: 2;
+    background-image: url(../../images/login/Mulher.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.container_formulario{
+    flex: 1;
+    background-color: $fundo-branco;
+}
+
+.logo {
+    background-image: url("../../images/login/logo.svg");
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0em 3em;
+}
+
+.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_input {
+    width: 100%;
+    margin: 0.5em;
+}
+
+.titulo {
+    font-size: $grande;
+    font-weight: $negrito;
+    margin-bottom: 1em;
+}
+
+.button {
+    margin-top: 1em;
+    width: 50%;
+    height: 50px;
+    border-radius: 10px;
+    font-size: $normal;
+    box-shadow: none;
+}
+
+.button:hover {
+    background-color: $amarelo-claro-default;
+    box-shadow: none;
+}
