@@ -1,5 +1,5 @@
 import { LayoutBasePage } from "../../shared/layouts";
-import { CadastroClienteForm } from "../../shared/forms/form-client/ClienteForm";
+import { CadastroClienteForm } from "../../shared/forms/client/ClienteForm";
 import { useEffect, useState } from "react";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import { TableClients } from "../../shared/components/client-components/table-clients";

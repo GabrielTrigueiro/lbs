@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { ClientListPage, Login } from "../pages";
-import { ProviderListPage } from "../pages/providers-page";
+import { ProviderListPage } from "../pages/providers";
 import { MenuLateral } from "../shared/components";
 import { useAuthContext, useDrawerContext } from "../shared/contexts";
 
