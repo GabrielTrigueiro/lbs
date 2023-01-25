@@ -2,8 +2,8 @@ import { AxiosError } from "axios";
 import jwtDecode from "jwt-decode";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-// import { Notification } from "../components";
 import { AuthService } from "../services/api/auth/AuthService";
+import { Notification } from "../components";
 
 //dados user
 interface IUser{
@@ -48,10 +48,10 @@ export const AuthProvider: React.FC = ({children}) =>{
             await AuthService.auth(username, password)
                 .then( result => {
                     if (result instanceof AxiosError) {
-                        // Notification(result.message, "error");
+                        Notification(result.message, "error");
                     }
                     else{
-                        // Notification(result.message, "success");
+                        Notification(result.message, "success");
                         localStorage.setItem(
                             "Acess_Token", JSON.stringify(result.acessToken)
                         );

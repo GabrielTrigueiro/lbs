@@ -23,6 +23,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material"
+import { Notification } from "../../shared/components"
 
 interface State {
   password: string
@@ -97,7 +98,8 @@ export const Login: React.FC = () => {
             erros.inner.forEach((erros) => {
                 if (!erros.path) return;
                 validandoErros[erros.path] = erros.message;
-                // Notification(erros.message, "error");
+                console.log(erros.message)
+                Notification(erros.message, "error");
             });
             formRef.current?.setErrors(validandoErros);
         });
@@ -136,7 +138,6 @@ export const Login: React.FC = () => {
                 }
               />
               </FormControl>
-            
             <FormControl className={styles.login_input} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
                 Senha
@@ -171,7 +172,6 @@ export const Login: React.FC = () => {
                 label="Senha"
               />
             </FormControl>
-
             <Button className={styles.botao} type="submit" disabled={loading} variant="contained">
               Login
               {loading && (
