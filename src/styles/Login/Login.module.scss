@@ -50,25 +50,58 @@
 
 .login_input {
     width: 100%;
-    margin: 0.5em;
+    margin: 0.5em !important;
 }
 
 .titulo {
-    font-size: $grande;
-    font-weight: $negrito;
+    font-size: $grande !important;
+    font-weight: $negrito !important;
     margin-bottom: 1em;
 }
 
-.button {
-    margin-top: 1em;
-    width: 50%;
-    height: 50px;
-    border-radius: 10px;
-    font-size: $normal;
+.botao {
+    margin-top: 1em !important;
+    width: 50% !important;
+    height: 50px !important;
+    border-radius: 10px !important;
+    font-size: $normal !important;
+    box-shadow: none !important;
+    background-color: $amarelo_default !important;
+}
+
+.botao:hover {
+    background-color: $amarelo-claro-default !important;
     box-shadow: none;
 }
 
-.button:hover {
-    background-color: $amarelo-claro-default;
-    box-shadow: none;
+@media (max-width: $sm) {
+    .container_formulario {
+        width: 100vw;
+        height: 100vh;
+    }
+    .imagem {
+        flex: 0;
+    }
+    .titulo {
+        font-size: $pequena;
+    }
+}
+
+@media (max-width: $md) {
+    .container {
+        flex-direction: column;
+    }
+    .container_formulario {
+        position: absolute;
+        padding: 1em;
+        width: 50vw;
+        height: 50vh;
+        top: 25%;
+        right: 25%;
+        border-radius: 1em;
+    }
+    .imagem {
+        flex: 1;
+        background-position: center;
+    }
 }

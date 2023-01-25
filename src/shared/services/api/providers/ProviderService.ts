@@ -1,7 +1,7 @@
 import { AxiosError } from "axios"
 import { environment } from "../../../environment"
-import { api } from "../axios-config"
 import { IClientSearch, ISendPagination } from "../client"
+import { api } from "../axios"
 
 export interface IInfoProvider {
     id?: string
@@ -50,6 +50,7 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
         console.error(err)
     })
 }
+
 const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     const token = {
         headers:{
@@ -68,6 +69,7 @@ const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
         return new Error((error as {message: string}).message || 'Erro ao carregar página')
     }
 }
+
 const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Error>   => {
     const token = {
         headers:{
@@ -86,6 +88,7 @@ const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Erro
         console.error(err)
       })
 }
+
 const DeleteById = async (id: string): Promise<void | Error>   => {
     const token = {
         headers:{
@@ -104,6 +107,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
         console.error(err)
       })
 }
+
 const Create = async (dados: IInfoProvider): Promise<any>   => {
     const token = {
         headers:{

@@ -5,7 +5,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useAuthContext, useDrawerContext } from "../../contexts";
+import { useAuthContext, useSideBarContext } from "../../contexts";
 import MenuIcon from "./MenuIcon";
 import { Navigate } from "react-router-dom";
 import {
@@ -132,12 +132,12 @@ export const MenuLateral: React.FC = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
-  const { drawerOptions, toggleDrawerOpen } = useDrawerContext();
+  const { sideBarOption, toggleSideBar } = useSideBarContext();
   const { isAuthenticated, login } = useAuthContext()
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
-  if (!isAuthenticated) return <Navigate replace to="/login"/>
+  if (!isAuthenticated) return <Navigate replace to="/"/>
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -165,18 +165,18 @@ export const MenuLateral: React.FC = ({ children }) => {
       <Drawer
         variant={smDown ? "temporary" : "permanent"}
         open={open}
-        onClose={toggleDrawerOpen}
+        onClose={toggleSideBar}
       >
         <DrawerHeader></DrawerHeader>
         <Box flex={1} sx={{ mt: theme.spacing(20) }}>
           <List component="nav">
-            {drawerOptions.map((drawerOption) => (
+            {sideBarOption.map((drawerOption) => (
               <ListItemLink 
                 to={drawerOption.path}
                 key={drawerOption.path}
                 icon={drawerOption.icon}
                 label={drawerOption.label}
-                onClick={smDown ? toggleDrawerOpen : undefined}
+                onClick={smDown ? toggleSideBar : undefined}
               />
             ))}
           </List>
@@ -214,8 +214,8 @@ export const MenuLateral: React.FC = ({ children }) => {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Outlet/>
+        <DrawerHeader/>
+        {children}
       </Box>
     </Box>
   );

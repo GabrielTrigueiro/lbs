@@ -3,8 +3,6 @@ import { useAuthContext } from "../../shared/contexts"
 import { useContext, useEffect, useRef, useState } from "react"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import LockIcon from "@mui/icons-material/Lock"
-import Mulher from "../../images/login/Mulher.jpg"
-import Logo from "../../images/login/logo.svg"
 import { VisibilityOff, Visibility } from "@mui/icons-material"
 import { VLoginOutlinedInput } from "../../shared/forms"
 import { Form } from "@unform/web"
@@ -66,15 +64,15 @@ export const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const schema: Yup.SchemaOf<State> = Yup.object().shape({
-    usuario: 
-    Yup.string()
-    .required('Campo obrigatório')
-    .min(6,'Mínimo 6 digitos'),
-    password: 
-    Yup.string()
-    .required('Campo obrigatório')
-    .min(4,'Mínimo 4 digitos')
-  })
+    usuario:
+  Yup.string()
+      .required("Usuário obrigatório")
+      .min(6, "Usuário mínimo 6 digitos"),
+    password:
+  Yup.string()
+      .required("Senha obrigatória")
+      .min(4, "Senha mínimo 4 digitos")
+});
   
   const handleButtonClick = () => {
     if (!loading) {
@@ -89,27 +87,21 @@ export const Login: React.FC = () => {
   
   const HandleLogin = (dados: State) => {
     schema
-    .validate(dados, { abortEarly: false })
-    .then((dadosValidados) => {
-      login(dados.usuario, dados.password)
-      handleButtonClick()
-    })
-    .catch((erros: Yup.ValidationError) => {
-      setSnack(new Snack({
-        message: 'Quantidade mínima de digitos não respeitada',
-        color:'error',
-        open: true}))
-
-      const validandoErros: { [key: string]: string } = {};
-
-      erros.inner.forEach((erros) => {
-        if (!erros.path) return;
-        validandoErros[erros.path] = erros.message;
-      });
-
-      formRef.current?.setErrors(validandoErros);
-    });
-  }
+        .validate(dados, { abortEarly: false })
+        .then((dadosValidados) => {
+            login(dadosValidados.usuario, dadosValidados.password);
+            handleButtonClick();
+        })
+        .catch((erros: Yup.ValidationError) => {
+            const validandoErros: { [key: string]: string } = {};
+            erros.inner.forEach((erros) => {
+                if (!erros.path) return;
+                validandoErros[erros.path] = erros.message;
+                // Notification(erros.message, "error");
+            });
+            formRef.current?.setErrors(validandoErros);
+        });
+};
 
   useEffect(() => {
     return () => {
@@ -117,7 +109,7 @@ export const Login: React.FC = () => {
     }
   }, [])
   
-  if (isAuthenticated) return <Navigate replace to="/pagina-inicial/clientes"/>
+  if (isAuthenticated) return <Navigate replace to="/home/clientes"/>
   return (
     <Grid className={styles.container}>
       <image className={styles.imagem}/>
@@ -180,7 +172,7 @@ export const Login: React.FC = () => {
               />
             </FormControl>
 
-            <Button className={styles.button} type="submit" disabled={loading} variant="contained">
+            <Button className={styles.botao} type="submit" disabled={loading} variant="contained">
               Login
               {loading && (
               <CircularProgress

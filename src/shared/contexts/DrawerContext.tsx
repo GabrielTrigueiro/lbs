@@ -1,41 +1,44 @@
 import { createContext, useCallback, useContext, useState } from "react";
 
-interface IDrawerOption{
-  path: string,
-  icon: string,
-  label: string,
+interface ISideBarItem{
+    path: string
+    icon: string
+    label: string
 }
 
-interface IDrawerContextData {
-  isDrawerOpen: boolean;
-  drawerOptions: IDrawerOption[];
-  toggleDrawerOpen: () => void;
-  setDrawerOption: (newDrawerOptions: IDrawerOption[]) => void;
+interface ISideBarProps{
+    isSideBarOpen: boolean
+    toggleSideBar: ()=> void
+    sideBarOption: ISideBarItem[]
+    setSideBarOption: (newSideBarOption: ISideBarItem[]) => void
 }
 
-const DrawerContext = createContext({} as IDrawerContextData);
+const SideBarContext = createContext({} as ISideBarProps);
 
-export const useDrawerContext = () => {
-  return useContext(DrawerContext);
+export const useSideBarContext = () => {
+    return useContext(SideBarContext);
 };
 
-export const DrawerProvider: React.FC = ({ children }) => {
+export const SideBarProvider: React.FC = ({children}) => {
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [sideOpen, setSideOpen] = useState<boolean>(false);
+    const [sideItem, setSideItem] = useState<ISideBarItem[]>([]);
+    const toggleSide = useCallback(()=>{
+        setSideOpen((oldSideOpen) => !oldSideOpen);
+    },[]);
+    const handleSetSideBarItems = useCallback((newSideItem: ISideBarItem[])=>{
+        setSideItem(newSideItem);
+    },[]);
 
-  const [drawerOptions, setDrawerOptions] = useState<IDrawerOption[]>([]);
-
-  const toggleDrawerOpen = useCallback(() => {
-    
-    setIsDrawerOpen((oldDrawerOpen) => !oldDrawerOpen);
-  }, []);
-  const handleSetDrawerOptions = useCallback((newDrawerOptions: IDrawerOption[]) => {
-    setDrawerOptions(newDrawerOptions);
-  }, []);
-  
-  return (
-    <DrawerContext.Provider value={{ isDrawerOpen,setDrawerOption: handleSetDrawerOptions , drawerOptions, toggleDrawerOpen }}>
-      {children}
-    </DrawerContext.Provider>
-  );
+    return(
+        <SideBarContext.Provider
+            value={{
+                toggleSideBar: toggleSide,
+                isSideBarOpen: sideOpen,
+                setSideBarOption: handleSetSideBarItems,
+                sideBarOption: sideItem,
+            }}>
+            {children}
+        </SideBarContext.Provider>
+    );
 };

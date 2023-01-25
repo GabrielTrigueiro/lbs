@@ -9,10 +9,3 @@ export const environment = {
     url_client:  URL + `/api/client/`,
     url_provider: URL + `/api/provider/`,
 }
-
-// export const TokenConfig = {
-//     headers:{
-//         Authorization: 
-//         `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
-//     }
-// }

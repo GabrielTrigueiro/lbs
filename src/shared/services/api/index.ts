@@ -1,2 +1,2 @@
-export * from './axios-config'
+export * from "./axios"
 export * from "./client"
