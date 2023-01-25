@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ClientListPage, Login } from './pages';
 import Home from './pages/home/Home';
 import { AuthProvider, SideBarProvider, useSideBarContext } from './shared/contexts';
+import { ProviderListPage } from './pages/providers';
 
 
 const router = createBrowserRouter([
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
       {
         path: "/home/clientes",
         element: <ClientListPage/>
-      }
+      },
+      {
+        path: "/home/provedores",
+        element: <ProviderListPage/>
+      },
     ]
   },
 ])

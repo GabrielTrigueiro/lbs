@@ -18,7 +18,7 @@ export default function Home() {
           {
             label: "Fornecedores",
             icon: "account_box_icon",   
-            path: "/home/fornecedores",
+            path: "/home/provedores",
           },
         ]);
       }, []);
