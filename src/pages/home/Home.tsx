@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
-import MenuIcon from "../../shared/components/menu/MenuIcon";
 import { MenuLateral } from "../../shared/components";
 import { useSideBarContext } from "../../shared/contexts";
 import {useEffect} from "react";
+import styles from "../../styles/Home/Home.module.scss";
 
 export default function Home() {
 
@@ -24,10 +24,10 @@ export default function Home() {
       }, []);
 
     return(
-        <>
+        <div className={styles.container}>
             <MenuLateral>
                 <Outlet/>
             </MenuLateral>
-        </>
+        </div>
     )
 }

@@ -8,6 +8,7 @@ import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom
 import { useAuthContext, useSideBarContext } from "../../contexts";
 import MenuIcon from "./MenuIcon";
 import { Navigate } from "react-router-dom";
+import styles from "../../../styles/MenuLateral/MenuLateral.module.scss";
 import {
   Box,
   Button,
@@ -139,7 +140,7 @@ export const MenuLateral: React.FC = ({ children }) => {
   };
   if (!isAuthenticated) return <Navigate replace to="/"/>
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box className={styles.container}>
       <CssBaseline />
       <AppBar sx={{ backgroundColor: "#575A61", boxShadow:'none' }}>
         <Toolbar
@@ -214,7 +215,6 @@ export const MenuLateral: React.FC = ({ children }) => {
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader/>
         {children}
       </Box>
     </Box>
