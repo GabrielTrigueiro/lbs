@@ -8,7 +8,7 @@ import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom
 import { useAuthContext, useSideBarContext } from "../../contexts";
 import MenuIcon from "./MenuIcon";
 import { Navigate } from "react-router-dom";
-import styles from "../../../styles/MenuLateral/MenuLateral.module.scss";
+import styles from "../../../styles/SideBar/SideBar.module.scss";
 import {
   Box,
   Button,
@@ -141,34 +141,19 @@ export const MenuLateral: React.FC = ({ children }) => {
   if (!isAuthenticated) return <Navigate replace to="/"/>
   return (
     <Box className={styles.container}>
-      <CssBaseline />
-      <AppBar sx={{ backgroundColor: "#575A61", boxShadow:'none' }}>
-        <Toolbar
-          disableGutters
-          sx={{
-            paddingLeft: 0,
-            paddingRight: 2,
-            justifyContent: "space-between",
-          }}
-        >
-          <Box sx={{height: "100%", display:'flex'}}>
-            <Box
-              sx={{bgcolor:'transparent', width: 65, height: "100%" }}
-            ></Box>
-            <Box
-              sx={{bgcolor:'#E4DB00' ,width: 65, height: "100%"}}
-            ></Box>
-          </Box>
+
+      {/* Navbar */}
+      <AppBar className={styles.navbar}>
           <MenuIcon />
-        </Toolbar>
       </AppBar>
 
+      {/* SideBar */}
       <Drawer
         variant={smDown ? "temporary" : "permanent"}
         open={open}
         onClose={toggleSideBar}
       >
-        <DrawerHeader></DrawerHeader>
+        {/* <DrawerHeader></DrawerHeader> */}
         <Box flex={1} sx={{ mt: theme.spacing(20) }}>
           <List component="nav">
             {sideBarOption.map((drawerOption) => (
