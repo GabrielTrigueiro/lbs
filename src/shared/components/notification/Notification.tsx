@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 
-
 export const Notification = (message: string, type: "error" | "success" | "warning") =>{
     if (type == "success"){
         return(
@@ -43,5 +42,4 @@ export const Notification = (message: string, type: "error" | "success" | "warni
                 theme: "light",
             })
         );}
-    
 };

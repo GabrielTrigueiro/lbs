@@ -6,7 +6,8 @@ import { ClientListPage, Login } from './pages';
 import Home from './pages/home/Home';
 import { AuthProvider, SideBarProvider, useSideBarContext } from './shared/contexts';
 import { ProviderListPage } from './pages/providers';
-
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
+      <ToastContainer/>
       <SideBarProvider>
         <RouterProvider router={router}/>
       </SideBarProvider>
