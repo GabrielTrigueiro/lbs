@@ -1,34 +1,25 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import MuiDrawer from "@mui/material/Drawer";
-import { CSSObject, styled, Theme, useTheme } from "@mui/material/styles";
-import { useState } from "react";
-import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useAuthContext, useSideBarContext } from "../../contexts";
-import MenuIcon from "./MenuIcon";
-import { Navigate } from "react-router-dom";
-import styles from "../../../styles/SideBar/SideBar.module.scss";
 import {
   Box,
-  Button,
-  CssBaseline,
-  Icon,
+  Button, Icon,
   List,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-  Toolbar,
-  useMediaQuery,
+  ListItemText, useMediaQuery
 } from "@mui/material";
+import MuiAppBar from "@mui/material/AppBar";
+import MuiDrawer from "@mui/material/Drawer";
+import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
+import { useState } from "react";
+import { Navigate, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import styles from "../../../styles/SideBar/SideBar.module.scss";
+import { useAuthContext, useSideBarContext } from "../../contexts";
+import { AppBarProps, IListItemLinkProps } from "../../models/appBar";
+import MenuIcon from "./MenuIcon";
 
-interface IListItemLinkProps {
-  to: string;
-  icon: string;
-  label: string;
-  onClick: (() => void) | undefined;
-}
 const drawerWidth = 200;
+
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -37,6 +28,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowX: "hidden",
 });
+
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -48,17 +40,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 2),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
@@ -76,20 +58,44 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  borderColor: "transparent",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+//propriedades da sideBar
 const ListItemLink: React.FC<IListItemLinkProps> = ({
   to,
   icon,
   label,
   onClick,
 }) => {
+
   const navigate = useNavigate();
+
   const resolvedPath = useResolvedPath(to);
+
   const match = useMatch({ path: resolvedPath.pathname, end: false });
+
   const handleClick = () => {
     navigate(to);
     onClick?.();
   };
-  //icon effect
+
   return (
     <ListItemButton
       selected={!!match}
@@ -110,34 +116,23 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
     </ListItemButton>
   );
 };
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  borderColor: "transparent",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
 
 export const MenuLateral: React.FC = ({ children }) => {
 
   const theme = useTheme();
+
   const [open, setOpen] = useState(false);
+
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { sideBarOption, toggleSideBar } = useSideBarContext();
+
   const { isAuthenticated, login } = useAuthContext()
+
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
+
   if (!isAuthenticated) return <Navigate replace to="/"/>
   return (
     <Box className={styles.container}>
@@ -149,12 +144,13 @@ export const MenuLateral: React.FC = ({ children }) => {
 
       {/* SideBar */}
       <Drawer
+        className={styles.sideBar}
         variant={smDown ? "temporary" : "permanent"}
         open={open}
         onClose={toggleSideBar}
       >
         {/* <DrawerHeader></DrawerHeader> */}
-        <Box flex={1} sx={{ mt: theme.spacing(20) }}>
+        <Box className={styles.sideBarLinks}>
           <List component="nav">
             {sideBarOption.map((drawerOption) => (
               <ListItemLink 
@@ -167,39 +163,14 @@ export const MenuLateral: React.FC = ({ children }) => {
             ))}
           </List>
         </Box>
-        <Box>
-         
-          <Button
-            onClick={handleDrawerOpenOrClose}
-            sx={{
-              padding: 2,
-              color: "#000",
-              width: "100%",
-              background: "#fff",
-              minHeight: 48,
-              px: 2.5,
-              minWidth: 0,
-              mr: open ? 3 : "auto",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContens: "center",
-                alignItems: "center",
-                borderStyle: "solid",
-                borderWidth: 2,
-                borderColor: "#000",
-              }}
-            >
-              {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </Box>
-          </Button>
-        </Box>
+        <div className={styles.sideBarButtonContainer}>
+          <div className={styles.sideBarButton} onClick={handleDrawerOpenOrClose}>
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </div>
+        </div>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
         {children}
       </Box>
     </Box>

@@ -16,3 +16,28 @@
     flex-direction: row !important;
     justify-content: end !important;
 }
+
+.sideBar {
+    display: flex;
+}
+
+.sideBarLinks {
+    flex: 10;
+    // background-color: aqua !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sideBarButtonContainer {
+    flex: 1;
+    // background-color: chartreuse;
+}
+
+.sideBarButton {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

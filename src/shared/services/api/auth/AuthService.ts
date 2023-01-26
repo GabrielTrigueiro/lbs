@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 // import { Notification } from "../../../components";
 import { environment } from "../../../environment";
 import { api } from "../axios";
+import { Notification } from "../../../components";
 
 //type usuario
 export type TUser = {
@@ -29,7 +30,7 @@ async (username: string, password: string):Promise<any | AxiosError> => {
             return data.data;
         })
         .catch(err => {
-            // Notification(err.response.data.message, "error");
+            Notification(err.response.data.message, "error");
         });
 };
 
