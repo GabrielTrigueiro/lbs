@@ -114,9 +114,9 @@ export const Login: React.FC = () => {
   if (isAuthenticated) return <Navigate replace to="/home/clientes"/>
   return (
     <Grid className={styles.container}>
-      <image className={styles.imagem}/>
+      <div className={styles.imagem}/>
       <Grid className={styles.container_formulario}>
-        <image className={styles.logo}/>
+        <div className={styles.logo}/>
         <Box className={styles.formulario}>
           <Typography className={styles.titulo}>Login</Typography>
           <Form ref={formRef} onSubmit={(dados) => HandleLogin(dados)} className={styles.login}>
