@@ -8,27 +8,27 @@
 }
 
 .topTitle {
-    font-weight: 600;
-    font-size: $grande;
-    color: $fundo-cinza;
+    font-weight: 600 !important;
+    font-size: $grande !important;
+    color: $fundo-cinza !important;
 }
 
 .topButton {
-    height: 45px;
-    width: 200px;
-    color: $cinza-escuro;
-    background-color: $amarelo-default;
-    box-shadow: none;
+    height: 45px !important;
+    width: 200px !important;
+    color: $cinza-escuro !important;
+    background-color: $amarelo-default !important;
+    box-shadow: none !important;
 }
 
 .topButtonText {
-    font-size: $micro;
-    font-weight: bold;
+    font-size: $micro !important;
+    font-weight: bold !important;
 }
 
 .topButton:hover {
-    background-color: $amarelo-claro-default;
-    box-shadow: none;
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
 }
 
 .midContainer {
