@@ -138,15 +138,13 @@ export const ClientListPage: React.FC = () => {
         {isLoading ? <ClientListPageSkeleton /> : <TableClients update={update} lista={rows} />}
       </Box>
 
-      <Box display="flex" justifyContent="flex-end" mt={1}>
-        
+      <Box display="flex" justifyContent="center" mt={1}>
           <Pagination
             count={pages}
             shape="rounded" 
             page={actualpage+1}
             onChange={handleChange}
           />
-        
       </Box>
 
       <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
