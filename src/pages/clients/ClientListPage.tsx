@@ -135,7 +135,7 @@ export const ClientListPage: React.FC = () => {
         <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
 
-      <Box sx={{ padding: 0 }}>
+      <Box className={styles.table}>
         <TableClients update={update} lista={rows} />
       </Box>
 

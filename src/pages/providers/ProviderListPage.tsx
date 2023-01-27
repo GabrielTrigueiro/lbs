@@ -7,6 +7,7 @@ import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
 import { ISendPagination } from "../../shared/services";
 import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
+import styles from "../../styles/Provider/Provider.module.scss";
 import {
   Box,
   Typography,
@@ -31,7 +32,7 @@ export const ProviderListPage: React.FC = () => {
   const [modal, setModal] = useState<true | false>(false);
   const [pages, setPages] = useState<number>(0);
   const [actualpage, setActualPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(3);
+  const [pageSize, setPageSize] = useState<number>(5);
   const [selectContent, setSelectContent] = useState("");
 
   const handleModal = () => {
@@ -139,9 +140,9 @@ export const ProviderListPage: React.FC = () => {
                 label="nº itens"
                 onChange={selectChange}
               >
-                <MenuItem value={3}>Três</MenuItem>
-                <MenuItem value={5}>Cinco</MenuItem>
-                <MenuItem value={10}>Dez</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
               </Select>
             </FormControl>
           </Grid>

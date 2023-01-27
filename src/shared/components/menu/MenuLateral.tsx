@@ -138,41 +138,45 @@ export const MenuLateral: React.FC = ({ children }) => {
     <Box className={styles.container}>
 
       {/* Navbar */}
-      <AppBar className={styles.navbar}>
-          <MenuIcon />
-      </AppBar>
+      <div className={styles.divApp}>
+        <AppBar className={styles.navbar}>
+            <MenuIcon />
+        </AppBar>
+      </div>
 
       {/* SideBar */}
-      <Drawer
-        className={styles.sideBar}
-        variant={smDown ? "temporary" : "permanent"}
-        open={open}
-        onClose={toggleSideBar}
-      >
-        {/* <DrawerHeader></DrawerHeader> */}
-        <Box className={styles.sideBarLinks}>
-          <List component="nav">
-            {sideBarOption.map((drawerOption) => (
-              <ListItemLink 
-                to={drawerOption.path}
-                key={drawerOption.path}
-                icon={drawerOption.icon}
-                label={drawerOption.label}
-                onClick={smDown ? toggleSideBar : undefined}
-              />
-            ))}
-          </List>
-        </Box>
-        <div className={styles.sideBarButtonContainer} onClick={handleDrawerOpenOrClose}>
-          <div className={styles.sideBarButton}>
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      <div className={styles.teste}>
+        <Drawer
+          className={styles.sideBar}
+          variant={smDown ? "temporary" : "permanent"}
+          open={open}
+          onClose={toggleSideBar}
+        >
+          {/* <DrawerHeader></DrawerHeader> */}
+          <Box className={styles.sideBarLinks}>
+            <List component="nav">
+              {sideBarOption.map((drawerOption) => (
+                <ListItemLink 
+                  to={drawerOption.path}
+                  key={drawerOption.path}
+                  icon={drawerOption.icon}
+                  label={drawerOption.label}
+                  onClick={smDown ? toggleSideBar : undefined}
+                />
+              ))}
+            </List>
+          </Box>
+          <div className={styles.sideBarButtonContainer} onClick={handleDrawerOpenOrClose}>
+            <div className={styles.sideBarButton}>
+              {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </div>
           </div>
-        </div>
-      </Drawer>
+        </Drawer>
+        <Box className={styles.main}>
+          {children}  
+        </Box>
+      </div>
 
-      <Box sx={{ flexGrow: 1, p: 3 }}>
-        {children}
-      </Box>
     </Box>
   );
 };
