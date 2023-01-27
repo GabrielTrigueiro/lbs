@@ -1,0 +1,58 @@
+@import "../GlobalVariables.module.scss";
+
+.topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.topContainerTitle {
+    font-weight: 600 !important;
+    font-size: $grande !important;
+    color: $fundo-cinza !important;
+}
+
+.topButton {
+    height: 45px !important;
+    width: 200px !important;
+    color: $cinza-escuro !important;
+    background-color: $amarelo-default !important;
+    box-shadow: none !important;
+}
+
+.topButtonText {
+    font-size: 10px !important;
+    font-weight: bold !important;
+}
+
+.topButton:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.table {
+    min-height: 60vh;
+    max-height: 60vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.table::-webkit-scrollbar {
+    width: 5px;
+}
+
+.table::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: #D6DEE1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.table::-webkit-scrollbar-thumb:hover {
+    background-color: #A8BBBF;
+}

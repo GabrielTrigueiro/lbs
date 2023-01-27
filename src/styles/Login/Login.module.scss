@@ -74,6 +74,11 @@
     box-shadow: none;
 }
 
+.well {
+    color: $fundo-cinza;
+    margin-left: 1em;
+}
+
 @media (max-width: $sm) {
     .container_formulario {
         width: 100vw;

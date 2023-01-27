@@ -23,6 +23,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { ClientListPageSkeleton } from "../clients";
 
 export const ProviderListPage: React.FC = () => {
   const [value, setValue] = useState<string>("");
@@ -81,31 +82,10 @@ export const ProviderListPage: React.FC = () => {
 
   return (
     <LayoutBasePage>
-      <Box
-        justifyContent={"space-between"}
-        padding={0}
-        display="flex"
-        alignItems="center"
-      >
-        <Typography
-          sx={{
-            margin: "40px 0px",
-            fontWeight: 600,
-            fontSize: "35px",
-            color: "#575a61",
-          }}
-        >
-          Fornecedores{" "}
-        </Typography>
-        <Button
-          onClick={handleModal}
-          variant="contained"
-          startIcon={<Add />}
-          sx={{ height: 45, width: 200, color: "#494b4f" }}
-        >
-          <Typography fontSize={"10px"} sx={{ fontWeight: "bold" }}>
-            Cadastrar Fornecedor
-          </Typography>
+      <Box className={styles.topContainer}>
+        <Typography className={styles.topContainerTitle}>Fornecedores</Typography>
+        <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
+          <Typography className={styles.topButtonText}>Cadastrar Fornecedor</Typography>
         </Button>
       </Box>
       <Box margin="0px" display="flex">
@@ -150,8 +130,8 @@ export const ProviderListPage: React.FC = () => {
         <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
 
-      <Box sx={{ padding: 0 }}>
-        <TableProviders update={update} lista={rows} />
+      <Box className={styles.table}>
+        {isLoading ? <ClientListPageSkeleton /> : <TableProviders update={update} lista={rows} />}
       </Box>
 
       <Box display="flex" justifyContent="flex-end" mt={1}>

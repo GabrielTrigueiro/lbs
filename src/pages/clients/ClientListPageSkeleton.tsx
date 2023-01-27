@@ -2,8 +2,8 @@ import { Skeleton, Stack } from "@mui/material";
 
 export const ClientListPageSkeleton = () => {
   return (
-    <Stack spacing={1}>
-      <Skeleton variant="rectangular" sx={{marginTop:'200px', marginLeft:'120px'}} width={'1034px'} height={300} />
+    <Stack>
+      <Skeleton variant="rectangular" sx={{minHeight: "60vh", maxHeight: "60vh", marginTop: 7, borderRadius: 1}}/>
     </Stack>
   );
 };

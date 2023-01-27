@@ -89,7 +89,6 @@ export const ClientListPage: React.FC = () => {
     update();
   }, [value, actualpage, pageSize]);
 
-  if (isLoading) return <ClientListPageSkeleton />;
   return (
     <LayoutBasePage>
       <Box className={styles.topContainer}>
@@ -136,7 +135,7 @@ export const ClientListPage: React.FC = () => {
       </Box>
 
       <Box className={styles.table}>
-        <TableClients update={update} lista={rows} />
+        {isLoading ? <ClientListPageSkeleton /> : <TableClients update={update} lista={rows} />}
       </Box>
 
       <Box display="flex" justifyContent="flex-end" mt={1}>

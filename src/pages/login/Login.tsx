@@ -175,12 +175,7 @@ export const Login: React.FC = () => {
             <Button className={styles.botao} type="submit" disabled={loading} variant="contained">
               Login
               {loading && (
-              <CircularProgress
-                size={24}
-                sx={{
-                  color: '#E4DB00',
-                }}
-              />
+              <CircularProgress className={styles.well}size={24}/>
             )}
             </Button>
           </Form>
