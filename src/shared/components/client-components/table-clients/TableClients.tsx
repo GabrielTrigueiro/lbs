@@ -24,7 +24,6 @@ const TableRowStyled = styled(TableRow)({
   borderEndEndRadius: "10px",
 });
 const TableCellStyled = styled(TableCell)({
-  width: "200px",
   borderColor: "transparent",
   padding: "10px 16px",
 });
@@ -39,29 +38,28 @@ export const TableClients: React.FC<{
       <TableStyled sx={{ minWidth: 700 }}>
         <TableHead>
           <TableRow>
+            <TableCellStyled></TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Informações Básicas</TableCellStyled>
-            <TableCellStyled></TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Número de Celular</TableCellStyled>
-            <TableCellStyled></TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>CPF</TableCellStyled>
           </TableRow>
         </TableHead>
      
           <TableBody>
             {lista.map((row) => (
-              <TableRowStyled key={row.id} sx={{ boxShadow: "inherit" }} className="MuiTableRow-root">
+              <TableRowStyled key={row.id} sx={{ boxShadow: "inherit" }} className={styles.celula}>
                 <TableCellStyled style={{ borderLeftColor: row.isActive ? "#42FF00" : "#FF5555" }} sx={{ width: 30, mr: "15px" }}>
-                  <Box display="flex">
-                  <Avatar sx={{marginRight: 1}}/>
-                    <Box>
-                      <Box sx={{fontWeight:'500'}}>{row.name}</Box>
-                      <Box sx={{color:'#575a61', fontSize:'12px'}}>{row.email}</Box>
-                    </Box>
-                  </Box>
+                  <Avatar/>
                 </TableCellStyled>
-                <TableCellStyled></TableCellStyled>
+                <TableCellStyled>
+                    <Box display="flex">
+                      <Box>
+                        <Box sx={{fontWeight:'500'}}>{row.name}</Box>
+                        <Box sx={{color:'#575a61', fontSize:'12px'}}>{row.email}</Box>
+                      </Box>
+                    </Box>
+                </TableCellStyled>
                 <TableCellStyled  sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
-                <TableCellStyled></TableCellStyled>
                 <TableCellStyled  sx={{fontWeight:'500'}}>{row.cpf}</TableCellStyled>
                 <TableCellStyled sx={{display: "flex", justifyContent: "flex-end", alignContent:"center"}}>
                   <TableSubMenu update={update} client={row}/>
