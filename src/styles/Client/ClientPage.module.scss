@@ -1,0 +1,60 @@
+@import "../GlobalVariables.module.scss";
+
+.topContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.topTitle {
+    font-weight: 600;
+    font-size: $grande;
+    color: $fundo-cinza;
+}
+
+.topButton {
+    height: 45px;
+    width: 200px;
+    color: $cinza-escuro;
+    background-color: $amarelo-default;
+    box-shadow: none;
+}
+
+.topButtonText {
+    font-size: $micro;
+    font-weight: bold;
+}
+
+.topButton:hover {
+    background-color: $amarelo-claro-default;
+    box-shadow: none;
+}
+
+.midContainer {
+    display: flex;
+}
+
+.midGrid {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.midLeft {
+    display: flex;
+    border-bottom: 4px solid $amarelo-default;
+}
+
+.midLeftTitle {
+    color: $cinza-escuro;
+    font-size: $normal;
+}
+
+.midRight {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 3px solid $cinza-claro;
+}

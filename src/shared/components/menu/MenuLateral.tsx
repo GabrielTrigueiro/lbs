@@ -163,8 +163,8 @@ export const MenuLateral: React.FC = ({ children }) => {
             ))}
           </List>
         </Box>
-        <div className={styles.sideBarButtonContainer}>
-          <div className={styles.sideBarButton} onClick={handleDrawerOpenOrClose}>
+        <div className={styles.sideBarButtonContainer} onClick={handleDrawerOpenOrClose}>
+          <div className={styles.sideBarButton}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </div>
         </div>

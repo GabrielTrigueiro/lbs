@@ -1,38 +1,46 @@
-import { LayoutBasePage } from "../../shared/layouts";
-import { CadastroClienteForm } from "../../shared/forms/client/ClienteForm";
-import { useEffect, useState } from "react";
-import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
-import { TableClients } from "../../shared/components/client-components/table-clients";
-import { SearchInput} from "../../shared/components/search";
 import { Add } from "@mui/icons-material";
-import { ConfirmationButton } from "../../shared/components";
-import { ClienteService, IClientSearch, IInfoClient, IReceivePagination, ISendPagination } from "../../shared/services";
 import {
   Box,
-  Icon,
-  Typography,
-  Grid,
-  Stack,
-  Pagination,
   Button,
-  Modal,
   FormControl,
+  Grid,
+  Icon,
   InputLabel,
   MenuItem,
-  TablePagination,
+  Modal,
+  Pagination,
+  Stack,
+  Typography
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useEffect, useState } from "react";
+import { ConfirmationButton } from "../../shared/components";
+import { TableClients } from "../../shared/components/client-components/table-clients";
+import { SearchInput } from "../../shared/components/search";
+import { CadastroClienteForm } from "../../shared/forms/client/ClienteForm";
+import { LayoutBasePage } from "../../shared/layouts";
+import { ClienteService, IInfoClient, ISendPagination } from "../../shared/services";
+import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
+import styles from "../../styles/Client/ClientPage.module.scss";
 
 export const ClientListPage: React.FC = () => {
 
   const [value, setValue] = useState<string>("");
+
   const [isLoading, setIsLoading] = useState(true);
+
   const [rows, setRows] = useState<IInfoClient[]>([]);
+
   const [confirm, setConfirm] = useState<true | false>(false);
+
   const [modal, setModal] = useState<true | false>(false);
+
   const [pages, setPages] = useState<number>(0)
-  const [pageSize, setPageSize] = useState<number>(3)
+
+  const [pageSize, setPageSize] = useState<number>(5)
+
   const [actualpage, setActualPage] = useState<number>(0)
+
   const [selectContent, setSelectContent] = useState('');
 
   const handleModal = () => {
@@ -42,10 +50,6 @@ export const ClientListPage: React.FC = () => {
   const handleConfirm = () => {
     confirm ? setConfirm(false) : setConfirm(true);
   };
-
-  useEffect(() => {
-    update();
-  }, [value, actualpage, pageSize]);
 
   const update = () => {
     ClienteService.getAll(ClientPaginationConf).then((result) => {
@@ -81,57 +85,29 @@ export const ClientListPage: React.FC = () => {
     setPageSize(translate)
   };
 
+  useEffect(() => {
+    update();
+  }, [value, actualpage, pageSize]);
+
   if (isLoading) return <ClientListPageSkeleton />;
   return (
     <LayoutBasePage>
-      <Box
-        justifyContent={"space-between"}
-        padding={0}
-        display="flex"
-        alignItems="center"
-      >
-        <Typography
-          sx={{
-            margin: "40px 0px",
-            fontWeight: 600,
-            fontSize: "35px",
-            color: "#575a61",
-          }}
-        >
-          Clientes
-        </Typography>
-        <Button
-          onClick={handleModal}
-          variant="contained"
-          startIcon={<Add />}
-          sx={{ height: 45, width: 200, color: "#494b4f" }}
-        >
-          <Typography fontSize={"12px"} sx={{ fontWeight: "bold" }}>
-            Cadastrar Clientes
-          </Typography>
+      <Box className={styles.topContainer}>
+        <Typography className={styles.topTitle}>Clientes</Typography>
+        <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
+          <Typography className={styles.topButtonText}>Cadastrar Clientes</Typography>
         </Button>
       </Box>
 
-      <Box margin="0px" display="flex">
-        <Grid display="flex" direction="row" container flex={1}>
-          <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
-            <Typography
-              sx={{ color: "#3d3d3d", fontSize: "18px" }}
-              variant="h5"
-            >
-              Lista de Clientes
-            </Typography>
+      <Box className={styles.midContainer}>
+        <Grid className={styles.midGrid}>
+          <Grid  className={styles.midLeft}>
+            <Typography className={styles.midLeftTitle}>Lista de Clientes</Typography>
             <Box position={"relative"} bottom={3}>
               <SearchInput change={(value)=>{setValue(value.target.value)}}/>
             </Box>
           </Grid>
-          <Grid
-            justifyContent="flex-end"
-            display="flex"
-            alignItems={'center'}
-            flex={1}
-            sx={{ borderBottom: "3px solid #D9D9D9" }}
-          >
+          <Grid className={styles.midRight}>
             <Box sx={{ mr: 2 }} flexDirection="row" display="flex" gap={1}>
               <Icon sx={{ color: "#42FF00" }}>circle</Icon>
               <Typography variant="subtitle1">Ativo</Typography>
@@ -149,9 +125,9 @@ export const ClientListPage: React.FC = () => {
                 label="nº itens"
                 onChange={selectChange}
               >
-                <MenuItem value={3}>Três</MenuItem>
-                <MenuItem value={5}>Cinco</MenuItem>
-                <MenuItem value={10}>Dez</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -164,15 +140,14 @@ export const ClientListPage: React.FC = () => {
       </Box>
 
       <Box display="flex" justifyContent="flex-end" mt={1}>
-        <Stack>
+        
           <Pagination
             count={pages}
-            variant="outlined"
-            shape="circular" 
+            shape="rounded" 
             page={actualpage+1}
             onChange={handleChange}
           />
-        </Stack>
+        
       </Box>
 
       <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
