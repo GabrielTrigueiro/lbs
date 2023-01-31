@@ -6,22 +6,17 @@ import {
   Grid,
   Icon,
   InputLabel,
-  MenuItem,
-  Modal,
-  Pagination,
-  Stack,
-  Typography
+  MenuItem, Pagination, Typography
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useEffect, useState } from "react";
-import { ConfirmationButton } from "../../shared/components";
 import { TableClients } from "../../shared/components/client-components/table-clients";
 import { SearchInput } from "../../shared/components/search";
-import { CadastroClienteForm } from "../../shared/forms/client/ClienteForm";
 import { LayoutBasePage } from "../../shared/layouts";
 import { ClienteService, IInfoClient, ISendPagination } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import styles from "../../styles/Client/ClientPage.module.scss";
+import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
 
 export const ClientListPage: React.FC = () => {
 
@@ -33,7 +28,7 @@ export const ClientListPage: React.FC = () => {
 
   const [confirm, setConfirm] = useState<true | false>(false);
 
-  const [modal, setModal] = useState<true | false>(false);
+  const [modalState, setModalState] = useState<true | false>(false);
 
   const [pages, setPages] = useState<number>(0)
 
@@ -43,13 +38,9 @@ export const ClientListPage: React.FC = () => {
 
   const [selectContent, setSelectContent] = useState('');
 
-  const handleModal = () => {
-    modal ? setModal(false) : setModal(true);
-  };
-
-  const handleConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true);
-  };
+  function handleModal() {
+    setModalState(!modalState);
+  }
 
   const update = () => {
     ClienteService.getAll(ClientPaginationConf).then((result) => {
@@ -147,44 +138,8 @@ export const ClientListPage: React.FC = () => {
           />
       </Box>
 
-      <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
-        <Box
-          sx={{
-            overflow: "auto",
-            //posição do modal
-            position: "absolute" as "absolute",
-            top: "40%",
-            left: "50%",
-            height: "600px",
-            width: "1000px",
-            transform: "translate(-50%, -40%)",
+      <ClientRegisterModal handleModal={handleModal} modalState={modalState}/>
 
-            //CSS estilo
-            borderRadius: 0,
-            bgcolor: "background.paper",
-            display: "flex",
-            flexDirection: "column",
-            padding: 0,
-
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CadastroClienteForm
-            tittle={'Cadastrar Cliente'}
-            type={"register"}
-            update={update}
-            handleModal={handleModal}
-          />
-        </Box>
-      </Modal>
-
-      <ConfirmationButton
-        confirmMessage="Deseja realmente fechar?"
-        handleDialog={handleConfirm}
-        handleModal={handleModal}
-        confirmStatus={confirm}
-      />
     </LayoutBasePage>
   );
 };

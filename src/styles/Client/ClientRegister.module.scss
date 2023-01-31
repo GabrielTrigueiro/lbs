@@ -1,0 +1,117 @@
+@import "../GlobalVariables.module.scss";
+
+.modalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;
+}
+
+.modalFormContainer {
+    outline: none;
+    background-color: $fundo-branco;
+    height: 80vh;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.titulo {
+    background-color: $cinza-escuro;
+    padding: 0.5em 1.5em;
+    color: white;
+    font-weight: bold;
+    font-size: $media;
+}
+
+.form{
+    padding: 0.5em 3em;
+    overflow-y: scroll;
+}
+
+
+.innerForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.form::-webkit-scrollbar {
+    width: 15px;
+}
+
+.form::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.form::-webkit-scrollbar-thumb {
+    background-color: #D6DEE1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.form::-webkit-scrollbar-thumb:hover {
+    background-color: #A8BBBF;
+}
+
+.up {
+    display: flex;
+    justify-content: space-between;
+}
+
+.down {
+    display: flex;
+    justify-content: space-between;
+}
+
+.upLeft {
+    width: 48%;
+}
+
+.upRight {
+    width: 48%;
+}
+
+.subtitulo {
+    margin: 1em 0;
+    font-weight: bold;
+    font-size: $normal;
+    color: $cinza-escuro;
+}
+
+.downLeft {
+    width: 48%;
+}
+
+.downRight {
+    width: 48%;
+}
+
+.submit {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em 0em;
+}
+
+.button{
+    width: 7pc !important;
+    margin: 0em 1em !important;
+    box-shadow: none !important;
+    background-color: $amarelo-default !important;
+    color: $cinza-escuro !important;
+}
+
+.button:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.confirmTitle{
+    text-align: center;
+}

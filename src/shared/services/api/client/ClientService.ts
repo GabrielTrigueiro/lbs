@@ -1,6 +1,8 @@
 import { AxiosError } from "axios"
 import { environment } from "../../../environment";
 import { api } from "../axios";
+import { RegisterClient } from "../../../models/client";
+import { Notification } from "../../../components";
 
 export interface IInfoClient {
     id?: string;
@@ -132,7 +134,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
       })
 }
 
-const Create = async (dados: IInfoClient): Promise<any | Error> => {
+const Create = async (dados: RegisterClient): Promise<any | Error> => {
     const token = {
         headers:{
           Authorization: 
@@ -147,7 +149,8 @@ const Create = async (dados: IInfoClient): Promise<any | Error> => {
         return data.data
       })
       .catch(err => { 
-        console.error(err)
+        console.log(err);
+        Notification(`${err.response.data.message}`, "error"); 
       })
 }
 
