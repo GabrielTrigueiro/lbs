@@ -3,17 +3,17 @@ import * as yup from 'yup';
 export interface RegisterClient {
     id?: string;
     address: string,
-    cell: number,
-    cep: number,
+    cell: string,
+    cep: string,
     city: string,
-    cpf: number,
+    cpf: string,
     email: string,
     name: string,
     neighborhood: string,
-    number: number,
-    rg: number,
+    number: string,
+    rg: string,
     sex: string,
-    telephone?: number,
+    telephone?: string,
     isActive?: boolean
     uf: string
 }
@@ -78,7 +78,7 @@ export const clientValidationSchema = yup.object({
     email: yup.string().email().required("Preencha o email"),
     name: yup.string().required("Preencha o nome"),
     neighborhood: yup.string().required("Preencha o bairro"),
-    number: yup.number().required("Preencha o número da residência").typeError("Apenas números"),
+    number: yup.string().required("Preencha o número da residência").typeError("Apenas números"),
     rg: yup.string().required("Preencha o RG"),
     sex: yup.string().required("Preencha o gênero"),
     telephone: yup.string().required("Preencha o residencial "),

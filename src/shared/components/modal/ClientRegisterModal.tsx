@@ -1,16 +1,19 @@
 import React from 'react'
 import { clientValidationSchema, RegisterClient } from '../../models/client';
-import { Modal, TextField, Button } from '@mui/material';
+import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useFormik } from 'formik';
 import modal from "../../../styles/Client/ClientRegister.module.scss"
 import {Dialog, DialogActions, DialogTitle} from '@mui/material';
 import {useState} from "react";
 import { ClienteService } from '../../services';
 import { Notification } from '../notification';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
     
     const [confirm, setConfirm] = useState<true | false>(false);
+
+    const [sex, setSex] = useState("");
     
     function changeConfirm() {
         setConfirm(!confirm);
@@ -29,29 +32,34 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
         })
     }
 
+    const handleChange = (event: SelectChangeEvent) => {
+        setSex(event.target.value);
+    };
+
     const formik = useFormik({
         initialValues: {
             address: "",
-            cell: 0,
-            cep: 0,
+            cell: "",
+            cep: "",
             city: "",
-            cpf: 0,
+            cpf: "",
             email: "",
             name: "",
             neighborhood: "",
-            number: 0,
-            rg: 0,
+            number: "",
+            rg: "",
             sex: "",
-            telephone: 0,
-            uf: ""
+            telephone: "",
+            uf: "",
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
             // alert(JSON.stringify(values, null, 2));
+            values.sex = sex;
             createUser(values);
         },
         onReset(values, formikHelpers) {
-            
+            setSex("")
         },
     });
 
@@ -72,7 +80,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     return (
         <>
-            <Modal className={modal.modalContainer} open={modalState} onClose={handleModal}>
+            <Modal className={modal.modalContainer} open={modalState} onClose={changeConfirm}>
                 <div className={modal.modalFormContainer}>
                     <div className={modal.titulo}>
                         Cadastrar Cliente
@@ -94,7 +102,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.name && Boolean(formik.errors.name)}
                                         helperText={formik.touched.name && formik.errors.name}
                                     />
-                                    <TextField
+                                    {/* <TextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -106,7 +114,21 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         onChange={formik.handleChange}
                                         error={formik.touched.sex && Boolean(formik.errors.sex)}
                                         helperText={formik.touched.sex && formik.errors.sex}
-                                    />
+                                    /> */}
+                                    <FormControl variant="standard" fullWidth>
+                                        <InputLabel>Genero</InputLabel>
+                                            <Select
+                                            value={sex}
+                                            onChange={handleChange}
+                                            label="Genero"
+                                            error={formik.touched.sex && Boolean(formik.errors.sex)}
+                                        >
+                                            <MenuItem value=""></MenuItem>
+                                            <MenuItem value={"Masculino"}>Masculino</MenuItem>
+                                            <MenuItem value={"Feminino"}>Feminino</MenuItem>
+                                            <MenuItem value={"Outro"}>Outro</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     <TextField
                                         autoComplete="off"
                                         variant="standard"
