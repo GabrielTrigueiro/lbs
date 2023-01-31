@@ -8,6 +8,8 @@ import { AuthProvider, SideBarProvider, useSideBarContext } from './shared/conte
 import { ProviderListPage } from './pages/providers';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from 'react-redux';
+import store from './shared/store';
 
 const router = createBrowserRouter([
   {
@@ -32,12 +34,14 @@ const router = createBrowserRouter([
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ToastContainer/>
-      <SideBarProvider>
-        <RouterProvider router={router}/>
-      </SideBarProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <ToastContainer/>
+        <SideBarProvider>
+          <RouterProvider router={router}/>
+        </SideBarProvider>
+      </AuthProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

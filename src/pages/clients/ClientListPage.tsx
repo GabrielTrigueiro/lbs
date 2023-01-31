@@ -18,6 +18,8 @@ import styles from "../../styles/Client/ClientPage.module.scss";
 import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
 import { IInfoClient, ISendPagination } from "../../shared/models/client";
 import { TableClients } from "../../shared/components";
+import { useDispatch } from "react-redux";
+import { getClient } from "../../shared/store/reducers/clientSlice";
 
 export const ClientListPage: React.FC = () => {
 
@@ -39,6 +41,8 @@ export const ClientListPage: React.FC = () => {
 
   const [selectContent, setSelectContent] = useState('');
 
+  const dispatch = useDispatch();
+
   function handleModal() {
     setModalState(!modalState);
   }
@@ -48,10 +52,10 @@ export const ClientListPage: React.FC = () => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
+        // dispatch(getClient(result.data.data))
         setIsLoading(false);
         setPages(result.data.numberOfPages)
         setRows(result.data.data);
-        console.log(result.data.data);
       }
     });
   };

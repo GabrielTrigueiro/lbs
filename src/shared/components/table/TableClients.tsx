@@ -9,6 +9,8 @@ import { styled } from "@mui/material/styles";
 import { IInfoClient } from "../../models/client";
 import { TableSubMenu } from "../client-submenu/TableSubMenu";
 import "../../../styles/Client/ClientTable.css";
+import { useAppSelector } from "../../store/hooks";
+import { useEffect } from "react";
 
 const TableStyled = styled(Table)({
   borderSpacing: "0px 8px",
@@ -26,6 +28,7 @@ const TableCellStyled = styled(TableCell)({
   borderColor: "transparent",
   padding: "10px 16px",
 });
+
 
 export const TableClients: React.FC<{
   lista: IInfoClient[];
@@ -58,10 +61,10 @@ export const TableClients: React.FC<{
                       </Box>
                     </Box>
                 </TableCellStyled>
-                <TableCellStyled  sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
-                <TableCellStyled  sx={{fontWeight:'500'}}>{row.cpf}</TableCellStyled>
+                <TableCellStyled sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
+                <TableCellStyled sx={{fontWeight:'500'}}>{row.cpf}</TableCellStyled>
                 <TableCellStyled sx={{display: "flex", justifyContent: "flex-end", alignContent:"center"}}>
-                  <TableSubMenu update={update}/>
+                  <TableSubMenu update={update} cliente={row}/>
                 </TableCellStyled>
               </TableRowStyled>
             ))}

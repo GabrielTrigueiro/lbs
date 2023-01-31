@@ -9,7 +9,9 @@
     "@mui/material": "^5.2.6",
     "@mui/styles": "^5.8.3",
     "@mui/x-data-grid": "^5.12.1",
+    "@reduxjs/toolkit": "^1.9.2",
     "@types/jwt-decode": "^3.1.0",
+    "@types/react-redux": "^7.1.25",
     "@types/react-router": "^5.1.20",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
@@ -23,10 +25,12 @@
     "react-scripts": "5.0.0",
     "react-select": "^5.4.0",
     "react-toastify": "^9.1.1",
+    "redux": "^4.2.1",
     "sass": "^1.57.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@redux-devtools/core": "^3.13.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
