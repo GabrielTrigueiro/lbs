@@ -1,7 +1,7 @@
 import { AxiosError } from "axios"
 import { environment } from "../../../environment"
-import { IClientSearch, ISendPagination } from "../client"
 import { api } from "../axios"
+import { ISendPagination, IClientSearch } from "../../../models/client"
 
 export interface IInfoProvider {
     id?: string

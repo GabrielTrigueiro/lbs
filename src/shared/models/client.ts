@@ -1,19 +1,72 @@
 import * as yup from 'yup';
 
 export interface RegisterClient {
+    id?: string;
     address: string,
-    cell: string,
-    cep: string,
+    cell: number,
+    cep: number,
     city: string,
-    cpf: string,
+    cpf: number,
     email: string,
     name: string,
     neighborhood: string,
-    number: string,
-    rg: string,
+    number: number,
+    rg: number,
     sex: string,
-    telephone: string,
+    telephone?: number,
+    isActive?: boolean
     uf: string
+}
+
+export interface IInfoClient {
+    id?: string;
+    cpf: number;
+    name: string;
+    rg: number;
+    sex: string;
+    address: string;
+    cep: number;
+    city: string;
+    uf: string;
+    neighborhood: string;
+    number: number;
+    cell: number;
+    email: string;
+    telephone?: number;
+    isActive?: boolean
+}
+export interface IClientPackage {
+    data: IInfoClient[],
+    message: string,
+    errors: string,
+    success: boolean
+}
+
+export interface IClientSearch {
+    numberOfPages: number
+    actualPage: number
+    totalElements: number
+    hasNext: boolean
+    data: IInfoClient[]
+}
+
+export interface ISendPagination {
+    page: number
+    pageSize: number
+    sortField: string
+    sortDiresction: string
+    param: string
+    value: string
+}
+
+export interface IReceivePagination{
+    numberOfPages:number
+    actualPage: number
+    hasNext: boolean
+}
+
+export type TAllClientList = {
+    data: IClientPackage
 }
 
 export const clientValidationSchema = yup.object({

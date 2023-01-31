@@ -5,18 +5,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
-import { ClienteService, IInfoClient } from "../../../services";
+import { ClienteService } from "../../services";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Typography } from "@mui/material";
-import { CadastroClienteForm, IClienteCadastroInfo } from "../../../forms";
 import { useState } from "react";
-import { ConfirmationButton } from "../../confirmation-button/ConfirmationButton";
-import { DialogConfirm } from "../../confirmation-button/DialogConfirm";
-import { ClientDetail } from "../ClientDetail";
+import { ConfirmationButton } from "../confirmation-button/ConfirmationButton";
+import { DialogConfirm } from "../confirmation-button/DialogConfirm";
+import { ClientDetail } from "../modal/ClientDetailModal";
+import { IInfoClient } from "../../models/client";
 
 export const TableSubMenu: React.FC<{
-  client: IInfoClient;
   update: () => void;
-}> = ({ client, update }) => {
+}> = ({ update }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
   const [confirm, setConfirm] = useState<true | false>(false);
@@ -43,23 +42,23 @@ export const TableSubMenu: React.FC<{
     setAnchorEl(null);
   };
 
-  const handleDeleteUser = () => {
-    if (client.id)
-      ClienteService.DeleteById(client.id)
-      .then((result) => {
-        update();
-      });
-  };
+  // const handleDeleteUser = () => {
+  //   if (client.id)
+  //     ClienteService.DeleteById(client.id)
+  //     .then((result) => {
+  //       update();
+  //     });
+  // };
 
-  const functionTeste = (e:IInfoClient) => {
-    if(e.id){
-      e.isActive = !e.isActive
-      ClienteService.UpdateById(e.id, e)
-      .then((result) => {
-        update();
-      });
-    }
-  }
+  // const functionTeste = (e:IInfoClient) => {
+  //   if(e.id){
+  //     e.isActive = !e.isActive
+  //     ClienteService.UpdateById(e.id, e)
+  //     .then((result) => {
+  //       update();
+  //     });
+  //   }
+  // }
 
   return (
     <Box>
@@ -119,7 +118,7 @@ export const TableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleEditModal}>
+        {/* <MenuItem onClick={handleEditModal}>
           Editar
         </MenuItem>
         <MenuItem onClick={()=>setDialogState(true)}>
@@ -130,7 +129,7 @@ export const TableSubMenu: React.FC<{
         </MenuItem>
         <MenuItem onClick={()=>setDelet(true)}>
           Apagar
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
 
       <Modal
@@ -160,23 +159,17 @@ export const TableSubMenu: React.FC<{
             justifyContent: "center",
           }}
         >
-          <CadastroClienteForm
-            type={"edit"}
-            update={update}
-            handleModal={handleEditModal}
-            client={client}
-            tittle={'Editar Cliente'}
-          />
+
         </Box>
       </Modal>
-
+{/* 
       <ConfirmationButton
         confirmMessage="Deseja salvar as alterações?"
         confirmStatus={confirm}
         handleDialog={handleEditConfirm}
         handleModal={handleEditModal}
-      />
-
+      /> */}
+{/* 
       <Dialog
         open={delet}
         aria-labelledby="alert-dialog-title"
@@ -207,21 +200,21 @@ export const TableSubMenu: React.FC<{
             Continuar
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       
-      <DialogConfirm
+      {/* <DialogConfirm
         dialogState={dialogState}
         setDialogState={()=>setDialogState(false)}
         dialogMessage={'Confirmar alteração?'}
         handleSomething={()=>functionTeste(client)}
-      />
+      /> */}
 
-      <ClientDetail
+      {/* <ClientDetail
         close={()=>setDetailState(false)}
         state={detailState}
         thisClient={client}
         tittle={'Dados do Cliente'}
-      />
+      /> */}
     </Box>
   );
 };

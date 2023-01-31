@@ -32,17 +32,17 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
     const formik = useFormik({
         initialValues: {
             address: "",
-            cell: "",
-            cep: "",
+            cell: 0,
+            cep: 0,
             city: "",
-            cpf: "",
+            cpf: 0,
             email: "",
             name: "",
             neighborhood: "",
-            number: "",
-            rg: "",
+            number: 0,
+            rg: 0,
             sex: "",
-            telephone: "",
+            telephone: 0,
             uf: ""
         },
         validationSchema: clientValidationSchema,

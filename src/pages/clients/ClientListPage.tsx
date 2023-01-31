@@ -10,13 +10,14 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useEffect, useState } from "react";
-import { TableClients } from "../../shared/components/client-components/table-clients";
 import { SearchInput } from "../../shared/components/search";
 import { LayoutBasePage } from "../../shared/layouts";
-import { ClienteService, IInfoClient, ISendPagination } from "../../shared/services";
+import { ClienteService } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import styles from "../../styles/Client/ClientPage.module.scss";
 import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
+import { IInfoClient, ISendPagination } from "../../shared/models/client";
+import { TableClients } from "../../shared/components";
 
 export const ClientListPage: React.FC = () => {
 
@@ -50,6 +51,7 @@ export const ClientListPage: React.FC = () => {
         setIsLoading(false);
         setPages(result.data.numberOfPages)
         setRows(result.data.data);
+        console.log(result.data.data);
       }
     });
   };

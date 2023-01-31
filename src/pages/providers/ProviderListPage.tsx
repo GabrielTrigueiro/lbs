@@ -5,7 +5,6 @@ import { SearchInput } from "../../shared/components/search";
 import { TableProviders } from "../../shared/components/provider-components/TableProviders";
 import { ProviderForm } from "../../shared/forms";
 import { LayoutBasePage } from "../../shared/layouts";
-import { ISendPagination } from "../../shared/services";
 import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
 import styles from "../../styles/Provider/Provider.module.scss";
 import {
@@ -24,6 +23,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { ClientListPageSkeleton } from "../clients";
+import { ISendPagination } from "../../shared/models/client";
 
 export const ProviderListPage: React.FC = () => {
   const [value, setValue] = useState<string>("");
