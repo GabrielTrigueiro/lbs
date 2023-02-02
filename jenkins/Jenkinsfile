@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker{
-        image 'node:16.13.1-alpine'
+        image 'node:16.13.2-alpine'
         args '-p 3000:3000'
         }
     }
@@ -12,9 +12,11 @@ pipeline {
     stages {
         stage('Build'){
             steps{
-                sh 'yarn install'
                 sh "chmod +x -R ${env.WORKSPACE}"
-                sh 'yarn build'
+                sh "rm -rf node_modules rm -rf package-lock.json rm -rf yarn.lock"
+                sh 'npm install'
+                
+                sh 'npm run build'
             }
         }
         stage('Deliver') {
