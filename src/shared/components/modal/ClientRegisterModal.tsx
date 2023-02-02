@@ -151,7 +151,6 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         label="Data de Nascimento"
                                         value={data}
                                         disableFuture
-                                        minDate={}
                                         inputFormat='DD-MM-YYYY'
                                         onChange={(newValue) => { newValue == null ? setData(dayjs("")) : formik.values.dataNascimento = newValue.format("YYYY-MM-DD HH:mm")}}
                                         renderInput={(params) => 
