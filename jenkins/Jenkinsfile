@@ -12,6 +12,7 @@ pipeline {
     stages {
         stage('Build'){
             steps{
+                sh "yarn add redux @types/redux @types/react-redux"
                 sh 'yarn install'
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh 'yarn build'
