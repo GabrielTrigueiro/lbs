@@ -7,12 +7,13 @@ pipeline {
     }
     environment {
         CI = 'false'
-        YARN_CACHE_FOLDER=/dev/shm/yarn_cache yarn --production
     }
     stages {
         stage('Build'){
             steps{
-                sh "yarn add redux @types/redux @types/react-redux"
+                yarn cache clean
+                sh "chmod +x -R ${env.WORKSPACE}"
+                
                 sh 'yarn install'
                 sh "chmod +x -R ${env.WORKSPACE}"
                 sh 'yarn build'
