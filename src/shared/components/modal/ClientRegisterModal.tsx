@@ -4,17 +4,40 @@ import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select } f
 import { useFormik } from 'formik';
 import modal from "../../../styles/Client/ClientRegister.module.scss"
 import {Dialog, DialogActions, DialogTitle} from '@mui/material';
-import {useState} from "react";
-import { ClienteService } from '../../services';
+import {useState, useEffect} from "react";
+import { api, ClienteService } from '../../services';
 import { Notification } from '../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
+import DayjsUtils from '@date-io/dayjs/build/dayjs-utils';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
+import dayjs, { Dayjs } from 'dayjs';
+import { model } from 'mongoose';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
     
     const [confirm, setConfirm] = useState<true | false>(false);
 
-    const [sex, setSex] = useState("");
-    
+    //lista de indicaçoes do cliente
+    const [clientIndic, setClientIndic] = useState([""]);
+
+    //indicaçao selecionada
+    const [auxInd, setAuxInd] = useState("");
+
+    //state do modal de indicaçao
+    const [indicState, setindicState] = useState(false);
+
+    //data
+    const [data, setData] = useState<Dayjs>(dayjs(""));
+    const [formatada, setFormatada] = useState<string>("");
+
+
+    function addIndicacao(ind: string) {
+        clientIndic.push(ind);
+        console.log(clientIndic);
+    }
+
     function changeConfirm() {
         setConfirm(!confirm);
     }
@@ -32,10 +55,6 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
         })
     }
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setSex(event.target.value);
-    };
-
     const formik = useFormik({
         initialValues: {
             address: "",
@@ -48,18 +67,18 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
             neighborhood: "",
             number: "",
             rg: "",
-            sex: "",
+            datade: "",
             telephone: "",
             uf: "",
+            dataNascimento: ""
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
-            // alert(JSON.stringify(values, null, 2));
-            values.sex = sex;
             createUser(values);
+            console.log(formik.values.dataNascimento);
         },
         onReset(values, formikHelpers) {
-            setSex("")
+            setData(dayjs(""))
         },
     });
 
@@ -77,7 +96,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
           }
         })
     }
-
+    
     return (
         <>
             <Modal className={modal.modalContainer} open={modalState} onClose={changeConfirm}>
@@ -102,33 +121,6 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.name && Boolean(formik.errors.name)}
                                         helperText={formik.touched.name && formik.errors.name}
                                     />
-                                    {/* <TextField
-                                        autoComplete="off"
-                                        variant="standard"
-                                        size="small"
-                                        fullWidth
-                                        id="sex"
-                                        name="sex"
-                                        label="Genero"
-                                        value={formik.values.sex}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.sex && Boolean(formik.errors.sex)}
-                                        helperText={formik.touched.sex && formik.errors.sex}
-                                    /> */}
-                                    <FormControl variant="standard" fullWidth>
-                                        <InputLabel>Genero</InputLabel>
-                                            <Select
-                                            value={sex}
-                                            onChange={handleChange}
-                                            label="Genero"
-                                            error={formik.touched.sex && Boolean(formik.errors.sex)}
-                                        >
-                                            <MenuItem value=""></MenuItem>
-                                            <MenuItem value={"Masculino"}>Masculino</MenuItem>
-                                            <MenuItem value={"Feminino"}>Feminino</MenuItem>
-                                            <MenuItem value={"Outro"}>Outro</MenuItem>
-                                        </Select>
-                                    </FormControl>
                                     <TextField
                                         autoComplete="off"
                                         variant="standard"
@@ -153,8 +145,26 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         value={formik.values.cpf}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
-                                        helperText={formik.touched.name && formik.errors.cpf}
+                                        helperText={formik.touched.cpf && formik.errors.cpf}
                                     />
+                                   <DatePicker 
+                                        label="Data de Nascimento"
+                                        value={data}
+                                        disableFuture
+                                        minDate={}
+                                        inputFormat='DD-MM-YYYY'
+                                        onChange={(newValue) => { newValue == null ? setData(dayjs("")) : formik.values.dataNascimento = newValue.format("YYYY-MM-DD HH:mm")}}
+                                        renderInput={(params) => 
+                                            <TextField {...params}
+                                                fullWidth
+                                                autoComplete='off'
+                                                sx={{marginTop: 2}}
+                                                size='small'
+                                                error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
+                                                helperText={formik.touched.dataNascimento && formik.errors.dataNascimento} 
+                                            />
+                                        }
+                                   />
                                 </div>
                                 <div className={modal.upRight}>
                                     <TextField
@@ -169,7 +179,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         onChange={formik.handleChange}
                                         error={formik.touched.email && Boolean(formik.errors.email)}
                                         helperText={formik.touched.email && formik.errors.email}
-                                    />
+                                    />  
                                     <TextField
                                         autoComplete="off"
                                         variant="standard"
@@ -196,6 +206,9 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
                                         helperText={formik.touched.cell && formik.errors.cell}
                                     />
+                                    <div className={modal.indicacoes}>
+                                        <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
+                                    </div>
                                 </div>
                             </div>
                             <div className={modal.subtitulo}>Informações de endereço</div>
@@ -299,7 +312,27 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                     <Button className={modal.button} onClick={changeConfirm}>Cancelar</Button>
                     <Button className={modal.button} onClick={closeModal}>Confirmar</Button>
                 </DialogActions>
-            </Dialog>   
+            </Dialog>
+{/* 
+            <Modal className={modal.modalContainer} open={indicState} onClose={() => setindicState(false)}>
+                <div className={modal.indicacaoContainer}>
+                    <div className={modal.indicacaoTitle}>Cadastrar Indicação</div>
+                    <FormControl variant="standard" fullWidth>
+                        <InputLabel>Indicação</InputLabel>
+                            <Select
+                            value={auxInd}
+                            onChange={handleChange}
+                            label="Indicação"
+                        >
+                            <MenuItem value={"Masculino"}>Masculino</MenuItem>
+                            <MenuItem value={"Feminino"}>Feminino</MenuItem>
+                            <MenuItem value={"Outro"}>Outro</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <div>descrição</div>
+                </div>
+            </Modal> */}
+
         </>
     )
 }
