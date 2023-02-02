@@ -67,7 +67,7 @@ export const ClientDetail: React.FC<props> = ({ close, state, tittle, thisClient
           >
             <Box flex={1}>
                 <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.name}</Typography>
-                <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.sex}</Typography>
+                {/* <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.sex}</Typography> */}
                 <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.rg}</Typography>
                 <Typography fontSize={`${fontSizeContainerDados}px`}>{thisClient.cpf}</Typography>
             </Box>

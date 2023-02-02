@@ -115,3 +115,40 @@
 .confirmTitle{
     text-align: center;
 }
+
+.indicacoes {
+    padding: 1em 0;
+}
+
+.indicaceosButton {
+    box-shadow: none !important;
+    background-color: $amarelo-default !important;
+    color: $cinza-escuro !important;
+}
+
+.indicaceosButton:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.indicacaoContainer {
+    outline: none;
+    background-color: $fundo-branco;
+    height: 40vh;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;    
+}
+
+.indicacaoTitle {
+    background-color: $cinza-escuro;
+    color: white;
+    font-size: $normal;
+    font-weight: bold;
+    padding: 0.5em;
+}
+
+.date {
+    width: 100%;
+    margin: 1em 0;
+}

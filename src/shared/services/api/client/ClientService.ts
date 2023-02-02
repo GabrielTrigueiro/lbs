@@ -1,8 +1,29 @@
 import { AxiosError } from "axios"
-import { environment } from "../../../environment";
+import { URL, environment } from "../../../environment";
 import { api } from "../axios";
 import { IClientPackage, IClientSearch, IInfoClient, ISendPagination, RegisterClient } from "../../../models/client";
 import { Notification } from "../../../components";
+
+
+const getInficacoes = async (): Promise<any | Error> => {
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return await api.get(URL+"/api/indicacao", token)
+    .then(data => {
+        if(data instanceof AxiosError){
+            return data
+        }
+        return data
+    })
+    .catch(err => {
+        console.log('aqui');
+        console.error(err)
+    })
+}
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     const token = {
@@ -105,4 +126,5 @@ export const ClienteService = {
     UpdateById,
     DeleteById,
     Create,
+    getInficacoes
 }

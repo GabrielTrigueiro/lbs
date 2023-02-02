@@ -12,7 +12,6 @@ export interface RegisterClient {
     neighborhood: string,
     number: string,
     rg: string,
-    sex: string,
     telephone?: string,
     isActive?: boolean
     uf: string
@@ -23,7 +22,7 @@ export interface IInfoClient {
     cpf: number;
     name: string;
     rg: number;
-    sex: string;
+    dataNascimento: string;
     address: string;
     cep: number;
     city: string;
@@ -70,17 +69,17 @@ export type TAllClientList = {
 }
 
 export const clientValidationSchema = yup.object({
-    address: yup.string().required("Preencha o endereço"),
-    cell: yup.string().required("Preencha o celular"),
-    cep: yup.string().required("Preencha o CEP"),
-    city: yup.string().required("Preencha a cidade"),
+    address: yup.string(),
+    cell: yup.string(),
+    cep: yup.string(),
+    city: yup.string(),
     cpf: yup.string().required("Preencha o CPF"),
-    email: yup.string().email().required("Preencha o email"),
+    email: yup.string(),
     name: yup.string().required("Preencha o nome"),
-    neighborhood: yup.string().required("Preencha o bairro"),
-    number: yup.string().required("Preencha o número da residência").typeError("Apenas números"),
-    rg: yup.string().required("Preencha o RG"),
-    sex: yup.string().required("Preencha o gênero"),
-    telephone: yup.string().required("Preencha o residencial "),
-    uf: yup.string().required("Preencha o estado"),
+    neighborhood: yup.string(),
+    number: yup.string().typeError("Apenas números"),
+    rg: yup.string(),
+    telephone: yup.string(),
+    uf: yup.string(),
+    dataNascimento: yup.string().required("Preencha a data de nascimento")
 })
