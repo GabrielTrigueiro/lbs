@@ -1,0 +1,18 @@
+@import "../GlobalVariables.module.scss";
+
+.button{
+    width: 7pc !important;
+    margin: 0em 1em !important;
+    box-shadow: none !important;
+    background-color: $amarelo-default !important;
+    color: $cinza-escuro !important;
+}
+
+.button:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.confirmTitle{
+    text-align: center;
+}

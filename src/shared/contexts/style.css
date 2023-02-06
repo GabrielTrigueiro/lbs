@@ -1,0 +1,30 @@
+.item{
+    width: 300px;
+    margin: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    border-radius: 10px;
+    animation: SLideLeft 0.8s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+.item.exit{
+    animation: SLideRight 0.8s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+@keyframes SLideLeft{
+    0%{
+        margin-left: 120%;
+    }
+    100%{
+        margin-left: 0;
+    }
+}
+@keyframes SLideRight{
+    0%{
+        margin-left: 0;
+    }
+    100%{
+        margin-left: 120%;
+    }
+}
