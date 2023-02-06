@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import clientSlice from "./reducers/clientSlice";
+import indicationSlice from "./reducers/indicationSlice";
+import clientIndicationSlice from "./reducers/clientIndicationSlice";
 
 const store = configureStore({
     reducer: {
-        client: clientSlice
+        client: clientSlice,
+        clientIndication: clientIndicationSlice,
+        indicacoes: indicationSlice
     }
 })
 

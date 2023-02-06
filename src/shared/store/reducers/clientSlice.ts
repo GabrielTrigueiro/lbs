@@ -20,7 +20,7 @@ export const clientSlice = createSlice({
             if (state.lista.length == 0){
                 state.lista.push(...action.payload);
             }
-        }
+        },
     }
 });
 

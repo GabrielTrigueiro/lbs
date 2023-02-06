@@ -1,7 +1,7 @@
 import React from 'react'
-import { clientValidationSchema, RegisterClient } from '../../models/client';
-import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { useFormik } from 'formik';
+import { clientValidationSchema, dataAllIndications, dataOneIndication, RegisterClient } from '../../models/client';
+import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select, Stack, Chip } from '@mui/material';
+import { Field, useFormik } from 'formik';
 import modal from "../../../styles/Client/ClientRegister.module.scss"
 import {Dialog, DialogActions, DialogTitle} from '@mui/material';
 import {useState, useEffect} from "react";
@@ -12,29 +12,43 @@ import DayjsUtils from '@date-io/dayjs/build/dayjs-utils';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useAppDispatch } from '../../store/hooks';
+import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
+import { RootState } from '../../store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { setClientIndications } from '../../store/reducers/clientIndicationSlice';
 
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
     
+    //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
-
-    //lista de indicaçoes do cliente
-    const [clientIndic, setClientIndic] = useState([""]);
-
-    //indicaçao selecionada
-    const [auxInd, setAuxInd] = useState("");
 
     //state do modal de indicaçao
     const [indicState, setindicState] = useState(false);
 
+    const [select, setSelect] = useState("");
+
+    const [tempInd, setTempInd] = useState<dataOneIndication>({description:"", id:"", type:""});
+
     //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
-    const [formatada, setFormatada] = useState<string>("");
 
+    const dispatch = useDispatch();
 
-    function addIndicacao(ind: string) {
-        clientIndic.push(ind);
-        console.log(clientIndic);
+    function getListaIndicacao() {
+        const data = ClienteService.getInficacoes().then((response) => {
+            dispatch(setAllIndicacoes(response.data.data));
+        });
+    };
+
+    const lista = useSelector((state: RootState) => state.indicacoes.data);
+
+    const indClient = useSelector((state: RootState) => state.clientIndication.data);
+
+    function addInd() {
+        dispatch(setClientIndications(tempInd))
     }
 
     function changeConfirm() {
@@ -69,7 +83,8 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
             datade: "",
             telephone: "",
             uf: "",
-            dataNascimento: ""
+            dataNascimento: Date,
+            indicacoesIds: [""]
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
@@ -77,7 +92,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
             console.log(formik.values.dataNascimento);
         },
         onReset(values, formikHelpers) {
-            setData(dayjs(""))
+            
         },
     });
 
@@ -95,7 +110,15 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
           }
         })
     }
-    
+
+    function handleChange(event: SelectChangeEvent) {
+        setSelect(event.target.value as string)
+    }
+
+    useEffect(() => {
+        getListaIndicacao();
+    },[indClient])
+
     return (
         <>
             <Modal className={modal.modalContainer} open={modalState} onClose={changeConfirm}>
@@ -146,23 +169,23 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
                                         helperText={formik.touched.cpf && formik.errors.cpf}
                                     />
-                                   <DatePicker 
-                                        label="Data de Nascimento"
-                                        value={data}
+                                   <DatePicker
+                                        label="Data de nascimento"
                                         disableFuture
-                                        inputFormat='DD-MM-YYYY'
-                                        onChange={(newValue) => { newValue == null ? setData(dayjs("")) : formik.values.dataNascimento = newValue.format("YYYY-MM-DD HH:mm")}}
-                                        renderInput={(params) => 
-                                            <TextField {...params}
-                                                fullWidth
-                                                autoComplete='off'
-                                                sx={{marginTop: 2}}
-                                                size='small'
-                                                error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
-                                                helperText={formik.touched.dataNascimento && formik.errors.dataNascimento} 
-                                            />
-                                        }
-                                   />
+                                        value={formik.values.dataNascimento}
+                                        inputFormat='DD/MM/YYYY'
+                                        renderInput={(params) => (
+                                        <TextField 
+                                            {...params} 
+                                            variant="standard"
+                                            fullWidth
+                                            autoComplete='none'
+                                            error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
+                                            helperText={formik.touched.dataNascimento && formik.errors.dataNascimento}
+                                        />
+                                        )}
+                                        onChange={(value) => formik.setFieldValue('dataNascimento', value, true)}
+                                    />
                                 </div>
                                 <div className={modal.upRight}>
                                     <TextField
@@ -204,9 +227,12 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
                                         helperText={formik.touched.cell && formik.errors.cell}
                                     />
-                                    <div className={modal.indicacoes}>
+                                    <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
-                                    </div>
+                                        {indClient.map((item, index) => (
+                                            <Chip variant='filled' label={item}/>
+                                        ))}
+                                    </Stack>
                                 </div>
                             </div>
                             <div className={modal.subtitulo}>Informações de endereço</div>
@@ -311,25 +337,32 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                     <Button className={modal.button} onClick={closeModal}>Confirmar</Button>
                 </DialogActions>
             </Dialog>
-{/* 
+
             <Modal className={modal.modalContainer} open={indicState} onClose={() => setindicState(false)}>
                 <div className={modal.indicacaoContainer}>
                     <div className={modal.indicacaoTitle}>Cadastrar Indicação</div>
-                    <FormControl variant="standard" fullWidth>
-                        <InputLabel>Indicação</InputLabel>
-                            <Select
-                            value={auxInd}
-                            onChange={handleChange}
-                            label="Indicação"
-                        >
-                            <MenuItem value={"Masculino"}>Masculino</MenuItem>
-                            <MenuItem value={"Feminino"}>Feminino</MenuItem>
-                            <MenuItem value={"Outro"}>Outro</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <div>descrição</div>
-                </div>
-            </Modal> */}
+                    <div className={modal.optionContainer}>
+                        <FormControl className={modal.formIndic} variant="standard">
+                            <InputLabel>Indicação</InputLabel>
+
+
+                            <Select value={select} onChange={handleChange}>
+                                {
+                                    lista.map((item, index) => (
+                                        <MenuItem key={item.id} onClick={() => setTempInd(item)} value={item.type}>{item.type}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+
+
+                        </FormControl>
+                        <div className={modal.indicacoesActions}>
+                            <Button className={modal.button} onClick={() => setindicState(false)}>Cancelar</Button>
+                            <Button className={modal.button} onClick={addInd}>Confirmar</Button>
+                        </div>
+                    </div>
+                </div>  
+            </Modal>
 
         </>
     )
