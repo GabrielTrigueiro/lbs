@@ -21,7 +21,7 @@ export const indicationSlice = createSlice({
     reducers: {
         setAllIndicacoes: (state, action: PayloadAction<dataOneIndication[]>) => {
             state.data = action.payload;
-            console.log(state.data);
+            // console.log(state.data);
         }
     }
 });

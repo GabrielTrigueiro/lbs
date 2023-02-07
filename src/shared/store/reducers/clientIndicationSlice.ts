@@ -19,14 +19,18 @@ export const clientIndicationSlice = createSlice({
     name: "listaDeIndicacoes",
     initialState,
     reducers: {
+        clearClientIndications: () => initialState,
         setClientIndications: (state, action: PayloadAction<dataOneIndication>) => {
             state.data.push(action.payload);
-            console.log("indicações Cliente: " + state.data);
         },
-        clearClientIndications: () => initialState,
+        removeIndication: (state, action: PayloadAction<string>) => {
+            const teste = state.data.filter(item => item.id !== action.payload);
+            state.data = teste;
+            console.log(state.data)
+        }
     }
 });
 
-export const { setClientIndications, clearClientIndications } = clientIndicationSlice.actions;
+export const { setClientIndications, clearClientIndications, removeIndication } = clientIndicationSlice.actions;
 
 export default clientIndicationSlice.reducer;

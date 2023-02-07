@@ -17,7 +17,7 @@ import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setClientIndications } from '../../store/reducers/clientIndicationSlice';
+import { removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
 
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
@@ -35,6 +35,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
     //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
 
+
     const dispatch = useDispatch();
 
     function getListaIndicacao() {
@@ -47,8 +48,21 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     const indClient = useSelector((state: RootState) => state.clientIndication.data);
 
+    //não validando
     function addInd() {
-        dispatch(setClientIndications(tempInd))
+        if(indClient.map( item => item.id == tempInd.id)){
+            dispatch(setClientIndications(tempInd))
+            setSelect("");
+            setindicState(false)
+        }
+        else {
+            Notification("Essas indicação já foi selecionada", "error");
+            setSelect("");
+        }
+    }
+
+    function removeInd(id: string) {
+        dispatch(removeIndication(id))
     }
 
     function changeConfirm() {
@@ -230,7 +244,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
                                         {indClient.map((item, index) => (
-                                            <Chip variant='filled' label={item}/>
+                                            <Chip key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)}/>
                                         ))}
                                     </Stack>
                                 </div>
