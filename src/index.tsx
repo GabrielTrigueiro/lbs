@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './shared/store';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { IndicationPage } from './pages/indications';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/home/provedores",
         element: <ProviderListPage/>
+      },
+      {
+        path: "/home/indicacoes",
+        element: <IndicationPage/>
       },
     ]
   },

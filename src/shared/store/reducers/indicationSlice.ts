@@ -1,15 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-
-interface dataOneIndication {
-    description: string,
-    id: string,
-    type: string,
-}
-
-interface dataAllIndictions {
-    data: dataOneIndication[]
-};
+import { dataAllIndictions, dataOneIndication } from '../../models/indication';
 
 const initialState: dataAllIndictions = {
     data: []

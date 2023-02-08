@@ -20,6 +20,11 @@ export default function Home() {
             icon: "account_box_icon",   
             path: "/home/provedores",
           },
+          {
+            label: "Indicações",
+            icon: "local_offer_icon",   
+            path: "/home/indicacoes",
+          },
         ]);
       }, []);
 

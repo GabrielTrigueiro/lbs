@@ -1,23 +1,22 @@
 import React from 'react'
-import { clientValidationSchema, dataAllIndications, dataOneIndication, RegisterClient } from '../../models/client';
 import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select, Stack, Chip } from '@mui/material';
-import { Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import modal from "../../../styles/Client/ClientRegister.module.scss"
 import {Dialog, DialogActions, DialogTitle} from '@mui/material';
 import {useState, useEffect} from "react";
-import { api, ClienteService } from '../../services';
+import { ClienteService } from '../../services';
 import { Notification } from '../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
-import DayjsUtils from '@date-io/dayjs/build/dayjs-utils';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useAppDispatch } from '../../store/hooks';
 import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
+import { RegisterClient, clientValidationSchema } from '../../models/client';
+import { dataOneIndication } from '../../models/indication';
+import { IndicationService } from '../../services/api/indication/IndicationService';
 
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
@@ -39,7 +38,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
     const dispatch = useDispatch();
 
     function getListaIndicacao() {
-        const data = ClienteService.getInficacoes().then((response) => {
+        const data = IndicationService.getInficacoes().then((response) => {
             dispatch(setAllIndicacoes(response.data.data));
         });
     };

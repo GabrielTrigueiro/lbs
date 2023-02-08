@@ -69,16 +69,6 @@ export type TAllClientList = {
     data: IClientPackage
 }
 
-export interface dataOneIndication {
-    description: string,
-    id: string,
-    type: string,
-}
-
-export interface dataAllIndications {
-    data: dataOneIndication[]
-};
-
 export const clientValidationSchema = yup.object({
     address: yup.string(),
     cell: yup.string(),
