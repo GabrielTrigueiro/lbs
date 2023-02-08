@@ -17,7 +17,6 @@ export const clientIndicationSlice = createSlice({
         removeIndication: (state, action: PayloadAction<string>) => {
             const teste = state.data.filter(item => item.id !== action.payload);
             state.data = teste;
-            console.log(state.data)
         }
     }
 });

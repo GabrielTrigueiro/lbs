@@ -15,8 +15,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
 import { RegisterClient, clientValidationSchema } from '../../models/client';
-import { dataOneIndication } from '../../models/indication';
 import { IndicationService } from '../../services/api/indication/IndicationService';
+import { dataOneIndication } from '../../models/indication';
 
 
 export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
@@ -47,16 +47,21 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     const indClient = useSelector((state: RootState) => state.clientIndication.data);
 
-    //não validando
     function addInd() {
-        if(indClient.map( item => item.id == tempInd.id)){
-            dispatch(setClientIndications(tempInd))
-            setSelect("");
-            setindicState(false)
-        }
-        else {
+        if(indClient.filter( item => item.id === tempInd.id) && indClient.length > 0){
             Notification("Essas indicação já foi selecionada", "error");
             setSelect("");
+            return
+        }
+        if(indClient.length === 3){
+            Notification("Só podem haver três indicações", "error");
+            setSelect("");
+            return
+        }
+        else{
+            dispatch(setClientIndications(tempInd))
+            setSelect("");
+            return
         }
     }
 
@@ -243,7 +248,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
                                         {indClient.map((item, index) => (
-                                            <Chip key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)}/>
+                                            <Chip sx={{fontSize: 9}} size='small' key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)}/>
                                         ))}
                                     </Stack>
                                 </div>

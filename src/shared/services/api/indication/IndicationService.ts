@@ -1,5 +1,6 @@
 import { AxiosError } from "axios"
 import { api } from "../axios"
+import { URL } from "../../../environment"
 
 const getInficacoes = async (): Promise<any | Error> => {
     const token = {
