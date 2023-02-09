@@ -5,7 +5,7 @@ import { Box, Typography, Button, FormControl, Grid, Icon, InputLabel, MenuItem,
 import styles from "../../styles/Indication/Indication.module.scss"
 import { SearchInput } from '../../shared/components/search'
 import { ClientListPageSkeleton } from '../clients'
-import { dataAllIndications, dataOneIndication } from '../../shared/models/indication'
+import { dataOneIndication } from '../../shared/models/indication'
 import { IndicationService } from '../../shared/services/api/indication/IndicationService'
 import { TableIndications } from '../../shared/components/table/TableIndications'
 
@@ -53,6 +53,10 @@ export const IndicationPage: React.FC = () => {
         });
     };
 
+    function handleModal() {
+        setModalState(!modalState)
+    }
+
     useEffect(() => {
         update();
     }, [value, actualpage, pageSize]);
@@ -62,10 +66,11 @@ export const IndicationPage: React.FC = () => {
 
             <Box className={styles.topContainer}>
                 <Typography className={styles.topContainerTitle}>Indicações</Typography>
-                <Button className={styles.topButton} /*onClick={handleModal}*/ variant="contained" startIcon={<Add />}>
+                <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
                     <Typography className={styles.topButtonText}>Cadastrar Indicação</Typography>
                 </Button>
             </Box>
+
             <Box margin="0px" display="flex">
                 <Grid display="flex" direction="row" container flex={1}>
                     <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
@@ -107,7 +112,6 @@ export const IndicationPage: React.FC = () => {
                 </Grid>
                 <Box flexDirection="row" display="flex" gap={10}></Box>
             </Box>
-
 
             <Box className={styles.table}>
                 {isLoading ? <ClientListPageSkeleton /> : <TableIndications lista={rows} update={update}/>}
