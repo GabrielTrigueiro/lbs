@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { api } from "../axios"
-import { URL } from "../../../environment"
+import { URL, environment } from "../../../environment"
 
 const getInficacoes = async (): Promise<any | Error> => {
     const token = {
@@ -17,11 +17,30 @@ const getInficacoes = async (): Promise<any | Error> => {
         return data
     })
     .catch(err => {
-        console.log('aqui');
+        console.error(err)
+    })
+}
+
+const deletIndicacao = async (id: string): Promise<any | Error> => {
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return await api.delete(environment.url_indication + `${id}`, token)
+    .then(data => {
+        if(data instanceof AxiosError){
+            return data
+        }
+        return data
+    })
+    .catch(err => {
         console.error(err)
     })
 }
 
 export const IndicationService = {
-    getInficacoes
+    getInficacoes,
+    deletIndicacao,
 };

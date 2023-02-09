@@ -4,6 +4,6 @@ export interface dataOneIndication {
     type: string,
 }
 
-export interface dataAllIndictions {
+export interface dataAllIndications {
     data: dataOneIndication[]
 };

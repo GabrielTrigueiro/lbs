@@ -8,4 +8,5 @@ export const environment = {
     url_provider_search: URL + `/api/provider/search/`,
     url_client:  URL + `/api/client/`,
     url_provider: URL + `/api/provider/`,
+    url_indication: URL + `/api/indication/`,
 }

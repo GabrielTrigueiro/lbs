@@ -5,8 +5,9 @@ import { Box, Typography, Button, FormControl, Grid, Icon, InputLabel, MenuItem,
 import styles from "../../styles/Indication/Indication.module.scss"
 import { SearchInput } from '../../shared/components/search'
 import { ClientListPageSkeleton } from '../clients'
-import { dataOneIndication } from '../../shared/models/indication'
+import { dataAllIndications, dataOneIndication } from '../../shared/models/indication'
 import { IndicationService } from '../../shared/services/api/indication/IndicationService'
+import { TableIndications } from '../../shared/components/table/TableIndications'
 
 export const IndicationPage: React.FC = () => {
 
@@ -54,7 +55,6 @@ export const IndicationPage: React.FC = () => {
 
     useEffect(() => {
         update();
-        console.log(rows);
     }, [value, actualpage, pageSize]);
 
     return (
@@ -110,7 +110,7 @@ export const IndicationPage: React.FC = () => {
 
 
             <Box className={styles.table}>
-                {isLoading ? <ClientListPageSkeleton /> : <div>tabela de indicação</div>}
+                {isLoading ? <ClientListPageSkeleton /> : <TableIndications lista={rows} update={update}/>}
             </Box>
 
             <Box display="flex" justifyContent="center" mt={1}>
