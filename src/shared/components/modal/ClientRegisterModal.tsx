@@ -34,7 +34,6 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
     //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
 
-
     const dispatch = useDispatch();
 
     function getListaIndicacao() {
@@ -107,7 +106,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
             createUser(values);
-            console.log(formik.values.dataNascimento);
+            formik.resetForm();
         },
         onReset(values, formikHelpers) {
             

@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { URL, environment } from "../../../environment";
+import { environment } from "../../../environment";
 import { api } from "../axios";
 import { IClientPackage, IClientSearch, IInfoClient, ISendPagination, RegisterClient } from "../../../models/client";
 import { Notification } from "../../../components";

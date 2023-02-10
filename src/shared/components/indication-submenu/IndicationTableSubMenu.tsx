@@ -45,7 +45,7 @@ export const IndicationTableSubMenu: React.FC<{
     if(e.id){
       IndicationService.deletIndicacao(e.id)
       .then((result) => {
-        Notification("Cliente removido com sucesso.", "success");
+        Notification("Indicação removida com sucesso.", "success");
         update();
       })
     }

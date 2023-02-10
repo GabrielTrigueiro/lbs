@@ -8,6 +8,8 @@ import { ClientListPageSkeleton } from '../clients'
 import { dataOneIndication } from '../../shared/models/indication'
 import { IndicationService } from '../../shared/services/api/indication/IndicationService'
 import { TableIndications } from '../../shared/components/table/TableIndications'
+import { IndicationRegisterModal } from '../../shared/components/modal/IndicationRegisterModal'
+import { ISendPagination } from '../../shared/models/client'
 
 export const IndicationPage: React.FC = () => {
 
@@ -29,6 +31,15 @@ export const IndicationPage: React.FC = () => {
 
     const [selectContent, setSelectContent] = useState('');
 
+    let IndicacaoPaginationConf: ISendPagination = {
+        page: actualpage,
+        pageSize: pageSize,
+        param: "name",
+        sortDiresction: "DESC",
+        sortField: "name",
+        value: value,
+    };
+
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setActualPage(value - 1);
     };
@@ -41,13 +52,13 @@ export const IndicationPage: React.FC = () => {
     };
 
     const update = () => {
-        IndicationService.getInficacoes().then((result) => {
+        IndicationService.getAllIndicacoes(IndicacaoPaginationConf).then((result) => {
             if (result instanceof Error) {
                 alert(result.message);
             } else {
-                // dispatch(getClient(result.data.data))
                 setIsLoading(false);
                 setPages(result.data.numberOfPages)
+                console.log(result.data.data)
                 setRows(result.data.data);
             }
         });
@@ -125,6 +136,8 @@ export const IndicationPage: React.FC = () => {
                     onChange={handleChange}
                 />
             </Box>
+
+            <IndicationRegisterModal update={update} modalState={modalState} handleModal={handleModal}/>
 
         </LayoutBasePage>
     )
