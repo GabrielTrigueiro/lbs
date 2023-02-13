@@ -11,8 +11,8 @@ export const clientIndicationSlice = createSlice({
     initialState,
     reducers: {
         clearClientIndications: () => initialState,
-        setClientIndications: (state, action: PayloadAction<dataAllIndications>) => {
-            state.data = action.payload.data;
+        setClientIndications: (state, action: PayloadAction<dataOneIndication>) => {
+            state.data.push(action.payload);
         },
         removeIndication: (state, action: PayloadAction<string>) => {
             const teste = state.data.filter(item => item.id !== action.payload);

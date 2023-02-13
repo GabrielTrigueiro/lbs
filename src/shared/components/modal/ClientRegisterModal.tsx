@@ -18,7 +18,7 @@ import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
 import { dataAllIndications, dataOneIndication } from '../../models/indication';
 
-export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: () => void }> = ({ modalState, handleModal, update }) => {
+export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void}> = ({ modalState, handleModal}) => {
 
     //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
@@ -31,8 +31,6 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
     //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
 
-
-    const [listaTemp, setListaTemp] = useState<dataAllIndications>({ data: [] });
     const [tempInd, setTempInd] = useState<dataOneIndication>({ description: "", id: "", type: "" });
 
     const dispatch = useDispatch();
@@ -49,10 +47,10 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
 
     function addObject(object: dataOneIndication) {
 
-        const existingObject = listaTemp.data.find(obj => obj.id === object.id);
+        const existingObject = indClient.find(obj => obj.id === object.id);
 
         if (!existingObject) {
-            listaTemp.data.push(object);
+            dispatch(setClientIndications(object))
             setSelect("");
             return
         } else {
@@ -69,7 +67,6 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
             return
         }
         addObject(tempInd)
-        dispatch(setClientIndications(listaTemp))
     }
 
     function removeInd(id: string) {
@@ -114,9 +111,10 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
-            dispatch(setClientIndications(listaTemp))
+            formik.values.indicacoesIds = indClient.map(item => item.id);
             createUser(values);
             formik.resetForm();
+            dispatch(clearClientIndications);
         },
         onReset(values, formikHelpers) {
 

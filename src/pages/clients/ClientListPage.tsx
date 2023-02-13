@@ -144,7 +144,7 @@ export const ClientListPage: React.FC = () => {
           />
       </Box>
 
-      <ClientRegisterModal handleModal={handleModal} modalState={modalState} update={update}/>
+      <ClientRegisterModal handleModal={handleModal} modalState={modalState}/>
 
     </LayoutBasePage>
   );
