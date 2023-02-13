@@ -49,7 +49,7 @@ const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error>
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return  await api.put<IInfoClient>(environment.url_client + `${id}`, dados, token)
+    return  await api.put<IInfoClient>(environment.url_client + `/${id}`, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
