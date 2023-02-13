@@ -2,8 +2,8 @@ import React from 'react'
 import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select, Stack, Chip } from '@mui/material';
 import { useFormik } from 'formik';
 import modal from "../../../styles/Client/ClientRegister.module.scss"
-import {Dialog, DialogActions, DialogTitle} from '@mui/material';
-import {useState, useEffect} from "react";
+import { Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { useState, useEffect } from "react";
 import { ClienteService } from '../../services';
 import { Notification } from '../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -13,14 +13,13 @@ import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
+import { clearClientIndications, removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
 import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
-import { dataOneIndication } from '../../models/indication';
+import { dataAllIndications, dataOneIndication } from '../../models/indication';
 
+export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: () => void }> = ({ modalState, handleModal, update }) => {
 
-export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: () => void}> = ({modalState, handleModal}) => {
-    
     //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
 
@@ -29,10 +28,12 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     const [select, setSelect] = useState("");
 
-    const [tempInd, setTempInd] = useState<dataOneIndication>({description:"", id:"", type:""});
-
     //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
+
+
+    const [listaTemp, setListaTemp] = useState<dataAllIndications>({ data: [] });
+    const [tempInd, setTempInd] = useState<dataOneIndication>({ description: "", id: "", type: "" });
 
     const dispatch = useDispatch();
 
@@ -46,22 +47,29 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     const indClient = useSelector((state: RootState) => state.clientIndication.data);
 
-    function addInd() {
-        if(indClient.filter( item => item.id === tempInd.id) && indClient.length > 0){
-            Notification("Essas indicação já foi selecionada", "error");
+    function addObject(object: dataOneIndication) {
+
+        const existingObject = listaTemp.data.find(obj => obj.id === object.id);
+
+        if (!existingObject) {
+            listaTemp.data.push(object);
+            setSelect("");
+            return
+        } else {
+            Notification("Essa indicação já está em sua lista", "error")
             setSelect("");
             return
         }
-        if(indClient.length === 3){
+    }
+
+    function addInd() {
+        if (indClient.length === 3) {
             Notification("Só podem haver três indicações", "error");
             setSelect("");
             return
         }
-        else{
-            dispatch(setClientIndications(tempInd))
-            setSelect("");
-            return
-        }
+        addObject(tempInd)
+        dispatch(setClientIndications(listaTemp))
     }
 
     function removeInd(id: string) {
@@ -71,9 +79,10 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
     function changeConfirm() {
         setConfirm(!confirm);
     }
-    
+
     function closeModal() {
         formik.resetForm();
+        dispatch(clearClientIndications())
         handleModal();
         changeConfirm();
     }
@@ -105,27 +114,28 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
+            dispatch(setClientIndications(listaTemp))
             createUser(values);
             formik.resetForm();
         },
         onReset(values, formikHelpers) {
-            
+
         },
     });
 
-    function getCepData (ev: any) {
-        const {value} = ev.target
+    function getCepData(ev: any) {
+        const { value } = ev.target
         const cep = value?.replace(/[^0-9]/g, '')
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.localidade){
-            formik.setFieldValue("city", `${data.localidade}`)
-            formik.setFieldValue("uf", `${data.uf}`)
-            formik.setFieldValue("address", `${data.logradouro}`)
-            formik.setFieldValue("neighborhood", `${data.bairro}`)
-          }
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.localidade) {
+                    formik.setFieldValue("city", `${data.localidade}`)
+                    formik.setFieldValue("uf", `${data.uf}`)
+                    formik.setFieldValue("address", `${data.logradouro}`)
+                    formik.setFieldValue("neighborhood", `${data.bairro}`)
+                }
+            })
     }
 
     function handleChange(event: SelectChangeEvent) {
@@ -134,7 +144,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
 
     useEffect(() => {
         getListaIndicacao();
-    },[indClient])
+    }, [indClient, select])
 
     return (
         <>
@@ -186,20 +196,20 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
                                         helperText={formik.touched.cpf && formik.errors.cpf}
                                     />
-                                   <DatePicker
+                                    <DatePicker
                                         label="Data de nascimento"
                                         disableFuture
                                         value={formik.values.dataNascimento}
                                         inputFormat='DD/MM/YYYY'
                                         renderInput={(params) => (
-                                        <TextField 
-                                            {...params} 
-                                            variant="standard"
-                                            fullWidth
-                                            autoComplete='none'
-                                            error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
-                                            helperText={formik.touched.dataNascimento && formik.errors.dataNascimento}
-                                        />
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                fullWidth
+                                                autoComplete='none'
+                                                error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
+                                                helperText={formik.touched.dataNascimento && formik.errors.dataNascimento}
+                                            />
                                         )}
                                         onChange={(value) => formik.setFieldValue('dataNascimento', value, true)}
                                     />
@@ -217,7 +227,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                         onChange={formik.handleChange}
                                         error={formik.touched.email && Boolean(formik.errors.email)}
                                         helperText={formik.touched.email && formik.errors.email}
-                                    />  
+                                    />
                                     <TextField
                                         autoComplete="off"
                                         variant="standard"
@@ -247,7 +257,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
                                         {indClient.map((item, index) => (
-                                            <Chip sx={{fontSize: 9}} size='small' key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)}/>
+                                            <Chip sx={{ fontSize: 9 }} size='small' key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)} />
                                         ))}
                                     </Stack>
                                 </div>
@@ -378,7 +388,7 @@ export const ClientRegisterModal: React.FC<{modalState: boolean, handleModal: ()
                             <Button className={modal.button} onClick={addInd}>Confirmar</Button>
                         </div>
                     </div>
-                </div>  
+                </div>
             </Modal>
 
         </>
