@@ -28,6 +28,8 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     const [tempInd, setTempInd] = useState<dataOneIndication>({ description: "", id: "", type: "" });
 
+    const [clientInd, setClientInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
+
     const dispatch = useDispatch();
 
     const lista = useSelector((state: RootState) => state.indicacoes.data);
@@ -53,7 +55,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
             setSelect("");
             return
         }
-    }
+    };
 
     function addInd() {
         if (indClient.length === 3) {
@@ -62,22 +64,22 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
             return
         }
         addObject(tempInd)
-    }
+    };
 
     function removeInd(id: string) {
         dispatch(removeIndication(id))
-    }
+    };
 
     function changeConfirm() {
         setConfirm(!confirm);
-    }
+    };
 
     function closeModal() {
         formik.resetForm();
         dispatch(clearClientIndications())
         handleModal();
         changeConfirm();
-    }
+    };
 
     function getCepData(ev: any) {
         const { value } = ev.target
@@ -92,11 +94,11 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                     formik.setFieldValue("neighborhood", `${data.bairro}`)
                 }
             })
-    }
+    };
 
     function handleChange(event: SelectChangeEvent) {
         setSelect(event.target.value as string)
-    }
+    };
 
     function editUser(objeto: RegisterClient) {
         if(objeto.id){
@@ -106,7 +108,16 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                 handleModal();
             })
         }
-    }
+    };
+
+    function getClientIndication(client: RegisterClient) {
+        if(client.id){
+            ClienteService.getByIDd(client.id).then((response) => {
+                console.log(clientInd)
+                setClientInd(response.data.indicacoes)
+            })
+        }
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -141,6 +152,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     });
 
     useEffect(() => {
+        getClientIndication(client)
         getListaIndicacao();
     }, [indClient, select])
 
@@ -254,7 +266,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                     />
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
-                                        {indClient.map((item, index) => (
+                                        {clientInd.map((item, index) => (
                                             <Chip sx={{ fontSize: 9 }} size='small' key={item.id} variant='filled' label={item.type} onDelete={() => removeInd(item.id)} />
                                         ))}
                                     </Stack>

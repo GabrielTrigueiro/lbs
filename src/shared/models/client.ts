@@ -1,21 +1,23 @@
 import * as yup from 'yup';
+import { dataOneIndication } from './indication';
 
 export interface RegisterClient {
     id?: string;
-    address: string,
-    cell: string,
-    cep: string,
-    city: string,
-    cpf: string,
-    email: string,
-    name: string,
-    neighborhood: string,
-    number: string,
-    rg: string,
-    telephone?: string,
+    address: string
+    cell: string
+    cep: string
+    city: string
+    cpf: string
+    email: string
+    name: string
+    neighborhood: string
+    number: string
+    rg: string
+    telephone?: string
     isActive?: boolean
     uf: string
     indicacoesIds?: string[]
+    indicacoes?: dataOneIndication[]
     dataNascimento: string;
 }
 
