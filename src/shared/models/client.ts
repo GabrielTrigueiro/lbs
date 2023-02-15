@@ -16,6 +16,7 @@ export interface RegisterClient {
     isActive?: boolean
     uf: string
     indicacoesIds?: string[]
+    dataNascimento: string;
 }
 
 export interface IInfoClient {

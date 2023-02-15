@@ -6,15 +6,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { useState } from "react";
-import { IInfoClient } from "../../models/client";
+import { IInfoClient, RegisterClient } from "../../models/client";
 import { ClienteService } from "../../services";
 import { Notification } from "../notification";
 import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { ClientEditModal } from "../modal/ClientEditModal";
 
 export const TableSubMenu: React.FC<{
   update: () => void;
-  cliente: IInfoClient;
+  cliente: RegisterClient;
 }> = ({ update, cliente }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
@@ -39,7 +40,7 @@ export const TableSubMenu: React.FC<{
     setAnchorEl(null);
   };
 
-  function deletarClient(e: IInfoClient) {
+  function deletarClient(e: RegisterClient) {
     if(e.id){
       ClienteService.DeleteById(e.id)
       .then((result) => {
@@ -47,14 +48,14 @@ export const TableSubMenu: React.FC<{
         update();
       })
     }
-  }
+  };
   
   function handleConfirm() {
     setConfirm(!confirm)
     deletarClient(cliente)
-  }
+  };
 
-  function alterarStatus(e: IInfoClient) {
+  function alterarStatus(e: RegisterClient) {
     if(e.id){
       e.isActive = !e.isActive;
       ClienteService.UpdateById(e.id, e)
@@ -63,6 +64,10 @@ export const TableSubMenu: React.FC<{
         update();
       })
     }
+  }
+
+  function handleEdit() {
+    setEditModal(!editModal);
   }
 
   return (
@@ -125,6 +130,9 @@ export const TableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <MenuItem onClick={() => handleEdit()}>
+          Editar cliente
+        </MenuItem>
         <MenuItem onClick={() => alterarStatus(cliente)}>
           Alterar Status
         </MenuItem>
@@ -140,6 +148,8 @@ export const TableSubMenu: React.FC<{
               <Button className={modal.button} onClick={() => handleConfirm()}>Sim</Button>
           </DialogActions>
       </Dialog> 
+
+      <ClientEditModal update={update} client={cliente} handleModal={handleEdit} modalState={editModal} />
     </>
   );
 };

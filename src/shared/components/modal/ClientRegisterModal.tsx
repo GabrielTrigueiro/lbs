@@ -18,32 +18,29 @@ import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
 import { dataAllIndications, dataOneIndication } from '../../models/indication';
 
-export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void}> = ({ modalState, handleModal}) => {
+export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: ()=>void}> = ({ update, modalState, handleModal}) => {
 
-    //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
 
-    //state do modal de indicaçao
     const [indicState, setindicState] = useState(false);
 
     const [select, setSelect] = useState("");
 
-    //data
     const [data, setData] = useState<Dayjs>(dayjs(""));
 
     const [tempInd, setTempInd] = useState<dataOneIndication>({ description: "", id: "", type: "" });
 
     const dispatch = useDispatch();
 
+    const lista = useSelector((state: RootState) => state.indicacoes.data);
+    
+    const indClient = useSelector((state: RootState) => state.clientIndication.data);
+
     function getListaIndicacao() {
         const data = IndicationService.getInficacoes().then((response) => {
             dispatch(setAllIndicacoes(response.data.data));
         });
     };
-
-    const lista = useSelector((state: RootState) => state.indicacoes.data);
-
-    const indClient = useSelector((state: RootState) => state.clientIndication.data);
 
     function addObject(object: dataOneIndication) {
 
@@ -87,39 +84,12 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
     function createUser(newUser: RegisterClient) {
         ClienteService.Create(newUser).then((response) => {
             Notification(response.message, "success")
+            update();
             handleModal();
-        })
-    }
-
-    const formik = useFormik({
-        initialValues: {
-            address: "",
-            cell: "",
-            cep: "",
-            city: "",
-            cpf: "",
-            email: "",
-            name: "",
-            neighborhood: "",
-            number: "",
-            rg: "",
-            datade: "",
-            telephone: "",
-            uf: "",
-            dataNascimento: Date,
-            indicacoesIds: [""]
-        },
-        validationSchema: clientValidationSchema,
-        onSubmit: (values) => {
-            formik.values.indicacoesIds = indClient.map(item => item.id);
-            createUser(values);
             formik.resetForm();
             dispatch(clearClientIndications);
-        },
-        onReset(values, formikHelpers) {
-
-        },
-    });
+        })
+    }
 
     function getCepData(ev: any) {
         const { value } = ev.target
@@ -139,6 +109,37 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
     function handleChange(event: SelectChangeEvent) {
         setSelect(event.target.value as string)
     }
+
+    const formik = useFormik({
+        initialValues: {
+            address: "",
+            cell: "",
+            cep: "",
+            city: "",
+            cpf: "",
+            email: "",
+            name: "",
+            neighborhood: "",
+            number: "",
+            rg: "",
+            telephone: "",
+            uf: "",
+            dataNascimento: "",
+            indicacoesIds: [""]
+        },
+        validationSchema: clientValidationSchema,
+        onSubmit: (values) => {
+            let dataString = dayjs(formik.values.dataNascimento).format('DD-MM-YYYY');
+
+            formik.values.dataNascimento = dataString.toString() + " 03:00";
+            formik.values.indicacoesIds = indClient.map(item => item.id);
+
+            createUser(values);
+        },
+        onReset(values, formikHelpers) {
+
+        },
+    });
 
     useEffect(() => {
         getListaIndicacao();

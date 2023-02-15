@@ -16,7 +16,7 @@ import { ClienteService } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import styles from "../../styles/Client/ClientPage.module.scss";
 import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
-import { IInfoClient, ISendPagination } from "../../shared/models/client";
+import { IInfoClient, ISendPagination, RegisterClient } from "../../shared/models/client";
 import { TableClients } from "../../shared/components";
 import { useDispatch } from "react-redux";
 import { getClient } from "../../shared/store/reducers/clientSlice";
@@ -27,7 +27,7 @@ export const ClientListPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [rows, setRows] = useState<IInfoClient[]>([]);
+  const [rows, setRows] = useState<RegisterClient[]>([]);
 
   const [confirm, setConfirm] = useState<true | false>(false);
 
@@ -144,7 +144,7 @@ export const ClientListPage: React.FC = () => {
           />
       </Box>
 
-      <ClientRegisterModal handleModal={handleModal} modalState={modalState}/>
+      <ClientRegisterModal update={update} handleModal={handleModal} modalState={modalState}/>
 
     </LayoutBasePage>
   );

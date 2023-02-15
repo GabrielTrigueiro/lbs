@@ -6,11 +6,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Avatar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IInfoClient } from "../../models/client";
+import { IInfoClient, RegisterClient } from "../../models/client";
 import { TableSubMenu } from "../client-submenu/TableSubMenu";
 import "../../../styles/Client/ClientTable.css";
-import { useAppSelector } from "../../store/hooks";
-import { useEffect } from "react";
 
 const TableStyled = styled(Table)({
   borderSpacing: "0px 8px",
@@ -31,7 +29,7 @@ const TableCellStyled = styled(TableCell)({
 
 
 export const TableClients: React.FC<{
-  lista: IInfoClient[];
+  lista: RegisterClient[];
   update: () => void;
 }> = ({ lista, update }) => {
 

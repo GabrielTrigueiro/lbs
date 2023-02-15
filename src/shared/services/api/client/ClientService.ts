@@ -32,8 +32,9 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error> => {
          }
      }
     try {
-        const {data} = await api.get( environment.url_client + `${id}`, token)
+        const {data} = await api.get( environment.url_client + `/${id}`, token)
         if(data){
+            console.log(data)
             return data
         }
         return new Error('Erro ao procurar o registro')
@@ -42,14 +43,14 @@ const getByIDd = async (id: string): Promise<IInfoClient | Error> => {
     }
 }
 
-const UpdateById = async (id: string, dados: IInfoClient): Promise<void | Error> => {
+const UpdateById = async (id: string, dados: RegisterClient): Promise<void | Error> => {
     const token = {
         headers:{
           Authorization: 
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return  await api.put<IInfoClient>(environment.url_client + `/${id}`, dados, token)
+    return  await api.put<RegisterClient>(environment.url_client + `/${id}`, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -68,7 +69,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return await api.delete(environment.url_client + `${id}`, token)
+    return await api.delete(environment.url_client + `/${id}`, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
