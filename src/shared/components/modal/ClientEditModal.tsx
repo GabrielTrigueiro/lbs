@@ -12,13 +12,14 @@ import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { clearClientIndications, removeIndication, setClientIndications } from '../../store/reducers/clientIndicationSlice';
 import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
 import { dataOneIndication } from '../../models/indication';
 import { ClienteService } from '../../services';
 
 export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () => void,  client: RegisterClient, update: ()=>void}> = ({ modalState, handleModal, client, update}) => {
+
+    const dispatch = useDispatch();
 
     const [confirm, setConfirm] = useState<true | false>(false);
 
@@ -30,11 +31,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     const [clientInd, setClientInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
 
-    const dispatch = useDispatch();
-
     const lista = useSelector((state: RootState) => state.indicacoes.data);
-
-    const indClient = useSelector((state: RootState) => state.clientIndication.data);
 
     function getListaIndicacao() {
         const data = IndicationService.getInficacoes().then((response) => {
@@ -44,10 +41,10 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     function addObject(object: dataOneIndication) {
 
-        const existingObject = indClient.find(obj => obj.id === object.id);
+        const existingObject = clientInd.find(obj => obj.id === object.id);
 
         if (!existingObject) {
-            dispatch(setClientIndications(object))
+            clientInd.push(object);
             setSelect("");
             return
         } else {
@@ -58,7 +55,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     };
 
     function addInd() {
-        if (indClient.length === 3) {
+        if (clientInd.length === 3) {
             Notification("Só podem haver três indicações", "error");
             setSelect("");
             return
@@ -67,7 +64,8 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     };
 
     function removeInd(id: string) {
-        dispatch(removeIndication(id))
+        let idRemovedArray = clientInd.filter(obj => obj.id !== id);
+        setClientInd(idRemovedArray);
     };
 
     function changeConfirm() {
@@ -75,8 +73,6 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     };
 
     function closeModal() {
-        formik.resetForm();
-        dispatch(clearClientIndications())
         handleModal();
         changeConfirm();
     };
@@ -102,6 +98,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     function editUser(objeto: RegisterClient) {
         if(objeto.id){
+            console.log('editar')
             ClienteService.UpdateById(objeto.id, objeto).then((response) => {
                 Notification("Editado com sucesso", "success")
                 update();
@@ -113,7 +110,6 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     function getClientIndication(client: RegisterClient) {
         if(client.id){
             ClienteService.getByIDd(client.id).then((response) => {
-                console.log(clientInd)
                 setClientInd(response.data.indicacoes)
             })
         }
@@ -138,11 +134,11 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
-            let dataString = dayjs(formik.values.dataNascimento).format('DD/MM/YYYY');
 
-            formik.values.indicacoesIds = indClient.map(item => item.id);
-            formik.values.dataNascimento = dataString.toString();
-            console.log(values);
+            // let dataString = dayjs(formik.values.dataNascimento).format('DD/MM/YYYY');
+            // formik.values.dataNascimento = dataString.toString();
+
+            formik.values.indicacoesIds = clientInd.map(item => item.id);
 
             editUser(values);
         },
@@ -154,7 +150,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     useEffect(() => {
         getClientIndication(client)
         getListaIndicacao();
-    }, [indClient, select])
+    }, [select])
 
     return (
         <>
