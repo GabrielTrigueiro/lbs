@@ -134,12 +134,8 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
-
-            // let dataString = dayjs(formik.values.dataNascimento).format('DD/MM/YYYY');
-            // formik.values.dataNascimento = dataString.toString();
-
             formik.values.indicacoesIds = clientInd.map(item => item.id);
-
+            console.log(values);
             editUser(values);
         },
         onReset(values, formikHelpers) {
