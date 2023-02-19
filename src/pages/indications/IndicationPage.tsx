@@ -58,7 +58,6 @@ export const IndicationPage: React.FC = () => {
             } else {
                 setIsLoading(false);
                 setPages(result.data.numberOfPages)
-                console.log(result.data.data)
                 setRows(result.data.data);
             }
         });

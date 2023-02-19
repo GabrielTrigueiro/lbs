@@ -1,76 +1,31 @@
-import { Add } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { ConfirmationButton } from "../../shared/components";
-import { SearchInput } from "../../shared/components/search";
-import { TableProviders } from "../../shared/components/provider-components/TableProviders";
-import { ProviderForm } from "../../shared/forms";
-import { LayoutBasePage } from "../../shared/layouts";
-import { IInfoProvider, ProviderService } from "../../shared/services/api/providers/ProviderService";
-import styles from "../../styles/Provider/Provider.module.scss";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Icon,
-  Pagination,
-  Stack,
-  Modal,
-  SelectChangeEvent,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import { ClientListPageSkeleton } from "../clients";
-import { ISendPagination } from "../../shared/models/client";
+import React, { useEffect, useState } from 'react'
+import { LayoutBasePage } from '../../shared/layouts'
+import { Add } from '@mui/icons-material'
+import { Box, Typography, Button, FormControl, Grid, InputLabel, MenuItem, Select, Pagination, SelectChangeEvent } from '@mui/material'
+import styles from "../../styles/Provider/Provider.module.scss"
+import { SearchInput } from '../../shared/components/search'
+import { ClientListPageSkeleton } from '../clients'
+import { ISendPagination } from '../../shared/models/client'
+import { ProviderService } from '../../shared/services/api/providers/ProviderService'
+import { IInfoProvider } from '../../shared/models/provider'
+import { TableProviders } from '../../shared/components/table/TableProviders'
 
 export const ProviderListPage: React.FC = () => {
+
   const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IInfoProvider[]>([]);
+
   const [confirm, setConfirm] = useState<true | false>(false);
-  const [modal, setModal] = useState<true | false>(false);
-  const [pages, setPages] = useState<number>(0);
-  const [actualpage, setActualPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5);
-  const [selectContent, setSelectContent] = useState("");
+  const [modalState, setModalState] = useState<true | false>(false);
+  function handleModal() {
+    setModalState(!modalState)
+  }
 
-  const handleModal = () => {
-    modal ? setModal(false) : setModal(true);
-  };
-
-  const handleConfirm = () => {
-    confirm ? setConfirm(false) : setConfirm(true);
-  };
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setActualPage(value - 1);
-  };
-
-  useEffect(() => {
-    update();
-  }, [value, actualpage, pageSize]);
-
-  const update = () => {
-    ProviderService.getAll(ProviderPaginationConf).then((result) => {
-      if (result instanceof Error) {
-        alert(result.message);
-      } else {
-        setIsLoading(false);
-        setPages(result.data.numberOfPages);
-        setRows(result.data.data);
-      }
-    });
-  };
-
-  const selectChange = (event: SelectChangeEvent) => {
-    setSelectContent(event.target.value as string);
-    const translate = parseInt(event.target.value as string);
-    setActualPage(0);
-    setPageSize(translate);
-  };
-
+  const [pages, setPages] = useState<number>(0)
+  const [pageSize, setPageSize] = useState<number>(5)
+  const [actualpage, setActualPage] = useState<number>(0)
+  const [selectContent, setSelectContent] = useState('');
   let ProviderPaginationConf: ISendPagination = {
     page: actualpage,
     pageSize: pageSize,
@@ -79,15 +34,42 @@ export const ProviderListPage: React.FC = () => {
     sortField: "name",
     value: value,
   };
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setActualPage(value - 1);
+  };
+  const selectChange = (event: SelectChangeEvent) => {
+    setSelectContent(event.target.value as string);
+    const translate = parseInt(event.target.value as string)
+    setActualPage(0)
+    setPageSize(translate)
+  };
+
+  const update = () => {
+    ProviderService.getAll(ProviderPaginationConf).then((result) => {
+      if (result instanceof Error) {
+        alert(result.message);
+      } else {
+        setIsLoading(false);
+        setPages(result.data.numberOfPages)
+        setRows(result.data.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    update();
+  }, [value, actualpage, pageSize]);
 
   return (
     <LayoutBasePage>
+
       <Box className={styles.topContainer}>
-        <Typography className={styles.topContainerTitle}>Fornecedores</Typography>
+        <Typography className={styles.topContainerTitle}>Colaboradores</Typography>
         <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography className={styles.topButtonText}>Cadastrar Fornecedor</Typography>
+          <Typography className={styles.topButtonText}>Cadastrar colaborador</Typography>
         </Button>
       </Box>
+
       <Box margin="0px" display="flex">
         <Grid display="flex" direction="row" container flex={1}>
           <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
@@ -95,7 +77,7 @@ export const ProviderListPage: React.FC = () => {
               sx={{ color: "#3d3d3d", fontSize: "18px" }}
               variant="h5"
             >
-              Lista de Fornecedores
+              Lista de Colaboladores
             </Typography>
             <Box position={"relative"} bottom={3}>
               <SearchInput
@@ -131,56 +113,20 @@ export const ProviderListPage: React.FC = () => {
       </Box>
 
       <Box className={styles.table}>
-        {isLoading ? <ClientListPageSkeleton /> : <TableProviders update={update} lista={rows} />}
+        {isLoading ? <ClientListPageSkeleton /> : <TableProviders lista={rows} update={update} />}
       </Box>
 
       <Box display="flex" justifyContent="center" mt={1}>
-          <Pagination
-            count={pages}
-            shape="rounded" 
-            page={actualpage+1}
-            onChange={handleChange}
-          />
+        <Pagination
+          count={pages}
+          shape="rounded"
+          page={actualpage + 1}
+          onChange={handleChange}
+        />
       </Box>
-      
-      <Modal sx={{ minWidth: 1020 }} onClose={handleConfirm} open={modal}>
-        <Box
-          sx={{
-            overflow: "auto",
-            //posição do modal
-            position: "absolute" as "absolute",
-            top: "40%",
-            left: "50%",
-            height: "600px",
-            width: "1000px",
-            transform: "translate(-50%, -40%)",
 
-            //CSS estilo
-            borderRadius: 0,
-            bgcolor: "background.paper",
-            display: "flex",
-            flexDirection: "column",
-            padding: 0,
 
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <ProviderForm
-            tittle="Cadastrar Fornecedor"
-            type={"register"}
-            update={update}
-            handleModal={handleModal}
-          />
-        </Box>
-      </Modal>
 
-      <ConfirmationButton
-        confirmMessage="Deseja realmente fechar?"
-        handleDialog={handleConfirm}
-        handleModal={handleModal}
-        confirmStatus={confirm}
-      />
     </LayoutBasePage>
-  );
-};
+  )
+}

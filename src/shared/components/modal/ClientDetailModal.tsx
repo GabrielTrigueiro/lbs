@@ -1,8 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material";
-import { borderColor } from "@mui/system";
 import React, { useState } from "react";
 import { IInfoClient } from "../../models/client"; 
-import { IInfoProvider } from "../../services/api/providers/ProviderService";
 import { SearchInput } from "../search";
 
 interface props {

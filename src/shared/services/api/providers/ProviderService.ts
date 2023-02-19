@@ -2,35 +2,7 @@ import { AxiosError } from "axios"
 import { environment } from "../../../environment"
 import { api } from "../axios"
 import { ISendPagination, IClientSearch } from "../../../models/client"
-
-export interface IInfoProvider {
-    id?: string
-    code: number
-    name: string
-    cnpj: string
-
-    contact: number
-    email: string
-    telephone: number
-    cell: number
-
-    cep: number
-    address: string
-    cityId?: string
-    city: string
-    uf: string
-    neighborhood: string
-    number: number
-}
-export interface IProviderPackage {
-    data: IInfoProvider[]
-    message: string,
-    errors: string,
-    success: boolean
-}
-export type TAllProviderList = {
-    data: IProviderPackage
-}
+import { IInfoProvider, IProviderPackage } from "../../../models/provider"
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     const token = {

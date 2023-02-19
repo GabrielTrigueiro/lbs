@@ -97,7 +97,6 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     function editUser(objeto: RegisterClient) {
         if(objeto.id){
-            console.log('editar')
             ClienteService.UpdateById(objeto.id, objeto).then((response) => {
                 Notification("Editado com sucesso", "success")
                 update();
