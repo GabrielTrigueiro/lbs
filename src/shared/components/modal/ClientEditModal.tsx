@@ -6,7 +6,6 @@ import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { useState, useEffect } from "react";
 import { Notification } from '../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
-import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
 import { RootState } from '../../store';
@@ -117,6 +116,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
 
     const formik = useFormik({
         initialValues: {
+            id: client.id,
             address: client.address,
             cell: client.cell,
             cep: client.cep,
@@ -135,7 +135,6 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
             formik.values.indicacoesIds = clientInd.map(item => item.id);
-            console.log(values);
             editUser(values);
         },
         onReset(values, formikHelpers) {
