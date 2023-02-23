@@ -9,19 +9,23 @@ import { ISendPagination } from '../../shared/models/client'
 import { ProviderService } from '../../shared/services/api/providers/ProviderService'
 import { IInfoProvider } from '../../shared/models/provider'
 import { TableProviders } from '../../shared/components/table/TableProviders'
+import { ProviderRegisterModal } from '../../shared/components/modal/ProviderRegisterModal'
 
 export const ProviderListPage: React.FC = () => {
 
+  //rolls
   const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IInfoProvider[]>([]);
 
+  //registro
   const [confirm, setConfirm] = useState<true | false>(false);
   const [modalState, setModalState] = useState<true | false>(false);
   function handleModal() {
     setModalState(!modalState)
   }
 
+  //pagination
   const [pages, setPages] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(5)
   const [actualpage, setActualPage] = useState<number>(0)
@@ -44,6 +48,7 @@ export const ProviderListPage: React.FC = () => {
     setPageSize(translate)
   };
 
+  //refresh
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
       if (result instanceof Error) {
@@ -125,7 +130,7 @@ export const ProviderListPage: React.FC = () => {
         />
       </Box>
 
-
+      <ProviderRegisterModal modalState={modalState} update={update} handleModal={handleModal}/>
 
     </LayoutBasePage>
   )

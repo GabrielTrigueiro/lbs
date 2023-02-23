@@ -48,7 +48,7 @@ export const TableProviders: React.FC<{
             {lista.map((row, index) => (
               <TableRowStyled key={row.id} sx={{ boxShadow: "inherit" }}>
                 <TableCellStyled sx={{ width: 30, mr: "15px" }}>
-                  <Typography>{index + 1}</Typography>
+                  <Typography></Typography>
                 </TableCellStyled>
                 <TableCellStyled>
                     <Box display="flex">
