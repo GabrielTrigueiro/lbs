@@ -39,9 +39,7 @@ export const ClientListPage: React.FC = () => {
 
   const [actualpage, setActualPage] = useState<number>(0)
 
-  const [selectContent, setSelectContent] = useState('');
-
-  const dispatch = useDispatch();
+  const [selectContent, setSelectContent] = useState('5');
 
   function handleModal() {
     setModalState(!modalState);
@@ -52,7 +50,6 @@ export const ClientListPage: React.FC = () => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
-        // dispatch(getClient(result.data.data))
         setIsLoading(false);
         setPages(result.data.numberOfPages)
         setRows(result.data.data);

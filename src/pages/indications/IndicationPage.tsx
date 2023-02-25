@@ -29,7 +29,7 @@ export const IndicationPage: React.FC = () => {
 
     const [actualpage, setActualPage] = useState<number>(0)
 
-    const [selectContent, setSelectContent] = useState('');
+    const [selectContent, setSelectContent] = useState('5');
 
     let IndicacaoPaginationConf: ISendPagination = {
         page: actualpage,

@@ -1,7 +1,7 @@
 .MuiTableRow-root td:first-child{
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  border-left: 6px solid;
+  border-left: 6px solid #626262;
 }
 
 .MuiTableRow-root td:last-child{

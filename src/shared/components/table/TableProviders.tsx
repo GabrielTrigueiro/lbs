@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import { Avatar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "../../../styles/Client/ClientTable.css";
-import { IInfoProvider, IProviderCadastroInfo } from "../../models/provider";
+import { IProviderCadastroInfo } from "../../models/provider";
 import { ProviderSubMenu } from "../provider-submenu/ProviderSubmenu";
 
 const TableStyled = styled(Table)({

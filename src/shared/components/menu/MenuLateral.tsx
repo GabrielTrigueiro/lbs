@@ -108,7 +108,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
       onClick={handleClick}
     >
       <ListItemIcon>
-        <Icon sx={{ fontSize: "2rem", color: match ? "#E4DB00" : "black" }}>
+        <Icon sx={{ fontSize: "2rem", color: match ? "#E4DB00" : "#626262" }}>
           {icon}
         </Icon>
       </ListItemIcon>

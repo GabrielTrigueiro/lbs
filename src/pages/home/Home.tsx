@@ -12,17 +12,17 @@ export default function Home() {
         setSideBarOption([
           {
             label: "Clientes",
-            icon: "person_outline_icon",
+            icon: "account_circle",
             path: "/home/clientes",
           },
           {
             label: "Fornecedores",
-            icon: "account_box_icon",   
+            icon: "badge",   
             path: "/home/provedores",
           },
           {
             label: "Indicações",
-            icon: "local_offer_icon",   
+            icon: "diversity_3",   
             path: "/home/indicacoes",
           },
         ]);
