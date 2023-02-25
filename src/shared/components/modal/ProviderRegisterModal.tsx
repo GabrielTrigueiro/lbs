@@ -26,7 +26,6 @@ export const ProviderRegisterModal: React.FC<{
             code: "",
             contact: "",
             email: "",
-            id: "",
             name: "",
             neighborhood: "",
             number: "",

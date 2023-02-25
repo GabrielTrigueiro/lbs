@@ -69,7 +69,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return await api.delete(environment.url_provider + `${id}`, token)
+    return await api.delete(environment.url_provider + `/${id}`, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -77,7 +77,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
         return data.data
       })
       .catch(err => { 
-        console.error(err)
+        Notification(err.response?.data.message, "error")
       })
 }
 
