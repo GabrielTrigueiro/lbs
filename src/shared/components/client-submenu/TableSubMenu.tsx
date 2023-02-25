@@ -12,11 +12,15 @@ import { Notification } from "../notification";
 import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { ClientEditModal } from "../modal/ClientEditModal";
+import { ClientDetail } from "../modal/ClientDetailModal";
 
 export const TableSubMenu: React.FC<{
   update: () => void;
   cliente: RegisterClient;
 }> = ({ update, cliente }) => {
+
+
+  const [detailModal, setDetailModal] = useState<true | false>(false);
 
   const [editModal, setEditModal] = useState<true | false>(false);
 
@@ -70,6 +74,9 @@ export const TableSubMenu: React.FC<{
     setEditModal(!editModal);
   }
 
+  function handleDetail() {
+    setDetailModal(!detailModal)
+  }
   return (
     <>
       <Box
@@ -133,6 +140,9 @@ export const TableSubMenu: React.FC<{
         <MenuItem onClick={() => handleEdit()}>
           Editar cliente
         </MenuItem>
+        <MenuItem onClick={() => handleDetail()}>
+          Detalhes
+        </MenuItem>
         <MenuItem onClick={() => alterarStatus(cliente)}>
           Alterar Status
         </MenuItem>
@@ -150,6 +160,8 @@ export const TableSubMenu: React.FC<{
       </Dialog> 
 
       <ClientEditModal update={update} client={cliente} handleModal={handleEdit} modalState={editModal} />
+
+      <ClientDetail update={update} client={cliente} handleModal={handleDetail} modalState={detailModal}/>
     </>
   );
 };
