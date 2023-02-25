@@ -7,7 +7,7 @@ import { SearchInput } from '../../shared/components/search'
 import { ClientListPageSkeleton } from '../clients'
 import { ISendPagination } from '../../shared/models/client'
 import { ProviderService } from '../../shared/services/api/providers/ProviderService'
-import { IInfoProvider } from '../../shared/models/provider'
+import { IProviderCadastroInfo } from '../../shared/models/provider'
 import { TableProviders } from '../../shared/components/table/TableProviders'
 import { ProviderRegisterModal } from '../../shared/components/modal/ProviderRegisterModal'
 
@@ -16,7 +16,7 @@ export const ProviderListPage: React.FC = () => {
   //rolls
   const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [rows, setRows] = useState<IInfoProvider[]>([]);
+  const [rows, setRows] = useState<IProviderCadastroInfo[]>([]);
 
   //registro
   const [confirm, setConfirm] = useState<true | false>(false);
@@ -29,7 +29,7 @@ export const ProviderListPage: React.FC = () => {
   const [pages, setPages] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(5)
   const [actualpage, setActualPage] = useState<number>(0)
-  const [selectContent, setSelectContent] = useState('');
+  const [selectContent, setSelectContent] = useState('5');
   let ProviderPaginationConf: ISendPagination = {
     page: actualpage,
     pageSize: pageSize,
@@ -69,9 +69,9 @@ export const ProviderListPage: React.FC = () => {
     <LayoutBasePage>
 
       <Box className={styles.topContainer}>
-        <Typography className={styles.topContainerTitle}>Colaboradores</Typography>
+        <Typography className={styles.topContainerTitle}>Fornecedor</Typography>
         <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography className={styles.topButtonText}>Cadastrar colaborador</Typography>
+          <Typography className={styles.topButtonText}>Cadastrar fornecedor</Typography>
         </Button>
       </Box>
 
@@ -82,7 +82,7 @@ export const ProviderListPage: React.FC = () => {
               sx={{ color: "#3d3d3d", fontSize: "18px" }}
               variant="h5"
             >
-              Lista de Colaboladores
+              Lista de Fornecedores
             </Typography>
             <Box position={"relative"} bottom={3}>
               <SearchInput

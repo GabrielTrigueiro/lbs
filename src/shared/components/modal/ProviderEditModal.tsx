@@ -1,69 +1,58 @@
-import { Button, Dialog, DialogActions, DialogTitle, Modal } from "@mui/material";
-import styles from "../../../styles/Provider/ProviderRegister.module.scss";
-import { TextField } from "@mui/material";
-import { useFormik } from "formik";
-import { ProviderCadastroSchema } from "../../models/provider";
+import React from 'react';
+import { Modal, TextField, Button } from '@mui/material';
+import { useFormik } from 'formik';
+import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { useState } from "react";
-import { IProviderCadastroInfo } from "../../models/provider";
-import { ProviderService } from "../../services/api/providers/ProviderService";
-import { Notification } from "../notification";
+import { Notification } from '../notification';
+import styles from "../../../styles/Provider/ProviderRegister.module.scss";
+import { IProviderCadastroInfo, ProviderCadastroSchema } from '../../models/provider';
+import { ProviderService } from '../../services/api/providers/ProviderService';
 
-export const ProviderRegisterModal: React.FC<{
+export const ProviderEditModal: React.FC<{
     modalState: boolean,
     handleModal: () => void,
+    fornecedor: IProviderCadastroInfo,
     update: () => void
-}
-> = ({ handleModal, modalState, update }) => {
+}> = ({ modalState, handleModal, fornecedor, update }) => {
+
+    const [confirm, setConfirm] = useState<true | false>(false);
 
     const formik = useFormik({
         initialValues: {
-            address: "",
-            cell: "",
-            cep: "",
-            city: "",
-            cityId: "",
-            cnpj: "",
-            code: "",
-            contact: "",
-            email: "",
-            id: "",
-            name: "",
-            neighborhood: "",
-            number: "",
-            telephone: "",
-            uf: "",
-            stateRegistration: "",
-            nameContact: ""
+            id: fornecedor.id,
+            address: fornecedor.address,
+            cell: fornecedor.cell,
+            cep: fornecedor.cep,
+            city: fornecedor.city,
+            cnpj: fornecedor.cnpj,
+            email: fornecedor.email,
+            name: fornecedor.name,
+            neighborhood: fornecedor.neighborhood,
+            number: fornecedor.number,
+            telephone: fornecedor.telephone,
+            uf: fornecedor.uf,
+            code: fornecedor.code,
+            nameContact: fornecedor.nameContact,
+            stateRegistration: fornecedor.stateRegistration
         },
         validationSchema: ProviderCadastroSchema,
         onSubmit: (values) => {
-            createProvider(values);
+            editProvider(values);
         },
         onReset(values, formikHelpers) {
 
         },
-    })
-
-    const [confirm, setConfirm] = useState<true | false>(false);
-
-    function createProvider(newProvider: IProviderCadastroInfo) {
-        ProviderService.Create(newProvider).then((response) => {
-            Notification(response.message, "success");
-            update();
-            handleModal();
-            formik.resetForm();
-        })
-    }
+    });
 
     function changeConfirm() {
         setConfirm(!confirm);
-    }
+    };
 
     function closeModal() {
-        formik.resetForm();
         handleModal();
         changeConfirm();
-    }
+        formik.resetForm();
+    };
 
     function getCepData(ev: any) {
         const { value } = ev.target
@@ -78,7 +67,18 @@ export const ProviderRegisterModal: React.FC<{
                     formik.setFieldValue("neighborhood", `${data.bairro}`)
                 }
             })
-    }
+    };
+
+    function editProvider(objeto: IProviderCadastroInfo) {
+        console.log(objeto)
+        if (objeto.id) {
+            ProviderService.UpdateById(objeto.id, objeto).then((response) => {
+                Notification("Editado com sucesso", "success")
+                update();
+                handleModal();
+            })
+        }
+    };
 
     return (
         <>
@@ -181,19 +181,6 @@ export const ProviderRegisterModal: React.FC<{
                                         onChange={formik.handleChange}
                                         error={formik.touched.telephone && Boolean(formik.errors.telephone)}
                                         helperText={formik.touched.telephone && formik.errors.telephone}
-                                    />
-                                    <TextField
-                                        autoComplete="off"
-                                        variant="standard"
-                                        size="small"
-                                        fullWidth
-                                        id="contact"
-                                        name="contact"
-                                        label="Celular"
-                                        value={formik.values.contact}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.contact && Boolean(formik.errors.contact)}
-                                        helperText={formik.touched.contact && formik.errors.contact}
                                     />
                                 </div>
                             </div>

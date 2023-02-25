@@ -18,7 +18,7 @@ export interface IInfoProvider {
     number: number
 }
 export interface IProviderPackage {
-    data: IInfoProvider[]
+    data: IProviderCadastroInfo[]
     message: string,
     errors: string,
     success: boolean
@@ -39,8 +39,10 @@ export interface IProviderCadastroInfo {
     email?: string
     id?: string
     name: string,
-    neighborhood?: string
+    nameContact?: string,
+    neighborhood?: string,
     number?: string
+    stateRegistration?: string,
     telephone?: string
     uf?: string
 }
@@ -60,5 +62,7 @@ export const ProviderCadastroSchema: Yup.SchemaOf<IProviderCadastroInfo> = Yup.o
     city: Yup.string(),
     uf: Yup.string(),
     neighborhood: Yup.string(),
-    number: Yup.string()
+    number: Yup.string(),
+    nameContact: Yup.string(),
+    stateRegistration: Yup.string()
 })

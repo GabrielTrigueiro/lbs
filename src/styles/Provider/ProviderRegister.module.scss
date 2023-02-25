@@ -10,7 +10,7 @@
 .formContainer {
 outline: none;
 background-color: $fundo-branco;
-height: 80vh;
+height: 85vh;
 width: 60vw;
 display: flex;
 flex-direction: column;
@@ -83,7 +83,6 @@ font-size: $media;
 .submit {
     display: flex;
     justify-content: flex-end;
-    margin-top: 1em;;
     padding: 1em 0em;
 }
 

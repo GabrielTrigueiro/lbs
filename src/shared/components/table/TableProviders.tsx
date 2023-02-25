@@ -7,7 +7,8 @@ import TableRow from "@mui/material/TableRow";
 import { Avatar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "../../../styles/Client/ClientTable.css";
-import { IInfoProvider } from "../../models/provider";
+import { IInfoProvider, IProviderCadastroInfo } from "../../models/provider";
+import { ProviderSubMenu } from "../provider-submenu/ProviderSubmenu";
 
 const TableStyled = styled(Table)({
   borderSpacing: "0px 8px",
@@ -28,7 +29,7 @@ const TableCellStyled = styled(TableCell)({
 
 
 export const TableProviders: React.FC<{
-  lista: IInfoProvider[];
+  lista: IProviderCadastroInfo[];
   update: () => void;
 }> = ({ lista, update }) => {
 
@@ -39,8 +40,8 @@ export const TableProviders: React.FC<{
           <TableRow>
             <TableCellStyled></TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Informações Básicas</TableCellStyled>
-            <TableCellStyled sx={{color: '#8e8e8e'}}>Número de Celular</TableCellStyled>
-            <TableCellStyled sx={{color: '#8e8e8e'}}>CPF</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>Número Celular</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>CNPJ</TableCellStyled>
           </TableRow>
         </TableHead>
      
@@ -61,7 +62,7 @@ export const TableProviders: React.FC<{
                 <TableCellStyled sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
                 <TableCellStyled sx={{fontWeight:'500'}}>{row.cnpj}</TableCellStyled>
                 <TableCellStyled sx={{display: "flex", justifyContent: "flex-end", alignContent:"center"}}>
-                  <div>menu aqui</div>
+                  <ProviderSubMenu update={update} fornecedor={row}/>
                 </TableCellStyled>
               </TableRowStyled>
             ))}

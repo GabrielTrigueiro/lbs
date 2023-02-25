@@ -2,7 +2,8 @@ import { AxiosError } from "axios"
 import { environment } from "../../../environment"
 import { api } from "../axios"
 import { ISendPagination, IClientSearch } from "../../../models/client"
-import { IInfoProvider, IProviderPackage } from "../../../models/provider"
+import { IInfoProvider, IProviderCadastroInfo, IProviderPackage } from "../../../models/provider"
+import { Notification } from "../../../components"
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     const token = {
@@ -42,14 +43,14 @@ const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
     }
 }
 
-const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Error>   => {
+const UpdateById = async (id: string, dados: IProviderCadastroInfo): Promise<void | Error>   => {
     const token = {
         headers:{
           Authorization: 
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return  await api.put<IInfoProvider>(environment.url_provider + `${id}`, dados, token)
+    return  await api.put<IProviderCadastroInfo>(environment.url_provider + `/${id}`, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data
@@ -57,7 +58,7 @@ const UpdateById = async (id: string, dados: IInfoProvider): Promise<void | Erro
         return data.data
       })
       .catch(err => { 
-        console.error(err)
+        Notification(err.response?.data.message, "error")
       })
 }
 
@@ -80,7 +81,7 @@ const DeleteById = async (id: string): Promise<void | Error>   => {
       })
 }
 
-const Create = async (dados: IInfoProvider): Promise<any>   => {
+const Create = async (dados: IProviderCadastroInfo): Promise<any | Error>   => {
     const token = {
         headers:{
           Authorization: 
@@ -95,7 +96,7 @@ const Create = async (dados: IInfoProvider): Promise<any>   => {
         return data.data
       })
       .catch(err => { 
-        console.error(err)
+        Notification(err.response?.data.message, "error")
       })
 }
 export const ProviderService = {
