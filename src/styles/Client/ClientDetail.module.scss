@@ -1,0 +1,35 @@
+@import "../GlobalVariables.module.scss";
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555555;
+}
+
+.details{
+    outline: none;
+    background-color: $branco-escuro;
+    height: 90vh;
+    width: 60vw;
+    padding: 1em 2em;
+}
+
+.title{
+    font-size: 2pc;
+    font-weight: 700;
+    color: $fundo-cinza;
+}
+
+.info{
+    display: flex;
+    height: 6em;
+    justify-content: space-between;
+    padding: 1em 2em;
+}
+
+.addres{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 2em;
+}

@@ -3,22 +3,24 @@ import { dataOneIndication } from './indication';
 
 export interface RegisterClient {
     id?: string;
-    address: string
-    cell: string
-    cep: string
-    city: string
     cpf: string
     email: string
     name: string
-    neighborhood: string
-    number: string
     rg: string
     telephone?: string
+
     isActive?: boolean
-    uf: string
     indicacoesIds?: string[]
     indicacoes?: dataOneIndication[]
     dataNascimento: string;
+    
+    neighborhood: string
+    number: string
+    address: string
+    uf: string
+    cell: string
+    cep: string
+    city: string
 }
 
 export interface IInfoClient {
