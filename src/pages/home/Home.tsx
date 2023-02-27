@@ -18,12 +18,17 @@ export default function Home() {
           {
             label: "Fornecedores",
             icon: "badge",   
-            path: "/home/provedores",
+            path: "/home/fornecedores",
           },
           {
             label: "Indicações",
             icon: "diversity_3",   
             path: "/home/indicacoes",
+          },
+          {
+            label: "categorias",
+            icon: "local_offer",   
+            path: "/home/categorias",
           },
         ]);
       }, []);

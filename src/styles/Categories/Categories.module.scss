@@ -1,0 +1,55 @@
+@import "../GlobalVariables.module.scss";
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.topContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    padding-top: 2em;
+}
+
+.topContainerTitle {
+    font-weight: 600 !important;
+    font-size: $grande !important;
+    color: $fundo-cinza !important;
+}
+
+.topButton {
+    height: 45px !important;
+    width: 200px !important;
+    color: $cinza-escuro !important;
+    background-color: $amarelo-default !important;
+    box-shadow: none !important;
+}
+
+.topButtonText {
+    font-size: 10px !important;
+    font-weight: bold !important;
+}
+
+.topButton:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.searchContainer {
+    display: flex;
+}
+
+.searchGrid {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.table {
+    height: auto;
+    flex: 1;
+}

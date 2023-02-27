@@ -124,7 +124,7 @@ export const IndicationPage: React.FC = () => {
             </Box>
 
             <Box className={styles.table}>
-                {isLoading ? <ClientListPageSkeleton /> : <TableIndications lista={rows} update={update}/>}
+                {isLoading ? <ClientListPageSkeleton /> : <TableIndications lista={rows} update={update} />}
             </Box>
 
             <Box display="flex" justifyContent="center" mt={1}>
@@ -136,7 +136,7 @@ export const IndicationPage: React.FC = () => {
                 />
             </Box>
 
-            <IndicationRegisterModal update={update} modalState={modalState} handleModal={handleModal}/>
+            <IndicationRegisterModal update={update} modalState={modalState} handleModal={handleModal} />
 
         </LayoutBasePage>
     )
