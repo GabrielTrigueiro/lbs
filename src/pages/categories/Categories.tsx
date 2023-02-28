@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { ClientListPageSkeleton } from '../clients'
 
 export const Categories = () => {
+  //skeleton ou tabela
+  const [isLoading, setIsLoading] = useState(true);
   //search
   const [value, setValue] = useState<string>("")
   //pagination e seletor
@@ -22,6 +24,18 @@ export const Categories = () => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setActualPage(value - 1);
   };
+  //buscar categorias e gerenciar laoding
+  // const update = () => {
+  //   IndicationService.getAllIndicacoes(IndicacaoPaginationConf).then((result) => {
+  //     if (result instanceof Error) {
+  //       alert(result.message);
+  //     } else {
+  //       setIsLoading(false);
+  //       setPages(result.data.numberOfPages)
+  //       setRows(result.data.data);
+  //     }
+  //   });
+  // };
   return (
 
     <div className={styles.container}>

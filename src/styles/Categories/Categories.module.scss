@@ -52,4 +52,24 @@
 .table {
     height: auto;
     flex: 1;
+    overflow-y: scroll;
+}
+
+.table::-webkit-scrollbar {
+    width: 5px;
+}
+
+.table::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: #D6DEE1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.table::-webkit-scrollbar-thumb:hover {
+    background-color: #A8BBBF;
 }
