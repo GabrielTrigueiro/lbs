@@ -8,8 +8,15 @@ import { CategoryService } from '../../shared/services/api/categories/Categories
 import { ISendPagination } from '../../shared/models/client'
 import { ICategoryRegister } from '../../shared/models/categories'
 import { TableCategories } from '../../shared/components/table/TableCategories'
+import { CategoryRegisterModal } from '../../shared/components/modal/CategoryRegisterModal'
 
 export const Categories = () => {
+
+  //modal registrar categoria
+  const [modalState, setModalState] = useState<true | false>(false);
+  function handleModal() {
+    setModalState(!modalState)
+  }
 
   //categorias data
   const [rows, setRows] = useState<ICategoryRegister[]>([]);
@@ -41,7 +48,7 @@ export const Categories = () => {
     sortDiresction: "DESC",
     sortField: "name",
     value: value,
-};
+  };
   //buscar categorias e gerenciar laoding
   const update = () => {
     CategoryService.getAllCategories(CategoryPaginationConf).then((result) => {
@@ -54,10 +61,10 @@ export const Categories = () => {
       }
     });
   };
-  
+
   useEffect(() => {
     update();
-  },[])
+  }, [])
 
   return (
 
@@ -65,7 +72,7 @@ export const Categories = () => {
 
       <Box className={styles.topContainer}>
         <Typography className={styles.topContainerTitle}>Categorias</Typography>
-        <Button className={styles.topButton} /*onClick={handleModal}*/ variant="contained" startIcon={<Add />}>
+        <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
           <Typography className={styles.topButtonText}>Cadastrar categoria</Typography>
         </Button>
       </Box>
@@ -89,7 +96,7 @@ export const Categories = () => {
       </Box>
 
       <Box className={styles.table}>
-        {isLoading ? <ClientListPageSkeleton /> : <TableCategories lista={rows} update={update}/>}
+        {isLoading ? <ClientListPageSkeleton /> : <TableCategories lista={rows} update={update} />}
       </Box>
 
       <Box display="flex" justifyContent="end" mt={1} alignItems={"center"}>
@@ -115,6 +122,9 @@ export const Categories = () => {
           onChange={handleChange}
         />
       </Box>
+
+      <CategoryRegisterModal handleModal={handleModal} modalState={modalState} update={update} />
+
     </div>
   )
 }

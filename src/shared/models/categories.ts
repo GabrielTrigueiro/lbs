@@ -1,3 +1,5 @@
+import * as yup from "yup"
+
 export interface ICategoryRegister {
     id?: string
     code: string
@@ -12,3 +14,9 @@ export interface ICategorySearch {
     hasNext: boolean
     data: ICategoryRegister[]
 }
+
+export const categoryRegisterSchema = yup.object({
+    name: yup.string().required(),
+    code: yup.string().required(),
+    description: yup.string().required(),
+})
