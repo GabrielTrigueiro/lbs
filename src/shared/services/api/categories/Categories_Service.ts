@@ -81,7 +81,7 @@ const createCategory= async (dados: ICategoryRegister): Promise<any | Error> => 
       })
 }
 
-export const IndicationService = {
+export const CategoryService = {
     createCategory,
     getCategories,
     getAllCategories,

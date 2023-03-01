@@ -2,14 +2,21 @@ import { Add } from '@mui/icons-material'
 import { Box, Typography, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Pagination } from '@mui/material'
 import styles from "../../styles/Categories/Categories.module.scss"
 import { SearchInput } from '../../shared/components/search'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ClientListPageSkeleton } from '../clients'
+import { CategoryService } from '../../shared/services/api/categories/Categories_Service'
+import { ISendPagination } from '../../shared/models/client'
+import { ICategoryRegister } from '../../shared/models/categories'
+import { TableCategories } from '../../shared/components/table/TableCategories'
 
 export const Categories = () => {
+
+  //categorias data
+  const [rows, setRows] = useState<ICategoryRegister[]>([]);
+
   //skeleton ou tabela
-  const [isLoading, setIsLoading] = useState(true);
-  //search
-  const [value, setValue] = useState<string>("")
+  const [isLoading, setIsLoading] = useState(true)
+
   //pagination e seletor
   const [pages, setPages] = useState<number>(0)
   const [selectContent, setSelectContent] = useState('5')
@@ -24,18 +31,34 @@ export const Categories = () => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setActualPage(value - 1);
   };
+
+  //search
+  const [value, setValue] = useState<string>("")
+  let CategoryPaginationConf: ISendPagination = {
+    page: actualpage,
+    pageSize: pageSize,
+    param: "name",
+    sortDiresction: "DESC",
+    sortField: "name",
+    value: value,
+};
   //buscar categorias e gerenciar laoding
-  // const update = () => {
-  //   IndicationService.getAllIndicacoes(IndicacaoPaginationConf).then((result) => {
-  //     if (result instanceof Error) {
-  //       alert(result.message);
-  //     } else {
-  //       setIsLoading(false);
-  //       setPages(result.data.numberOfPages)
-  //       setRows(result.data.data);
-  //     }
-  //   });
-  // };
+  const update = () => {
+    CategoryService.getAllCategories(CategoryPaginationConf).then((result) => {
+      if (result instanceof Error) {
+        alert(result.message);
+      } else {
+        setIsLoading(false);
+        setPages(result.data.numberOfPages)
+        setRows(result.data.data);
+      }
+    });
+  };
+  
+  useEffect(() => {
+    update();
+  },[])
+
   return (
 
     <div className={styles.container}>
@@ -66,7 +89,7 @@ export const Categories = () => {
       </Box>
 
       <Box className={styles.table}>
-        <ClientListPageSkeleton />
+        {isLoading ? <ClientListPageSkeleton /> : <TableCategories lista={rows} update={update}/>}
       </Box>
 
       <Box display="flex" justifyContent="end" mt={1} alignItems={"center"}>
