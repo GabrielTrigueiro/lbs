@@ -81,9 +81,29 @@ const createCategory= async (dados: ICategoryRegister): Promise<any | Error> => 
       })
 }
 
+const UpdateById = async (id: string, dados: ICategoryRegister): Promise<void | Error>   => {
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return  await api.put<ICategoryRegister>(environment.url_category + `/${id}`, dados, token)
+    .then(data => {
+        if (data instanceof AxiosError){
+            return data.response?.data
+        }
+        return data.data
+      })
+      .catch(err => { 
+        Notification(err.response?.data.message, "error")
+      })
+}
+
 export const CategoryService = {
     createCategory,
     getCategories,
     getAllCategories,
-    deletCategory
+    deletCategory,
+    UpdateById
 };

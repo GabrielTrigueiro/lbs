@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { ICategoryRegister } from "../../models/categories";
+import { CategoryTableSubMenu } from "../category-submenu/CategorySubMenu";
 
 const TableStyled = styled(Table)({
   borderSpacing: "0px 8px",
@@ -46,7 +47,7 @@ export const TableCategories: React.FC<{lista: ICategoryRegister[]; update: () =
                 <TableCellStyled sx={{fontWeight:'500'}}>{row.code}</TableCellStyled>
                 <TableCellStyled sx={{fontWeight:'500'}}>{row.description}</TableCellStyled>
                 <TableCellStyled sx={{display: "flex", justifyContent: "flex-end", alignContent:"center"}}>
-                {/* <IndicationTableSubMenu update={update} indicacao={row}/>            */}
+                <CategoryTableSubMenu update={update} categoria={row}/>
                 </TableCellStyled>
               </TableRowStyled>
             ))}
