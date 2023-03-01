@@ -33,7 +33,7 @@ export const TableCategories: React.FC<{lista: ICategoryRegister[]; update: () =
         <TableHead>
           <TableRow>
             <TableCellStyled></TableCellStyled>
-            <TableCellStyled sx={{color: '#8e8e8e'}}>Tipo</TableCellStyled>
+            <TableCellStyled sx={{color: '#8e8e8e'}}>Nome</TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Código</TableCellStyled>
             <TableCellStyled sx={{color: '#8e8e8e'}}>Descrição</TableCellStyled>
           </TableRow>
