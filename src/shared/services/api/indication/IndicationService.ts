@@ -4,6 +4,7 @@ import { URL, environment } from "../../../environment"
 import { IIndicationSearch, registerIndication } from "../../../models/indication"
 import { Notification } from "../../../components"
 import { ISendPagination } from "../../../models/client"
+import { dataOneIndication } from "../../../models/indication"
 
 const getInficacoes = async (): Promise<any | Error> => {
     const token = {
@@ -81,9 +82,29 @@ const createIndication = async (dados: registerIndication): Promise<any | Error>
       })
 }
 
+const UpdateById = async (id: string, dados: dataOneIndication): Promise<void | Error>   => {
+    const token = {
+        headers:{
+          Authorization: 
+          `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
+         }
+     }
+    return  await api.put<dataOneIndication>(environment.url_indication + `${id}`, dados, token)
+    .then(data => {
+        if (data instanceof AxiosError){
+            return data.response?.data
+        }
+        return data.data
+      })
+      .catch(err => { 
+        Notification(err.response?.data.message, "error")
+      })
+}
+
 export const IndicationService = {
     getInficacoes,
     deletIndicacao,
     createIndication,
-    getAllIndicacoes
+    getAllIndicacoes,
+    UpdateById
 };

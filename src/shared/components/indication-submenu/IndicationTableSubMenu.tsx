@@ -13,6 +13,7 @@ import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { dataOneIndication } from "../../models/indication";
 import { IndicationService } from "../../services/api/indication/IndicationService";
+import { IndicationEditModal } from "../modal/IndicationEditModal";
 
 export const IndicationTableSubMenu: React.FC<{
   update: () => void;
@@ -20,6 +21,9 @@ export const IndicationTableSubMenu: React.FC<{
 }> = ({ update, indicacao }) => {
 
   const [editModal, setEditModal] = useState<true | false>(false);
+  function handleEdit() {
+    setEditModal(!editModal)
+  }
 
   const [confirm, setConfirm] = useState<true | false>(false);
 
@@ -116,6 +120,9 @@ export const IndicationTableSubMenu: React.FC<{
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <MenuItem onClick={handleEdit}>
+          Editar
+        </MenuItem>
         <MenuItem onClick={() => setConfirm(!confirm)}>
           Apagar
         </MenuItem>
@@ -127,7 +134,9 @@ export const IndicationTableSubMenu: React.FC<{
               <Button className={modal.button} onClick={() => setConfirm(!confirm)}>Não</Button>
               <Button className={modal.button} onClick={() => handleConfirm()}>Sim</Button>
           </DialogActions>
-      </Dialog> 
+      </Dialog>
+
+      <IndicationEditModal handleModal={handleEdit} indicacao={indicacao} modalState={editModal} update={update}/>
     </>
   );
 };
