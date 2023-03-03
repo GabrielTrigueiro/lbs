@@ -16,10 +16,8 @@ import { ClienteService } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import styles from "../../styles/Client/ClientPage.module.scss";
 import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
-import { IInfoClient, ISendPagination, RegisterClient } from "../../shared/models/client";
+import { ISendPagination, RegisterClient } from "../../shared/models/client";
 import { TableClients } from "../../shared/components";
-import { useDispatch } from "react-redux";
-import { getClient } from "../../shared/store/reducers/clientSlice";
 
 export const ClientListPage: React.FC = () => {
 
