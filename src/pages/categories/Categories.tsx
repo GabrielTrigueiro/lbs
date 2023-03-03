@@ -49,6 +49,7 @@ export const Categories = () => {
     sortField: "name",
     value: value,
   };
+
   //buscar categorias e gerenciar laoding
   const update = () => {
     CategoryService.getAllCategories(CategoryPaginationConf).then((result) => {
@@ -64,7 +65,7 @@ export const Categories = () => {
 
   useEffect(() => {
     update();
-  }, [])
+  }, [value, actualpage, pageSize])
 
   return (
 
