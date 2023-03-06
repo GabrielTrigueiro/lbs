@@ -135,7 +135,7 @@ export const ProviderRegisterModal: React.FC<{
                                         id="cnpj"
                                         name="cnpj"
                                         label="CNPJ"
-                                        value={formik.values.cnpj}
+                                        value={formik.values.cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cnpj && Boolean(formik.errors.cnpj)}
                                         helperText={formik.touched.cnpj && formik.errors.cnpj}

@@ -21,9 +21,9 @@ export const IndicationEditModal: React.FC<{
     }
 
     function closeModal() {
-        formik.resetForm();
         handleModal();
         changeConfirm();
+        formik.resetForm();
     }
 
     function editIndication(indicacao: dataOneIndication) {

@@ -16,7 +16,7 @@ import { IndicationService } from '../../services/api/indication/IndicationServi
 import { dataOneIndication } from '../../models/indication';
 import { ClienteService } from '../../services';
 
-export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () => void,  client: RegisterClient, update: ()=>void}> = ({ modalState, handleModal, client, update}) => {
+export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () => void, client: RegisterClient, update: () => void }> = ({ modalState, handleModal, client, update }) => {
 
     const dispatch = useDispatch();
 
@@ -70,10 +70,11 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     function changeConfirm() {
         setConfirm(!confirm);
     };
-
+    
     function closeModal() {
         handleModal();
         changeConfirm();
+        formik.resetForm();
     };
 
     function getCepData(ev: any) {
@@ -96,7 +97,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     };
 
     function editUser(objeto: RegisterClient) {
-        if(objeto.id){
+        if (objeto.id) {
             ClienteService.UpdateById(objeto.id, objeto).then((response) => {
                 Notification("Editado com sucesso", "success")
                 update();
@@ -106,7 +107,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     };
 
     function getClientIndication(client: RegisterClient) {
-        if(client.id){
+        if (client.id) {
             ClienteService.getByIDd(client.id).then((response) => {
                 setClientInd(response.data.indicacoes)
             })
@@ -191,7 +192,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="cpf"
                                         name="cpf"
                                         label="CPF"
-                                        value={formik.values.cpf}
+                                        value={formik.values.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
                                         helperText={formik.touched.cpf && formik.errors.cpf}
@@ -299,7 +300,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="cep"
                                         name="cep"
                                         label="CEP"
-                                        value={formik.values.cep}
+                                        value={formik.values.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}
                                         onBlur={getCepData}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cep && Boolean(formik.errors.cep)}

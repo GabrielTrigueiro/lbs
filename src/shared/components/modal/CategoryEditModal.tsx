@@ -21,9 +21,9 @@ export const CategoryEditModal: React.FC<{
     }
 
     function closeModal() {
-        formik.resetForm();
         handleModal();
         changeConfirm();
+        formik.resetForm();
     }
 
     function editCateogry(novaCategoria: ICategoryRegister) {

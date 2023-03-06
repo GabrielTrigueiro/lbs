@@ -298,7 +298,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         id="cep"
                                         name="cep"
                                         label="CEP"
-                                        value={formik.values.cep}
+                                        value={formik.values.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}
                                         onBlur={getCepData}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cep && Boolean(formik.errors.cep)}
