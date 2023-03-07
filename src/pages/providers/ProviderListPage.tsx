@@ -19,7 +19,7 @@ export const ProviderListPage: React.FC = () => {
   const [rows, setRows] = useState<IProviderCadastroInfo[]>([]);
 
   //registro
-  const [confirm, setConfirm] = useState<true | false>(false);
+  // const [confirm, setConfirm] = useState<true | false>(false);
   const [modalState, setModalState] = useState<true | false>(false);
   function handleModal() {
     setModalState(!modalState)
@@ -66,7 +66,7 @@ export const ProviderListPage: React.FC = () => {
   }, [value, actualpage, pageSize]);
 
   return (
-    <LayoutBasePage>
+    <div className={styles.container}>
 
       <Box className={styles.topContainer}>
         <Typography className={styles.topContainerTitle}>Fornecedor</Typography>
@@ -75,8 +75,8 @@ export const ProviderListPage: React.FC = () => {
         </Button>
       </Box>
 
-      <Box margin="0px" display="flex">
-        <Grid display="flex" direction="row" container flex={1}>
+      <Box className={styles.searchContainer}>
+        <Grid className={styles.searchGrid}>
           <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
             <Typography
               sx={{ color: "#3d3d3d", fontSize: "18px" }}
@@ -98,30 +98,29 @@ export const ProviderListPage: React.FC = () => {
             flex={1}
             sx={{ borderBottom: "3px solid #D9D9D9" }}
           >
-            <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
-              <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectContent}
-                label="nº itens"
-                onChange={selectChange}
-              >
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-              </Select>
-            </FormControl>
           </Grid>
         </Grid>
-        <Box flexDirection="row" display="flex" gap={10}></Box>
       </Box>
 
       <Box className={styles.table}>
         {isLoading ? <ClientListPageSkeleton /> : <TableProviders lista={rows} update={update} />}
       </Box>
 
-      <Box display="flex" justifyContent="center" mt={1}>
+      <Box display="flex" justifyContent="end" mt={1} alignItems={"center"}>
+        <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
+          <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectContent}
+            label="nº itens"
+            onChange={selectChange}
+          >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+          </Select>
+        </FormControl>
         <Pagination
           count={pages}
           shape="rounded"
@@ -130,8 +129,8 @@ export const ProviderListPage: React.FC = () => {
         />
       </Box>
 
-      <ProviderRegisterModal modalState={modalState} update={update} handleModal={handleModal}/>
+      <ProviderRegisterModal modalState={modalState} update={update} handleModal={handleModal} />
 
-    </LayoutBasePage>
+    </div>
   )
 }

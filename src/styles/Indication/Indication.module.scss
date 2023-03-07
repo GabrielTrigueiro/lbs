@@ -1,10 +1,18 @@
 @import "../GlobalVariables.module.scss";
 
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
 .topContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1em;
+    padding-top: 2em;
 }
 
 .topContainerTitle {
@@ -31,10 +39,15 @@
     box-shadow: none !important;
 }
 
+.searchGrid {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
 .table {
-    min-height: 60vh;
-    max-height: 60vh;
-    width: 100%;
+    height: auto;
+    flex: 1;
     overflow-y: scroll;
 }
 

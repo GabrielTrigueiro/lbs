@@ -82,7 +82,7 @@ export const ClientListPage: React.FC = () => {
   }, [value, actualpage, pageSize]);
 
   return (
-    <LayoutBasePage>
+    <div className={styles.container}>
       <Box className={styles.topContainer}>
         <Typography className={styles.topTitle}>Clientes</Typography>
         <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
@@ -107,7 +107,16 @@ export const ClientListPage: React.FC = () => {
               <Icon sx={{ color: "#FF5555" }}>circle</Icon>
               <Typography variant="subtitle1">Inativo</Typography>
             </Box>
-            <FormControl sx={{width:'100px', ml:1, mb:0.5}} size="small">
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box className={styles.table}>
+        {isLoading ? <ClientListPageSkeleton /> : <TableClients update={update} lista={rows} />}
+      </Box>
+
+      <Box display="flex" justifyContent="end" mt={1} alignItems={'center'}>
+      <FormControl sx={{width:'100px', ml:1, mb:0.5}} size="small">
               <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -121,16 +130,6 @@ export const ClientListPage: React.FC = () => {
                 <MenuItem value={20}>20</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-        </Grid>
-        <Box flexDirection="row" display="flex" gap={10}></Box>
-      </Box>
-
-      <Box className={styles.table}>
-        {isLoading ? <ClientListPageSkeleton /> : <TableClients update={update} lista={rows} />}
-      </Box>
-
-      <Box display="flex" justifyContent="center" mt={1}>
           <Pagination
             count={pages}
             shape="rounded" 
@@ -141,6 +140,6 @@ export const ClientListPage: React.FC = () => {
 
       <ClientRegisterModal update={update} handleModal={handleModal} modalState={modalState}/>
 
-    </LayoutBasePage>
+    </div>
   );
 };

@@ -63,7 +63,7 @@ export default function MenuIcon() {
           elevation: 0,
           sx: {
             overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            // filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {
               width: 32,
@@ -89,30 +89,27 @@ export default function MenuIcon() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
+          <Avatar /> Meu perfil
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Adicionar outra conta
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Configurações
         </MenuItem>
 
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Sair
         </MenuItem>
       </Menu>
     </>

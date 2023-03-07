@@ -72,7 +72,7 @@ export const IndicationPage: React.FC = () => {
     }, [value, actualpage, pageSize]);
 
     return (
-        <LayoutBasePage>
+        <div className={styles.container}>
 
             <Box className={styles.topContainer}>
                 <Typography className={styles.topContainerTitle}>Indicações</Typography>
@@ -81,8 +81,8 @@ export const IndicationPage: React.FC = () => {
                 </Button>
             </Box>
 
-            <Box margin="0px" display="flex">
-                <Grid display="flex" direction="row" container flex={1}>
+            <Box className={styles.searchContainer}>
+                <Grid className={styles.searchGrid}>
                     <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
                         <Typography
                             sx={{ color: "#3d3d3d", fontSize: "18px" }}
@@ -104,30 +104,29 @@ export const IndicationPage: React.FC = () => {
                         flex={1}
                         sx={{ borderBottom: "3px solid #D9D9D9" }}
                     >
-                        <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
-                            <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={selectContent}
-                                label="nº itens"
-                                onChange={selectChange}
-                            >
-                                <MenuItem value={5}>5</MenuItem>
-                                <MenuItem value={10}>10</MenuItem>
-                                <MenuItem value={20}>20</MenuItem>
-                            </Select>
-                        </FormControl>
                     </Grid>
                 </Grid>
-                <Box flexDirection="row" display="flex" gap={10}></Box>
             </Box>
 
             <Box className={styles.table}>
                 {isLoading ? <ClientListPageSkeleton /> : <TableIndications lista={rows} update={update} />}
             </Box>
 
-            <Box display="flex" justifyContent="center" mt={1}>
+            <Box display="flex" justifyContent="end" mt={1} alignItems={"center"}>
+                <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
+                    <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectContent}
+                        label="nº itens"
+                        onChange={selectChange}
+                    >
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={20}>20</MenuItem>
+                    </Select>
+                </FormControl>
                 <Pagination
                     count={pages}
                     shape="rounded"
@@ -138,6 +137,6 @@ export const IndicationPage: React.FC = () => {
 
             <IndicationRegisterModal update={update} modalState={modalState} handleModal={handleModal} />
 
-        </LayoutBasePage>
+        </div>
     )
 }
