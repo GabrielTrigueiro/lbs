@@ -8,7 +8,10 @@ export default function Home() {
 
     const { setSideBarOption } = useSideBarContext();
 
+    const token = localStorage.getItem('Acess_Token')?.replace(/"/g,'');
+
     useEffect(() => {
+        console.log(token)
         setSideBarOption([
           {
             label: "Clientes",
@@ -31,7 +34,7 @@ export default function Home() {
             path: "/home/categorias",
           },
         ]);
-      }, []);
+      }, [token]);
 
     return(
         <div className={styles.container}>

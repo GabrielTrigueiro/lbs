@@ -12,6 +12,7 @@ import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { IProviderCadastroInfo } from "../../models/provider";
 import { ProviderService } from "../../services/api/providers/ProviderService";
 import { ProviderEditModal } from "../modal/ProviderEditModal";
+import { ProviderDetailModal } from "../modal/ProviderDetailModal";
 
 export const ProviderSubMenu: React.FC<{
   update: () => void;
@@ -39,6 +40,10 @@ export const ProviderSubMenu: React.FC<{
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function handleDetail(){
+    setDetailState(!detailState);
+  }
 
   function deletarClient(e: IProviderCadastroInfo) {
     if(e.id){
@@ -122,6 +127,9 @@ export const ProviderSubMenu: React.FC<{
         <MenuItem onClick={() => handleEdit()}>
           Editar fornecedor
         </MenuItem>
+        <MenuItem onClick={handleDetail}>
+          Detalhes
+        </MenuItem>
         <MenuItem onClick={() => setConfirm(!confirm)}>
           Apagar
         </MenuItem>
@@ -136,6 +144,8 @@ export const ProviderSubMenu: React.FC<{
       </Dialog> 
 
       <ProviderEditModal update={update} fornecedor={fornecedor} handleModal={handleEdit} modalState={editModal} />
+
+      <ProviderDetailModal fornecedor={fornecedor} handleModal={handleDetail} modalState={detailState}/>
     </>
   );
 };
