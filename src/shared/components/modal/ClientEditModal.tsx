@@ -260,7 +260,7 @@ export const ClientEditModal: React.FC<{
                                         id="telephone"
                                         name="telephone"
                                         label="Telefone"
-                                        inputProps={{ maxLength: "6" }}
+                                        inputProps={{ maxLength: "10" }}
                                         value={formik.values.telephone?.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.telephone && Boolean(formik.errors.telephone)}
@@ -274,7 +274,7 @@ export const ClientEditModal: React.FC<{
                                         id="cell"
                                         name="cell"
                                         label="Celular"
-                                        inputProps={{ maxLength: "6" }}
+                                        inputProps={{ maxLength: "10" }}
                                         value={formik.values.cell.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}

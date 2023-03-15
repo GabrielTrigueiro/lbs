@@ -207,6 +207,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         id="cpf"
                                         name="cpf"
                                         label="CPF"
+                                        inputProps={{ maxLength: "15" }}
                                         value={formatarDocumento(formik.values.cpf)}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
@@ -252,6 +253,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         id="telephone"
                                         name="telephone"
                                         label="Telefone"
+                                        inputProps={{ maxLength: "10" }}
                                         value={formik.values.telephone?.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.telephone && Boolean(formik.errors.telephone)}
@@ -265,6 +267,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         id="cell"
                                         name="cell"
                                         label="Celular"
+                                        inputProps={{ maxLength: "10" }}
                                         value={formik.values.cell.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
