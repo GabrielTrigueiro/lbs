@@ -15,8 +15,14 @@ import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
 import { dataOneIndication } from '../../models/indication';
 import { ClienteService } from '../../services';
+import FormikTextField from '../formik-text-field/FormikTextField';
 
-export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () => void, client: RegisterClient, update: () => void }> = ({ modalState, handleModal, client, update }) => {
+export const ClientEditModal: React.FC<{
+    modalState: boolean,
+    handleModal: () => void,
+    client: RegisterClient,
+    update: () => void
+}> = ({ modalState, handleModal, client, update }) => {
 
     const dispatch = useDispatch();
 
@@ -70,7 +76,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
     function changeConfirm() {
         setConfirm(!confirm);
     };
-    
+
     function closeModal() {
         handleModal();
         changeConfirm();
@@ -114,6 +120,21 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
         }
     };
 
+    function formatarDocumento(doc: string) {
+        // remove todos os caracteres não numéricos
+        doc = doc.replace(/\D/g, '');
+
+        // verifica o tipo de documento (CPF ou CNPJ)
+        if (doc.length === 11) {
+            // formata CPF: 999.999.999-99
+            doc = doc.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        } else if (doc.length === 14) {
+            // formata CNPJ: 99.999.999/9999-99
+            doc = doc.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        return doc;
+    }
+
     const formik = useFormik({
         initialValues: {
             id: client.id,
@@ -152,13 +173,13 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
             <Modal className={modal.modalContainer} open={modalState} onClose={changeConfirm}>
                 <div className={modal.modalFormContainer}>
                     <div className={modal.titulo}>
-                        Cadastrar Cliente
+                        Editar Cliente
                     </div>
                     <div className={modal.form}>
                         <form className={modal.innerForm} onSubmit={formik.handleSubmit}>
                             <div className={modal.up}>
                                 <div className={modal.upLeft}>
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -171,7 +192,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         error={formik.touched.name && Boolean(formik.errors.name)}
                                         helperText={formik.touched.name && formik.errors.name}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -179,20 +200,22 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="rg"
                                         name="rg"
                                         label="RG"
-                                        value={formik.values.rg}
+                                        inputProps={{ maxLength: "9" }}
+                                        value={formik.values.rg.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, "$1.$2.$3-$4")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.rg && Boolean(formik.errors.rg)}
                                         helperText={formik.touched.rg && formik.errors.rg}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
                                         fullWidth
                                         id="cpf"
                                         name="cpf"
-                                        label="CPF"
-                                        value={formik.values.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+                                        label="CPF/CNPJ "
+                                        inputProps={{ maxLength: "15" }}
+                                        value={formatarDocumento(formik.values.cpf)}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cpf && Boolean(formik.errors.cpf)}
                                         helperText={formik.touched.cpf && formik.errors.cpf}
@@ -216,7 +239,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                     />
                                 </div>
                                 <div className={modal.upRight}>
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -229,7 +252,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         error={formik.touched.email && Boolean(formik.errors.email)}
                                         helperText={formik.touched.email && formik.errors.email}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -237,12 +260,13 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="telephone"
                                         name="telephone"
                                         label="Telefone"
-                                        value={formik.values.telephone}
+                                        inputProps={{ maxLength: "6" }}
+                                        value={formik.values.telephone?.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.telephone && Boolean(formik.errors.telephone)}
                                         helperText={formik.touched.telephone && formik.errors.telephone}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -250,7 +274,8 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="cell"
                                         name="cell"
                                         label="Celular"
-                                        value={formik.values.cell}
+                                        inputProps={{ maxLength: "6" }}
+                                        value={formik.values.cell.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
                                         helperText={formik.touched.cell && formik.errors.cell}
@@ -266,7 +291,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                             <div className={modal.subtitulo}>Informações de endereço</div>
                             <div className={modal.down}>
                                 <div className={modal.downLeft}>
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -279,7 +304,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         error={formik.touched.uf && Boolean(formik.errors.uf)}
                                         helperText={formik.touched.uf && formik.errors.uf}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -292,7 +317,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         error={formik.touched.address && Boolean(formik.errors.address)}
                                         helperText={formik.touched.address && formik.errors.address}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -300,13 +325,14 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         id="cep"
                                         name="cep"
                                         label="CEP"
+                                        inputProps={{ maxLength: "8" }}
                                         value={formik.values.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}
                                         onBlur={getCepData}
                                         onChange={formik.handleChange}
                                         error={formik.touched.cep && Boolean(formik.errors.cep)}
                                         helperText={formik.touched.cep && formik.errors.cep}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -321,7 +347,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                     />
                                 </div>
                                 <div className={modal.downRight}>
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"
@@ -334,7 +360,7 @@ export const ClientEditModal: React.FC<{ modalState: boolean, handleModal: () =>
                                         error={formik.touched.neighborhood && Boolean(formik.errors.neighborhood)}
                                         helperText={formik.touched.neighborhood && formik.errors.neighborhood}
                                     />
-                                    <TextField
+                                    <FormikTextField
                                         autoComplete="off"
                                         variant="standard"
                                         size="small"

@@ -56,7 +56,7 @@ export const IndicationEditModal: React.FC<{
             <Modal className={styles.container} open={modalState} onClose={changeConfirm}>
                 <div className={styles.modalFormContainer}>
                         <div className={styles.titulo}>
-                            Cadastrar Indicação
+                            Editar Indicação
                         </div>
                         <div className={styles.form}>
                             <div className={styles.fields}>

@@ -57,7 +57,7 @@ export const CategoryEditModal: React.FC<{
             <Modal className={styles.container} open={modalState} onClose={changeConfirm}>
                 <div className={styles.modalFormContainer}>
                     <div className={styles.titulo}>
-                        Cadastrar Categoria
+                        Editar Categoria
                     </div>
                     <div className={styles.form}>
                         <div className={styles.fields}>

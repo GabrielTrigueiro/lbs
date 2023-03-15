@@ -84,7 +84,7 @@ export const ProviderEditModal: React.FC<{
         <>
             <Modal className={styles.container} open={modalState} onClose={changeConfirm}>
                 <div className={styles.formContainer}>
-                    <div className={styles.titulo}>Cadastrar Fornecedor</div>
+                    <div className={styles.titulo}>Editar Fornecedor</div>
                     <div className={styles.form}>
                         <form onSubmit={formik.handleSubmit}>
                             <div className={styles.up}>

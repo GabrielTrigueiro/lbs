@@ -33,6 +33,21 @@ export const TableClients: React.FC<{
   update: () => void;
 }> = ({ lista, update }) => {
 
+  function formatarDocumento(doc: string) {
+    // remove todos os caracteres não numéricos
+    doc = doc.replace(/\D/g, '');
+
+    // verifica o tipo de documento (CPF ou CNPJ)
+    if (doc.length === 11) {
+        // formata CPF: 999.999.999-99
+        doc = doc.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else if (doc.length === 14) {
+        // formata CNPJ: 99.999.999/9999-99
+        doc = doc.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+    return doc;
+}
+
   return (
     <TableContainer className="table-container">
       <TableStyled sx={{ minWidth: 700 }}>
@@ -59,8 +74,8 @@ export const TableClients: React.FC<{
                       </Box>
                     </Box>
                 </TableCellStyled>
-                <TableCellStyled sx={{fontWeight:'500'}}>{row.cell}</TableCellStyled>
-                <TableCellStyled sx={{fontWeight:'500'}}>{row.cpf}</TableCellStyled>
+                <TableCellStyled sx={{fontWeight:'500'}}>{row.cell.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3")}</TableCellStyled>
+                <TableCellStyled sx={{fontWeight:'500'}}>{formatarDocumento(row.cpf)}</TableCellStyled>
                 <TableCellStyled sx={{display: "flex", justifyContent: "flex-end", alignContent:"center"}}>
                   <TableSubMenu update={update} cliente={row}/>
                 </TableCellStyled>
