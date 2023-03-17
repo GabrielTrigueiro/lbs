@@ -12,11 +12,11 @@ export const indicationSlice = createSlice({
     reducers: {
         setAllIndicacoes: (state, action: PayloadAction<dataOneIndication[]>) => {
             state.data = action.payload;
-            // console.log(state.data);
-        }
+        },
+        resetIndicacao: () => initialState,
     }
 });
 
-export const { setAllIndicacoes } = indicationSlice.actions;
+export const { setAllIndicacoes, resetIndicacao } = indicationSlice.actions;
 
 export default indicationSlice.reducer;

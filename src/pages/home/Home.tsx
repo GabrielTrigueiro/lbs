@@ -11,7 +11,7 @@ export default function Home() {
     const token = localStorage.getItem('Acess_Token')?.replace(/"/g,'');
 
     useEffect(() => {
-        console.log(token)
+        // console.log(token)
         setSideBarOption([
           {
             label: "Clientes",

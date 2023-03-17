@@ -7,10 +7,6 @@ import { useState, useEffect } from "react";
 import { Notification } from '../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { setAllIndicacoes } from '../../store/reducers/indicationSlice';
-import { RootState } from '../../store';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { RegisterClient, clientValidationSchema } from '../../models/client';
 import { IndicationService } from '../../services/api/indication/IndicationService';
 import { dataOneIndication } from '../../models/indication';
@@ -24,8 +20,6 @@ export const ClientEditModal: React.FC<{
     update: () => void
 }> = ({ modalState, handleModal, client, update }) => {
 
-    const dispatch = useDispatch();
-
     const [confirm, setConfirm] = useState<true | false>(false);
 
     const [indicState, setindicState] = useState(false);
@@ -36,11 +30,16 @@ export const ClientEditModal: React.FC<{
 
     const [clientInd, setClientInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
 
-    const lista = useSelector((state: RootState) => state.indicacoes.data);
+    const [apiInd, setApiInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
 
     function getListaIndicacao() {
-        const data = IndicationService.getInficacoes().then((response) => {
-            dispatch(setAllIndicacoes(response.data.data));
+        if (client.id) {
+            ClienteService.getByIDd(client.id).then((response) => {
+                setClientInd(response.data.indicacoes)
+            })
+        }
+        IndicationService.getInficacoes().then((response) => {
+            setApiInd(response.data.data);
         });
     };
 
@@ -49,7 +48,7 @@ export const ClientEditModal: React.FC<{
         const existingObject = clientInd.find(obj => obj.id === object.id);
 
         if (!existingObject) {
-            clientInd.push(object);
+            setClientInd([...clientInd, object])
             setSelect("");
             return
         } else {
@@ -59,6 +58,11 @@ export const ClientEditModal: React.FC<{
         }
     };
 
+    function removeInd(id: string) {
+        let idRemovedArray = clientInd.filter(obj => obj.id !== id);
+        setClientInd(idRemovedArray);
+    };
+
     function addInd() {
         if (clientInd.length === 3) {
             Notification("Só podem haver três indicações", "error");
@@ -66,11 +70,6 @@ export const ClientEditModal: React.FC<{
             return
         }
         addObject(tempInd)
-    };
-
-    function removeInd(id: string) {
-        let idRemovedArray = clientInd.filter(obj => obj.id !== id);
-        setClientInd(idRemovedArray);
     };
 
     function changeConfirm() {
@@ -112,17 +111,9 @@ export const ClientEditModal: React.FC<{
         }
     };
 
-    function getClientIndication(client: RegisterClient) {
-        if (client.id) {
-            ClienteService.getByIDd(client.id).then((response) => {
-                setClientInd(response.data.indicacoes)
-            })
-        }
-    };
-
     function formatarDocumento(doc: string) {
         // remove todos os caracteres não numéricos
-        doc = doc.replace(/\D/g, '');
+        doc = doc.replace(/\D/g, '');   
 
         // verifica o tipo de documento (CPF ou CNPJ)
         if (doc.length === 11) {
@@ -164,7 +155,6 @@ export const ClientEditModal: React.FC<{
     });
 
     useEffect(() => {
-        getClientIndication(client)
         getListaIndicacao();
     }, [select])
 
@@ -280,6 +270,7 @@ export const ClientEditModal: React.FC<{
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
                                         helperText={formik.touched.cell && formik.errors.cell}
                                     />
+                                    {/* indicações do cliente */}
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
                                         {clientInd.map((item, index) => (
@@ -402,7 +393,7 @@ export const ClientEditModal: React.FC<{
 
                             <Select value={select} onChange={handleChange}>
                                 {
-                                    lista.map((item, index) => (
+                                    apiInd.map((item, index) => (
                                         <MenuItem key={item.id} onClick={() => setTempInd(item)} value={item.type}>{item.type}</MenuItem>
                                     ))
                                 }
