@@ -48,7 +48,9 @@ export const ProductPage = () => {
             </Box>
 
             {/* tabela de produtos */}
-            
+            <Box className={styles.table}>
+                oi  
+            </Box>
         </div>
     )
 }
