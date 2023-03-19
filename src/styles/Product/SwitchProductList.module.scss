@@ -1,0 +1,10 @@
+@import "../GlobalVariables.module.scss";
+
+.container{
+  color: $cinza-escuro;
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.5em 0.5em  0.5em 0;
+}

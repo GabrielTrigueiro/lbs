@@ -1,0 +1,69 @@
+@import "../GlobalVariables.module.scss";
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.topContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    padding-top: 2em;
+}
+
+.topTitle {
+    font-weight: 600 !important;
+    font-size: $grande !important;
+    color: $fundo-cinza !important;
+}
+
+.topButton {
+    height: 45px !important;
+    width: 200px !important;
+    color: $cinza-escuro !important;
+    background-color: $amarelo-default !important;
+    box-shadow: none !important;
+}
+
+.topButtonText {
+    font-size: $micro !important;
+    font-weight: bold !important;
+}
+
+.topButton:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+
+.midContainer {
+    display: flex;
+}
+
+.midGrid {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.midLeft {
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid $amarelo-default;
+}
+
+.midLeftTitle {
+    color: $cinza-escuro;
+    font-size: $normal;
+}
+
+.midRight {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 3px solid $cinza-claro;
+}

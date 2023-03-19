@@ -13,6 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { IndicationPage } from './pages/indications';
 import { Categories } from './pages/categories';
+import { ProductPage } from './pages/products/ProductPage';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/home/categorias",
         element: <Categories/>
+      },
+      {
+        path: "/home/produtos",
+        element: <ProductPage/>
       },
     ]
   },
