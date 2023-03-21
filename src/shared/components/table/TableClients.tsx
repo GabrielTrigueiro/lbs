@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Avatar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IInfoClient, RegisterClient } from "../../models/client";
+import { RegisterClient } from "../../models/client";
 import { TableSubMenu } from "../client-submenu/TableSubMenu";
 import "../../../styles/Client/ClientTable.css";
 

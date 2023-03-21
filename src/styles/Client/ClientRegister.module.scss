@@ -1,10 +1,10 @@
 @import "../GlobalVariables.module.scss";
 
 .modalContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Poppins;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;
 }
 
 .modalFormContainer {
@@ -25,7 +25,7 @@
     font-size: $media;
 }
 
-.form{
+.form {
     padding: 0.5em 3em;
     overflow-y: scroll;
 }
@@ -36,7 +36,7 @@
     flex-direction: column;
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
 }
@@ -99,7 +99,7 @@
     padding: 1em 0em;
 }
 
-.button{
+.button {
     width: 7pc !important;
     margin: 0em 1em !important;
     box-shadow: none !important;
@@ -112,7 +112,7 @@
     box-shadow: none !important;
 }
 
-.confirmTitle{
+.confirmTitle {
     text-align: center;
 }
 

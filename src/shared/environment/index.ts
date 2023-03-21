@@ -23,5 +23,9 @@ export const environment = {
 
     //categorias
     url_category: URL + '/api/category',
-    url_cateogires_search: URL + '/api/category/search/'
+    url_cateogires_search: URL + '/api/category/search/',
+
+    //produtos
+    url_product: URL + '/api/product',
+    url_product_search: URL + '/api/product/search/'
 }

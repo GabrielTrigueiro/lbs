@@ -64,7 +64,7 @@ export const SwitchProductList: React.FC<props> = ({change, state}) => {
 
     return (
         <div className={styles.container}>
-            <IOSSwitch onClick={change}/>
+            <IOSSwitch sx={{ mr: 1 }} onClick={change}/>
             {state ? <AppsIcon sx={{fontSize:"2em" }}/> : <ReorderIcon sx={{fontSize:"2em"}}/>}
         </div>
     );
