@@ -107,7 +107,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                 />
                                 <div className={styles.infos}>
                                     <div className={styles.infosLeft}>
-                                        <FormControl sx={{width: "100%"}} variant="standard">
+                                        <FormControl sx={{width: "100%",  marginTop: "0.3em"}} variant="standard">
                                             <InputLabel>Categoria</InputLabel>
                                             <Select value={select} onChange={handleChange}>
                                                 {

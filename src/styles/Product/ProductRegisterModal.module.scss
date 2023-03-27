@@ -99,9 +99,18 @@
     width: 100%;
 }
 .infosLeft{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-right: 1em;
 }
 .infosRight{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: 1em;
-    width: 100%;
 }
