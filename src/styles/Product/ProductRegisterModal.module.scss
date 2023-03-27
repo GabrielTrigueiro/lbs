@@ -25,7 +25,6 @@
 }
 
 .form{
-    background-color: aqua;
     height: 100%;
     width: 100%;
     display: flex;
@@ -53,10 +52,9 @@
 }
 
 .up{
-    background-color: aliceblue;
     display: flex;
-    height: 15em;
-    padding: 0.5em;
+    height: 20em;
+    padding: 0.5em
 }
 .mid{
     background-color: bisque;
@@ -69,4 +67,41 @@
     display: flex;
     flex: 1;
     padding: 0.5em;
+}
+
+//estilos dentro do modal
+.upLeft{
+    flex: 1;
+    height: 100%;
+    padding: 0 2em;
+}
+
+.imagem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: $cinza-claro;
+    height: 10em;
+    width: 10em;
+}
+
+.upRight{
+    flex: 4;
+    height: 100%;
+    padding: 0 2em;
+}
+
+.infos{
+    display: flex;
+    width: 100%;
+}
+.infosLeft{
+    margin-right: 1em;
+}
+.infosRight{
+    margin-left: 1em;
+    width: 100%;
 }

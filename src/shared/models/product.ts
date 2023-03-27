@@ -15,6 +15,30 @@ export interface IDataProduct {
     category: ICategoryRegister;
     provider: IProviderCadastroInfo;
 }
+export interface IDataProductRegiser {
+    categoryId: string,
+    codeBarras: string,
+    custePrice: 0,
+    description: string,
+    informations: [
+      {
+        color: string,
+        quantity: 0,
+        size: string
+      }
+    ],
+    name: string,
+    providerId: string,
+    quantity: number,
+    salerPrice: number,
+    tagPrice: number
+}
+
+interface oneInformation{
+    color: string;
+    quantity: number;
+    size: string;
+}
 
 export interface IProductSearch {
     numberOfPages: number;
@@ -35,14 +59,22 @@ export type TProductList = {
     data: IProductPackage;
 }
 
+const oneInfoSchema = yup.object().shape({
+    color: yup.string(),
+    quantity: yup.string(),
+    size: yup.string(),
+})
+
 export const ProductValidationSchema = yup.object({
     id: yup.string(),
-    name: yup.string(),
-    description: yup.string(),
-    quantidade: yup.number(),
+    categoryId: yup.string(),
+    codeBarras: yup.string(),
     custePrice: yup.number(),
+    description: yup.string(),
+    informations: yup.array().of(oneInfoSchema),
+    name: yup.string(),
+    providerId: yup.string(),
+    quantity: yup.number(),
     salerPrice: yup.number(),
     tagPrice: yup.number(),
-    codeBarras: yup.string(),
-    codeInt: yup.string(),
 })

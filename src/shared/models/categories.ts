@@ -6,6 +6,12 @@ export interface ICategoryRegister {
     description: string
     name: string
 }
+export interface ICategory {
+    id: string
+    code: string
+    description: string
+    name: string
+}
 
 export interface ICategorySearch {
     numberOfPages: number
