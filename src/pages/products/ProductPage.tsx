@@ -68,7 +68,7 @@ export const ProductPage = () => {
 
     useEffect(() => {
         update();
-    })
+    },[value, actualpage, pageSize])
 
     return (
         <div className={styles.container}>

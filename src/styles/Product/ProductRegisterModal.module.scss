@@ -4,13 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Poppins;
+    font-family: 'Poppins', sans-serif;
 }
 
 .modalFormContainer {
     outline: none;
     background-color: $fundo-branco;
-    height: 90vh;
+    height: 85vh;
     width: 70vw;
     display: flex;
     flex-direction: column;
@@ -24,12 +24,12 @@
     font-size: $media;
 }
 
-.form{
+.form {
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
     overflow-y: scroll;
+    display: grid;
+    grid-template-rows: 50%;
 }
 
 .form::-webkit-scrollbar {
@@ -51,32 +51,31 @@
     background-color: #A8BBBF;
 }
 
-.up{
-    display: flex;
-    height: 20em;
-    padding: 0.5em
-}
-.mid{
-    background-color: bisque;
-    display: flex;
-    height: 15em;
-    padding: 0.5em;
-}
-.down{
-    background-color: blueviolet;
+.up {
     display: flex;
     flex: 1;
-    padding: 0.5em;
+}
+
+.mid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 //estilos dentro do modal
-.upLeft{
+.upLeft {
     flex: 1;
     height: 100%;
     padding: 0 2em;
 }
 
-.imagem{
+.upRight {
+    flex: 4;
+    height: 100%;
+    padding: 0 2em;
+}
+
+.imagem {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,29 +87,61 @@
     width: 10em;
 }
 
-.upRight{
-    flex: 4;
-    height: 100%;
-    padding: 0 2em;
-}
-
-.infos{
+.infos {
     display: flex;
     width: 100%;
 }
-.infosLeft{
-    display: flex;
-    flex-direction: column;
+
+.infosLeft {
     flex: 1;
-    margin-top: auto;
-    margin-bottom: auto;
     margin-right: 1em;
 }
-.infosRight{
+
+.infosRight {
     display: flex;
     flex-direction: column;
     flex: 2;
-    margin-top: auto;
-    margin-bottom: auto;
     margin-left: 1em;
 }
+
+.price {
+    margin: 0 1.4em;
+    color: $cinza-escuro;
+    font-size: $media;
+    height: min-content;
+    border-bottom: 1px solid #000;
+}
+
+.priceInputs{
+    padding: 0 2em;
+}
+
+.grids{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 2em;
+}
+
+.gridRight{
+    display: grid;
+}
+
+.submit {
+    margin: auto 1.5em;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button {
+    width: 7pc !important;
+    margin: 0 1em !important;
+    box-shadow: none !important;
+    background-color: $amarelo-default !important;
+    color: $cinza-escuro !important;
+}
+
+.button:hover {
+    background-color: $amarelo-claro-default !important;
+    box-shadow: none !important;
+}
+

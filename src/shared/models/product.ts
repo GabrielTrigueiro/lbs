@@ -34,7 +34,7 @@ export interface IDataProductRegiser {
     tagPrice: number
 }
 
-interface oneInformation{
+export interface oneInformation{
     color: string;
     quantity: number;
     size: string;

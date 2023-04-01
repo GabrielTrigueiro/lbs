@@ -44,7 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const SearchInput: React.FC<{change: (text:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}> = ({change}) => {
 
-  const [ wide, setWide ] = useState<number>(0)
   const [ word, setWord ] = useState<string>('')
 
   return (
