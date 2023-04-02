@@ -35,6 +35,7 @@ export interface IDataProductRegiser {
 }
 
 export interface oneInformation{
+    id?: number;
     color: string;
     quantity: number;
     size: string;
@@ -49,7 +50,7 @@ export interface IProductSearch {
 }
 
 export interface IProductPackage {
-    data: IDataProduct[];
+    data: IDataProductRegiser[];
     message: string;
     errors: string;
     success: boolean;

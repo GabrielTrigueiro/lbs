@@ -19,11 +19,11 @@ export const ProviderListPage: React.FC = () => {
   const [rows, setRows] = useState<IProviderCadastroInfo[]>([]);
 
   //registro
-  // const [confirm, setConfirm] = useState<true | false>(false);
   const [modalState, setModalState] = useState<true | false>(false);
   function handleModal() {
     setModalState(!modalState)
   }
+
 
   //pagination
   const [pages, setPages] = useState<number>(0)

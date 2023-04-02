@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
 import styles from "../../../styles/Product/ProductRegisterModal.module.scss";
 import { useFormik } from "formik";
 import { ProductValidationSchema, oneInformation } from "../../models/product";
@@ -12,6 +12,7 @@ import { ProductRegister } from "../table/product/ProductRegister";
 import { ProviderService } from "../../services/api/providers/ProviderService";
 import { ISendPagination } from "../../models/client";
 import { IProviderCadastroInfo } from "../../models/provider";
+import { ProductRegisterInfos } from "./ProductRegisterInfos";
 
 interface props {
     state: boolean;
@@ -38,9 +39,9 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         validationSchema: ProductValidationSchema,
         onSubmit: (values) => {
             formik.values.categoryId = idCategoria;
-            formik.values.providerId = idCategoria;
+            formik.values.providerId = value;
             formik.values.quantidade = quantidade;
-            alert(values)
+            console.log(values)
         },
         onReset(values, formikHelpers) {
 
@@ -52,6 +53,13 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
     const [quantidade, setQuantidade] = useState("");
+    function addInfo(e: oneInformation){
+        setInfo([...infos, e]);
+    }
+    function removeInd(index: number) {
+        let idRemovedArray = infos.filter(obj => obj.id !== index);
+        setInfo(idRemovedArray);
+    };
 
     //dados da api
     const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
@@ -93,15 +101,30 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         setSelect(event.target.value as string)
     }
 
+    //confirm
+    const [confirm, setConfirm] = useState<true | false>(false);
+    function handleConfirm() {
+        setConfirm(!confirm);
+    }
+    function changeConfirmAndModal() {
+        setConfirm(!confirm);
+        handleModal();
+    }
+
+    //modal de informações
+    const [infosModal, setInfosModal] = useState<true | false>(false);
+    function handleInfos() {
+        setInfosModal(!infosModal);
+    }
+
     useEffect(() => {
         getCategories();
         getProviders();
-        console.log(providersApi);
     }, [value])
 
     return (
         <>
-            <Modal className={styles.modalContainer} open={state} onClose={handleModal}>
+            <Modal className={styles.modalContainer} open={state} onClose={handleConfirm}>
                 <div className={styles.modalFormContainer}>
                     <div className={styles.titulo}>
                         Cadastrar Produto
@@ -168,7 +191,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             helperText={formik.touched.description && formik.errors.codeBarras}
                                         />
                                         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1.5em" }}>
-                                            <Button className={styles.button}>
+                                            <Button onClick={handleInfos} className={styles.button}>
                                                 + Tamanho
                                             </Button>
                                         </Box>
@@ -176,10 +199,10 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                     <div className={styles.infosRight}>
                                         <Autocomplete
                                             options={providersApi.map((e) => e.name)}
-                                            sx={{ width: '100%', marginTop: "0.3em"}}
+                                            sx={{ width: '100%', marginTop: "0.3em" }}
                                             value={value}
-                                            onChange={()=>handleInputChange}
-                                            renderInput={(params) => <TextField {...params} label="Provedor" variant="standard"/>}
+                                            onChange={() => handleInputChange}
+                                            renderInput={(params) => <TextField {...params} label="Provedor" variant="standard" />}
                                         />
                                         <FormikTextField
                                             autoComplete="off"
@@ -194,7 +217,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
                                         />
-                                        <ProductRegister qtd={formik.values.quantidade} data={infos} change={(value) => { setQuantidade(value.target.value)}} />
+                                        <ProductRegister data={infos} change={(value) => { setQuantidade(value.target.value) }}/>
                                     </div>
                                 </div>
                             </div>
@@ -258,6 +281,23 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                     </form>
                 </div>
             </Modal>
+
+            <ProductRegisterInfos
+                infosAr={infos}
+                addInfo={() => addInfo}
+                removeInfo={() => removeInd}
+                qtd={formik.values.quantidade}
+                changeState={handleInfos}
+                state={infosModal}
+            />
+
+            <Dialog open={confirm}>
+                <DialogTitle className={styles.confirmTitle}>Não aplicar alterações?</DialogTitle>
+                <DialogActions>
+                    <Button className={styles.button} onClick={handleConfirm}>Cancelar</Button>
+                    <Button className={styles.button} onClick={changeConfirmAndModal}>Confirmar</Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

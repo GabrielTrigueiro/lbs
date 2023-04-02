@@ -3,7 +3,7 @@ import { environment } from "../../../environment";
 import { api } from "../axios";
 import { Notification } from "../../../components";
 import { ISendPagination } from "../../../models/client";
-import { IDataProduct, IProductPackage, IProductSearch } from "../../../models/product";
+import { IDataProduct, IDataProductRegiser, IProductPackage, IProductSearch } from "../../../models/product";
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     const token = {
@@ -82,7 +82,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
         })
 }
 
-const Create = async (dados: IDataProduct): Promise<any | Error> => {
+const Create = async (dados: IDataProductRegiser): Promise<any | Error> => {
     const token = {
         headers: {
             Authorization:
