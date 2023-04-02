@@ -6,14 +6,13 @@ import { ProductInfoRow } from "./ProductInfoRow";
 
 interface props {
     qtd: string;
-    infosAr: oneInformation[];
     state: boolean;
-    addInfo: (e:oneInformation) => void;
-    removeInfo: () => void;
+    infosAr: oneInformation[];
+    onFormSubmit: (formValues: oneInformation) => void;
     changeState: () => void;
 }
 
-export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd, addInfo, infosAr, removeInfo}) => {
+export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd, onFormSubmit, infosAr }) => {
 
     //confirm
     const [confirm, setConfirm] = useState<true | false>(false);
@@ -25,24 +24,28 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
         changeState();
     }
 
-    //states
-    const [size, setSize] = useState<string>("");
-    const [color, setColor] = useState<string>("");
-    const [quant, setQuant] = useState<number>(0);
-    const [info, setInfo] = useState<oneInformation>({size: size, color: color, quantity: quant});
-    const changeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-        setSize(newValue);
-    };
-    const changeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-        setColor(newValue);
-    };
-    const changeQuant = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-        setQuant(Number(newValue));
-    };
-      
+    //manipulando o objeto
+    const [formValues, setFormValues] = useState<oneInformation>({
+        color: '',
+        size: '',
+        quantity: 0,
+    });
+    function handleCorChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFormValues({ ...formValues, color: event.target.value });
+    }
+
+    function handleTamanhoChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFormValues({ ...formValues, size: event.target.value });
+    }
+
+    function handleQuantidadeChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFormValues({ ...formValues, quantity: Number(event.target.value) });
+    }
+
+    function handleButtonClick() {
+        onFormSubmit(formValues);
+        setFormValues({ color: '', size: '', quantity: 0 });
+    }
 
     return (
         <>
@@ -51,21 +54,21 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                     <div className={styles.titulo}>TAMANHOS</div>
                     <div className={styles.form}>
                         <div className={styles.inputs}>
-                            <TextField value={size} onChange={changeSize} label='Tamanho' variant="standard"/>
-                            <TextField value={color} onChange={changeColor} label='Cor' variant="standard"/>
-                            <TextField value={quant} onChange={changeQuant} label='Quantidade' variant="standard"/>
-                            <Button className={styles.button}>Adicionar</Button>
+                            <TextField label="Cor" value={formValues.color} onChange={handleCorChange} />
+                            <TextField label="Tamanho" value={formValues.size} onChange={handleTamanhoChange} />
+                            <TextField label="Quantidade" type="number" value={formValues.quantity} onChange={handleQuantidadeChange} />
+                            <Button onClick={handleButtonClick} className={styles.button}>Adicionar</Button>
                         </div>
                         <div className={styles.tabelaRows}>
                             {infosAr.map((row, index) =>(
                                 <ProductInfoRow ind={String(index)} rows={row}/>
                             ))}
                         </div>
-                        <div className={styles.footer}> 
+                        <div className={styles.footer}>
                             <div>Qtd. Total: `{qtd}`</div>
                             <div>
                                 <Button onClick={handleConfirm} className={styles.button}>Fechar</Button>
-                                <Button className={styles.button} onClick={()=>addInfo(info)}>Salvar</Button>
+                                <Button className={styles.button}>Salvar</Button>
                             </div>
                         </div>
                     </div>

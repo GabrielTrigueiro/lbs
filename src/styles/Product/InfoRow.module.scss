@@ -1,7 +1,13 @@
 @import "../GlobalVariables.module.scss";
 
-.rows{
+.rows {
     background-color: aliceblue;
     display: flex;
+    width: 95%;
+    height: 1.5em;
+    font-size: $micro;
     justify-content: space-around;
+    align-items: center;
+    border-radius: 0.5em;
+    margin: 0 auto;
 }

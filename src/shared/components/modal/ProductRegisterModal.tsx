@@ -48,18 +48,14 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         },
     })
 
-    //dados que vao entrar no formulario
-    const [infos, setInfo] = useState<oneInformation[]>([]);
+    //infos que entrarão no submit
+    const [infos, setInfos] = useState<oneInformation[]>([]);
+    function handleFormSubmit(formValues: oneInformation) {
+        setInfos([...infos, formValues]);
+    }
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
     const [quantidade, setQuantidade] = useState("");
-    function addInfo(e: oneInformation){
-        setInfo([...infos, e]);
-    }
-    function removeInd(index: number) {
-        let idRemovedArray = infos.filter(obj => obj.id !== index);
-        setInfo(idRemovedArray);
-    };
 
     //dados da api
     const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
@@ -284,8 +280,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
 
             <ProductRegisterInfos
                 infosAr={infos}
-                addInfo={() => addInfo}
-                removeInfo={() => removeInd}
+                onFormSubmit={handleFormSubmit}
                 qtd={formik.values.quantidade}
                 changeState={handleInfos}
                 state={infosModal}

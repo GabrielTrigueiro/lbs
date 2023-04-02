@@ -1,29 +1,31 @@
-@import "../GlobalVariables.module.scss";;
+@import "../GlobalVariables.module.scss";
+;
 
-.container{
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Poppins';
 }
 
-.table{
+.table {
     height: 45vh;
     width: 40vw;
     background-color: #fff;
 }
 
-.titulo{
+.titulo {
     height: 2em;
     color: #fff;
-    font-size: $media;;
+    font-size: $media;
+    ;
     background-color: $cinza-escuro;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.form{
+.form {
     width: 100%;
     height: 100%;
     display: flex;
@@ -31,7 +33,7 @@
     align-items: center;
 }
 
-.inputs{
+.inputs {
     padding: 0.5em;
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -51,18 +53,22 @@
     box-shadow: none !important;
 }
 
-.tabelaRows{
+.tabelaRows {
     width: 95%;
-    margin: 0.5em 0;
     background-color: $cinza-claro;
-    display: flex;
     border-radius: 0.5em;
-    height: 9em;
+    height: 8em;
     overflow: scroll;
+    display: grid;
+    grid-auto-rows: 1em;
+    row-gap: 0.5em;
+    margin: 0.5em;
+    padding-top: 1em;
 }
 
 .tabelaRows::-webkit-scrollbar {
     width: 1px;
+    background-color: transparent;
 }
 
 .tabelaRows::-webkit-scrollbar-track {
@@ -76,7 +82,7 @@
     background-clip: content-box;
 }
 
-.footer{
+.footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
