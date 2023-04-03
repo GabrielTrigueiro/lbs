@@ -56,9 +56,12 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
         setFormValues({ ...formValues, quantity: Number(event.target.value) });
     }
 
-    function handleButtonClick() {
+    function handlebutton() {
         onFormSubmit(formValues);
         setFormValues({ color: '', size: '', quantity: 0 });
+    }
+
+    function handleButtonClick() {
         changeState();
     }
 
@@ -72,7 +75,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                             <TextField label="Cor" value={formValues.color} onChange={handleCorChange} variant={'standard'}/>
                             <TextField label="Tamanho" value={formValues.size} onChange={handleTamanhoChange} variant={'standard'}/>
                             <TextField label="Quantidade" value={formValues.quantity} onChange={handleQuantidadeChange} variant={'standard'}/>
-                            <Button onClick={handleButtonClick} className={styles.button}>Adicionar</Button>
+                            <Button onClick={handlebutton} className={styles.button}>Adicionar</Button>
                         </div>
 
                         <TableContainer className={styles.tableContainer}>
