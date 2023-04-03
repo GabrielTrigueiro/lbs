@@ -15,7 +15,7 @@ import { LayoutBasePage } from "../../shared/layouts";
 import { ClienteService } from "../../shared/services";
 import { ClientListPageSkeleton } from "./ClientListPageSkeleton";
 import styles from "../../styles/Client/ClientPage.module.scss";
-import { ClientRegisterModal } from "../../shared/components/modal/ClientRegisterModal";
+import { ClientRegisterModal } from "../../shared/components/modal/Client/ClientRegisterModal";
 import { ISendPagination, RegisterClient } from "../../shared/models/client";
 import { TableClients } from "../../shared/components";
 

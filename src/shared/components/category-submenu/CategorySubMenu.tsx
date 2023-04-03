@@ -11,7 +11,7 @@ import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { IndicationService } from "../../services/api/indication/IndicationService";
 import { ICategoryRegister } from "../../models/categories";
-import { CategoryEditModal } from "../modal/CategoryEditModal";
+import { CategoryEditModal } from "../modal/Category/CategoryEditModal";
 import { CategoryService } from "../../services/api/categories/Categories_Service";
 
 export const CategoryTableSubMenu: React.FC<{

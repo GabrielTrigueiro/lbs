@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogTitle, Modal, TextField } from "@mui/material"
 import { useFormik } from 'formik'
-import styles from "../../../styles/Categories/CategoryRegisterModal.module.scss"
-import { Notification } from '../notification'
-import { ICategoryRegister, categoryRegisterSchema } from '../../models/categories'
-import { CategoryService } from '../../services/api/categories/Categories_Service'
+import styles from "../../../../styles/Categories/CategoryRegisterModal.module.scss"
+import { Notification } from '../../notification'
+import { ICategoryRegister, categoryRegisterSchema } from '../../../models/categories'
+import { CategoryService } from '../../../services/api/categories/Categories_Service'
 
-export const CategoryEditModal: React.FC<{ 
-    categoria: ICategoryRegister,
-    modalState: boolean,
-    handleModal: () => void,
-    update: () => void;
-}> = ({ handleModal, modalState, update, categoria }) => {
+export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: () => void; }> = ({ handleModal, modalState, update }) => {
 
     //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
@@ -21,15 +16,14 @@ export const CategoryEditModal: React.FC<{
     }
 
     function closeModal() {
+        formik.resetForm();
         handleModal();
         changeConfirm();
-        formik.resetForm();
     }
 
-    function editCateogry(novaCategoria: ICategoryRegister) {
-        if(novaCategoria.id)
-        CategoryService.UpdateById(novaCategoria.id, novaCategoria).then((response) => {
-            Notification("Categoria editada com sucesso", "success")
+    function createCateogry(novaCategoria: ICategoryRegister) {
+        CategoryService.createCategory(novaCategoria).then((response) => {
+            Notification(response.message, "success")
             update();
             handleModal();
         })
@@ -37,14 +31,13 @@ export const CategoryEditModal: React.FC<{
 
     const formik = useFormik({
         initialValues: {
-            id: categoria.id,
-            name: categoria.name,
-            code: categoria.code,
-            description: categoria.description,
+            name: "",
+            code: "",
+            description: "",
         },
         validationSchema: categoryRegisterSchema,
         onSubmit: (values) => {
-            editCateogry(values)
+            createCateogry(values)
             formik.resetForm();
         },
         onReset(values, formikHelpers) {
@@ -57,7 +50,7 @@ export const CategoryEditModal: React.FC<{
             <Modal className={styles.container} open={modalState} onClose={changeConfirm}>
                 <div className={styles.modalFormContainer}>
                     <div className={styles.titulo}>
-                        Editar Categoria
+                        Cadastrar Categoria
                     </div>
                     <div className={styles.form}>
                         <div className={styles.fields}>

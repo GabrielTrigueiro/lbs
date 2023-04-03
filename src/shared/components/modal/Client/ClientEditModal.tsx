@@ -1,20 +1,24 @@
 import React from 'react'
-import { Modal, Button, FormControl, InputLabel, MenuItem, Select, Stack, Chip } from '@mui/material';
+import { Modal, TextField, Button, FormControl, InputLabel, MenuItem, Select, Stack, Chip } from '@mui/material';
 import { useFormik } from 'formik';
-import modal from "../../../styles/Client/ClientRegister.module.scss"
+import modal from "../../../../styles/Client/ClientRegister.module.scss"
 import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { useState, useEffect } from "react";
-import { ClienteService } from '../../services';
-import { Notification } from '../notification';
+import { Notification } from '../../notification';
 import { SelectChangeEvent } from '@mui/material/Select';
-import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { RegisterClient, clientValidationSchema } from '../../models/client';
-import { IndicationService } from '../../services/api/indication/IndicationService';
-import { dataOneIndication } from '../../models/indication';
-import FormikTextField from '../formik-text-field/FormikTextField';
+import { RegisterClient, clientValidationSchema } from '../../../models/client';
+import { IndicationService } from '../../../services/api/indication/IndicationService';
+import { dataOneIndication } from '../../../models/indication';
+import { ClienteService } from '../../../services';
+import FormikTextField from '../../formik-text-field/FormikTextField';
 
-export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: ()=>void}> = ({ update, modalState, handleModal}) => {
+export const ClientEditModal: React.FC<{
+    modalState: boolean,
+    handleModal: () => void,
+    client: RegisterClient,
+    update: () => void
+}> = ({ modalState, handleModal, client, update }) => {
 
     const [confirm, setConfirm] = useState<true | false>(false);
 
@@ -22,16 +26,18 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
 
     const [select, setSelect] = useState("");
 
-    const [data, setData] = useState<Dayjs>(dayjs(""));
-
     const [tempInd, setTempInd] = useState<dataOneIndication>({ description: "", id: "", type: "" });
-    
+
+    const [clientInd, setClientInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
+
     const [apiInd, setApiInd] = useState<dataOneIndication[]>([{ description: "", id: "", type: "" }]);
 
-    const [clientInd, setClientInd] = useState<dataOneIndication[]>([]);
-
-
     function getListaIndicacao() {
+        if (client.id) {
+            ClienteService.getByIDd(client.id).then((response) => {
+                setClientInd(response.data.indicacoes)
+            })
+        }
         IndicationService.getInficacoes().then((response) => {
             setApiInd(response.data.data);
         });
@@ -50,7 +56,12 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
             setSelect("");
             return
         }
-    }
+    };
+
+    function removeInd(id: string) {
+        let idRemovedArray = clientInd.filter(obj => obj.id !== id);
+        setClientInd(idRemovedArray);
+    };
 
     function addInd() {
         if (clientInd.length === 3) {
@@ -59,31 +70,17 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
             return
         }
         addObject(tempInd)
-    }
-
-    function removeInd(id: string) {
-        let idRemovedArray = clientInd.filter(obj => obj.id !== id);
-        setClientInd(idRemovedArray);
     };
 
     function changeConfirm() {
         setConfirm(!confirm);
-    }
+    };
 
     function closeModal() {
         handleModal();
         changeConfirm();
         formik.resetForm();
-    }
-
-    function createUser(newUser: RegisterClient) {
-        ClienteService.Create(newUser).then((response) => {
-            Notification(response.message, "success")
-            update();
-            handleModal();
-            formik.resetForm();
-        })
-    }
+    };
 
     function getCepData(ev: any) {
         const { value } = ev.target
@@ -98,15 +95,25 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                     formik.setFieldValue("neighborhood", `${data.bairro}`)
                 }
             })
-    }
+    };
 
     function handleChange(event: SelectChangeEvent) {
         setSelect(event.target.value as string)
-    }
+    };
+
+    function editUser(objeto: RegisterClient) {
+        if (objeto.id) {
+            ClienteService.UpdateById(objeto.id, objeto).then((response) => {
+                Notification("Editado com sucesso", "success")
+                update();
+                handleModal();
+            })
+        }
+    };
 
     function formatarDocumento(doc: string) {
         // remove todos os caracteres não numéricos
-        doc = doc.replace(/\D/g, '');
+        doc = doc.replace(/\D/g, '');   
 
         // verifica o tipo de documento (CPF ou CNPJ)
         if (doc.length === 11) {
@@ -121,29 +128,26 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
 
     const formik = useFormik({
         initialValues: {
-            address: "",
-            cell: "",
-            cep: "",
-            city: "",
-            cpf: "",
-            email: "",
-            name: "",
-            neighborhood: "",
-            number: "",
-            rg: "",
-            telephone: "",
-            uf: "",
-            dataNascimento: "",
-            indicacoesIds: [""]
+            id: client.id,
+            address: client.address,
+            cell: client.cell,
+            cep: client.cep,
+            city: client.city,
+            cpf: client.cpf,
+            email: client.email,
+            name: client.name,
+            neighborhood: client.neighborhood,
+            number: client.number,
+            rg: client.rg,
+            telephone: client.telephone,
+            uf: client.uf,
+            dataNascimento: client.dataNascimento,
+            indicacoesIds: client.indicacoesIds
         },
         validationSchema: clientValidationSchema,
         onSubmit: (values) => {
-            let dataString = dayjs(formik.values.dataNascimento).format('DD-MM-YYYY');
-
-            formik.values.dataNascimento = dataString.toString() + " 03:00";
             formik.values.indicacoesIds = clientInd.map(item => item.id);
-
-            createUser(values);
+            editUser(values);
         },
         onReset(values, formikHelpers) {
 
@@ -159,7 +163,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
             <Modal className={modal.modalContainer} open={modalState} onClose={changeConfirm}>
                 <div className={modal.modalFormContainer}>
                     <div className={modal.titulo}>
-                        Cadastrar Cliente
+                        Editar Cliente
                     </div>
                     <div className={modal.form}>
                         <form className={modal.innerForm} onSubmit={formik.handleSubmit}>
@@ -199,7 +203,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         fullWidth
                                         id="cpf"
                                         name="cpf"
-                                        label="CPF"
+                                        label="CPF/CNPJ "
                                         inputProps={{ maxLength: "15" }}
                                         value={formatarDocumento(formik.values.cpf)}
                                         onChange={formik.handleChange}
@@ -212,7 +216,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         value={formik.values.dataNascimento}
                                         inputFormat='DD/MM/YYYY'
                                         renderInput={(params) => (
-                                            <FormikTextField
+                                            <TextField
                                                 {...params}
                                                 variant="standard"
                                                 fullWidth
@@ -266,6 +270,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         error={formik.touched.cell && Boolean(formik.errors.cell)}
                                         helperText={formik.touched.cell && formik.errors.cell}
                                     />
+                                    {/* indicações do cliente */}
                                     <Stack direction="row" spacing={1} className={modal.indicacoes}>
                                         <Button onClick={() => setindicState(true)} className={modal.indicaceosButton} variant='contained'>+ Indicações</Button>
                                         {clientInd.map((item, index) => (
@@ -311,6 +316,7 @@ export const ClientRegisterModal: React.FC<{ modalState: boolean, handleModal: (
                                         id="cep"
                                         name="cep"
                                         label="CEP"
+                                        inputProps={{ maxLength: "8" }}
                                         value={formik.values.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}
                                         onBlur={getCepData}
                                         onChange={formik.handleChange}

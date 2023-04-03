@@ -11,8 +11,8 @@ import modal from "../../../styles/Provider/ProviderSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { IProviderCadastroInfo } from "../../models/provider";
 import { ProviderService } from "../../services/api/providers/ProviderService";
-import { ProviderEditModal } from "../modal/ProviderEditModal";
-import { ProviderDetailModal } from "../modal/ProviderDetailModal";
+import { ProviderEditModal } from "../modal/Provider/ProviderEditModal";
+import { ProviderDetailModal } from "../modal/Provider/ProviderDetailModal";
 
 export const ProviderSubMenu: React.FC<{
   update: () => void;

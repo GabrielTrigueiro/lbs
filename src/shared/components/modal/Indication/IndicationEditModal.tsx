@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogTitle, Modal, TextField } from "@mui/material"
 import { useFormik } from 'formik'
-import { dataOneIndication, indicationRegisterSchema } from '../../models/indication'
-import styles from "../../../styles/Indication/IndicationRegisterModal.module.scss"
-import { IndicationService } from '../../services/api/indication/IndicationService'
-import { Notification } from '../notification'
+import { dataOneIndication, indicationRegisterSchema } from '../../../models/indication'
+import styles from "../../../../styles/Indication/IndicationRegisterModal.module.scss"
+import { IndicationService } from '../../../services/api/indication/IndicationService'
+import { Notification } from '../../notification'
 
 export const IndicationEditModal: React.FC<{
     modalState: boolean, 

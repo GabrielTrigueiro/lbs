@@ -8,7 +8,7 @@ import { CategoryService } from '../../shared/services/api/categories/Categories
 import { ISendPagination } from '../../shared/models/client'
 import { ICategoryRegister } from '../../shared/models/categories'
 import { TableCategories } from '../../shared/components/table/TableCategories'
-import { CategoryRegisterModal } from '../../shared/components/modal/CategoryRegisterModal'
+import { CategoryRegisterModal } from '../../shared/components/modal/Category/CategoryRegisterModal'
 
 export const Categories = () => {
 

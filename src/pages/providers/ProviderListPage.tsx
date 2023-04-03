@@ -9,7 +9,7 @@ import { ISendPagination } from '../../shared/models/client'
 import { ProviderService } from '../../shared/services/api/providers/ProviderService'
 import { IProviderCadastroInfo } from '../../shared/models/provider'
 import { TableProviders } from '../../shared/components/table/TableProviders'
-import { ProviderRegisterModal } from '../../shared/components/modal/ProviderRegisterModal'
+import { ProviderRegisterModal } from '../../shared/components/modal/Provider/ProviderRegisterModal'
 
 export const ProviderListPage: React.FC = () => {
 

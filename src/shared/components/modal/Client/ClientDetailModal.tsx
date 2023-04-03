@@ -1,6 +1,6 @@
 import { Divider, Modal, Typography } from "@mui/material"
-import { RegisterClient } from "../../models/client"
-import styles from "../../../styles/Client/ClientDetail.module.scss"
+import { RegisterClient } from "../../../models/client"
+import styles from "../../../../styles/Client/ClientDetail.module.scss"
 
 export const ClientDetail: React.FC<{
   modalState: boolean,

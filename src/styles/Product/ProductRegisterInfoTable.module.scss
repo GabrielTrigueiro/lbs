@@ -53,37 +53,13 @@
     box-shadow: none !important;
 }
 
-.tabelaRows {
-    width: 95%;
-    background-color: $cinza-claro;
-    border-radius: 0.5em;
-    height: 8em;
-    overflow: scroll;
-    display: grid;
-    grid-auto-rows: 1em;
-    row-gap: 0.5em;
-    margin: 0.5em;
-    padding-top: 1em;
-}
-
-.tabelaRows::-webkit-scrollbar {
-    width: 1px;
-    background-color: transparent;
-}
-
-.tabelaRows::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-.tabelaRows::-webkit-scrollbar-thumb {
-    background-color: #D6DEE1;
-    border-radius: 20px;
-    border: 6px solid transparent;
-    background-clip: content-box;
-}
-
 .footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+//estilisação da tabela
+.tableContainer{
+    height: 9em;
 }

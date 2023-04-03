@@ -13,7 +13,7 @@ import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { dataOneIndication } from "../../models/indication";
 import { IndicationService } from "../../services/api/indication/IndicationService";
-import { IndicationEditModal } from "../modal/IndicationEditModal";
+import { IndicationEditModal } from "../modal/Indication/IndicationEditModal";
 
 export const IndicationTableSubMenu: React.FC<{
   update: () => void;

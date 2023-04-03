@@ -11,8 +11,8 @@ import { ClienteService } from "../../services";
 import { Notification } from "../notification";
 import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
-import { ClientEditModal } from "../modal/ClientEditModal";
-import { ClientDetail } from "../modal/ClientDetailModal";
+import { ClientEditModal } from "../modal/Client/ClientEditModal";
+import { ClientDetail } from "../modal/Client/ClientDetailModal";
 
 export const TableSubMenu: React.FC<{
   update: () => void;

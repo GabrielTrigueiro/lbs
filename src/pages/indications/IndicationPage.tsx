@@ -8,7 +8,7 @@ import { ClientListPageSkeleton } from '../clients'
 import { dataOneIndication } from '../../shared/models/indication'
 import { IndicationService } from '../../shared/services/api/indication/IndicationService'
 import { TableIndications } from '../../shared/components/table/TableIndications'
-import { IndicationRegisterModal } from '../../shared/components/modal/IndicationRegisterModal'
+import { IndicationRegisterModal } from '../../shared/components/modal/Indication/IndicationRegisterModal'
 import { ISendPagination } from '../../shared/models/client'
 
 export const IndicationPage: React.FC = () => {

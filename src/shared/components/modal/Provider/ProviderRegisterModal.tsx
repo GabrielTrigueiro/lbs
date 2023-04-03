@@ -1,12 +1,12 @@
 import { Button, Dialog, DialogActions, DialogTitle, Modal } from "@mui/material";
-import styles from "../../../styles/Provider/ProviderRegister.module.scss";
+import styles from "../../../../styles/Provider/ProviderRegister.module.scss";
 import { TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { ProviderCadastroSchema } from "../../models/provider";
+import { ProviderCadastroSchema } from "../../../models/provider";
 import { useState } from "react";
-import { IProviderCadastroInfo } from "../../models/provider";
-import { ProviderService } from "../../services/api/providers/ProviderService";
-import { Notification } from "../notification";
+import { IProviderCadastroInfo } from "../../../models/provider";
+import { ProviderService } from "../../../services/api/providers/ProviderService";
+import { Notification } from "../../notification";
 
 export const ProviderRegisterModal: React.FC<{
     modalState: boolean,

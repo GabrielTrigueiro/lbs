@@ -1,6 +1,6 @@
 import { Divider, Modal, Typography, Button } from "@mui/material"
-import styles from "../../../styles/Provider/ProviderDetail.module.scss"
-import { IProviderCadastroInfo } from "../../models/provider"
+import styles from "../../../../styles/Provider/ProviderDetail.module.scss"
+import { IProviderCadastroInfo } from "../../../models/provider"
 import CloseIcon from '@mui/icons-material/Close';
 
 export const ProviderDetailModal: React.FC<{

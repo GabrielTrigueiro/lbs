@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import {Button, Dialog, DialogActions, DialogTitle, Modal, TextField} from "@mui/material"
 import { useFormik } from 'formik'
-import { indicationRegisterSchema, registerIndication} from '../../models/indication'
-import styles from "../../../styles/Indication/IndicationRegisterModal.module.scss"
-import { IndicationService } from '../../services/api/indication/IndicationService'
+import { indicationRegisterSchema, registerIndication} from '../../../models/indication'
+import styles from "../../../../styles/Indication/IndicationRegisterModal.module.scss"
+import { IndicationService } from '../../../services/api/indication/IndicationService'
 import { AxiosError } from 'axios'
-import { Notification } from '../notification'
+import { Notification } from '../../notification'
 
 export const IndicationRegisterModal: React.FC<{modalState: boolean, handleModal: () => void, update: () => void;}> = ({handleModal, modalState, update}) => {
 

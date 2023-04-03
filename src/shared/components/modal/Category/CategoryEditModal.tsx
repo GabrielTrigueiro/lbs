@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogTitle, Modal, TextField } from "@mui/material"
 import { useFormik } from 'formik'
-import styles from "../../../styles/Categories/CategoryRegisterModal.module.scss"
-import { Notification } from '../notification'
-import { ICategoryRegister, categoryRegisterSchema } from '../../models/categories'
-import { CategoryService } from '../../services/api/categories/Categories_Service'
+import styles from "../../../../styles/Categories/CategoryRegisterModal.module.scss"
+import { Notification } from '../../notification'
+import { ICategoryRegister, categoryRegisterSchema } from '../../../models/categories'
+import { CategoryService } from '../../../services/api/categories/Categories_Service'
 
-export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: () => void; }> = ({ handleModal, modalState, update }) => {
+export const CategoryEditModal: React.FC<{ 
+    categoria: ICategoryRegister,
+    modalState: boolean,
+    handleModal: () => void,
+    update: () => void;
+}> = ({ handleModal, modalState, update, categoria }) => {
 
     //modal de confirmar
     const [confirm, setConfirm] = useState<true | false>(false);
@@ -16,14 +21,15 @@ export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal:
     }
 
     function closeModal() {
-        formik.resetForm();
         handleModal();
         changeConfirm();
+        formik.resetForm();
     }
 
-    function createCateogry(novaCategoria: ICategoryRegister) {
-        CategoryService.createCategory(novaCategoria).then((response) => {
-            Notification(response.message, "success")
+    function editCateogry(novaCategoria: ICategoryRegister) {
+        if(novaCategoria.id)
+        CategoryService.UpdateById(novaCategoria.id, novaCategoria).then((response) => {
+            Notification("Categoria editada com sucesso", "success")
             update();
             handleModal();
         })
@@ -31,13 +37,14 @@ export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal:
 
     const formik = useFormik({
         initialValues: {
-            name: "",
-            code: "",
-            description: "",
+            id: categoria.id,
+            name: categoria.name,
+            code: categoria.code,
+            description: categoria.description,
         },
         validationSchema: categoryRegisterSchema,
         onSubmit: (values) => {
-            createCateogry(values)
+            editCateogry(values)
             formik.resetForm();
         },
         onReset(values, formikHelpers) {
@@ -50,7 +57,7 @@ export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal:
             <Modal className={styles.container} open={modalState} onClose={changeConfirm}>
                 <div className={styles.modalFormContainer}>
                     <div className={styles.titulo}>
-                        Cadastrar Categoria
+                        Editar Categoria
                     </div>
                     <div className={styles.form}>
                         <div className={styles.fields}>

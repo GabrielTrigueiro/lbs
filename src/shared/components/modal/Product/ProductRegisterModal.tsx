@@ -1,17 +1,16 @@
 import { Autocomplete, Box, Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
-import styles from "../../../styles/Product/ProductRegisterModal.module.scss";
+import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
 import { useFormik } from "formik";
-import { ProductValidationSchema, oneInformation } from "../../models/product";
-import FormikTextField from "../formik-text-field/FormikTextField";
+import { ProductValidationSchema, oneInformation } from "../../../models/product";
+import FormikTextField from "../../formik-text-field/FormikTextField";
 import React, { useEffect, useState } from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
-import { ProductService } from "../../services/api/product";
-import { CategoryService } from "../../services/api/categories/Categories_Service";
-import { ICategory, ICategoryRegister } from "../../models/categories";
-import { ProductRegister } from "../table/product/ProductRegister";
-import { ProviderService } from "../../services/api/providers/ProviderService";
-import { ISendPagination } from "../../models/client";
-import { IProviderCadastroInfo } from "../../models/provider";
+import { ProductService } from "../../../services/api/product";
+import { CategoryService } from "../../../services/api/categories/Categories_Service";
+import { ICategory, ICategoryRegister } from "../../../models/categories";
+import { ProviderService } from "../../../services/api/providers/ProviderService";
+import { ISendPagination } from "../../../models/client";
+import { IProviderCadastroInfo } from "../../../models/provider";
 import { ProductRegisterInfos } from "./ProductRegisterInfos";
 
 interface props {
@@ -53,6 +52,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     function handleFormSubmit(formValues: oneInformation) {
         setInfos([...infos, formValues]);
     }
+
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
     const [quantidade, setQuantidade] = useState("");
@@ -213,7 +213,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
                                         />
-                                        <ProductRegister data={infos} change={(value) => { setQuantidade(value.target.value) }}/>
+                                        tabela aqui
                                     </div>
                                 </div>
                             </div>

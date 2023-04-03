@@ -3,10 +3,10 @@ import { Modal, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { useState } from "react";
-import { Notification } from '../notification';
-import styles from "../../../styles/Provider/ProviderRegister.module.scss";
-import { IProviderCadastroInfo, ProviderCadastroSchema } from '../../models/provider';
-import { ProviderService } from '../../services/api/providers/ProviderService';
+import { Notification } from '../../notification';
+import styles from "../../../../styles/Provider/ProviderRegister.module.scss";
+import { IProviderCadastroInfo, ProviderCadastroSchema } from '../../../models/provider';
+import { ProviderService } from '../../../services/api/providers/ProviderService';
 
 export const ProviderEditModal: React.FC<{
     modalState: boolean,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from "../../styles/Product/Products.module.scss";
+import styles from "../../styles/Product/ProductPage.module.scss";
 import { Add } from '@mui/icons-material';
 import { Box, Typography, Button, Grid, Icon, SelectChangeEvent, FormControl, InputLabel, MenuItem, Pagination, Select } from '@mui/material';
 import { SwitchProductList } from '../../shared/components/switchProductList/SwitchProductList';
@@ -7,7 +7,7 @@ import { TableProductList } from '../../shared/components/table/product/TablePro
 import { IDataProduct } from '../../shared/models/product';
 import { ProductService } from '../../shared/services/api/product';
 import { ISendPagination } from '../../shared/models/client';
-import { ProductRegisterModal } from '../../shared/components/modal/ProductRegisterModal';
+import { ProductRegisterModal } from '../../shared/components/modal/Product/ProductRegisterModal';
 
 export const ProductPage = () => {
 
