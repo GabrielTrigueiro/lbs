@@ -1,4 +1,18 @@
-import { Autocomplete, Box, Button, Dialog, DialogActions, DialogTitle, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import {
+    Autocomplete,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Modal,
+    Select,
+    Table, TableCell, TableRow,
+    TextField
+} from "@mui/material";
 import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
 import { useFormik } from "formik";
 import { ProductValidationSchema, oneInformation } from "../../../models/product";
@@ -12,6 +26,9 @@ import { ProviderService } from "../../../services/api/providers/ProviderService
 import { ISendPagination } from "../../../models/client";
 import { IProviderCadastroInfo } from "../../../models/provider";
 import { ProductRegisterInfos } from "./ProductRegisterInfos";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
 
 interface props {
     state: boolean;
@@ -116,7 +133,8 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     useEffect(() => {
         getCategories();
         getProviders();
-    }, [value])
+        console.log(infos)
+    }, [value, infos])
 
     return (
         <>
@@ -197,7 +215,9 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             options={providersApi.map((e) => e.name)}
                                             sx={{ width: '100%', marginTop: "0.3em" }}
                                             value={value}
-                                            onChange={() => handleInputChange}
+                                            onChange={() =>  {
+
+                                            }}
                                             renderInput={(params) => <TextField {...params} label="Provedor" variant="standard" />}
                                         />
                                         <FormikTextField
@@ -213,7 +233,28 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
                                         />
-                                        tabela aqui
+                                        <TableContainer sx={{backgroundColor:"#333", height:"4em"}}>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>Cor</TableCell>
+                                                        <TableCell>Tamanho</TableCell>
+                                                        <TableCell>Quantidade</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {
+                                                        infos.map((row, index) => (
+                                                            <TableRow key={index}>
+                                                                <TableCell>{row.color}</TableCell>
+                                                                <TableCell>{row.size}</TableCell>
+                                                                <TableCell>{row.quantity}</TableCell>
+                                                            </TableRow>
+                                                        ))
+                                                    }
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
                                     </div>
                                 </div>
                             </div>

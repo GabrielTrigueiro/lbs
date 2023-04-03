@@ -38,17 +38,11 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
     }
 
     //manipulando o objeto
-    const [infos, setInfos] = useState<oneInformation[]>([]);
     const [formValues, setFormValues] = useState<oneInformation>({
         color: '',
         size: '',
         quantity: 0,
     });
-
-    function removeInfo(index: string){
-        let arrayFiltrado = infos.filter(obj => String(obj.id) !== index);
-        setInfos(arrayFiltrado);
-    }
 
     function handleCorChange(event: React.ChangeEvent<HTMLInputElement>) {
         setFormValues({ ...formValues, color: event.target.value });
@@ -60,11 +54,6 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
 
     function handleQuantidadeChange(event: React.ChangeEvent<HTMLInputElement>) {
         setFormValues({ ...formValues, quantity: Number(event.target.value) });
-    }
-
-    function salvarFormDoModal() {
-        setInfos([...infos, formValues]);
-        setFormValues({ color: '', size: '', quantity: 0 });
     }
 
     function handleButtonClick() {
@@ -82,8 +71,8 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                         <div className={styles.inputs}>
                             <TextField label="Cor" value={formValues.color} onChange={handleCorChange} variant={'standard'}/>
                             <TextField label="Tamanho" value={formValues.size} onChange={handleTamanhoChange} variant={'standard'}/>
-                            <TextField label="Quantidade" type="number" value={formValues.quantity} onChange={handleQuantidadeChange} variant={'standard'}/>
-                            <Button onClick={salvarFormDoModal} className={styles.button}>Adicionar</Button>
+                            <TextField label="Quantidade" value={formValues.quantity} onChange={handleQuantidadeChange} variant={'standard'}/>
+                            <Button onClick={handleButtonClick} className={styles.button}>Adicionar</Button>
                         </div>
 
                         <TableContainer className={styles.tableContainer}>
@@ -97,7 +86,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        infos.map((row, index) => (
+                                        infosAr.map((row, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{row.color}</TableCell>
                                                 <TableCell>{row.size}</TableCell>
