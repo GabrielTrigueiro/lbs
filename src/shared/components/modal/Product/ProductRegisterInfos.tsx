@@ -80,7 +80,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
 
                         <TableContainer className={styles.tableContainer}>
                             <Table>
-                                <TableHead>
+                                <TableHead className={styles.tableHead}>
                                     <TableRow>
                                         <TableCell>Cor</TableCell>
                                         <TableCell>Tamanho</TableCell>

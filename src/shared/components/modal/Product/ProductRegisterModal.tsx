@@ -143,42 +143,42 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                     <div className={styles.titulo}>
                         Cadastrar Produto
                     </div>
-                    <form className={styles.form}>
-                        <div className={styles.up}>
-                            <div className={styles.upLeft}>
-                                <FormikTextField
-                                    autoComplete="off"
-                                    variant="standard"
-                                    size="small"
-                                    fullWidth
-                                    id="codeBarras"
-                                    name="codeBarras"
-                                    label="*Código de Barras"
-                                    value={formik.values.codeBarras}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.codeBarras && Boolean(formik.errors.codeBarras)}
-                                    helperText={formik.touched.codeBarras && formik.errors.codeBarras}
-                                />
-                                <div className={styles.imagem}>
-                                    Imagem
+                    <form className={styles.registerContainer}>
+                        <div className={styles.modalCima}>
+                            <div className={styles.modalCimaEsquerda}>
+                                <div className={styles.codeImage}>
+                                    <FormikTextField
+                                        autoComplete="off"
+                                        variant="standard"
+                                        size="small"
+                                        fullWidth
+                                        id="codeBarras"
+                                        name="codeBarras"
+                                        label="Código de barras"
+                                        value={formik.values.codeBarras}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.codeBarras && Boolean(formik.errors.codeBarras)}
+                                        helperText={formik.touched.codeBarras && formik.errors.codeBarras}
+                                    />
+                                    <Box sx={{ background: "#D9D9D9", width: '10em', height: '10em', marginTop: '1em', textAlign: 'center' }}>Imagem</Box>
                                 </div>
                             </div>
-                            <div className={styles.upRight}>
-                                <FormikTextField
-                                    autoComplete="off"
-                                    variant="standard"
-                                    size="small"
-                                    fullWidth
-                                    id="name"
-                                    name="name"
-                                    label="*Nome"
-                                    value={formik.values.name}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.name && Boolean(formik.errors.name)}
-                                    helperText={formik.touched.name && formik.errors.name}
-                                />
-                                <div className={styles.infos}>
-                                    <div className={styles.infosLeft}>
+                            <div className={styles.modalCimaDireita}>
+                                <div className={styles.inputsCima}>
+                                    <div className={styles.esquerda}>
+                                        <FormikTextField
+                                            autoComplete="off"
+                                            variant="standard"
+                                            size="small"
+                                            fullWidth
+                                            id="name"
+                                            name="name"
+                                            label="Nome completo"
+                                            value={formik.values.name}
+                                            onChange={formik.handleChange}
+                                            error={formik.touched.name && Boolean(formik.errors.name)}
+                                            helperText={formik.touched.name && formik.errors.name}
+                                        />
                                         <FormControl sx={{ width: "100%", marginTop: "0.3em" }} variant="standard">
                                             <InputLabel>Categoria</InputLabel>
                                             <Select value={select} onChange={handleChange}>
@@ -202,23 +202,16 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             value={formik.values.description}
                                             onChange={formik.handleChange}
                                             error={formik.touched.description && Boolean(formik.errors.description)}
-                                            helperText={formik.touched.description && formik.errors.codeBarras}
+                                            helperText={formik.touched.description && formik.errors.description}
                                         />
-                                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1.5em" }}>
-                                            <Button onClick={handleInfos} className={styles.button}>
-                                                + Tamanho
-                                            </Button>
-                                        </Box>
-                                    </div>
-                                    <div className={styles.infosRight}>
                                         <Autocomplete
                                             options={providersApi.map((e) => e.name)}
                                             sx={{ width: '100%', marginTop: "0.3em" }}
                                             value={value}
-                                            onChange={() =>  {
+                                            onChange={() => {
 
                                             }}
-                                            renderInput={(params) => <TextField {...params} label="Provedor" variant="standard" />}
+                                            renderInput={(params) => <TextField {...params} label="Fornecedor" variant="standard" />}
                                         />
                                         <FormikTextField
                                             autoComplete="off"
@@ -227,94 +220,97 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             fullWidth
                                             id="quantidade"
                                             name="quantidade"
-                                            label="*Quantidade"
+                                            label="Quantidade"
                                             value={formik.values.quantidade}
                                             onChange={formik.handleChange}
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
                                         />
-                                        <TableContainer sx={{backgroundColor:"#333", height:"4em"}}>
-                                            <Table>
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell>Cor</TableCell>
-                                                        <TableCell>Tamanho</TableCell>
-                                                        <TableCell>Quantidade</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {
-                                                        infos.map((row, index) => (
-                                                            <TableRow key={index}>
-                                                                <TableCell>{row.color}</TableCell>
-                                                                <TableCell>{row.size}</TableCell>
-                                                                <TableCell>{row.quantity}</TableCell>
-                                                            </TableRow>
-                                                        ))
-                                                    }
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
+                                    </div>
+                                    <div className={styles.direita}>
+                                        <Box className={styles.tableContainer}>
+                                            <TableContainer >
+                                                <Table>
+                                                    <TableHead className={styles.tableHead}>
+                                                        <TableRow>
+                                                            <TableCell>Cor</TableCell>
+                                                            <TableCell>Tamanho</TableCell>
+                                                            <TableCell>Quantidade</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody className={styles.tableBody}>
+                                                        {
+                                                            infos.map((row, index) => (
+                                                                <TableRow key={index}>
+                                                                    <TableCell>{row.color}</TableCell>
+                                                                    <TableCell>{row.size}</TableCell>
+                                                                    <TableCell>{row.quantity}</TableCell>
+                                                                </TableRow>
+                                                            ))
+                                                        }
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        </Box>
+                                        <Button onClick={handleInfos} className={styles.button}>+ Tamanho</Button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.mid}>
-                            <div className={styles.price}>Preço</div>
-                            <div className={styles.priceInputs}>
-                                <div className={styles.grids}>
-                                    <FormikTextField
-                                        autoComplete="off"
-                                        variant="standard"
-                                        size="small"
-                                        fullWidth
-                                        id="custePrice"
-                                        name="custePrice"
-                                        label="Custo"
-                                        value={formik.values.custePrice}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.custePrice && Boolean(formik.errors.custePrice)}
-                                        helperText={formik.touched.custePrice && formik.errors.custePrice}
-                                    />
-                                    <div className={styles.gridRight}>
-                                        <FormikTextField
-                                            autoComplete="off"
-                                            variant="standard"
-                                            size="small"
-                                            fullWidth
-                                            id="tagPrice"
-                                            name="tagPrice"
-                                            label="Preço de etiqueta"
-                                            value={formik.values.tagPrice}
-                                            onChange={formik.handleChange}
-                                            error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
-                                            helperText={formik.touched.tagPrice && formik.errors.tagPrice}
-                                        />
-                                        <FormikTextField
-                                            autoComplete="off"
-                                            variant="standard"
-                                            size="small"
-                                            fullWidth
-                                            id="salerPrice"
-                                            name="salerPrice"
-                                            label="Preço"
-                                            value={formik.values.salerPrice}
-                                            onChange={formik.handleChange}
-                                            error={formik.touched.salerPrice && Boolean(formik.errors.salerPrice)}
-                                            helperText={formik.touched.salerPrice && formik.errors.salerPrice}
-                                        />
-                                    </div>
-                                    <div className={styles.gridRight}>
-                                        <Box sx={{ marginTop: "1.5em" }}>Margem de lucro</Box>
-                                        <Box sx={{ marginTop: "1.5em" }}>Margem de lucro</Box>
-                                    </div>
-                                </div>
+                        <div className={styles.priceTitle}>Preço</div>
+                        <div className={styles.modalBaixo}>
+                            <div className={styles.modalBaixoEsquerda}>
+                                <FormikTextField
+                                    autoComplete="off"
+                                    variant="standard"
+                                    size="small"
+                                    fullWidth
+                                    id="custePrice"
+                                    name="custePrice"
+                                    label="Custo"
+                                    value={formik.values.custePrice}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.custePrice && Boolean(formik.errors.custePrice)}
+                                    helperText={formik.touched.custePrice && formik.errors.custePrice}
+                                />
                             </div>
-                            <div className={styles.submit}>
-                                <Button type="reset" className={styles.button} variant="contained">Cancelar</Button>
-                                <Button type="submit" className={styles.button} variant="contained">Salvar</Button>
+                            <div className={styles.modalBaixoMeio}>
+                                <FormikTextField
+                                    autoComplete="off"
+                                    variant="standard"
+                                    size="small"
+                                    fullWidth
+                                    id="tagPrice"
+                                    name="tagPrice"
+                                    label="Preço de etiqueta"
+                                    value={formik.values.tagPrice}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
+                                    helperText={formik.touched.tagPrice && formik.errors.tagPrice}
+                                />
+                                <FormikTextField
+                                    autoComplete="off"
+                                    variant="standard"
+                                    size="small"
+                                    fullWidth
+                                    id="salerPrice"
+                                    name="salerPrice"
+                                    label="Preço"
+                                    value={formik.values.salerPrice}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.salerPrice && Boolean(formik.errors.salerPrice)}
+                                    helperText={formik.touched.salerPrice && formik.errors.salerPrice}
+                                />
+                            </div>
+                            <div className={styles.modalBaixoDireita}>
+                                <Box sx={{marginTop:"2em"}}>Margem de lucro</Box>
+                                <Box sx={{marginTop:"2em"}}>Margem de lucro</Box>
                             </div>
                         </div>
+                            <Box sx={{display:'flex', justifyContent:'flex-end'}}>
+                                <Button onClick={handleConfirm} sx={{margin:'1em'}} className={styles.button}>Cancelar</Button>
+                                <Button onClick={handleModal} sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
+                            </Box>
                     </form>
                 </div>
             </Modal>

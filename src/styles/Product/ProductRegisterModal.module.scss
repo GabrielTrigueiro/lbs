@@ -24,117 +24,54 @@
     font-size: $media;
 }
 
-.form {
+.registerContainer{
     height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-rows: 50%;
-}
-
-.form::-webkit-scrollbar {
-    width: 15px;
-}
-
-.form::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-.form::-webkit-scrollbar-thumb {
-    background-color: #D6DEE1;
-    border-radius: 20px;
-    border: 6px solid transparent;
-    background-clip: content-box;
-}
-
-.form::-webkit-scrollbar-thumb:hover {
-    background-color: #A8BBBF;
-}
-
-.up {
-    display: flex;
-    flex: 1;
-}
-
-.mid {
     display: flex;
     flex-direction: column;
-    flex: 1;
 }
 
-//estilos dentro do modal
-.upLeft {
-    flex: 1;
-    height: 100%;
-    padding: 0 2em;
-}
-
-.upRight {
-    flex: 4;
-    height: 100%;
-    padding: 0 2em;
-}
-
-.imagem {
+.modalCima{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: $cinza-claro;
-    height: 10em;
-    width: 10em;
-}
-
-.infos {
-    display: flex;
-    width: 100%;
-}
-
-.infosLeft {
-    flex: 1;
-    margin-right: 1em;
-}
-
-.infosRight {
-    display: flex;
-    flex-direction: column;
     flex: 2;
-    margin-left: 1em;
 }
 
-.price {
-    margin: 0 1.4em;
-    color: $cinza-escuro;
-    font-size: $media;
-    height: min-content;
-    border-bottom: 1px solid #000;
+.modalCimaEsquerda{
+    flex: 1;
 }
 
-.priceInputs{
-    padding: 0 2em;
-}
-
-.grids{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 2em;
-}
-
-.gridRight{
-    display: grid;
-}
-
-.submit {
-    margin: auto 1.5em;
+//divs da esquerda
+.codeImage{
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+.modalCimaDireita{
+    flex: 3;
+}
+
+//campos da direita
+.inputsCima{
+    display: flex;
+    height: 100%;
+}
+.esquerda{
+    flex:1;
+    margin: 0 2em;
+}
+.direita{
+    margin: 0 1em;
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .button {
+    margin-top: 1em;
     width: 7pc !important;
-    margin: 0 1em !important;
     box-shadow: none !important;
     background-color: $amarelo-default !important;
     color: $cinza-escuro !important;
@@ -145,6 +82,57 @@
     box-shadow: none !important;
 }
 
-.confirmTitle {
-    text-align: center;
+//estilo da tabela
+.tableContainer{
+    max-height:15em;
+    margin-top: 2em;
+    overflow: scroll;
+}
+
+.tableContainer::-webkit-scrollbar {
+    width: 15px;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+    background-color: #D6DEE1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #A8BBBF;
+}
+
+.tableBody{
+    height: 5em;
+}
+
+.priceTitle{
+    font-size: $media;
+    margin: 0 0.5em;
+    border-bottom: 1px solid gray;
+}
+
+//div baix0
+.modalBaixo{
+    display: flex;
+    flex: 1;
+}
+
+.modalBaixoEsquerda{
+    margin: 0 1em;
+    flex: 1;
+}
+.modalBaixoMeio{
+    margin: 0 1em;
+    flex: 1;
+}
+.modalBaixoDireita{
+    margin: 0 1em;
+    flex: 1;
 }
