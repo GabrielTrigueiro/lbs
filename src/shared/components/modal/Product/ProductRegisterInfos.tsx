@@ -15,7 +15,8 @@ import { oneInformation } from "../../../models/product";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
-import {TableSubMenu} from "../../client-submenu/TableSubMenu";
+import { TableSubMenu } from "../../client-submenu/TableSubMenu";
+import { Notification } from "../../notification";
 
 interface props {
     qtd: string;
@@ -57,8 +58,19 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
     }
 
     function handlebutton() {
-        onFormSubmit(formValues);
-        setFormValues({ color: '', size: '', quantity: 0 });
+        if (formValues.color == '' && formValues.size == '') {
+            Notification("Preencha ao menos um campo de informação", "error");
+            return
+        }
+        if (formValues.quantity < 0) {
+            Notification("Quantidade inválida", "error");
+            return
+        }
+        else {
+            console.log(formValues)
+            onFormSubmit(formValues);
+            setFormValues({ color: '', size: '', quantity: 0 });
+        }
     }
 
     function handleButtonClick() {
@@ -72,9 +84,18 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                     <div className={styles.titulo}>TAMANHOS</div>
                     <div className={styles.form}>
                         <div className={styles.inputs}>
-                            <TextField label="Cor" value={formValues.color} onChange={handleCorChange} variant={'standard'}/>
-                            <TextField label="Tamanho" value={formValues.size} onChange={handleTamanhoChange} variant={'standard'}/>
-                            <TextField label="Quantidade" value={formValues.quantity} onChange={handleQuantidadeChange} variant={'standard'}/>
+                            <TextField label="Cor" value={formValues.color} onChange={handleCorChange} variant={'standard'} />
+                            <TextField label="Tamanho" value={formValues.size} onChange={handleTamanhoChange} variant={'standard'} />
+                            <TextField
+                                type="number"
+                                inputProps={{
+                                    inputprops: { min: 0 }
+                                }}
+                                label="Quantidade"
+                                value={formValues.quantity}
+                                onChange={handleQuantidadeChange}
+                                variant={'standard'}
+                            />
                             <Button onClick={handlebutton} className={styles.button}>Adicionar</Button>
                         </div>
 

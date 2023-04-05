@@ -133,8 +133,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     useEffect(() => {
         getCategories();
         getProviders();
-        console.log(infos)
-    }, [value, infos])
+    }, [value])
 
     return (
         <>
@@ -191,19 +190,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                                 }
                                             </Select>
                                         </FormControl>
-                                        <FormikTextField
-                                            autoComplete="off"
-                                            variant="standard"
-                                            size="small"
-                                            fullWidth
-                                            id="description"
-                                            name="description"
-                                            label="Descrição"
-                                            value={formik.values.description}
-                                            onChange={formik.handleChange}
-                                            error={formik.touched.description && Boolean(formik.errors.description)}
-                                            helperText={formik.touched.description && formik.errors.description}
-                                        />
                                         <Autocomplete
                                             options={providersApi.map((e) => e.name)}
                                             sx={{ width: '100%', marginTop: "0.3em" }}
@@ -225,6 +211,19 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             onChange={formik.handleChange}
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
+                                        />
+                                        <FormikTextField
+                                            autoComplete="off"
+                                            variant="standard"
+                                            size="small"
+                                            fullWidth
+                                            id="description"
+                                            name="description"
+                                            label="Descrição"
+                                            value={formik.values.description}
+                                            onChange={formik.handleChange}
+                                            error={formik.touched.description && Boolean(formik.errors.description)}
+                                            helperText={formik.touched.description && formik.errors.description}
                                         />
                                     </div>
                                     <div className={styles.direita}>
