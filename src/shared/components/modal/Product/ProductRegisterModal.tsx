@@ -72,6 +72,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
 
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
+    const [nameProvider, setNameProvider] = useState<IProviderCadastroInfo>();
     const [quantidade, setQuantidade] = useState("");
 
     //dados da api
@@ -191,12 +192,18 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             </Select>
                                         </FormControl>
                                         <Autocomplete
-                                            options={providersApi.map((e) => e.name)}
-                                            sx={{ width: '100%', marginTop: "0.3em" }}
-                                            value={value}
-                                            onChange={() => {
-
+                                            options={providersApi}
+                                            getOptionLabel={(option)=>option.name}
+                                            value={nameProvider}
+                                            inputValue={idProvider}
+                                            onChange={(event: any, newValue: IProviderCadastroInfo|null) => {
+                                                if(newValue){
+                                                    if(newValue.id){
+                                                        setIdProvider(newValue.id)
+                                                    }
+                                                }
                                             }}
+                                            sx={{ width: '100%', marginTop: "0.3em" }}
                                             renderInput={(params) => <TextField {...params} label="Fornecedor" variant="standard" />}
                                         />
                                         <FormikTextField

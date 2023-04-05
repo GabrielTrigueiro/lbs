@@ -67,7 +67,6 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
             return
         }
         else {
-            console.log(formValues)
             onFormSubmit(formValues);
             setFormValues({ color: '', size: '', quantity: 0 });
         }
