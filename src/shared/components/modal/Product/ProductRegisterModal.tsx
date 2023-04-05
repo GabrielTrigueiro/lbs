@@ -60,7 +60,10 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             console.log(values)
         },
         onReset(values, formikHelpers) {
-
+            setSelect('');
+            setIdCategoria('');
+            setIdProvider('');
+            setQuantidade('');
         },
     })
 
@@ -123,6 +126,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     function changeConfirmAndModal() {
         setConfirm(!confirm);
         handleModal();
+        formik.resetForm();
     }
 
     //modal de informações
@@ -195,7 +199,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             options={providersApi}
                                             getOptionLabel={(option)=>option.name}
                                             value={nameProvider}
-                                            inputValue={idProvider}
+                                            inputValue={nameProvider?.name}
                                             onChange={(event: any, newValue: IProviderCadastroInfo|null) => {
                                                 if(newValue){
                                                     if(newValue.id){
