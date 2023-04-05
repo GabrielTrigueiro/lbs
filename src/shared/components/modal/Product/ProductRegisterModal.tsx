@@ -57,13 +57,13 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             formik.values.categoryId = idCategoria;
             formik.values.providerId = value;
             formik.values.quantidade = quantidade;
-            console.log(values)
         },
         onReset(values, formikHelpers) {
             setSelect('');
             setIdCategoria('');
             setIdProvider('');
             setQuantidade('');
+            zerarInfos();
         },
     })
 
@@ -72,7 +72,13 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     function handleFormSubmit(formValues: oneInformation) {
         setInfos([...infos, formValues]);
     }
-
+    function zerarInfos(){
+        setInfos([]);
+    }
+    function removeByIndex(index: string){
+        let arrayFiltrado = infos.filter((obj) => String(obj.id) !== index);
+        setInfos(arrayFiltrado);
+    }
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
     const [nameProvider, setNameProvider] = useState<IProviderCadastroInfo>();
@@ -218,7 +224,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             id="quantidade"
                                             name="quantidade"
                                             label="Quantidade"
-                                            value={formik.values.quantidade}
+                                            value={quantidade}
                                             onChange={formik.handleChange}
                                             error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
                                             helperText={formik.touched.quantidade && formik.errors.quantidade}
@@ -319,13 +325,14 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                         </div>
                             <Box sx={{display:'flex', justifyContent:'flex-end'}}>
                                 <Button onClick={handleConfirm} sx={{margin:'1em'}} className={styles.button}>Cancelar</Button>
-                                <Button onClick={handleModal} sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
+                                <Button type='submit' onClick={handleModal} sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
                             </Box>
                     </form>
                 </div>
             </Modal>
 
             <ProductRegisterInfos
+                removerPorId={removeByIndex}
                 infosAr={infos}
                 onFormSubmit={handleFormSubmit}
                 qtd={formik.values.quantidade}

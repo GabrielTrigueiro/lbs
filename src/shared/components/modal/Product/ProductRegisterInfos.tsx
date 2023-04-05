@@ -17,8 +17,10 @@ import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
 import { TableSubMenu } from "../../client-submenu/TableSubMenu";
 import { Notification } from "../../notification";
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 
 interface props {
+    removerPorId: (index: string) => void;
     qtd: string;
     state: boolean;
     infosAr: oneInformation[];
@@ -26,7 +28,7 @@ interface props {
     changeState: () => void;
 }
 
-export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd, onFormSubmit, infosAr }) => {
+export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd, onFormSubmit, infosAr, removerPorId }) => {
 
     //confirm
     const [confirm, setConfirm] = useState<true | false>(false);
@@ -105,6 +107,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                         <TableCell>Cor</TableCell>
                                         <TableCell>Tamanho</TableCell>
                                         <TableCell>Quantidade</TableCell>
+                                        <TableCell></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -114,6 +117,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                                 <TableCell>{row.color}</TableCell>
                                                 <TableCell>{row.size}</TableCell>
                                                 <TableCell>{row.quantity}</TableCell>
+                                                <TableCell><DoDisturbOnIcon onClick={()=>removerPorId(String(index))} sx={{margin:"auto 0"}}/></TableCell>
                                             </TableRow>
                                         ))
                                     }
