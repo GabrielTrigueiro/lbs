@@ -20,13 +20,7 @@ export interface IDataProductRegiser {
     codeBarras: string,
     custePrice: 0,
     description: string,
-    informations: [
-      {
-        color: string,
-        quantity: 0,
-        size: string
-      }
-    ],
+    informations: oneInformation[],
     name: string,
     providerId: string,
     quantity: number,

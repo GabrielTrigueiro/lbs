@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
 import { useFormik } from "formik";
-import { ProductValidationSchema, oneInformation } from "../../../models/product";
+import { IDataProductRegiser, ProductValidationSchema, oneInformation } from "../../../models/product";
 import FormikTextField from "../../formik-text-field/FormikTextField";
 import React, { useEffect, useState } from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -29,6 +29,7 @@ import { ProductRegisterInfos } from "./ProductRegisterInfos";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
+import { Notification } from "../../notification";
 
 interface props {
     state: boolean;
@@ -42,7 +43,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             id: "",
             name: "",
             description: "",
-            quantidade: "",
+            quantity: "",
             custePrice: "",
             salerPrice: "",
             tagPrice: "",
@@ -56,7 +57,9 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         onSubmit: (values) => {
             formik.values.categoryId = idCategoria;
             formik.values.providerId = value;
-            formik.values.quantidade = quantidade;
+            formik.values.quantity = quantidade;
+            //formik.values.informations = infos; infos dando erro
+            //registerProduct(values);
         },
         onReset(values, formikHelpers) {
             setSelect('');
@@ -106,9 +109,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         sortField: "name",
         value: value,
     };
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value);
-    };
 
     //pegando providers da api
     const [providersApi, setProvidersApi] = useState<IProviderCadastroInfo[]>([]);
@@ -139,6 +139,16 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     const [infosModal, setInfosModal] = useState<true | false>(false);
     function handleInfos() {
         setInfosModal(!infosModal);
+    }
+
+    //registrar
+    function registerProduct(values: IDataProductRegiser){
+        ProductService.Create(values).then((response) => {
+            Notification(response.message, "success")
+            update();
+            handleModal();
+            formik.resetForm();
+        })
     }
 
     useEffect(() => {
@@ -221,13 +231,13 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             variant="standard"
                                             size="small"
                                             fullWidth
-                                            id="quantidade"
-                                            name="quantidade"
+                                            id="quantity"
+                                            name="quantity"
                                             label="Quantidade"
                                             value={quantidade}
                                             onChange={formik.handleChange}
-                                            error={formik.touched.quantidade && Boolean(formik.errors.quantidade)}
-                                            helperText={formik.touched.quantidade && formik.errors.quantidade}
+                                            error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                                            helperText={formik.touched.quantity && formik.errors.quantity}
                                         />
                                         <FormikTextField
                                             autoComplete="off"
@@ -335,7 +345,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                 removerPorId={removeByIndex}
                 infosAr={infos}
                 onFormSubmit={handleFormSubmit}
-                qtd={formik.values.quantidade}
+                qtd={formik.values.quantity}
                 changeState={handleInfos}
                 state={infosModal}
             />
