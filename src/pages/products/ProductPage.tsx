@@ -9,6 +9,7 @@ import { ProductService } from '../../shared/services/api/product';
 import { ISendPagination } from '../../shared/models/client';
 import { ProductRegisterModal } from '../../shared/components/modal/Product/ProductRegisterModal';
 import {SearchInput} from "../../shared/components/search";
+import {TableProductBox} from "../../shared/components/table/product/TableProductBox";
 
 export const ProductPage = () => {
 
@@ -17,17 +18,17 @@ export const ProductPage = () => {
     const [edit, setEdit] = useState(false);
     function handleRegister(){
         setRegister(!register)
-    };
+    }
     function handleEdit(){
         setEdit(!edit)
-    };
+    }
 
     //disposição da lista de produtos
     const [isLoading, setIsLoading] = useState(true);
     const [checked, setChecked] = useState(false);
     function toggle() {
         setChecked(!checked);
-    };
+    }
 
     //search
     const [selectContent, setSelectContent] = useState('5');
@@ -108,7 +109,11 @@ export const ProductPage = () => {
 
             {/* tabela de produtos */}
             <Box className={styles.table}>
-                <TableProductList lista={productList} update={update} />
+                {checked ?
+                    <TableProductBox productList={productList}/>
+                :
+                    <TableProductList lista={productList} update={update} />
+                }
             </Box>
 
             {/* pagination e seltor de pagina*/}

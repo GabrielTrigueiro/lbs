@@ -12,6 +12,7 @@ export interface IDataProduct {
     tagPrice: number;
     codeBarras: string;
     codeInt: string;
+    informations?: oneInformation[],
     category: ICategoryRegister;
     provider: IProviderCadastroInfo;
 }
