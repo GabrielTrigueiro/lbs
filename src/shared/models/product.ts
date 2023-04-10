@@ -18,9 +18,9 @@ export interface IDataProduct {
 export interface IDataProductRegiser {
     categoryId: string,
     codeBarras: string,
-    custePrice: 0,
+    custePrice: number,
     description: string,
-    informations: oneInformation[],
+    informations?: oneInformation[],
     name: string,
     providerId: string,
     quantity: number,
@@ -61,12 +61,11 @@ const oneInfoSchema = yup.object().shape({
 })
 
 export const ProductValidationSchema = yup.object({
-    id: yup.string(),
     categoryId: yup.string(),
     codeBarras: yup.string(),
     custePrice: yup.number(),
     description: yup.string(),
-    informations: yup.array().of(oneInfoSchema),
+    informations: yup.array(),
     name: yup.string(),
     providerId: yup.string(),
     quantity: yup.number(),

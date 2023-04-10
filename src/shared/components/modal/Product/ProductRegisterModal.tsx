@@ -40,32 +40,32 @@ interface props {
 export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, update }) => {
     const formik = useFormik({
         initialValues: {
-            id: "",
             name: "",
             description: "",
-            quantity: "",
-            custePrice: "",
-            salerPrice: "",
-            tagPrice: "",
+            quantity: 0,
+            custePrice: 0,
+            salerPrice: 0,
+            tagPrice: 0,
             codeBarras: "",
             codeInt: "",
-            informations: [],
+            informations: new Array<oneInformation>(),
             categoryId: "",
             providerId: ""
         },
         validationSchema: ProductValidationSchema,
         onSubmit: (values) => {
             formik.values.categoryId = idCategoria;
-            formik.values.providerId = value;
+            formik.values.providerId = idProvider;
             formik.values.quantity = quantidade;
-            //formik.values.informations = infos; infos dando erro
+            formik.values.informations = infos;
+            console.log(formik.values.informations)
             //registerProduct(values);
         },
         onReset(values, formikHelpers) {
             setSelect('');
             setIdCategoria('');
             setIdProvider('');
-            setQuantidade('');
+            setQuantidade(0);
             zerarInfos();
         },
     })
@@ -85,7 +85,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     const [idCategoria, setIdCategoria] = useState("");
     const [idProvider, setIdProvider] = useState("");
     const [nameProvider, setNameProvider] = useState<IProviderCadastroInfo>();
-    const [quantidade, setQuantidade] = useState("");
+    const [quantidade, setQuantidade] = useState(0);
 
     //dados da api
     const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
@@ -94,29 +94,23 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             setCategoriasApi(response.data.data);
         });
     }
-
-    //search estranho
-    const [value, setValue] = useState<string>("");
-    const [pages, setPages] = useState<number>(0)
-    const [pageSize, setPageSize] = useState<number>(5)
-    const [actualpage, setActualPage] = useState<number>(0)
-    const [selectContent, setSelectContent] = useState('5');
-    let search: ISendPagination = {
-        page: actualpage,
-        pageSize: pageSize,
-        param: "name",
-        sortDiresction: "DESC",
-        sortField: "name",
-        value: value,
-    };
-
-    //pegando providers da api
     const [providersApi, setProvidersApi] = useState<IProviderCadastroInfo[]>([]);
     function getProviders() {
         ProviderService.getAll(search).then((response) => {
             setProvidersApi(response.data.data);
         });
     }
+
+    //search estranho
+    const [value, setValue] = useState<string>("");
+    let search: ISendPagination = {
+        page: 0,
+        pageSize: 10,
+        param: "name",
+        sortDirection: "DESC",
+        sortField: "name",
+        value: value,
+    };
 
     //controlar o select
     const [select, setSelect] = useState("");
@@ -151,6 +145,10 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         })
     }
 
+   function getPercentage(initialPrice: number, finalPrice: number): string{
+        return (((finalPrice - initialPrice)/initialPrice)*100).toFixed(2);
+   }
+
     useEffect(() => {
         getCategories();
         getProviders();
@@ -163,7 +161,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                     <div className={styles.titulo}>
                         Cadastrar Produto
                     </div>
-                    <form className={styles.registerContainer}>
+                    <form className={styles.registerContainer} onSubmit={formik.handleSubmit}>
                         <div className={styles.modalCima}>
                             <div className={styles.modalCimaEsquerda}>
                                 <div className={styles.codeImage}>
@@ -213,7 +211,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                         </FormControl>
                                         <Autocomplete
                                             options={providersApi}
-                                            getOptionLabel={(option)=>option.name}
+                                            getOptionLabel={(option) => option.name}
                                             value={nameProvider}
                                             inputValue={nameProvider?.name}
                                             onChange={(event: any, newValue: IProviderCadastroInfo|null) => {
@@ -306,19 +304,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                     variant="standard"
                                     size="small"
                                     fullWidth
-                                    id="tagPrice"
-                                    name="tagPrice"
-                                    label="Preço de etiqueta"
-                                    value={formik.values.tagPrice}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
-                                    helperText={formik.touched.tagPrice && formik.errors.tagPrice}
-                                />
-                                <FormikTextField
-                                    autoComplete="off"
-                                    variant="standard"
-                                    size="small"
-                                    fullWidth
                                     id="salerPrice"
                                     name="salerPrice"
                                     label="Preço"
@@ -327,15 +312,32 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                     error={formik.touched.salerPrice && Boolean(formik.errors.salerPrice)}
                                     helperText={formik.touched.salerPrice && formik.errors.salerPrice}
                                 />
+                                <FormikTextField
+                                    autoComplete="off"
+                                    variant="standard"
+                                    size="small"
+                                    fullWidth
+                                    id="tagPrice"
+                                    name="tagPrice"
+                                    label="Preço de etiqueta"
+                                    value={formik.values.tagPrice}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
+                                    helperText={formik.touched.tagPrice && formik.errors.tagPrice}
+                                />
                             </div>
                             <div className={styles.modalBaixoDireita}>
-                                <Box sx={{marginTop:"2em"}}>Margem de lucro</Box>
-                                <Box sx={{marginTop:"2em"}}>Margem de lucro</Box>
+                                <Box sx={{marginTop:"2em"}}>
+                                    {getPercentage(formik.values.custePrice, formik.values.salerPrice)}% Margem de lucro
+                                </Box>
+                                <Box sx={{marginTop:"2em"}}>
+                                    {getPercentage(formik.values.salerPrice, formik.values.tagPrice)}% Margem de lucro
+                                </Box>
                             </div>
                         </div>
                             <Box sx={{display:'flex', justifyContent:'flex-end'}}>
                                 <Button onClick={handleConfirm} sx={{margin:'1em'}} className={styles.button}>Cancelar</Button>
-                                <Button type='submit' onClick={handleModal} sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
+                                <Button type='submit' sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
                             </Box>
                     </form>
                 </div>

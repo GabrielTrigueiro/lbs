@@ -21,7 +21,6 @@ import { TableClients } from "../../shared/components";
 
 export const ClientListPage: React.FC = () => {
 
-  const [value, setValue] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,13 +30,19 @@ export const ClientListPage: React.FC = () => {
 
   const [modalState, setModalState] = useState<true | false>(false);
 
+  const [value, setValue] = useState<string>("");
   const [pages, setPages] = useState<number>(0)
-
   const [pageSize, setPageSize] = useState<number>(5)
-
   const [actualpage, setActualPage] = useState<number>(0)
-
   const [selectContent, setSelectContent] = useState('5');
+  let ClientPaginationConf: ISendPagination = {
+    page: actualpage,
+    pageSize: pageSize,
+    param: "name",
+    sortDirection: "DESC",
+    sortField: "name",
+    value: value,
+  };
 
   function handleModal() {
     setModalState(!modalState);
@@ -59,16 +64,8 @@ export const ClientListPage: React.FC = () => {
     event: React.ChangeEvent<unknown>, value: number
   ) => {
     setActualPage(value-1);
-  };  
-
-  let ClientPaginationConf: ISendPagination = {
-    page: actualpage,
-    pageSize: pageSize,
-    param: "name",
-    sortDiresction: "DESC",
-    sortField: "name",
-    value: value,
   };
+
 
   const selectChange = (event: SelectChangeEvent) => {
     setSelectContent(event.target.value as string);

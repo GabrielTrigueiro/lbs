@@ -59,7 +59,7 @@ export interface ISendPagination {
     page: number
     pageSize: number
     sortField: string
-    sortDiresction: string
+    sortDirection: string
     param: string
     value: string
 }

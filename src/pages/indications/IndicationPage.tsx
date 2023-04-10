@@ -35,7 +35,7 @@ export const IndicationPage: React.FC = () => {
         page: actualpage,
         pageSize: pageSize,
         param: "name",
-        sortDiresction: "DESC",
+        sortDirection: "DESC",
         sortField: "name",
         value: value,
     };

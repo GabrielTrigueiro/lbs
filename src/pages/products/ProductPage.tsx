@@ -8,6 +8,7 @@ import { IDataProduct } from '../../shared/models/product';
 import { ProductService } from '../../shared/services/api/product';
 import { ISendPagination } from '../../shared/models/client';
 import { ProductRegisterModal } from '../../shared/components/modal/Product/ProductRegisterModal';
+import {SearchInput} from "../../shared/components/search";
 
 export const ProductPage = () => {
 
@@ -38,7 +39,7 @@ export const ProductPage = () => {
         page: actualpage,
         pageSize: pageSize,
         param: "name",
-        sortDiresction: "DESC",
+        sortDirection: "DESC",
         sortField: "name",
         value: value,
     };
@@ -85,7 +86,7 @@ export const ProductPage = () => {
                         <SwitchProductList change={toggle} state={checked} />
                         <Typography className={styles.midLeftTitle}>Lista de Produtos</Typography>
                         <Box position={"relative"} bottom={3}>
-                            {/* <SearchInput change={(value) => { setValue(value.target.value) }} /> */}
+                            <SearchInput change={(value) => { setValue(value.target.value) }} />
                         </Box>
                     </Grid>
                     <Grid className={styles.midRight}>

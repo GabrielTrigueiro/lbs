@@ -97,7 +97,9 @@ const Create = async (dados: IDataProductRegiser): Promise<any | Error> => {
             return data.data
         })
         .catch(err => {
-            Notification(`${err.response.data.message}`, "error");
+            err.response.data.errors.map((err: any) => {
+                Notification(`${err.field + " " + err.message}`, "error");
+            })
         })
 }
 

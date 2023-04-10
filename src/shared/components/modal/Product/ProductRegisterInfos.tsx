@@ -21,7 +21,7 @@ import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 
 interface props {
     removerPorId: (index: string) => void;
-    qtd: string;
+    qtd: number;
     state: boolean;
     infosAr: oneInformation[];
     onFormSubmit: (formValues: oneInformation) => void;
