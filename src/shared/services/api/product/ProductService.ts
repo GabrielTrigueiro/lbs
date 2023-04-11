@@ -75,6 +75,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
             if (data instanceof AxiosError) {
                 return data.response?.data
             }
+            Notification(data.data.message, "success");
             return data.data
         })
         .catch(err => {

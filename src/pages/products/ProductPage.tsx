@@ -110,7 +110,7 @@ export const ProductPage = () => {
             {/* tabela de produtos */}
             <Box className={styles.table}>
                 {checked ?
-                    <TableProductBox productList={productList}/>
+                    <TableProductBox lista={productList} update={update}/>
                 :
                     <TableProductList lista={productList} update={update} />
                 }

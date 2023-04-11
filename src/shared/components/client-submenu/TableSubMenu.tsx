@@ -52,12 +52,12 @@ export const TableSubMenu: React.FC<{
         update();
       })
     }
-  };
+  }
   
   function handleConfirm() {
     setConfirm(!confirm)
     deletarClient(cliente)
-  };
+  }
 
   function alterarStatus(e: RegisterClient) {
     if(e.id){

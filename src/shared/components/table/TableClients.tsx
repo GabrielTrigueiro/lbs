@@ -27,7 +27,6 @@ const TableCellStyled = styled(TableCell)({
   padding: "10px 16px",
 });
 
-
 export const TableClients: React.FC<{
   lista: RegisterClient[];
   update: () => void;
