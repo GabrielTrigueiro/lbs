@@ -23,7 +23,7 @@ interface props {
     removerPorId: (index: string) => void;
     qtd: number;
     state: boolean;
-    infosAr: oneInformation[];
+    infosAr?: oneInformation[];
     onFormSubmit: (formValues: oneInformation) => void;
     changeState: () => void;
 }
@@ -112,6 +112,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                 </TableHead>
                                 <TableBody>
                                     {
+                                        infosAr ?
                                         infosAr.map((row, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{row.color}</TableCell>
@@ -119,7 +120,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                                 <TableCell>{row.quantity}</TableCell>
                                                 <TableCell><DoDisturbOnIcon onClick={()=>removerPorId(String(index))} sx={{margin:"auto 0"}}/></TableCell>
                                             </TableRow>
-                                        ))
+                                        )) : <></>
                                     }
                                 </TableBody>
                             </Table>

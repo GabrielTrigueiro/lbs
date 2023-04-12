@@ -1,4 +1,4 @@
-import {IDataProduct, IProductPackage} from "../../models/product";
+import {IDataProduct} from "../../models/product";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -8,10 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import {useState} from "react";
 import {Button, Dialog, DialogActions, DialogTitle} from "@mui/material";
 import modal from "../../../styles/Client/ClientSubMenu.module.scss";
-import {RegisterClient} from "../../models/client";
-import {ClienteService} from "../../services";
-import {Notification} from "../notification";
 import {ProductService} from "../../services/api/product";
+import {ProductEditModal} from "../modal/Product/ProductEditModal";
 
 interface props{
     product: IDataProduct;
@@ -116,6 +114,8 @@ export const ProductSubMenu:React.FC<props> = ({update, product}) => {
                     <Button className={modal.button} onClick={() => handleConfirm()}>Sim</Button>
                 </DialogActions>
             </Dialog>
+
+            <ProductEditModal data={product} state={editModal} handleModal={handleEdit} update={update}/>
         </>
     )
 }

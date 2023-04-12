@@ -3,7 +3,12 @@ import { environment } from "../../../environment";
 import { api } from "../axios";
 import { Notification } from "../../../components";
 import { ISendPagination } from "../../../models/client";
-import { IDataProduct, IDataProductRegiser, IProductPackage, IProductSearch } from "../../../models/product";
+import {
+    IDataProduct,
+    IDataProductRegiser,
+    IProductPackage,
+    IProductSearch
+} from "../../../models/product";
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     const token = {
@@ -44,7 +49,7 @@ const getByIDd = async (id: string): Promise<any | Error> => {
         })
 }
 
-const UpdateById = async (id: string, dados: IDataProduct): Promise<void | Error> => {
+const UpdateById = async (id: string, dados: IDataProductRegiser): Promise<string | Error> => {
     const token = {
         headers: {
             Authorization:
@@ -56,6 +61,7 @@ const UpdateById = async (id: string, dados: IDataProduct): Promise<void | Error
             if (data instanceof AxiosError) {
                 return data.response?.data
             }
+            Notification('Produto cadastrado', "success")
             return data.data
         })
         .catch(err => {

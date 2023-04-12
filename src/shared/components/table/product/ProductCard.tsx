@@ -8,11 +8,11 @@ const BoxCard = styled(Box)({
     height:"14em",
     width:"11em",
     borderRadius:"1em",
-    padding:"0.5em",
+    padding: "0.5em"
 })
 
 const BoxImagem = styled(Box)({
-    backgroundColor:"#000",
+    backgroundColor:"#3f3f3f",
     height:"50%",
     width:"100%",
     borderRadius:"0.5em",
@@ -24,11 +24,12 @@ const BoxName = styled.div({
 })
 
 const BoxInfos = styled(Box)({
+    marginTop:"1em",
     display:"flex",
-    flexDirection:"column",
+    flexDirection:"row",
     fontSize:"0.8pc",
-    //background:"#345",
-    marginTop:"0.5em"
+    alignItems:"center",
+    justifyContent:"space-between"
 })
 
 interface props {
@@ -43,7 +44,7 @@ export const ProductCard:React.FC<props> = ({data, update}) =>{
             <BoxName>{data.name}</BoxName>
             <BoxInfos>
                 <Box>
-                    <div>Código: {data.codeBarras}</div>
+                    <div>Código: {data.codeInt}</div>
                     <div>Venda: R$ {data.salerPrice}</div>
                     <div>Etiqueta: R$ {data.tagPrice}</div>
                 </Box>

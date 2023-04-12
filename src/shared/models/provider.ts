@@ -1,22 +1,5 @@
 import * as Yup from "yup"
 
-export interface IInfoProvider {
-    id?: string
-    code: number
-    name: string
-    cnpj: string
-    contact: number
-    email: string
-    telephone: number
-    cell: number
-    cep: number
-    address: string
-    cityId?: string
-    city: string
-    uf: string
-    neighborhood: string
-    number: number
-}
 export interface IProviderPackage {
     data: IProviderCadastroInfo[]
     message: string,
@@ -28,6 +11,7 @@ export type TAllProviderList = {
 }
 
 export interface IProviderCadastroInfo {
+    id?:string;
     address?: string
     cell?: string
     cep?: string
@@ -37,7 +21,6 @@ export interface IProviderCadastroInfo {
     code?: string
     contact?: string
     email?: string
-    id?: string
     name: string,
     nameContact?: string,
     neighborhood?: string,

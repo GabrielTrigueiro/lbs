@@ -2,7 +2,7 @@ import { AxiosError } from "axios"
 import { environment } from "../../../environment"
 import { api } from "../axios"
 import { ISendPagination, IClientSearch } from "../../../models/client"
-import { IInfoProvider, IProviderCadastroInfo, IProviderPackage } from "../../../models/provider"
+import {IProviderCadastroInfo, IProviderPackage } from "../../../models/provider"
 import { Notification } from "../../../components"
 
 const getAll = async (dados: ISendPagination): Promise<any | Error> => {
@@ -24,7 +24,7 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
     })
 }
 
-const getByIDd = async (id: string): Promise<IInfoProvider | Error>   => {
+const getByIDd = async (id: string): Promise<IProviderCadastroInfo | Error>   => {
     const token = {
         headers:{
           Authorization: 

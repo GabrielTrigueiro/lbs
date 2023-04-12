@@ -24,7 +24,7 @@ import { CategoryService } from "../../../services/api/categories/Categories_Ser
 import { ICategory, ICategoryRegister } from "../../../models/categories";
 import { ProviderService } from "../../../services/api/providers/ProviderService";
 import { ISendPagination } from "../../../models/client";
-import { IProviderCadastroInfo } from "../../../models/provider";
+import {IProviderCadastroInfo} from "../../../models/provider";
 import { ProductRegisterInfos } from "./ProductRegisterInfos";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -58,8 +58,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             formik.values.providerId = idProvider;
             formik.values.quantity = quantidade;
             formik.values.informations = infos;
-            console.log(formik.values.informations)
-            //registerProduct(values);
+            registerProduct(values);
         },
         onReset(values, formikHelpers) {
             setSelect('');
