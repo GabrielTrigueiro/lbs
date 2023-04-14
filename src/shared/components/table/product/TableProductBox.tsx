@@ -36,8 +36,8 @@ interface props {
 export const TableProductBox: React.FC<props> = ({update, lista}) => {
   return (
     <BoxTable>
-      {lista.map((row) => (
-        <ProductCard data={row} update={update}/>
+      {lista.map((row, index) => (
+        <ProductCard key={index} data={row} update={update}/>
       ))}
     </BoxTable>
   )

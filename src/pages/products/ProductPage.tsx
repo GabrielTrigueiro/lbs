@@ -59,7 +59,7 @@ export const ProductPage = () => {
     function update() {
         ProductService.getAll(ProductPaginationConf).then((result) => {
             if (result instanceof Error) {
-                alert(result.message);
+                console.log(result.message);
             } else {
                 setIsLoading(false);
                 setPages(result.data.numberOfPages)

@@ -76,6 +76,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
               categoryId: idCategoria,
               providerId: idProvider,
           }
+          console.log(produto)
           editProduct(produto);
       }
     },
@@ -100,6 +101,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
   function addInfo(newInfo: oneInformation) {
     if (formik.values.informations) {
       formik.setFieldValue('informations', [...formik.values.informations, newInfo]);
+      console.log(formik.values.informations);
     }
   }
   function removeByIndex(index: string) {

@@ -38,8 +38,8 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
                 </TableHead>
 
                 <TableBody>
-                    {lista.map((row) => (
-                        <TableRow>
+                    {lista.map((row, index) => (
+                        <TableRow key={index}>
                             <TableCellStyled></TableCellStyled>
                             <TableCellStyled sx={{ color: '#8e8e8e' }}>{row.name}</TableCellStyled>
                             <TableCellStyled sx={{ color: '#8e8e8e' }}>{row.salerPrice}</TableCellStyled>
