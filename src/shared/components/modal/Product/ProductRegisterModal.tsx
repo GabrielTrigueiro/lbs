@@ -90,7 +90,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
     function getCategories() {
         CategoryService.getCategories().then((response) => {
-            setCategoriasApi(response.data.data);
+            setCategoriasApi(response.data);
         });
     }
     const [providersApi, setProvidersApi] = useState<IProviderCadastroInfo[]>([]);
@@ -143,7 +143,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             formik.resetForm();
         })
     }
-
    function getPercentage(initialPrice: number, finalPrice: number): string{
         return (((finalPrice - initialPrice)/initialPrice)*100).toFixed(2);
    }

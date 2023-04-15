@@ -35,6 +35,7 @@ import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import {Notification} from "../../notification";
 import {IProviderCadastroInfo} from "../../../models/provider";
+import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
 
 interface props {
   data: IDataProduct;
@@ -61,34 +62,46 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
     },
     validationSchema: ProductValidationSchema,
     onSubmit: (values) => {
-      if(idCategoria && idProvider){
-          const produto: IDataProductRegiser = {
-              id:formik.values.id,
-              codeInt:formik.values.codeInt ,
-              codeBarras:formik.values.codeBarras,
-              custePrice:formik.values.custePrice,
-              description:formik.values.description ,
-              informations:formik.values.informations ,
-              name:formik.values.name ,
-              quantity:formik.values.quantity ,
-              salerPrice:formik.values.salerPrice ,
-              tagPrice:formik.values.tagPrice,
-              categoryId: idCategoria,
-              providerId: idProvider,
-          }
-          console.log(produto)
-          editProduct(produto);
-      }
+      // if(idCategoria && idProvider){
+      //     const produto: IDataProductRegiser = {
+      //         id:formik.values.id,
+      //         codeInt:formik.values.codeInt ,
+      //         codeBarras:formik.values.codeBarras,
+      //         custePrice:formik.values.custePrice,
+      //         description:formik.values.description ,
+      //         informations:formik.values.informations ,
+      //         name:formik.values.name ,
+      //         quantity:formik.values.quantity ,
+      //         salerPrice:formik.values.salerPrice ,
+      //         tagPrice:formik.values.tagPrice,
+      //         categoryId: idCategoria,
+      //         providerId: idProvider,
+      //     }
+      //     console.log(produto)
+      //     editProduct(produto);
+      // }
     },
     onReset(values, formikHelpers) {
-      setSelect('');
-      setIdCategoria('');
-      setIdProvider('');
-      setQuantidade(0);
+
     },
   })
 
-  //editar
+  //const [provider, setProvider] = useState<IProviderCadastroInfo  | null>();
+  //const [category, setCategory] = useState<ICategory | null>();
+  const [categoryList, setCategoryList] = useState<ICategory[]>(new Array<ICategory>());
+  const [providerList, setProviderList] = useState<IProviderCadastroInfo>();
+
+  // function getCategories(){
+  //   CategoryService.getAllCategories().then((response) => {
+  //     setCategoryList(response.data);
+  //   })
+  // }
+  // function getProviders(){
+  //   ProductService.getAll().then((response) => {
+  //     setCategoryList(response.data);
+  //   })
+  // }
+
   function editProduct(objeto: IDataProductRegiser) {
     if (objeto.id) {
       ProductService.UpdateById(objeto.id, objeto).then((response) => {
@@ -101,7 +114,6 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
   function addInfo(newInfo: oneInformation) {
     if (formik.values.informations) {
       formik.setFieldValue('informations', [...formik.values.informations, newInfo]);
-      console.log(formik.values.informations);
     }
   }
   function removeByIndex(index: string) {
@@ -111,66 +123,27 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
     }
   }
 
-  const [idCategoria, setIdCategoria] = useState(formik.values.category.id);
-  const [idProvider, setIdProvider] = useState(formik.values.provider.id);
-  const [nameProvider, setNameProvider] = useState(formik.values.provider);
-  const [quantidade, setQuantidade] = useState(formik.values.quantity);
-  const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
-  const [providersApi, setProvidersApi] = useState<IProviderCadastroInfo[]>([]);
-  const [select, setSelect] = useState(formik.values.category.name);
-  //dados da api
-  function getCategories() {
-    CategoryService.getCategories().then((response) => {
-      setCategoriasApi(response.data.data);
-    });
-  }
-  function getProviders() {
-    ProviderService.getAll(search).then((response) => {
-      setProvidersApi(response.data.data);
-    });
-  }
-  //controlar o select
-  function handleChange(event: SelectChangeEvent) {
-    setSelect(event.target.value as string)
-  }
-  //search estranho
-  const [value, setValue] = useState<string>("");
-  let search: ISendPagination = {
-    page: 0,
-    pageSize: 10,
-    param: "name",
-    sortDirection: "DESC",
-    sortField: "name",
-    value: value,
-  };
-  //confirm
   const [confirm, setConfirm] = useState<true | false>(false);
-
   function handleConfirm() {
     setConfirm(!confirm);
   }
-
   function changeConfirmAndModal() {
     setConfirm(!confirm);
     handleModal();
     formik.resetForm();
   }
 
-  //modal de informações
   const [infosModal, setInfosModal] = useState<true | false>(false);
-
   function handleInfos() {
     setInfosModal(!infosModal);
   }
-
   function getPercentage(initialPrice: number, finalPrice: number): string {
     return (((finalPrice - initialPrice) / initialPrice) * 100).toFixed(2);
   }
 
   useEffect(() => {
-    getCategories();
-    getProviders();
-  }, [value])
+
+  }, [])
 
   return (
     <>
@@ -221,34 +194,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
                       error={formik.touched.name && Boolean(formik.errors.name)}
                       helperText={formik.touched.name && formik.errors.name}
                     />
-                    <FormControl sx={{width: "100%", marginTop: "0.3em"}} variant="standard">
-                      <InputLabel>Categoria</InputLabel>
-                      <Select value={select} onChange={handleChange}>
-                        {
-                          categoriasApi.map((item, index) => (
-                            <MenuItem key={item.id} onClick={() => setIdCategoria(item.id)} value={item.name}>
-                              {item.name}
-                            </MenuItem>
-                          ))
-                        }
-                      </Select>
-                    </FormControl>
-                    <Autocomplete
-                      options={providersApi}
-                      getOptionLabel={(option) => option.name}
-                      value={nameProvider}
-                      inputValue={nameProvider?.name}
-                      onChange={(event: any, newValue: IProviderCadastroInfo | null) => {
-                        if (newValue) {
-                          if (newValue.id) {
-                            setIdProvider(newValue.id)
-                            setNameProvider(newValue)
-                          }
-                        }
-                      }}
-                      sx={{width: '100%', marginTop: "0.3em"}}
-                      renderInput={(params) => <TextField {...params} label="Fornecedor" variant="standard"/>}
-                    />
+                    {/*<AutoCompleteProvider/>*/}
                     <FormikTextField
                       autoComplete="off"
                       variant="standard"
@@ -257,7 +203,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
                       id="quantity"
                       name="quantity"
                       label="Quantidade"
-                      value={quantidade}
+                      value={formik.values.quantity}
                       onChange={formik.handleChange}
                       error={formik.touched.quantity && Boolean(formik.errors.quantity)}
                       helperText={formik.touched.quantity && formik.errors.quantity}

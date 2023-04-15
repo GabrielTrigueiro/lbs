@@ -62,8 +62,8 @@ export const ProductPage = () => {
                 console.log(result.message);
             } else {
                 setIsLoading(false);
-                setPages(result.data.numberOfPages)
-                setProductList(result.data.data);
+                setPages(result.numberOfPages)
+                setProductList(result.data);
             }
         })
     }

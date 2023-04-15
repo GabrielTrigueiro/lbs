@@ -3,7 +3,7 @@ import {IProviderCadastroInfo} from "./provider";
 import * as yup from "yup";
 
 export interface IDataProduct {
-    id?: string;
+    id: string;
     name: string;
     description: string;
     quantidade: number;
@@ -19,17 +19,17 @@ export interface IDataProduct {
 
 export interface IDataProductRegiser {
     id?:string;
-    codeInt?: string,
-    categoryId: string,
-    codeBarras: string,
-    custePrice: number,
-    description: string,
-    informations?: oneInformation[],
     name: string,
-    providerId: string,
+    description: string,
     quantity: number,
+    custePrice: number,
     salerPrice: number,
     tagPrice: number
+    codeBarras: string,
+    codeInt?: string,
+    informations?: oneInformation[],
+    categoryId: string,
+    providerId: string,
 }
 
 export interface oneInformation{
