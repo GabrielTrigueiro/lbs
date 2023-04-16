@@ -55,8 +55,8 @@ export const ProviderListPage: React.FC = () => {
         alert(result.message);
       } else {
         setIsLoading(false);
-        setPages(result.data.numberOfPages)
-        setRows(result.data.data);
+        setPages(result.numberOfPages)
+        setRows(result.data);
       }
     });
   };

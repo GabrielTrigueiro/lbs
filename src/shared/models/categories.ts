@@ -1,13 +1,7 @@
 import * as yup from "yup"
 
-export interface ICategoryRegister {
-    id?: string
-    code: string
-    description: string
-    name: string
-}
 export interface ICategory {
-    id: string
+    id?: string
     code: string
     description: string
     name: string
@@ -18,7 +12,7 @@ export interface ICategorySearch {
     actualPage: number
     totalElements: number
     hasNext: boolean
-    data: ICategoryRegister[]
+    data: ICategory[]
 }
 
 export const categoryRegisterSchema = yup.object({

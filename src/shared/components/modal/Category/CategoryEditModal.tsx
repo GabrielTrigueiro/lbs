@@ -3,11 +3,11 @@ import { Button, Dialog, DialogActions, DialogTitle, Modal, TextField } from "@m
 import { useFormik } from 'formik'
 import styles from "../../../../styles/Categories/CategoryRegisterModal.module.scss"
 import { Notification } from '../../notification'
-import { ICategoryRegister, categoryRegisterSchema } from '../../../models/categories'
+import { ICategory, categoryRegisterSchema } from '../../../models/categories'
 import { CategoryService } from '../../../services/api/categories/Categories_Service'
 
 export const CategoryEditModal: React.FC<{ 
-    categoria: ICategoryRegister,
+    categoria: ICategory,
     modalState: boolean,
     handleModal: () => void,
     update: () => void;
@@ -26,7 +26,7 @@ export const CategoryEditModal: React.FC<{
         formik.resetForm();
     }
 
-    function editCateogry(novaCategoria: ICategoryRegister) {
+    function editCateogry(novaCategoria: ICategory) {
         if(novaCategoria.id)
         CategoryService.UpdateById(novaCategoria.id, novaCategoria).then((response) => {
             Notification("Categoria editada com sucesso", "success")

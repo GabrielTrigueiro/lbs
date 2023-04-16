@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogTitle, Modal, TextField } from "@m
 import { useFormik } from 'formik'
 import styles from "../../../../styles/Categories/CategoryRegisterModal.module.scss"
 import { Notification } from '../../notification'
-import { ICategoryRegister, categoryRegisterSchema } from '../../../models/categories'
+import { ICategory, categoryRegisterSchema } from '../../../models/categories'
 import { CategoryService } from '../../../services/api/categories/Categories_Service'
 
 export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal: () => void, update: () => void; }> = ({ handleModal, modalState, update }) => {
@@ -21,7 +21,7 @@ export const CategoryRegisterModal: React.FC<{ modalState: boolean, handleModal:
         changeConfirm();
     }
 
-    function createCateogry(novaCategoria: ICategoryRegister) {
+    function createCateogry(novaCategoria: ICategory) {
         CategoryService.createCategory(novaCategoria).then((response) => {
             Notification(response.message, "success")
             update();

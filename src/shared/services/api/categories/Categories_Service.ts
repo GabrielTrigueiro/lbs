@@ -3,7 +3,7 @@ import { api } from "../axios"
 import {environment } from "../../../environment"
 import { Notification } from "../../../components"
 import { ISendPagination } from "../../../models/client"
-import { ICategoryRegister, ICategorySearch } from "../../../models/categories"
+import { ICategory, ICategorySearch } from "../../../models/categories"
 
 const getCategories = async (): Promise<any | Error> => {
     const token = {
@@ -36,7 +36,7 @@ const getAllCategories = async (dados: ISendPagination): Promise<any | Error> =>
         if(data instanceof AxiosError){
             return data
         }
-        return data
+        return data.data
     })
     .catch(err => {
         console.error(err)
@@ -62,7 +62,7 @@ const deletCategory = async (id: string): Promise<any | Error> => {
     })
 }
 
-const createCategory= async (dados: ICategoryRegister): Promise<any | Error> => {
+const createCategory= async (dados: ICategory): Promise<any | Error> => {
     const token = {
         headers:{
           Authorization: 
@@ -81,14 +81,14 @@ const createCategory= async (dados: ICategoryRegister): Promise<any | Error> => 
       })
 }
 
-const UpdateById = async (id: string, dados: ICategoryRegister): Promise<void | Error>   => {
+const UpdateById = async (id: string, dados: ICategory): Promise<void | Error>   => {
     const token = {
         headers:{
           Authorization: 
           `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g,'')}`
          }
      }
-    return  await api.put<ICategoryRegister>(environment.url_category + `/${id}`, dados, token)
+    return  await api.put<ICategory>(environment.url_category + `/${id}`, dados, token)
     .then(data => {
         if (data instanceof AxiosError){
             return data.response?.data

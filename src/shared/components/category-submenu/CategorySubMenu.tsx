@@ -10,13 +10,13 @@ import { Notification } from "../notification";
 import modal from "../../../styles/Client/ClientSubMenu.module.scss";
 import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { IndicationService } from "../../services/api/indication/IndicationService";
-import { ICategoryRegister } from "../../models/categories";
+import { ICategory } from "../../models/categories";
 import { CategoryEditModal } from "../modal/Category/CategoryEditModal";
 import { CategoryService } from "../../services/api/categories/Categories_Service";
 
 export const CategoryTableSubMenu: React.FC<{
     update: () => void;
-    categoria: ICategoryRegister;
+    categoria: ICategory;
 }> = ({ update, categoria }) => {
 
     //modal de edição
@@ -44,7 +44,7 @@ export const CategoryTableSubMenu: React.FC<{
         setAnchorEl(null);
     };
 
-    function deletarCategoria(e: ICategoryRegister) {
+    function deletarCategoria(e: ICategory) {
         if (e.id) {
             CategoryService.deletCategory(e.id)
                 .then((result) => {

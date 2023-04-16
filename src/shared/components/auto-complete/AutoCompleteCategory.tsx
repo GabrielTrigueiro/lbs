@@ -2,35 +2,38 @@ import {Autocomplete, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {IProviderCadastroInfo} from "../../models/provider";
 import {ProviderService} from "../../services/api/providers/ProviderService";
+import {ICategory} from "../../models/categories";
+import {CategoryService} from "../../services/api/categories/Categories_Service";
+import { ISendPagination } from "../../models/client";
 
 interface IProps{
-  fornecedor: IProviderCadastroInfo;
-  onSubmit: (objeto: IProviderCadastroInfo) => void;
+  categoria: ICategory;
+  onSubmit: (objeto: ICategory) => void;
 }
-export default function AutoCompleteProvider({fornecedor, onSubmit}: IProps){
+export default function AutoCompleteCategory({categoria, onSubmit}: IProps){
 
-  const [listaObjeto, setListaObjeto] = useState<IProviderCadastroInfo[]>([]);
-  const [search, setSearch] = useState<string>("");
+  const [listaObjeto, setListaObjeto] = useState<ICategory[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
   let Search = {
     page: 0,
     pageSize: 10,
     sortField: "",
     sortDirection: "",
     param: "",
-    value: search
+    value: searchValue
   }
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setSearchValue(event.target.value);
   }
-  const useSearch =() =>{
-    ProviderService.getAll(Search).then((response) => {
+  const getSearch =(value: ISendPagination) =>{
+    CategoryService.getAllCategories(value).then((response) => {
       setListaObjeto(response.data);
     });
   }
 
   useEffect(() => {
-    useSearch()
-  },[search])
+    getSearch(Search)
+  },[searchValue])
 
   return (
     <div>
@@ -38,10 +41,10 @@ export default function AutoCompleteProvider({fornecedor, onSubmit}: IProps){
         disableClearable={true}
         id="AutoComplete"
         options={listaObjeto}
-        value={fornecedor}
+        value={categoria}
         onChange={(event: any, newValue) => onSubmit(newValue)}
         getOptionLabel={(option) => option.name || ""}
-        renderInput={(params) => <TextField value={search} onChange={handleInputChange} {...params} label="Fornecedor" />}
+        renderInput={(params) => <TextField sx={{marginTop:"1em"}} variant={"standard"} value={searchValue} onChange={handleInputChange} {...params} label="Fornecedor" />}
       />
     </div>
   )

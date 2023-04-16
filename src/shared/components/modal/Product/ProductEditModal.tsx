@@ -1,20 +1,12 @@
 import {
-  Autocomplete,
   Box,
   Button,
   Dialog,
   DialogActions,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  Table, TableCell, TableRow,
-  TextField
+  DialogTitle, Modal, Table, TableCell, TableRow
 } from "@mui/material";
 import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
-import {useFormik} from "formik";
+import { useFormik } from "formik";
 import {
   IDataProductRegiser,
   ProductValidationSchema,
@@ -22,20 +14,16 @@ import {
   IDataProduct,
 } from "../../../models/product";
 import FormikTextField from "../../formik-text-field/FormikTextField";
-import React, {useEffect, useState} from "react";
-import {SelectChangeEvent} from '@mui/material/Select';
-import {ProductService} from "../../../services/api/product";
-import {CategoryService} from "../../../services/api/categories/Categories_Service";
-import {ICategory, ICategoryRegister} from "../../../models/categories";
-import {ProviderService} from "../../../services/api/providers/ProviderService";
-import {ISendPagination} from "../../../models/client";
-import {ProductRegisterInfos} from "./ProductRegisterInfos";
+import React, { useEffect, useState } from "react";
+import { ProductService } from "../../../services/api/product";
+import { ICategory } from "../../../models/categories";
+import { ProductRegisterInfos } from "./ProductRegisterInfos";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
-import {Notification} from "../../notification";
-import {IProviderCadastroInfo} from "../../../models/provider";
+import { IProviderCadastroInfo } from "../../../models/provider";
 import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
+import AutoCompleteCategory from "../../auto-complete/AutoCompleteCategory";
 
 interface props {
   data: IDataProduct;
@@ -62,45 +50,35 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
     },
     validationSchema: ProductValidationSchema,
     onSubmit: (values) => {
-      // if(idCategoria && idProvider){
-      //     const produto: IDataProductRegiser = {
-      //         id:formik.values.id,
-      //         codeInt:formik.values.codeInt ,
-      //         codeBarras:formik.values.codeBarras,
-      //         custePrice:formik.values.custePrice,
-      //         description:formik.values.description ,
-      //         informations:formik.values.informations ,
-      //         name:formik.values.name ,
-      //         quantity:formik.values.quantity ,
-      //         salerPrice:formik.values.salerPrice ,
-      //         tagPrice:formik.values.tagPrice,
-      //         categoryId: idCategoria,
-      //         providerId: idProvider,
-      //     }
-      //     console.log(produto)
-      //     editProduct(produto);
-      // }
+      if(formik.values.provider.id && formik.values.category.id){
+          const produto: IDataProductRegiser = {
+              id:formik.values.id,
+              codeInt:formik.values.codeInt ,
+              codeBarras:formik.values.codeBarras,
+              custePrice:formik.values.custePrice,
+              description:formik.values.description ,
+              informations:formik.values.informations ,
+              name:formik.values.name ,
+              quantity:formik.values.quantity ,
+              salerPrice:formik.values.salerPrice ,
+              tagPrice:formik.values.tagPrice,
+              categoryId: formik.values.category.id,
+              providerId: formik.values.provider.id,
+          }
+          editProduct(produto);
+      }
     },
     onReset(values, formikHelpers) {
 
     },
   })
 
-  //const [provider, setProvider] = useState<IProviderCadastroInfo  | null>();
-  //const [category, setCategory] = useState<ICategory | null>();
-  const [categoryList, setCategoryList] = useState<ICategory[]>(new Array<ICategory>());
-  const [providerList, setProviderList] = useState<IProviderCadastroInfo>();
-
-  // function getCategories(){
-  //   CategoryService.getAllCategories().then((response) => {
-  //     setCategoryList(response.data);
-  //   })
-  // }
-  // function getProviders(){
-  //   ProductService.getAll().then((response) => {
-  //     setCategoryList(response.data);
-  //   })
-  // }
+ function handleProvider(obj: IProviderCadastroInfo){
+    formik.setFieldValue('provider', obj)
+ }
+ function handleCategory(obj: ICategory){
+    formik.setFieldValue('category', obj)
+ }
 
   function editProduct(objeto: IDataProductRegiser) {
     if (objeto.id) {
@@ -140,10 +118,6 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
   function getPercentage(initialPrice: number, finalPrice: number): string {
     return (((finalPrice - initialPrice) / initialPrice) * 100).toFixed(2);
   }
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <>
@@ -194,7 +168,8 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
                       error={formik.touched.name && Boolean(formik.errors.name)}
                       helperText={formik.touched.name && formik.errors.name}
                     />
-                    {/*<AutoCompleteProvider/>*/}
+                    <AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category}/>
+                    <AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider}/>
                     <FormikTextField
                       autoComplete="off"
                       variant="standard"

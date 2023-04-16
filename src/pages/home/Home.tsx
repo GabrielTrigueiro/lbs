@@ -3,7 +3,6 @@ import { MenuLateral } from "../../shared/components";
 import { useSideBarContext } from "../../shared/contexts";
 import {useEffect} from "react";
 import styles from "../../styles/Home/Home.module.scss";
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 export default function Home() {
 

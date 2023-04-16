@@ -5,7 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
-import { ICategoryRegister } from "../../models/categories";
+import { ICategory } from "../../models/categories";
 import { CategoryTableSubMenu } from "../category-submenu/CategorySubMenu";
 
 const TableStyled = styled(Table)({
@@ -25,7 +25,7 @@ const TableCellStyled = styled(TableCell)({
 });
 
 
-export const TableCategories: React.FC<{lista: ICategoryRegister[]; update: () => void;}> = ({ lista, update }) => {
+export const TableCategories: React.FC<{lista: ICategory[]; update: () => void;}> = ({ lista, update }) => {
 
   return (
     <TableContainer>

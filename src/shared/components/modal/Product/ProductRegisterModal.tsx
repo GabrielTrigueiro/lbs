@@ -21,7 +21,7 @@ import React, { useEffect, useState } from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ProductService } from "../../../services/api/product";
 import { CategoryService } from "../../../services/api/categories/Categories_Service";
-import { ICategory, ICategoryRegister } from "../../../models/categories";
+import { ICategory } from "../../../models/categories";
 import { ProviderService } from "../../../services/api/providers/ProviderService";
 import { ISendPagination } from "../../../models/client";
 import {IProviderCadastroInfo} from "../../../models/provider";
@@ -30,6 +30,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import { Notification } from "../../notification";
+import AutoCompleteCategory from "../../auto-complete/AutoCompleteCategory";
+import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
 
 interface props {
     state: boolean;
@@ -54,22 +56,20 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         },
         validationSchema: ProductValidationSchema,
         onSubmit: (values) => {
-            formik.values.categoryId = idCategoria;
-            formik.values.providerId = idProvider;
-            formik.values.quantity = quantidade;
             formik.values.informations = infos;
             registerProduct(values);
         },
         onReset(values, formikHelpers) {
-            setSelect('');
-            setIdCategoria('');
-            setIdProvider('');
-            setQuantidade(0);
             zerarInfos();
         },
     })
 
-    //infos que entrarão no submit
+    function handleProvider(obj: IProviderCadastroInfo){
+        formik.setFieldValue('provider', obj)
+    }
+    function handleCategory(obj: ICategory){
+        formik.setFieldValue('category', obj)
+    }
     const [infos, setInfos] = useState<oneInformation[]>([]);
     function handleFormSubmit(formValues: oneInformation) {
         setInfos([...infos, formValues]);
@@ -81,43 +81,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         let arrayFiltrado = infos.filter((obj) => String(obj.id) !== index);
         setInfos(arrayFiltrado);
     }
-    const [idCategoria, setIdCategoria] = useState("");
-    const [idProvider, setIdProvider] = useState("");
-    const [nameProvider, setNameProvider] = useState<IProviderCadastroInfo>();
-    const [quantidade, setQuantidade] = useState(0);
-
-    //dados da api
-    const [categoriasApi, setCategoriasApi] = useState<ICategory[]>([]);
-    function getCategories() {
-        CategoryService.getCategories().then((response) => {
-            setCategoriasApi(response.data);
-        });
-    }
-    const [providersApi, setProvidersApi] = useState<IProviderCadastroInfo[]>([]);
-    function getProviders() {
-        ProviderService.getAll(search).then((response) => {
-            setProvidersApi(response.data.data);
-        });
-    }
-
-    //search estranho
-    const [value, setValue] = useState<string>("");
-    let search: ISendPagination = {
-        page: 0,
-        pageSize: 10,
-        param: "name",
-        sortDirection: "DESC",
-        sortField: "name",
-        value: value,
-    };
-
-    //controlar o select
-    const [select, setSelect] = useState("");
-    function handleChange(event: SelectChangeEvent) {
-        setSelect(event.target.value as string)
-    }
-
-    //confirm
     const [confirm, setConfirm] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
@@ -134,7 +97,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         setInfosModal(!infosModal);
     }
 
-    //registrar
     function registerProduct(values: IDataProductRegiser){
         ProductService.Create(values).then((response) => {
             Notification(response.message, "success")
@@ -146,11 +108,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
    function getPercentage(initialPrice: number, finalPrice: number): string{
         return (((finalPrice - initialPrice)/initialPrice)*100).toFixed(2);
    }
-
-    useEffect(() => {
-        getCategories();
-        getProviders();
-    }, [value])
 
     return (
         <>
@@ -195,33 +152,8 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             error={formik.touched.name && Boolean(formik.errors.name)}
                                             helperText={formik.touched.name && formik.errors.name}
                                         />
-                                        <FormControl sx={{ width: "100%", marginTop: "0.3em" }} variant="standard">
-                                            <InputLabel>Categoria</InputLabel>
-                                            <Select value={select} onChange={handleChange}>
-                                                {
-                                                    categoriasApi.map((item, index) => (
-                                                        <MenuItem key={item.id} onClick={() => setIdCategoria(item.id)} value={item.name}>
-                                                            {item.name}
-                                                        </MenuItem>
-                                                    ))
-                                                }
-                                            </Select>
-                                        </FormControl>
-                                        <Autocomplete
-                                            options={providersApi}
-                                            getOptionLabel={(option) => option.name}
-                                            value={nameProvider}
-                                            inputValue={nameProvider?.name}
-                                            onChange={(event: any, newValue: IProviderCadastroInfo|null) => {
-                                                if(newValue){
-                                                    if(newValue.id){
-                                                        setIdProvider(newValue.id)
-                                                    }
-                                                }
-                                            }}
-                                            sx={{ width: '100%', marginTop: "0.3em" }}
-                                            renderInput={(params) => <TextField {...params} label="Fornecedor" variant="standard" />}
-                                        />
+                                        {/*<AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category.id}/>*/}
+                                        {/*<AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider}/>*/}
                                         <FormikTextField
                                             autoComplete="off"
                                             variant="standard"
@@ -230,7 +162,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             id="quantity"
                                             name="quantity"
                                             label="Quantidade"
-                                            value={quantidade}
+                                            value={formik.values.quantity}
                                             onChange={formik.handleChange}
                                             error={formik.touched.quantity && Boolean(formik.errors.quantity)}
                                             helperText={formik.touched.quantity && formik.errors.quantity}

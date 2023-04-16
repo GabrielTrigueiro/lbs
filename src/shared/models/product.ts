@@ -1,4 +1,4 @@
-import { ICategoryRegister } from "./categories";
+import { ICategory } from "./categories";
 import {IProviderCadastroInfo} from "./provider";
 import * as yup from "yup";
 
@@ -13,7 +13,7 @@ export interface IDataProduct {
     codeBarras: string;
     codeInt: string;
     informations?: oneInformation[],
-    category: ICategoryRegister;
+    category: ICategory;
     provider: IProviderCadastroInfo;
 }
 

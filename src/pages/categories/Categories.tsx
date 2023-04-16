@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { ClientListPageSkeleton } from '../clients'
 import { CategoryService } from '../../shared/services/api/categories/Categories_Service'
 import { ISendPagination } from '../../shared/models/client'
-import { ICategoryRegister } from '../../shared/models/categories'
+import { ICategory } from '../../shared/models/categories'
 import { TableCategories } from '../../shared/components/table/TableCategories'
 import { CategoryRegisterModal } from '../../shared/components/modal/Category/CategoryRegisterModal'
 
@@ -19,7 +19,7 @@ export const Categories = () => {
   }
 
   //categorias data
-  const [rows, setRows] = useState<ICategoryRegister[]>([]);
+  const [rows, setRows] = useState<ICategory[]>([]);
 
   //skeleton ou tabela
   const [isLoading, setIsLoading] = useState(true)
@@ -57,8 +57,8 @@ export const Categories = () => {
         alert(result.message);
       } else {
         setIsLoading(false);
-        setPages(result.data.numberOfPages)
-        setRows(result.data.data);
+        setPages(result.numberOfPages)
+        setRows(result.data);
       }
     });
   };

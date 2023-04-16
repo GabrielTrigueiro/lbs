@@ -15,14 +15,9 @@ export const ProductPage = () => {
 
     //gerenciamento de modais
     const [register, setRegister] = useState(false);
-    const [edit, setEdit] = useState(false);
     function handleRegister(){
         setRegister(!register)
     }
-    function handleEdit(){
-        setEdit(!edit)
-    }
-
     //disposição da lista de produtos
     const [isLoading, setIsLoading] = useState(true);
     const [checked, setChecked] = useState(false);

@@ -22,7 +22,6 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
             if (data instanceof AxiosError) {
                 return data
             }
-            console.log(data)
             return data.data
         })
         .catch(err => {
