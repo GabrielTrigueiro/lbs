@@ -99,10 +99,9 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
     }
   }
 
-  function removeByIndex(index: string) {
+  function removeInfo(newList: oneInformation[]) {
     if (formik.values.informations) {
-      let arrayFiltrado = formik.values.informations.filter((obj) => String(obj.id) !== index);
-      formik.setFieldValue('informations', [...formik.values.informations, arrayFiltrado]);
+      formik.setFieldValue('informations', newList);
     }
   }
 
@@ -297,7 +296,7 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
       </Modal>
 
       <ProductRegisterInfos
-        removerPorId={removeByIndex}
+        removerPorId={removeInfo}
         infosAr={formik.values.informations}
         onFormSubmit={addInfo}
         qtd={formik.values.quantity}

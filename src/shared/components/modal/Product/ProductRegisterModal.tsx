@@ -77,10 +77,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     function zerarInfos(){
         setInfos([]);
     }
-    function removeByIndex(index: string){
-        let arrayFiltrado = infos.filter((obj) => String(obj.id) !== index);
-        setInfos(arrayFiltrado);
-    }
     const [confirm, setConfirm] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
@@ -273,14 +269,14 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                 </div>
             </Modal>
 
-            <ProductRegisterInfos
-                removerPorId={removeByIndex}
-                infosAr={infos}
-                onFormSubmit={handleFormSubmit}
-                qtd={formik.values.quantity}
-                changeState={handleInfos}
-                state={infosModal}
-            />
+            {/*<ProductRegisterInfos*/}
+            {/*    removerPorId={removeByIndex}*/}
+            {/*    infosAr={infos}*/}
+            {/*    onFormSubmit={handleFormSubmit}*/}
+            {/*    qtd={formik.values.quantity}*/}
+            {/*    changeState={handleInfos}*/}
+            {/*    state={infosModal}*/}
+            {/*/>*/}
 
             <Dialog open={confirm}>
                 <DialogTitle className={styles.confirmTitle}>Não aplicar alterações?</DialogTitle>

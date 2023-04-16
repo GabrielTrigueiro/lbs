@@ -20,7 +20,7 @@ import { Notification } from "../../notification";
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 
 interface props {
-    removerPorId: (index: string) => void;
+    removerPorId: (newArray: oneInformation[]) => void;
     qtd: number;
     state: boolean;
     infosAr?: oneInformation[];
@@ -30,7 +30,6 @@ interface props {
 
 export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd, onFormSubmit, infosAr, removerPorId }) => {
 
-    //confirm
     const [confirm, setConfirm] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
@@ -40,7 +39,6 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
         changeState();
     }
 
-    //manipulando o objeto
     const [formValues, setFormValues] = useState<oneInformation>({
         color: '',
         size: '',
@@ -76,6 +74,13 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
 
     function handleButtonClick() {
         changeState();
+    }
+
+    function remover(obj: number){
+        if(infosAr){
+            let newArray = infosAr.filter((e, index) => index !== obj);
+            removerPorId(newArray);
+        }
     }
 
     return (
@@ -118,7 +123,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                                 <TableCell>{row.color}</TableCell>
                                                 <TableCell>{row.size}</TableCell>
                                                 <TableCell>{row.quantity}</TableCell>
-                                                <TableCell><DoDisturbOnIcon onClick={()=>removerPorId(String(index))} sx={{margin:"auto 0"}}/></TableCell>
+                                                <TableCell><DoDisturbOnIcon onClick={()=>remover(index)} sx={{margin:"auto 0"}}/></TableCell>
                                             </TableRow>
                                         )) : <></>
                                     }
