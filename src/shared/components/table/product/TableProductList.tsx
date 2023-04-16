@@ -3,6 +3,7 @@ import { Table, TableRow, TableCell, Avatar, Box, TableBody, TableContainer, Tab
 import { IDataProduct } from "../../../models/product";
 import { TableSubMenu } from "../../client-submenu/TableSubMenu";
 import "../../../../styles/Client/ClientTable.css";
+import { ProductSubMenu } from "../../product-submenu/ProductSubMenu";
 
 interface props {
     lista: IDataProduct[];
@@ -34,6 +35,7 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
                         <TableCell sx={{ color: '#8e8e8e' }}>Venda</TableCell>
                         <TableCell sx={{ color: '#8e8e8e' }}>Etiqueta</TableCell>
                         <TableCell sx={{ color: '#8e8e8e' }}>Quantidade</TableCell>
+                        <TableCell sx={{ color: '#8e8e8e' }}></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -45,6 +47,7 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
                             <TableCellStyled sx={{ color: '#8e8e8e' }}>{row.salerPrice}</TableCellStyled>
                             <TableCellStyled sx={{ color: '#8e8e8e' }}>{row.tagPrice}</TableCellStyled>
                             <TableCellStyled sx={{ color: '#8e8e8e' }}>{row.quantidade}</TableCellStyled>
+                            <TableCellStyled sx={{ color: '#8e8e8e' }}><ProductSubMenu product={row} update={update}/></TableCellStyled>
                         </TableRow>
                     ))}
                 </TableBody>
