@@ -8,7 +8,8 @@ const BoxCard = styled(Box)({
     height:"14em",
     width:"11em",
     borderRadius:"1em",
-    padding: "0.5em"
+    padding: "0.5em",
+    fontFamily:"Poppins !important"
 })
 
 const BoxImagem = styled(Box)({

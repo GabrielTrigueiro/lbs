@@ -52,7 +52,6 @@ export const ProductPage = () => {
     //armazenando produtos
     const [productList, setProductList] = useState<IDataProduct[]>([]);
     function update() {
-        console.log('update rodou')
         ProductService.getAll(ProductPaginationConf).then((result) => {
             if (result instanceof Error) {
                 console.log(result.message);
