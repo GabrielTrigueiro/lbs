@@ -25,14 +25,15 @@ import { IProviderCadastroInfo } from "../../../models/provider";
 import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
 import AutoCompleteCategory from "../../auto-complete/AutoCompleteCategory";
 
-interface props {
+interface Iprops {
   data: IDataProduct;
   state: boolean;
   handleModal: () => void;
   update: () => void;
 }
 
-export const ProductEditModal: React.FC<props> = ({handleModal, state, update, data}) => {
+export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
+
   const formik = useFormik({
     initialValues: {
       id: data.id,
@@ -48,24 +49,25 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
       category: data.category,
       provider: data.provider
     },
+    enableReinitialize:true,
     validationSchema: ProductValidationSchema,
     onSubmit: (values) => {
-      if(formik.values.provider.id && formik.values.category.id){
-          const produto: IDataProductRegiser = {
-              id:formik.values.id,
-              codeInt:formik.values.codeInt ,
-              codeBarras:formik.values.codeBarras,
-              custePrice:formik.values.custePrice,
-              description:formik.values.description ,
-              informations:formik.values.informations ,
-              name:formik.values.name ,
-              quantity:formik.values.quantity ,
-              salerPrice:formik.values.salerPrice ,
-              tagPrice:formik.values.tagPrice,
-              categoryId: formik.values.category.id,
-              providerId: formik.values.provider.id,
-          }
-          editProduct(produto);
+      if (formik.values.provider.id && formik.values.category.id) {
+        const produto: IDataProductRegiser = {
+          id: formik.values.id,
+          codeInt: formik.values.codeInt,
+          codeBarras: formik.values.codeBarras,
+          custePrice: formik.values.custePrice,
+          description: formik.values.description,
+          informations: formik.values.informations,
+          name: formik.values.name,
+          quantity: formik.values.quantity,
+          salerPrice: formik.values.salerPrice,
+          tagPrice: formik.values.tagPrice,
+          categoryId: formik.values.category.id,
+          providerId: formik.values.provider.id,
+        }
+        editProduct(produto);
       }
     },
     onReset(values, formikHelpers) {
@@ -73,27 +75,30 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
     },
   })
 
- function handleProvider(obj: IProviderCadastroInfo){
+  function handleProvider(obj: IProviderCadastroInfo) {
     formik.setFieldValue('provider', obj)
- }
- function handleCategory(obj: ICategory){
+  }
+
+  function handleCategory(obj: ICategory) {
     formik.setFieldValue('category', obj)
- }
+  }
 
   function editProduct(objeto: IDataProductRegiser) {
     if (objeto.id) {
       ProductService.UpdateById(objeto.id, objeto).then((response) => {
-        update();
         handleModal();
         formik.resetForm();
+        update();
       })
     }
   }
+
   function addInfo(newInfo: oneInformation) {
     if (formik.values.informations) {
       formik.setFieldValue('informations', [...formik.values.informations, newInfo]);
     }
   }
+
   function removeByIndex(index: string) {
     if (formik.values.informations) {
       let arrayFiltrado = formik.values.informations.filter((obj) => String(obj.id) !== index);
@@ -105,6 +110,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
   function handleConfirm() {
     setConfirm(!confirm);
   }
+
   function changeConfirmAndModal() {
     setConfirm(!confirm);
     handleModal();
@@ -115,6 +121,7 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
   function handleInfos() {
     setInfosModal(!infosModal);
   }
+
   function getPercentage(initialPrice: number, finalPrice: number): string {
     return (((finalPrice - initialPrice) / initialPrice) * 100).toFixed(2);
   }
@@ -168,8 +175,8 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
                       error={formik.touched.name && Boolean(formik.errors.name)}
                       helperText={formik.touched.name && formik.errors.name}
                     />
-                    <AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category}/>
-                    <AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider}/>
+                    <AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category} />
+                    <AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider} />
                     <FormikTextField
                       autoComplete="off"
                       variant="standard"
@@ -273,17 +280,17 @@ export const ProductEditModal: React.FC<props> = ({handleModal, state, update, d
                 />
               </div>
               <div className={styles.modalBaixoDireita}>
-                <Box sx={{marginTop: "2em"}}>
+                <Box sx={{ marginTop: "2em" }}>
                   {getPercentage(formik.values.custePrice, formik.values.salerPrice)}% Margem de lucro
                 </Box>
-                <Box sx={{marginTop: "2em"}}>
+                <Box sx={{ marginTop: "2em" }}>
                   {getPercentage(formik.values.salerPrice, formik.values.tagPrice)}% Margem de lucro
                 </Box>
               </div>
             </div>
-            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-              <Button onClick={handleConfirm} sx={{margin: '1em'}} className={styles.button}>Cancelar</Button>
-              <Button type='submit' sx={{margin: '1em'}} className={styles.button}>Salvar</Button>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button onClick={handleConfirm} sx={{ margin: '1em' }} className={styles.button}>Cancelar</Button>
+              <Button type='submit' sx={{ margin: '1em' }} className={styles.button}>Salvar</Button>
             </Box>
           </form>
         </div>

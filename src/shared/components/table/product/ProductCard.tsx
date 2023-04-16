@@ -53,4 +53,3 @@ export const ProductCard:React.FC<props> = ({data, update}) =>{
         </BoxCard>
     )
 }
-
