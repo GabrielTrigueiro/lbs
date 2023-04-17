@@ -54,12 +54,13 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             categoryId: "",
             providerId: ""
         },
-        //validationSchema: ProductValidationSchema,
+        validationSchema: ProductValidationSchema,
         onSubmit: (values) => {
             registerProduct(values);
         },
         onReset(values, formikHelpers) {
-
+            setCategory({});
+            setProvider({})
         },
     })
 
