@@ -54,29 +54,36 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             categoryId: "",
             providerId: ""
         },
-        validationSchema: ProductValidationSchema,
+        //validationSchema: ProductValidationSchema,
         onSubmit: (values) => {
-            formik.values.informations = infos;
             registerProduct(values);
         },
         onReset(values, formikHelpers) {
-            zerarInfos();
+
         },
     })
 
+    const [provider, setProvider] = useState({});
+    const [category, setCategory] = useState({});
     function handleProvider(obj: IProviderCadastroInfo){
-        formik.setFieldValue('provider', obj)
+        formik.setFieldValue('providerId', obj.id)
+        setProvider(obj)
     }
     function handleCategory(obj: ICategory){
-        formik.setFieldValue('category', obj)
+        formik.setFieldValue('categoryId', obj.id)
+        setCategory(obj)
     }
-    const [infos, setInfos] = useState<oneInformation[]>([]);
-    function handleFormSubmit(formValues: oneInformation) {
-        setInfos([...infos, formValues]);
+    function addInfo(newInfo: oneInformation) {
+        if (formik.values.informations) {
+            formik.setFieldValue('informations', [...formik.values.informations, newInfo]);
+        }
     }
-    function zerarInfos(){
-        setInfos([]);
+    function removeInfo(newList: oneInformation[]) {
+        if (formik.values.informations) {
+            formik.setFieldValue('informations', newList);
+        }
     }
+
     const [confirm, setConfirm] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
@@ -94,6 +101,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
     }
 
     function registerProduct(values: IDataProductRegiser){
+        console.log('registrando')
         ProductService.Create(values).then((response) => {
             Notification(response.message, "success")
             update();
@@ -148,8 +156,8 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                             error={formik.touched.name && Boolean(formik.errors.name)}
                                             helperText={formik.touched.name && formik.errors.name}
                                         />
-                                        {/*<AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category.id}/>*/}
-                                        {/*<AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider}/>*/}
+                                        <AutoCompleteCategory onSubmit={handleCategory} categoria={category}/>
+                                        <AutoCompleteProvider onSubmit={handleProvider} fornecedor={provider}/>
                                         <FormikTextField
                                             autoComplete="off"
                                             variant="standard"
@@ -190,7 +198,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                                     </TableHead>
                                                     <TableBody className={styles.tableBody}>
                                                         {
-                                                            infos.map((row, index) => (
+                                                            formik.values.informations.map((row, index) => (
                                                                 <TableRow key={index}>
                                                                     <TableCell>{row.color}</TableCell>
                                                                     <TableCell>{row.size}</TableCell>
@@ -269,14 +277,14 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                 </div>
             </Modal>
 
-            {/*<ProductRegisterInfos*/}
-            {/*    removerPorId={removeByIndex}*/}
-            {/*    infosAr={infos}*/}
-            {/*    onFormSubmit={handleFormSubmit}*/}
-            {/*    qtd={formik.values.quantity}*/}
-            {/*    changeState={handleInfos}*/}
-            {/*    state={infosModal}*/}
-            {/*/>*/}
+            <ProductRegisterInfos
+                removerPorId={removeInfo}
+                infosAr={formik.values.informations}
+                onFormSubmit={addInfo}
+                qtd={formik.values.quantity}
+                changeState={handleInfos}
+                state={infosModal}
+            />
 
             <Dialog open={confirm}>
                 <DialogTitle className={styles.confirmTitle}>Não aplicar alterações?</DialogTitle>

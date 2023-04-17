@@ -4,11 +4,11 @@ import {IProviderCadastroInfo} from "../../models/provider";
 import {ProviderService} from "../../services/api/providers/ProviderService";
 import { ISendPagination } from "../../models/client";
 
-interface IProps{
-  fornecedor: IProviderCadastroInfo;
-  onSubmit: (objeto: IProviderCadastroInfo) => void;
+interface IProps<T>{
+  fornecedor: T;
+  onSubmit: (objeto: T) => void;
 }
-export default function AutoCompleteProvider({fornecedor, onSubmit}: IProps){
+export default function AutoCompleteProvider({fornecedor, onSubmit}: IProps<any>){
 
   const [listaObjeto, setListaObjeto] = useState<IProviderCadastroInfo[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");

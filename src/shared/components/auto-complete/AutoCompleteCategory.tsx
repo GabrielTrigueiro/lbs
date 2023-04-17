@@ -6,11 +6,11 @@ import {ICategory} from "../../models/categories";
 import {CategoryService} from "../../services/api/categories/Categories_Service";
 import { ISendPagination } from "../../models/client";
 
-interface IProps{
-  categoria: ICategory;
-  onSubmit: (objeto: ICategory) => void;
+interface IProps<T>{
+  categoria: T;
+  onSubmit: (objeto: T) => void;
 }
-export default function AutoCompleteCategory({categoria, onSubmit}: IProps){
+export default function AutoCompleteCategory({categoria, onSubmit}: IProps<any>){
 
   const [listaObjeto, setListaObjeto] = useState<ICategory[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -44,7 +44,7 @@ export default function AutoCompleteCategory({categoria, onSubmit}: IProps){
         value={categoria}
         onChange={(event: any, newValue) => onSubmit(newValue)}
         getOptionLabel={(option) => option.name || ""}
-        renderInput={(params) => <TextField sx={{marginTop:"1em"}} variant={"standard"} value={searchValue} onChange={handleInputChange} {...params} label="Fornecedor" />}
+        renderInput={(params) => <TextField sx={{marginTop:"1em"}} variant={"standard"} value={searchValue} onChange={handleInputChange} {...params} label="Categoria" />}
       />
     </div>
   )
