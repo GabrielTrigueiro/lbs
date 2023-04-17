@@ -63,7 +63,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             setProvider({})
         },
     })
-
     const [provider, setProvider] = useState({});
     const [category, setCategory] = useState({});
     function handleProvider(obj: IProviderCadastroInfo){
@@ -84,7 +83,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
             formik.setFieldValue('informations', newList);
         }
     }
-
     const [confirm, setConfirm] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
@@ -94,13 +92,10 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         handleModal();
         formik.resetForm();
     }
-
-    //modal de informações
     const [infosModal, setInfosModal] = useState<true | false>(false);
     function handleInfos() {
         setInfosModal(!infosModal);
     }
-
     function registerProduct(values: IDataProductRegiser){
         console.log('registrando')
         ProductService.Create(values).then((response) => {

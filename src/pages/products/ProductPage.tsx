@@ -26,11 +26,11 @@ export const ProductPage = () => {
     }
 
     //search
-    const [selectContent, setSelectContent] = useState('5');
-    const [pages, setPages] = useState<number>(0)
     const [value, setValue] = useState<string>("");
+    const [pages, setPages] = useState<number>(0)
     const [pageSize, setPageSize] = useState<number>(5)
     const [actualpage, setActualPage] = useState<number>(0)
+    const [selectContent, setSelectContent] = useState('5');
     let ProductPaginationConf: ISendPagination = {
         page: actualpage,
         pageSize: pageSize,
@@ -48,21 +48,19 @@ export const ProductPage = () => {
         setActualPage(0)
         setPageSize(translate)
     };
-
-    //armazenando produtos
     const [productList, setProductList] = useState<IDataProduct[]>([]);
     function update() {
         ProductService.getAll(ProductPaginationConf).then((result) => {
             if (result instanceof Error) {
                 console.log(result.message);
             } else {
+                console.log(result)
                 setIsLoading(false);
                 setPages(result.numberOfPages)
                 setProductList(result.data);
             }
         })
     }
-
     useEffect(() => {
         update();
     },[value, actualpage, pageSize])

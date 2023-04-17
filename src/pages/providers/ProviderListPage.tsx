@@ -13,19 +13,13 @@ import { ProviderRegisterModal } from '../../shared/components/modal/Provider/Pr
 
 export const ProviderListPage: React.FC = () => {
 
-  //rolls
   const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IProviderCadastroInfo[]>([]);
-
-  //registro
   const [modalState, setModalState] = useState<true | false>(false);
   function handleModal() {
     setModalState(!modalState)
   }
-
-
-  //pagination
   const [pages, setPages] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(5)
   const [actualpage, setActualPage] = useState<number>(0)
@@ -47,8 +41,6 @@ export const ProviderListPage: React.FC = () => {
     setActualPage(0)
     setPageSize(translate)
   };
-
-  //refresh
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
       if (result instanceof Error) {
