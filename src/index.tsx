@@ -51,14 +51,14 @@ const router = createBrowserRouter([
 ReactDOM.render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Provider store={store}>
-        <AuthProvider>
-          <ToastContainer/>
-          <SideBarProvider>
-            <RouterProvider router={router}/>
-          </SideBarProvider>
-        </AuthProvider>
-      </Provider>
+        <Provider store={store}>
+          <AuthProvider>
+            <ToastContainer/>
+            <SideBarProvider>
+              <RouterProvider router={router}/>
+            </SideBarProvider>
+          </AuthProvider>
+        </Provider>
     </LocalizationProvider>
   </React.StrictMode>,
   document.getElementById('root')

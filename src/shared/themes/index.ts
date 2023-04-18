@@ -1,2 +1,1 @@
-export * from './Ligth'
-export * from './Dark'
+export * from './DefaultTheme'

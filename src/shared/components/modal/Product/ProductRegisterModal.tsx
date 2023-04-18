@@ -11,7 +11,7 @@ import {
     Modal,
     Select,
     Table, TableCell, TableRow,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
 import { useFormik } from "formik";
@@ -32,6 +32,7 @@ import TableBody from "@mui/material/TableBody";
 import { Notification } from "../../notification";
 import AutoCompleteCategory from "../../auto-complete/AutoCompleteCategory";
 import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
+import {styled} from "@mui/material/styles";
 
 interface props {
     state: boolean;
@@ -39,8 +40,37 @@ interface props {
     update: () => void;
 }
 
+//estilização
+const Container = styled(Modal)({
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center"
+})
+
+const Card = styled(Box)({
+    outline: "none",
+    backgroundColor: "#FFF",
+    height: "85vh",
+    width: "70vw",
+    display: "flex",
+    flexDirection: "column",
+})
+
+const Title = styled(Typography)({
+    color:"white",
+    backgroundColor:"#494b4f",
+    fontWeight:"bold",
+    fontSize:"24px",
+    padding:"0.5em 1.4em"
+})
+
+const FormBody = styled("form")({
+    height: "100%",
+})
+
 export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, update }) => {
-    const formik = useFormik({
+
+    const formik  = useFormik({
         initialValues: {
             name: "",
             description: "",
@@ -84,6 +114,9 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         }
     }
     const [confirm, setConfirm] = useState<true | false>(false);
+
+    //estados
+    const [infosModal, setInfosModal] = useState<true | false>(false);
     function handleConfirm() {
         setConfirm(!confirm);
     }
@@ -92,7 +125,6 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
         handleModal();
         formik.resetForm();
     }
-    const [infosModal, setInfosModal] = useState<true | false>(false);
     function handleInfos() {
         setInfosModal(!infosModal);
     }
@@ -111,12 +143,10 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
 
     return (
         <>
-            <Modal className={styles.modalContainer} open={state} onClose={handleConfirm}>
-                <div className={styles.modalFormContainer}>
-                    <div className={styles.titulo}>
-                        Cadastrar Produto
-                    </div>
-                    <form className={styles.registerContainer} onSubmit={formik.handleSubmit}>
+            <Container open={state} onClose={handleConfirm}>
+                <Card>
+                    <Title>Cadastrar Produto</Title>
+                    <FormBody onSubmit={formik.handleSubmit}>
                         <div className={styles.modalCima}>
                             <div className={styles.modalCimaEsquerda}>
                                 <div className={styles.codeImage}>
@@ -211,7 +241,7 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.priceTitle}>Preço</div>
+                        <Typography sx={{margin: "0 0.5em",borderBottom: "1px solid gray"}}>Preço</Typography>
                         <div className={styles.modalBaixo}>
                             <div className={styles.modalBaixoEsquerda}>
                                 <FormikTextField
@@ -266,12 +296,12 @@ export const ProductRegisterModal: React.FC<props> = ({ handleModal, state, upda
                             </div>
                         </div>
                             <Box sx={{display:'flex', justifyContent:'flex-end'}}>
-                                <Button onClick={handleConfirm} sx={{margin:'1em'}} className={styles.button}>Cancelar</Button>
-                                <Button type='submit' sx={{margin:'1em'}} className={styles.button}>Salvar</Button>
+                                <Button onClick={handleConfirm} sx={{margin:'1em'}} variant="contained">Cancelar</Button>
+                                <Button type='submit' sx={{margin:'1em'}} variant="contained">Salvar</Button>
                             </Box>
-                    </form>
-                </div>
-            </Modal>
+                    </FormBody>
+                </Card>
+            </Container>
 
             <ProductRegisterInfos
                 removerPorId={removeInfo}

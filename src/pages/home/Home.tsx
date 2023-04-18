@@ -3,6 +3,8 @@ import { MenuLateral } from "../../shared/components";
 import { useSideBarContext } from "../../shared/contexts";
 import {useEffect} from "react";
 import styles from "../../styles/Home/Home.module.scss";
+import {ThemeProvider} from "@mui/material";
+import DefaultTheme from "../../shared/themes/DefaultTheme";
 
 export default function Home() {
 
@@ -42,10 +44,12 @@ export default function Home() {
       }, [token]);
 
     return(
+      <ThemeProvider theme={DefaultTheme}>
         <div className={styles.container}>
-            <MenuLateral>
-                <Outlet/>
-            </MenuLateral>
-        </div>
+              <MenuLateral>
+                  <Outlet/>
+              </MenuLateral>
+          </div>
+      </ThemeProvider>
     )
 }
