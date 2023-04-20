@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Dialog,
     DialogActions,
@@ -104,7 +105,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                             />
                             <Button onClick={handlebutton} className={styles.button}>Adicionar</Button>
                         </div>
-
+                                    
                         <TableContainer className={styles.tableContainer}>
                             <Table>
                                 <TableHead className={styles.tableHead}>
@@ -119,11 +120,11 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                                     {
                                         infosAr ?
                                         infosAr.map((row, index) => (
-                                            <TableRow key={index}>
+                                            <TableRow sx={{"td:first-child":{borderLeftColor:"transparent"}}} key={index}>
                                                 <TableCell>{row.color}</TableCell>
                                                 <TableCell>{row.size}</TableCell>
                                                 <TableCell>{row.quantity}</TableCell>
-                                                <TableCell><DoDisturbOnIcon onClick={()=>remover(index)} sx={{margin:"auto 0"}}/></TableCell>
+                                                <TableCell><DoDisturbOnIcon onClick={()=>remover(index)} sx={{margin:"auto 0", ":hover":{color:"#666"}}}/></TableCell>
                                             </TableRow>
                                         )) : <></>
                                     }
@@ -131,13 +132,13 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                             </Table>
                         </TableContainer>
 
-                        <div className={styles.footer}>
-                            <div>Qtd. Total: `{qtd}`</div>
+                        <Box sx={{margin:"auto"}}>
+                            <Box sx={{textAlign:"center"}}>Qtd. Total: `{qtd}`</Box>
                             <div>
                                 <Button onClick={handleConfirm} className={styles.button}>Fechar</Button>
                                 <Button onClick={handleButtonClick} className={styles.button}>Salvar</Button>
                             </div>
-                        </div>
+                        </Box>
                     </div>
                 </div>
             </Modal>

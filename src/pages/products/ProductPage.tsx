@@ -54,7 +54,6 @@ export const ProductPage = () => {
             if (result instanceof Error) {
                 console.log(result.message);
             } else {
-                console.log(result)
                 setIsLoading(false);
                 setPages(result.numberOfPages)
                 setProductList(result.data);
