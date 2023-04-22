@@ -33,8 +33,15 @@ const DefaultTheme = createTheme({
           })
         }
       ],
+    },
+    MuiPaper:{
+      defaultProps:{
+        style:{
+          boxShadow:"none"
+        }
+      }
     }
-  }
+  },
 });
 
 export default DefaultTheme;

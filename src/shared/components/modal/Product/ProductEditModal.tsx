@@ -3,10 +3,10 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogTitle, Modal, Table, TableCell, TableRow
+  DialogTitle, Modal, Table, TableCell, TableRow, Typography
 } from "@mui/material";
 import styles from "../../../../styles/Product/ProductRegisterModal.module.scss";
-import { useFormik } from "formik";
+import {useFormik} from "formik";
 import {
   IDataProductRegiser,
   ProductValidationSchema,
@@ -14,16 +14,17 @@ import {
   IDataProduct,
 } from "../../../models/product";
 import FormikTextField from "../../formik-text-field/FormikTextField";
-import React, { useEffect, useState } from "react";
-import { ProductService } from "../../../services/api/product";
-import { ICategory } from "../../../models/categories";
-import { ProductRegisterInfos } from "./ProductRegisterInfos";
+import React, {useEffect, useState} from "react";
+import {ProductService} from "../../../services/api/product";
+import {ICategory} from "../../../models/categories";
+import {ProductRegisterInfos} from "./ProductRegisterInfos";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
-import { IProviderCadastroInfo } from "../../../models/provider";
+import {IProviderCadastroInfo} from "../../../models/provider";
 import AutoCompleteProvider from "../../auto-complete/AutoCompleteProvider";
 import AutoCompleteCategory from "../../auto-complete/AutoCompleteCategory";
+import {Card, Container, FormBody, TableStyle, Title} from "./TableComponents";
 
 interface Iprops {
   data: IDataProduct;
@@ -32,7 +33,7 @@ interface Iprops {
   update: () => void;
 }
 
-export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
+export const ProductEditModal = ({data, handleModal, state, update}: Iprops) => {
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +50,7 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
       category: data.category,
       provider: data.provider
     },
-    enableReinitialize:true,
+    enableReinitialize: true,
     validationSchema: ProductValidationSchema,
     onSubmit: (values) => {
       if (formik.values.provider.id && formik.values.category.id) {
@@ -106,6 +107,7 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
   }
 
   const [confirm, setConfirm] = useState<true | false>(false);
+
   function handleConfirm() {
     setConfirm(!confirm);
   }
@@ -117,6 +119,7 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
   }
 
   const [infosModal, setInfosModal] = useState<true | false>(false);
+
   function handleInfos() {
     setInfosModal(!infosModal);
   }
@@ -127,114 +130,108 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
 
   return (
     <>
-      <Modal className={styles.modalContainer} open={state} onClose={handleConfirm}>
-        <div className={styles.modalFormContainer}>
-          <div className={styles.titulo}>
-            Cadastrar Produto
-          </div>
-          <form className={styles.registerContainer} onSubmit={formik.handleSubmit}>
-            <div className={styles.modalCima}>
-              <div className={styles.modalCimaEsquerda}>
-                <div className={styles.codeImage}>
-                  <FormikTextField
-                    autoComplete="off"
-                    variant="standard"
-                    size="small"
-                    fullWidth
-                    id="codeBarras"
-                    name="codeBarras"
-                    label="Código de barras"
-                    value={formik.values.codeBarras}
-                    onChange={formik.handleChange}
-                    error={formik.touched.codeBarras && Boolean(formik.errors.codeBarras)}
-                    helperText={formik.touched.codeBarras && formik.errors.codeBarras}
-                  />
-                  <Box sx={{
-                    background: "#D9D9D9",
-                    width: '10em',
-                    height: '10em',
-                    marginTop: '1em',
-                    textAlign: 'center'
-                  }}>Imagem</Box>
-                </div>
+      <Container open={state} onClose={handleConfirm}>
+        <Card>
+          <Title>Cadastrar Produto</Title>
+          <FormBody onSubmit={formik.handleSubmit}>
+            <Box sx={{display: "flex", justifyContent: "space-between"}}>
+              <Box>
+                <FormikTextField
+                  autoComplete="off"
+                  variant="standard"
+                  size="small"
+                  fullWidth
+                  id="codeBarras"
+                  name="codeBarras"
+                  label="Código de barras"
+                  value={formik.values.codeBarras}
+                  onChange={formik.handleChange}
+                  error={formik.touched.codeBarras && Boolean(formik.errors.codeBarras)}
+                  helperText={formik.touched.codeBarras && formik.errors.codeBarras}
+                />
+                <Box sx={{
+                  background: "#D9D9D9",
+                  width: '10em',
+                  height: '10em',
+                  marginTop: '1em',
+                  textAlign: 'center',
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }}>Imagem</Box>
+              </Box>
+              <div className={styles.esquerda}>
+                <FormikTextField
+                  autoComplete="off"
+                  variant="standard"
+                  size="small"
+                  fullWidth
+                  id="name"
+                  name="name"
+                  label="Nome completo"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+                <AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category}/>
+                <AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider}/>
+                <FormikTextField
+                  autoComplete="off"
+                  variant="standard"
+                  size="small"
+                  fullWidth
+                  id="quantity"
+                  name="quantity"
+                  label="Quantidade"
+                  value={formik.values.quantity}
+                  onChange={formik.handleChange}
+                  error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                  helperText={formik.touched.quantity && formik.errors.quantity}
+                />
+                <FormikTextField
+                  autoComplete="off"
+                  variant="standard"
+                  size="small"
+                  fullWidth
+                  id="description"
+                  name="description"
+                  label="Descrição"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  error={formik.touched.description && Boolean(formik.errors.description)}
+                  helperText={formik.touched.description && formik.errors.description}
+                />
               </div>
-              <div className={styles.modalCimaDireita}>
-                <div className={styles.inputsCima}>
-                  <div className={styles.esquerda}>
-                    <FormikTextField
-                      autoComplete="off"
-                      variant="standard"
-                      size="small"
-                      fullWidth
-                      id="name"
-                      name="name"
-                      label="Nome completo"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      error={formik.touched.name && Boolean(formik.errors.name)}
-                      helperText={formik.touched.name && formik.errors.name}
-                    />
-                    <AutoCompleteCategory onSubmit={handleCategory} categoria={formik.values.category} />
-                    <AutoCompleteProvider onSubmit={handleProvider} fornecedor={formik.values.provider} />
-                    <FormikTextField
-                      autoComplete="off"
-                      variant="standard"
-                      size="small"
-                      fullWidth
-                      id="quantity"
-                      name="quantity"
-                      label="Quantidade"
-                      value={formik.values.quantity}
-                      onChange={formik.handleChange}
-                      error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-                      helperText={formik.touched.quantity && formik.errors.quantity}
-                    />
-                    <FormikTextField
-                      autoComplete="off"
-                      variant="standard"
-                      size="small"
-                      fullWidth
-                      id="description"
-                      name="description"
-                      label="Descrição"
-                      value={formik.values.description}
-                      onChange={formik.handleChange}
-                      error={formik.touched.description && Boolean(formik.errors.description)}
-                      helperText={formik.touched.description && formik.errors.description}
-                    />
-                  </div>
-                  <div className={styles.direita}>
-                    <Box className={styles.tableContainer}>
-                      <TableContainer>
-                        <Table>
-                          <TableHead className={styles.tableHead}>
-                            <TableRow>
-                              <TableCell>Cor</TableCell>
-                              <TableCell>Tamanho</TableCell>
-                              <TableCell>Quantidade</TableCell>
+              <Box sx={{display: "flex", flexDirection: "column"}}>
+                <TableStyle>
+                  <TableContainer>
+                    <Table>
+                      <TableHead className={styles.tableHead}>
+                        <TableRow>
+                          <TableCell>Cor</TableCell>
+                          <TableCell>Tamanho</TableCell>
+                          <TableCell>Quantidade</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody className={styles.tableBody}>
+                        {
+                          formik.values.informations?.map((row, index) => (
+                            <TableRow key={index} sx={{"td:first-child": {borderLeftColor: "transparent"}, verticalAlign: 'top'}}>
+                              <TableCell>{row.color}</TableCell>
+                              <TableCell>{row.size}</TableCell>
+                              <TableCell>{row.quantity}</TableCell>
                             </TableRow>
-                          </TableHead>
-                          <TableBody className={styles.tableBody}>
-                            {
-                              formik.values.informations?.map((row, index) => (
-                                <TableRow key={index}>
-                                  <TableCell>{row.color}</TableCell>
-                                  <TableCell>{row.size}</TableCell>
-                                  <TableCell>{row.quantity}</TableCell>
-                                </TableRow>
-                              ))
-                            }
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </Box>
-                    <Button onClick={handleInfos} className={styles.button}>+ Tamanho</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.priceTitle}>Preço</div>
-            <div className={styles.modalBaixo}>
+                          ))
+                        }
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </TableStyle>
+                <Button variant={"contained"} sx={{margin: "2em auto"}} onClick={handleInfos}>+ Tamanho</Button>
+              </Box>
+            </Box>
+            <Typography sx={{borderBottom: "1px solid gray", margin: "auto 0.7em"}}>Preço</Typography>
+            <Box sx={{display: "flex", margin: "auto 0"}}>
               <div className={styles.modalBaixoEsquerda}>
                 <FormikTextField
                   autoComplete="off"
@@ -279,21 +276,21 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
                 />
               </div>
               <div className={styles.modalBaixoDireita}>
-                <Box sx={{ marginTop: "2em" }}>
+                <Box sx={{marginTop: "2em"}}>
                   {getPercentage(formik.values.custePrice, formik.values.salerPrice)}% Margem de lucro
                 </Box>
-                <Box sx={{ marginTop: "2em" }}>
+                <Box sx={{marginTop: "2em"}}>
                   {getPercentage(formik.values.salerPrice, formik.values.tagPrice)}% Margem de lucro
                 </Box>
               </div>
-            </div>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button onClick={handleConfirm} sx={{ margin: '1em' }} className={styles.button}>Cancelar</Button>
-              <Button type='submit' sx={{ margin: '1em' }} className={styles.button}>Salvar</Button>
             </Box>
-          </form>
-        </div>
-      </Modal>
+            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+              <Button variant={"contained"} onClick={handleConfirm} sx={{margin: '1em'}}>Cancelar</Button>
+              <Button variant={"contained"} type='submit' sx={{margin: '1em'}}>Salvar</Button>
+            </Box>
+          </FormBody>
+        </Card>
+      </Container>
 
       <ProductRegisterInfos
         removerPorId={removeInfo}
@@ -306,9 +303,9 @@ export const ProductEditModal = ({data, handleModal, state, update}:Iprops) => {
 
       <Dialog open={confirm}>
         <DialogTitle className={styles.confirmTitle}>Não aplicar alterações?</DialogTitle>
-        <DialogActions>
-          <Button className={styles.button} onClick={handleConfirm}>Cancelar</Button>
-          <Button className={styles.button} onClick={changeConfirmAndModal}>Confirmar</Button>
+        <DialogActions sx={{margin: "0 auto"}}>
+          <Button variant={"contained"} className={styles.button} onClick={handleConfirm}>Cancelar</Button>
+          <Button variant={"contained"} className={styles.button} onClick={changeConfirmAndModal}>Confirmar</Button>
         </DialogActions>
       </Dialog>
     </>

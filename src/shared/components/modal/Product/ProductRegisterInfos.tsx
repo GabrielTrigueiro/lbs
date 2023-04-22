@@ -132,7 +132,7 @@ export const ProductRegisterInfos: React.FC<props> = ({ changeState, state, qtd,
                             </Table>
                         </TableContainer>
 
-                        <Box sx={{margin:"auto"}}>
+                        <Box>
                             <Box sx={{textAlign:"center"}}>Qtd. Total: `{qtd}`</Box>
                             <div>
                                 <Button onClick={handleConfirm} className={styles.button}>Fechar</Button>

@@ -55,12 +55,12 @@ const UpdateById = async (id: string, dados: IDataProductRegiser): Promise<strin
                 `Bearer ${localStorage.getItem('Acess_Token')?.replace(/"/g, '')}`
         }
     }
-    return await api.put<IDataProduct>(environment.url_product + `/${id}`, dados, token)
+    return await api.put<any>(environment.url_product + `/${id}`, dados, token)
         .then(data => {
             if (data instanceof AxiosError) {
                 return data.response?.data
             }
-            Notification('Produto cadastrado', "success")
+            Notification(data.data.message, "success")
             return data.data
         })
         .catch(err => {
