@@ -39,6 +39,10 @@ export default function Home() {
             label: "produtos",
             icon: "shopping_bag",   
             path: "/home/produtos",
+          },          {
+            label: "caixa",
+            icon: "paid_icon",
+            path: "/home/caixa",
           },
         ]);
       }, [token]);

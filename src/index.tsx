@@ -14,6 +14,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { IndicationPage } from './pages/indications';
 import { Categories } from './pages/categories';
 import { ProductPage } from './pages/products/ProductPage';
+import { CaixaPage } from "./pages/caixa";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,9 @@ const router = createBrowserRouter([
       {
         path: "/home/produtos",
         element: <ProductPage/>
+      },      {
+        path: "/home/caixa",
+        element: <CaixaPage/>
       },
     ]
   },
