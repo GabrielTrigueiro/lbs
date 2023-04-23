@@ -132,7 +132,7 @@ export const ProductEditModal = ({data, handleModal, state, update}: Iprops) => 
     <>
       <Container open={state} onClose={handleConfirm}>
         <Card>
-          <Title>Cadastrar Produto</Title>
+          <Title>Editar Produto</Title>
           <FormBody onSubmit={formik.handleSubmit}>
             <Box sx={{display: "flex", justifyContent: "space-between"}}>
               <Box>

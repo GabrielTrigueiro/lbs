@@ -40,6 +40,15 @@ const DefaultTheme = createTheme({
           boxShadow:"none"
         }
       }
+    },
+    MuiModal:{
+      defaultProps:{
+        style:{
+          display:"flex",
+          alignItems:"center",
+          justifyContent:"center"
+        }
+      }
     }
   },
 });

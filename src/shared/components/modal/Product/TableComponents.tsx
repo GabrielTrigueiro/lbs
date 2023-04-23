@@ -33,7 +33,7 @@ export const FormBody = styled("form")({
 })
 
 export const TableStyle = styled(Box)({
-  maxHeight:"17em",
+  maxHeight:"10em",
   margin:"0 auto",
   overflowY: "scroll",
   "::-webkit-scrollbar": {
