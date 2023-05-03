@@ -1,33 +1,29 @@
-import {styled} from "@mui/material/styles";
-import {Box} from "@mui/material";
+import {Autocomplete, Box, Button, TextField, Typography} from "@mui/material";
+import { Caixa, CaixaContainer, Infos } from "./CaixaComponents";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import {useState} from "react";
+import {CodeImputField} from "./CodeImputField";
+import {CaixaList} from "./CaixaList";
 
 export const CaixaPage = () => {
 
   return(
-    <Box
-      sx={{
-        width:"100%",
-        padding:"3em 0",
-        display:"grid",
-        gridTemplateColumns:"1fr 1fr",
-        gap:"1em"
-      }}
-    >
-      <Box sx={{display:"grid", gridTemplateRows:"5em 1fr", rowGap:"1em"}}>
-        <Box  sx={{background:"#fff"}}>oi</Box>
-        <Box  sx={{background:"#fff"}}>io</Box>
-      </Box>
-      <Box sx={{
-          display:"grid",
-          gap:"1em",
-          gridTemplateRows:"1fr 100px 1fr 100px"
-        }}
-      >
+    <CaixaContainer>
+      <Caixa>
+        <CodeImputField/>
+        <CaixaList/>
+      </Caixa>
+      <Infos>
         <Box sx={{background:"#fff"}}>1</Box>
         <Box sx={{background:"#fff"}}>2</Box>
-        <Box sx={{background:"#fff"}}>3</Box>
-        <Box sx={{background:"#fff"}}>4</Box>
-      </Box>
-    </Box>
+        <Box sx={{background:"#fff"}}>
+          Formas de pagamento
+        </Box>
+        <Box sx={{background:"#fff"}}>
+          Valor final e confirmar
+        </Box>
+      </Infos>
+    </CaixaContainer>
   )
 }
