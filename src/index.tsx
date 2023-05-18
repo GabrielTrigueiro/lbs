@@ -15,6 +15,7 @@ import { IndicationPage } from './pages/indications';
 import { Categories } from './pages/categories';
 import { ProductPage } from './pages/products/ProductPage';
 import { CaixaPage } from "./pages/caixa";
+import "./index.css"
 
 const router = createBrowserRouter([
   {

@@ -1,12 +1,13 @@
-import {Autocomplete, Box, Button, TextField, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 import {CodeImputField} from "./CodeImputField";
 import {CaixaList} from "./CaixaList";
 
 export const CaixaPage = () => {
 
   return(
-    <div>
-      <div>
+    <div className="bg-slate-800 w-3 h-3">
+      oi asas
+      {/* <div>
         <CodeImputField/>
         <CaixaList/>
       </div>
@@ -19,7 +20,7 @@ export const CaixaPage = () => {
         <Box sx={{background:"#fff"}}>
           Valor final e confirmar
         </Box>
-      </div>
+      </div> */}
     </div>
   )
 }
