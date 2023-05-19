@@ -12,17 +12,17 @@ function createData(
 
 const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Cupcake', 305, 3.7, 67, 4.3),
-
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
+
 export const CaixaList = () => {
   return (
-    <div className="flex flex-col h-full">
-      <div className="h-full overflow-y-auto">
+    <div className="bg-white flex-grow flex flex-col">
+      <div className="flex-grow max-h-full">
         <TableContainer>
           <Table aria-label="simple table">
             <TableHead sx={{ borderBotton: "2px solid #000" }}>
@@ -40,6 +40,7 @@ export const CaixaList = () => {
                   key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
+
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
@@ -53,13 +54,27 @@ export const CaixaList = () => {
           </Table>
         </TableContainer>
       </div>
-      <div className="flex h-16 text-white rounded">
-        <div className="bg-red-500 flex items-center justify-center p-4">
+      <div className="bg-neutral-400 flex h-16 text-white">
+        <div
+          className="
+            transition
+            cursor-pointer
+          bg-red-500
+          border-black
+          hover:bg-white
+            hover:text-black
+            flex
+            items-center
+            justify-center
+            m-2
+            p-3
+            rounded-lg
+          "
+        >
           <Typography>Cancelar</Typography>
         </div>
         <div
           className="
-          bg-neutral-400
             flex
             flex-grow 
             justify-end 

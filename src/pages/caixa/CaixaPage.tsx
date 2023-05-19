@@ -5,22 +5,18 @@ import { CaixaList } from "./CaixaList";
 export const CaixaPage = () => {
 
   return (
-    <div 
+    <div
       className="
-        py-4
-        flex
-        gap-5
-        h-full
+          py-4
+          flex
+          gap-5
+          min-h-full
       "
     >
       {/* lista */}
-      <div className="flex-grow flex flex-col">
-        <div className="bg-white">
-          <CodeImputField />
-        </div>
-        <div className="bg-white flex-grow">
-          <CaixaList />
-        </div>
+      <div className="flex flex-col flex-grow gap-4">
+        <CodeImputField />
+        <CaixaList />
       </div>
 
       {/* infos */}

@@ -144,17 +144,17 @@ export const CodeImputField = () => {
   ];
 
   return (
-    <div className="grid grid-flow-col">
+    <div className="bg-white flex">
       {/* descrição e quantidade */}
-      <div className="bg-neutral-400 col-span-1">
-        <Typography align="center" sx={{ margin: "auto 0" }}>Quantidade</Typography>
+      <div className="bg-neutral-400 px-4">
+        <Typography>Quantidade</Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: "1em 1em 1em", gap: "1em", justifyContent: "center" }}>
           <AddIcon onClick={addQtd} sx={{ ":hover": { background: "#fff", }, borderRadius: "0.5em", transition: "0.3s" }} fontSize={"small"} />
           <Typography align={"center"}>{qtd}</Typography>
           <RemoveIcon onClick={rmvQtd} sx={{ ":hover": { background: "#fff", }, borderRadius: "0.5em", transition: "0.3s" }} fontSize={"small"} />
         </Box>
       </div>
-      <div className="col-span-4">
+      <div className="flex-grow">
         <Typography align={"center"}>Informe uma descrição ou um código de barras</Typography>
         <Autocomplete
           disablePortal
