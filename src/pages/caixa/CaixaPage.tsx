@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { CodeImputField } from "./CodeImputField";
 import { CaixaList } from "./CaixaList";
 
@@ -41,13 +41,22 @@ export const CaixaPage = () => {
         </div>
 
         {/* pagamentos */}
-        <div className="bg-rose-200 flex-grow">
-          pagamento
+        <div className="flex-grow grid grid-row-3">
+          <div className="bg-neutral-500 text-white flex items-center px-2">
+            Saldo a pagar: R$ 0,00
+          </div>
+          <div className=" flex items-center justify-center">
+            formas de pagamento
+          </div>
+          <div className="bg-neutral-500 text-white flex items-center px-2">
+            Desconto: R$    %     ####
+          </div>
         </div>
 
         {/* finalizar */}
-        <div className="bg-rose-200 flex-grow">
-          confirmar
+        <div className="bg-neutral-500 h-fit flex items-center justify-between p-2 text-white">
+          Valor a ser pago: R$
+          <Button variant="contained">Confirmar</Button>
         </div>
       </div>
     </div>
