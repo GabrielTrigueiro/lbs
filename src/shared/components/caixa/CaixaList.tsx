@@ -1,4 +1,4 @@
-import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography } from "@mui/material";
+import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
 
 function createData(
   name: string,
@@ -21,7 +21,14 @@ const rows = [
 
 export const CaixaList = () => {
   return (
-    <div className="bg-white flex-grow flex flex-col">
+    <div
+      className="
+        bg-white
+          flex-grow
+          flex
+          flex-col
+        "
+    >
       <div className="flex-grow max-h-full">
         <TableContainer>
           <Table aria-label="simple table">
@@ -54,32 +61,24 @@ export const CaixaList = () => {
           </Table>
         </TableContainer>
       </div>
-      <div className="bg-neutral-500 flex h-16 text-black">
-        <div
-          className="
-            transition
-            cursor-pointer
-          bg-yellow-300
-          border-black
-          hover:bg-white
-            hover:text-black
-            flex
-            items-center
-            justify-center
-            m-2
-            p-3
-            rounded-lg
+      <div
+        className="
+          bg-neutral-500
+           flex
+           h-16
+           text-black
+           items-center
+           px-2
+           rounded-b-lg
           "
-        >
-          <Typography>Cancelar</Typography>
-        </div>
+      >
+        <Button sx={{ height: "80%" }} variant="contained">Cancelar</Button>
         <div
           className="
             flex
             flex-grow 
             justify-end 
             items-center
-            px-5
           "
         >
           <Typography color={"#fff"}>Venda: valor total</Typography>

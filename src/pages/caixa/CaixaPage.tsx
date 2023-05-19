@@ -52,7 +52,7 @@ export const CaixaPage = () => {
           <div className="bg-neutral-500 text-white flex items-center px-2">
             Saldo a pagar: R$ 0,00
           </div>
-          <div className=" flex items-center justify-center">
+          <div className="bg-white flex items-center justify-center">
             formas de pagamento
           </div>
           <div className="bg-neutral-500 text-white flex items-center px-2">
