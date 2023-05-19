@@ -7,27 +7,18 @@ export const CaixaPage = () => {
   return (
     <div 
       className="
-        w-full
-        h-full
-        py-10 
-        gap-10 
+        py-4
         flex
+        gap-5
+        h-full
       "
     >
-
       {/* lista */}
-      <div
-        className="
-          flex-grow 
-          flex
-          flex-col
-          gap-5
-        "
-      >
+      <div className="flex-grow flex flex-col">
         <div className="bg-white">
           <CodeImputField />
         </div>
-        <div className="bg-white flex-grow overflow-y-scroll">
+        <div className="bg-white flex-grow">
           <CaixaList />
         </div>
       </div>
