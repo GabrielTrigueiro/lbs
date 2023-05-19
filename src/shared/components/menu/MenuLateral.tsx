@@ -44,6 +44,11 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
+  background: "#A6A6A6",
+  height: "4em",
+  whiteSpace: "nowrap",
+  flexShrink: 0,
+  boxSizing: "border-box",
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -86,11 +91,8 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
 }) => {
 
   const navigate = useNavigate();
-
   const resolvedPath = useResolvedPath(to);
-
   const match = useMatch({ path: resolvedPath.pathname, end: false });
-
   const handleClick = () => {
     navigate(to);
     onClick?.();
@@ -120,32 +122,24 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
 export const MenuLateral: React.FC = ({ children }) => {
 
   const theme = useTheme();
-
   const [open, setOpen] = useState(false);
-
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
-
   const { sideBarOption, toggleSideBar } = useSideBarContext();
-
   const { isAuthenticated, login } = useAuthContext()
-
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
 
-  if (!isAuthenticated) return <Navigate replace to="/"/>
+  if (!isAuthenticated) return <Navigate replace to="/" />
   return (
-    <Box className={styles.container}>
-
-      {/* Navbar */}
-      <div className={styles.divApp}>
-        <AppBar className={styles.navbar}>
-            <MenuIcon />
+    <div className="bg-neutral-100 w-full h-full flex flex-col">
+      <div className="h-16">
+        <AppBar>
+          <MenuIcon />
         </AppBar>
       </div>
 
-      {/* SideBar */}
-      <div className={styles.teste}>
+      <div className="flex flex-grow">
         <Drawer
           className={styles.sideBar}
           variant={smDown ? "temporary" : "permanent"}
@@ -156,7 +150,7 @@ export const MenuLateral: React.FC = ({ children }) => {
           <Box className={styles.sideBarLinks}>
             <List component="nav">
               {sideBarOption.map((drawerOption) => (
-                <ListItemLink 
+                <ListItemLink
                   to={drawerOption.path}
                   key={drawerOption.path}
                   icon={drawerOption.icon}
@@ -172,11 +166,11 @@ export const MenuLateral: React.FC = ({ children }) => {
             </div>
           </div>
         </Drawer>
-        <Box className={styles.main}>
-          {children}  
-        </Box>
+        <div className="w-full h-full px-4">
+          {children}
+        </div>
       </div>
 
-    </Box>
+    </div>
   );
 };

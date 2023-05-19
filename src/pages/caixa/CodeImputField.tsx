@@ -1,19 +1,20 @@
-import {Autocomplete, Box, TextField, Typography} from "@mui/material";
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import {useState} from "react";
+import { useState } from "react";
 
 export const CodeImputField = () => {
   //states e funções puramente visuais
   const [qtd, setQtd] = useState(0);
-  function addQtd(){
-    setQtd(qtd+1)
+  function addQtd() {
+    setQtd(qtd + 1)
   }
-  function rmvQtd(){
-    if(qtd > 0){
-      setQtd(qtd-1)
+  function rmvQtd() {
+    if (qtd > 0) {
+      setQtd(qtd - 1)
     }
   }
+
   // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
   const top100Films = [
     { label: 'The Shawshank Redemption', year: 1994 },
@@ -141,39 +142,26 @@ export const CodeImputField = () => {
     { label: '3 Idiots', year: 2009 },
     { label: 'Monty Python and the Holy Grail', year: 1975 },
   ];
-  return(
-    <Box
-      sx={{
-        background:"#fff",
-        display:"grid",
-        gridTemplateColumns:"9em 1fr"
-      }}
-    >
 
+  return (
+    <div className="grid grid-flow-col">
       {/* descrição e quantidade */}
-      <Box
-        sx={{
-          background:"#A7A7A7",
-          display:"grid",
-          gridTemplateRows:"1fr 2em"
-        }}
-      >
-        <Typography align="center" sx={{margin:"auto 0"}}>Quantidade</Typography>
-        <Box sx={{display: "grid", gridTemplateColumns: "1em 1em 1em", gap:"1em", justifyContent:"center"}}>
-          <AddIcon onClick={addQtd} sx={{":hover":{background:"#fff",}, borderRadius:"0.5em", transition:"0.3s"}} fontSize={"small"}/>
+      <div className="bg-neutral-400 col-span-1">
+        <Typography align="center" sx={{ margin: "auto 0" }}>Quantidade</Typography>
+        <Box sx={{ display: "grid", gridTemplateColumns: "1em 1em 1em", gap: "1em", justifyContent: "center" }}>
+          <AddIcon onClick={addQtd} sx={{ ":hover": { background: "#fff", }, borderRadius: "0.5em", transition: "0.3s" }} fontSize={"small"} />
           <Typography align={"center"}>{qtd}</Typography>
-          <RemoveIcon onClick={rmvQtd} sx={{":hover":{background:"#fff",}, borderRadius:"0.5em", transition:"0.3s"}} fontSize={"small"}/>
+          <RemoveIcon onClick={rmvQtd} sx={{ ":hover": { background: "#fff", }, borderRadius: "0.5em", transition: "0.3s" }} fontSize={"small"} />
         </Box>
-      </Box>
-
-      <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+      </div>
+      <div className="col-span-4">
         <Typography align={"center"}>Informe uma descrição ou um código de barras</Typography>
         <Autocomplete
           disablePortal
           options={top100Films}
-          renderInput={(params) => <TextField variant={'standard'} sx={{bottom:"0"}} {...params}/>}
+          renderInput={(params) => <TextField variant={'standard'} sx={{ bottom: "0" }} {...params} />}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   )
 }

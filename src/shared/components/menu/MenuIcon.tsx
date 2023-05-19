@@ -13,6 +13,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useAuthContext } from "../../contexts";
+import {Button} from "@mui/material";
 
 export default function MenuIcon() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -34,14 +35,14 @@ export default function MenuIcon() {
           display: "flex",
           alignItems: "center",
           textAlign: "center",
+          justifyContent: "end",
         }}
       >
-        <Tooltip title="Account settings">
-          <IconButton
+        <div className="px-3">
+          <Button
+            sx={{width:"100%", height: "100%", ":hover":{background:"#D9D9D9"}}}
             onClick={handleClick}
-            size="small"
             aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: "2rem", height: "2rem" }}>M</Avatar>
@@ -50,8 +51,8 @@ export default function MenuIcon() {
               {dados?.name}{" "}
             </Typography>
             <KeyboardArrowDownIcon sx={{color:'#fff'}}/>
-          </IconButton>
-        </Tooltip>
+          </Button>
+        </div>
       </Box>
       <Menu
         anchorEl={anchorEl}
