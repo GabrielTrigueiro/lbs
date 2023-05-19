@@ -82,7 +82,7 @@ export const CaixaList = () => {
             px-5
           "
         >
-          <Typography>Venda: valor total</Typography>
+          <Typography color={"#fff"}>Venda: valor total</Typography>
         </div>
       </div>
     </div>
