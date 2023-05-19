@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
-import { CodeImputField } from "./CodeImputField";
-import { CaixaList } from "./CaixaList";
+import { CodeImputField } from "../../shared/components/caixa/CodeImputField";
+import { CaixaList } from "../../shared/components/caixa/CaixaList";
 
 export const CaixaPage = () => {
 
@@ -14,7 +14,14 @@ export const CaixaPage = () => {
       "
     >
       {/* lista */}
-      <div className="flex flex-col flex-grow gap-4">
+      <div
+        className="
+          flex
+          flex-col
+          flex-grow
+          gap-4
+        "
+      >
         <CodeImputField />
         <CaixaList />
       </div>
