@@ -146,7 +146,7 @@ export const CodeImputField = () => {
   return (
     <div className="bg-white flex">
       {/* descrição e quantidade */}
-      <div className="bg-neutral-400 px-4">
+      <div className="bg-neutral-500 px-4">
         <Typography>Quantidade</Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: "1em 1em 1em", gap: "1em", justifyContent: "center" }}>
           <AddIcon onClick={addQtd} sx={{ ":hover": { background: "#fff", }, borderRadius: "0.5em", transition: "0.3s" }} fontSize={"small"} />

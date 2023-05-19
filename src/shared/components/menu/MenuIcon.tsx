@@ -46,7 +46,7 @@ export default function MenuIcon() {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: "2rem", height: "2rem" }}>M</Avatar>
-            <Typography sx={{ padding: 1, minWidth: 100, color: "#fff", fontSize:"12px"}}>
+            <Typography sx={{ padding: 1, minWidth: 100, color: "#fff", fontSize:"12px", ":hover":{color:"#000"}}}>
               {" "}
               {dados?.name}{" "}
             </Typography>

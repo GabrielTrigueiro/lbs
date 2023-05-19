@@ -54,12 +54,12 @@ export const CaixaList = () => {
           </Table>
         </TableContainer>
       </div>
-      <div className="bg-neutral-400 flex h-16 text-white">
+      <div className="bg-neutral-500 flex h-16 text-black">
         <div
           className="
             transition
             cursor-pointer
-          bg-red-500
+          bg-yellow-300
           border-black
           hover:bg-white
             hover:text-black

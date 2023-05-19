@@ -44,7 +44,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
-  background: "#A6A6A6",
+  background: "rgb(115 115 115)",
   height: "4em",
   whiteSpace: "nowrap",
   flexShrink: 0,

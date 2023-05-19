@@ -21,14 +21,13 @@ export const CaixaPage = () => {
 
       {/* infos */}
       <div className="flex-grow">
-        <Box sx={{ background: "#fff" }}>1</Box>
-        <Box sx={{ background: "#fff" }}>2</Box>
-        <Box sx={{ background: "#fff" }}>
-          Formas de pagamento
-        </Box>
-        <Box sx={{ background: "#fff" }}>
-          Valor final e confirmar
-        </Box>
+        <div
+          className="
+            bg-white
+          "
+        >
+          imagem e informações
+        </div>
       </div>
     </div>
   )
