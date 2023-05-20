@@ -7,27 +7,28 @@ export const CaixaPage = () => {
   return (
     <div
       className="
+          grid
+          grid-cols-4
           py-4
-          flex
           gap-5
-          min-h-full
+          h-full
       "
     >
       {/* lista */}
       <div
         className="
+          col-span-3
           flex
           flex-col
-          flex-grow
-          gap-4
+          gap-3
         "
       >
-        <CodeImputField />
-        <CaixaList />
+          <CodeImputField />
+          <CaixaList />
       </div>
 
       {/* infos */}
-      <div className="w-1/4 flex flex-col gap-3">
+      <div className="cols-span-1 flex flex-col gap-3">
 
         {/* infos */}
         <div className="bg-white flex flex-col items-center p-1">

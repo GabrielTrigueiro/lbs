@@ -14,22 +14,39 @@ const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
   createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Eclair', 262, 16.0, 24, 6.0),
 ];
 
 export const CaixaList = () => {
   return (
     <div
       className="
-        bg-white
-          flex-grow
-          flex
-          flex-col
-        "
+        grow
+        flex
+        flex-col
+        flex-none
+      "
     >
-      <div className="flex-grow max-h-full">
+      <div
+        className="
+          grow
+          h-[70vh]
+          overflow-y-auto
+        "
+      >
         <TableContainer>
           <Table aria-label="simple table">
             <TableHead sx={{ borderBotton: "2px solid #000" }}>

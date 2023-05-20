@@ -148,6 +148,7 @@ export const CodeImputField = () => {
   return (
     <div
       className="
+        grow-0
       bg-white
         grid
         grid-cols-5
