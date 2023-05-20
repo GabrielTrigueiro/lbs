@@ -34,19 +34,21 @@ const DefaultTheme = createTheme({
         }
       ],
     },
-    MuiPaper:{
-      defaultProps:{
-        style:{
-          boxShadow:"none"
-        }
-      }
-    },
     MuiModal:{
       defaultProps:{
         style:{
           display:"flex",
           alignItems:"center",
           justifyContent:"center"
+        }
+      }
+    },
+    MuiDrawer:{
+      defaultProps:{
+        PaperProps:{
+          style:{
+            borderRight: "none"
+          }
         }
       }
     }
