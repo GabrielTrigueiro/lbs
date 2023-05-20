@@ -42,6 +42,7 @@ export const CaixaList = () => {
     >
       <div
         className="
+          bg-white
           grow
           h-[70vh]
           overflow-y-auto
