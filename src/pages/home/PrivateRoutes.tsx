@@ -11,7 +11,6 @@ const PrivateRoutes = () => {
     if(!token){
       setAuth(false)
     }
-    console.log(auth)
   }, [auth])
 
   return (

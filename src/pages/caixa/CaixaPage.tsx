@@ -1,6 +1,8 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { CodeImputField } from "../../shared/components/caixa/CodeImputField";
 import { CaixaList } from "../../shared/components/caixa/CaixaList";
+
+//
 
 export const CaixaPage = () => {
 

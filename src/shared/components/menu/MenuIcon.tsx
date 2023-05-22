@@ -13,8 +13,10 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Button} from "@mui/material";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function MenuIcon() {
+  const {logout} = useAuthContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -102,7 +104,7 @@ export default function MenuIcon() {
           Configurações
         </MenuItem>
 
-        <MenuItem onClick={()=>{}}>
+        <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

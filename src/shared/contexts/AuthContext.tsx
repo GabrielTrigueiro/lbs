@@ -35,13 +35,15 @@ export const AuthProvider: React.FC = ({ children }) => {
         setToken(result.acessToken)
         setIsAuthenticated(result.isAuthenticated)
         navigate("/clientes")
+        console.log(result)
       });
   }, [navigate]);
 
   const logout = useCallback(() => {
     localStorage.removeItem(Jwt);
     setToken(undefined);
-  }, []);
+    navigate(0)
+  }, [navigate]);
 
   return (
     <AuthContext.Provider value={{
