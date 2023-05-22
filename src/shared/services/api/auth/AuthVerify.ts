@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { AcessToken } from "../../../contexts";
+// import { AcessToken } from "../../../contexts";
 
 const parseJwt = (token: string) => {
     try {
@@ -12,9 +12,8 @@ const parseJwt = (token: string) => {
 
 const AuthVerify = (props: any) => {
     const location = useLocation();
-
     useEffect(() => {
-        const user = JSON.parse(AcessToken);
+        const user = JSON.parse('AcessToken');
 
         if (user) {
             const decodedJwt = parseJwt(user.accessToken);

@@ -1,89 +1,57 @@
-import { AxiosError } from "axios";
-import jwtDecode from "jwt-decode";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { createContext, useState, useContext, useCallback, useEffect, useMemo } from "react";
 import { AuthService } from "../services/api/auth/AuthService";
 import { Notification } from "../components";
+import { ILogin } from "../models/user";
+import { useNavigate } from "react-router";
 
-//dados user
-interface IUser{
-    name: string
-    sub: string //id
+interface IAuthContext {
+  isAuthenticated: boolean
+  logout: () => void
+  login: (e: ILogin) => Promise<void>
 }
 
-//dados Auth
-interface IAuthContext{
-    isAuthenticated: boolean
-    dados?: IUser
-    logout: ()=> void
-    login: (username:string, password:string) =>
-    Promise<string|void>
-}
-
-//contexto auth
 const AuthContext = createContext({} as IAuthContext);
+export const Jwt = "Acess_Token";
+export const AuthProvider: React.FC = ({ children }) => {
 
-//token do local storage
-export const AcessToken = "Acess_Token";
+  const [token, setToken] = useState<string>();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-export const AuthProvider: React.FC = ({children}) =>{
-    const [acessToken, setAcessToken] = useState<string>();
-    const [dados, setDados] = useState<IUser>();
+  useEffect(() => {
+    let acessToken = localStorage.getItem(Jwt);
+    if (acessToken) {
+      setToken(acessToken);
+    } else {
+      setToken(undefined);
+    }
+  }, [token]);
 
-    //atualiza toda vez que o token é mudado e o salva
-    useEffect(() => {
-        const acessToken = localStorage.getItem(AcessToken);
-    
-        if (acessToken) {
-            setDados(jwtDecode(acessToken));
-            setAcessToken(acessToken);
-        } else {
-            setAcessToken(undefined);
-        }
-    }, [acessToken]);
+  const login = useCallback(async (user: ILogin) => {
+    await AuthService.login(user)
+      .then(result => {
+        Notification(result.message, "success")
+        localStorage.setItem(Jwt, JSON.stringify(result.acessToken))
+        setToken(result.acessToken)
+        setIsAuthenticated(result.isAuthenticated)
+        navigate("/clientes")
+      });
+  }, [navigate]);
 
-    //login e validação
-    const handleLogin = useCallback(
-        async (username: string, password: string) => {
-            await AuthService.auth(username, password)
-                .then( result => {
-                    if (result instanceof AxiosError) {
-                        Notification(result.message, "error");
-                    }
-                    else{
-                        Notification(result.message, "success");
-                        localStorage.setItem(
-                            "Acess_Token", JSON.stringify(result.acessToken)
-                        );
-                        setAcessToken(result.acessToken);
-                    }
-                });
-        },[]
-    );
+  const logout = useCallback(() => {
+    localStorage.removeItem(Jwt);
+    setToken(undefined);
+  }, []);
 
-    //logout
-    const handleLogout = useCallback(() => {
-        localStorage.removeItem(AcessToken);
-        setAcessToken(undefined);
-    }, []
-    );
+  return (
+    <AuthContext.Provider value={{
+      isAuthenticated,
+      login: login,
+      logout: logout
+    }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
 
-    //status auth ou não
-    const isAuthenticated = useMemo(() => 
-        acessToken !== undefined, [acessToken]
-    );
-
-    return (
-        <AuthContext.Provider
-            value={{
-                dados,
-                isAuthenticated,
-                login: handleLogin,
-                logout: handleLogout }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
-    
-};
 export const useAuthContext = () => useContext(AuthContext);

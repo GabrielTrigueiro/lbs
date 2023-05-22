@@ -1,39 +1,23 @@
 import { AxiosError } from "axios";
-// import { Notification } from "../../../components";
 import { environment } from "../../../environment";
+import { ILogin } from "../../../models/user";
 import { api } from "../axios";
-import { Notification } from "../../../components";
 
-//type usuario
-export type TUser = {
-    usename:string
-    password:string
+//login req
+const login = async (user: ILogin): Promise<any | Error> => {
+
+    return await api.post<ILogin>(environment.url_login, user)
+    .then((data) => {
+        if(data instanceof AxiosError){
+            return data.data
+        }
+        return data.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
-
-//interface para auth
-export interface IAuth{
-    token:string
-    type:string
-    message:string
-    isAuthenticated:string
-}
-
-//guarda os dados retornados da api de auth
-export const auth = 
-async (username: string, password: string):Promise<any | AxiosError> => {
-    return await api.post(environment.url_login, {username, password})
-        .then(data => {
-            if(data instanceof AxiosError){
-                return data;
-            }
-            console.log('chegou na promise')
-            return data.data;
-        })
-        .catch(err => {
-            Notification(err.response.data.message, "error");
-        });
-};
 
 export const AuthService = {
-    auth,
+    login
 };

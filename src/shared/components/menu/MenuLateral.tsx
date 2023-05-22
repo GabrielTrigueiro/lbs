@@ -12,9 +12,9 @@ import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
-import { Navigate, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import { Navigate, Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import styles from "../../../styles/SideBar/SideBar.module.scss";
-import { useAuthContext, useSideBarContext } from "../../contexts";
+import { useSideBarContext } from "../../contexts";
 import { AppBarProps, IListItemLinkProps } from "../../models/appBar";
 import MenuIcon from "./MenuIcon";
 
@@ -98,7 +98,6 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
     navigate(to);
     onClick?.();
   };
-
   return (
     <ListItemButton
       selected={!!match}
@@ -126,21 +125,17 @@ export const MenuLateral: React.FC = ({ children }) => {
   const [open, setOpen] = useState(false);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { sideBarOption, toggleSideBar } = useSideBarContext();
-  const { isAuthenticated, login } = useAuthContext()
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
 
-  if (!isAuthenticated) return <Navigate replace to="/" />
   return (
-    <div className="bg-neutral-100 w-full h-full flex flex-col">
-      <div className="h-16">
-        <AppBar>
-          <MenuIcon />
-        </AppBar>
+    <div className="bg-neutral-100 h-screen w-screen flex flex-col">
+      <div className="bg-neutral-600 h-16 z-20">
+        <MenuIcon />
       </div>
 
-      <div className="flex flex-grow">
+      <div className="h-full w-full flex">
         <Drawer
           className={styles.sideBar}
           variant={smDown ? "temporary" : "permanent"}
@@ -167,8 +162,8 @@ export const MenuLateral: React.FC = ({ children }) => {
             </div>
           </div>
         </Drawer>
-        <div className="w-full h-full px-4">
-          {children}
+        <div className="flex-grow px-4">
+          <Outlet />
         </div>
       </div>
 

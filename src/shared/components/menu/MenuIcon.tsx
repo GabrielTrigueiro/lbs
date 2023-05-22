@@ -12,7 +12,6 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useAuthContext } from "../../contexts";
 import {Button} from "@mui/material";
 
 export default function MenuIcon() {
@@ -24,8 +23,6 @@ export default function MenuIcon() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const { logout, dados } = useAuthContext();
 
   return (
     <>
@@ -47,8 +44,7 @@ export default function MenuIcon() {
           >
             <Avatar sx={{ width: "2rem", height: "2rem" }}>M</Avatar>
             <Typography sx={{ padding: 1, minWidth: 100, color: "#fff", fontSize:"12px", ":hover":{color:"#000"}}}>
-              {" "}
-              {dados?.name}{" "}
+              {/* oi */}
             </Typography>
             <KeyboardArrowDownIcon sx={{color:'#fff'}}/>
           </Button>
@@ -106,7 +102,7 @@ export default function MenuIcon() {
           Configurações
         </MenuItem>
 
-        <MenuItem onClick={logout}>
+        <MenuItem onClick={()=>{}}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

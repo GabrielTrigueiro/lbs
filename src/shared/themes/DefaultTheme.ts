@@ -47,7 +47,8 @@ const DefaultTheme = createTheme({
       defaultProps:{
         PaperProps:{
           style:{
-            borderRight: "none"
+            borderRight: "none",
+            zIndex: 5
           }
         }
       }
