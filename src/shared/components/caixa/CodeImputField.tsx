@@ -6,6 +6,7 @@ import { IItem } from "../../../pages/caixa";
 import { useCallback, useEffect, useState } from "react";
 import { IDataProduct } from "../../models/product";
 import { ProductService } from "../../services/api/product";
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ICodeInput {
   quantidade: number;
@@ -18,7 +19,12 @@ interface ICodeIputProps {
 
 const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
 
-  const { register, handleSubmit, resetField, setValue, watch } = useForm<ICodeInput>();
+  const { register, handleSubmit, resetField, setValue, watch } = useForm<ICodeInput>({
+    defaultValues: {
+      code: "",
+      quantidade: 0
+    }
+  });
   const qtd = watch('quantidade', 0);
   const inpt = watch('code');
   const [searchList, setSearchList] = useState<IDataProduct[]>([])
@@ -30,8 +36,18 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   };
 
   const addOne = useCallback(() => {
-    setValue("quantidade", qtd + 1);
+    setValue("quantidade", (qtd + 1));
   }, [setValue, qtd])
+
+  const rmvOne = useCallback(() => {
+    if (qtd > 0) {
+      setValue("quantidade", (qtd - 1));
+    }
+  }, [setValue, qtd])
+
+  const clear = useCallback(() => {
+    setValue("code", "")
+  }, [setValue])
 
   const getList = useCallback(async () => {
     let search = {
@@ -86,7 +102,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
               p-1
             "
         />
-        <RemoveIcon sx={{ cursor: "pointer" }} />
+        <RemoveIcon onClick={rmvOne} sx={{ cursor: "pointer" }} />
       </div>
       <div
         className="
@@ -97,27 +113,44 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
           "
       >
         <Typography align={"center"}>Informe uma descrição ou um código de barras</Typography>
-        <input
-          onKeyUp={getList}
-          autoComplete="off"
-          {...register("code")}
-          className="
-              bg-neutral-200
+        <div className="bg-neutral-200 flex px-1">
+          <input
+            onKeyUp={getList}
+            autoComplete="off"
+            {...register("code")}
+            className="
+              bg-transparent
+              grow
               outline-none
               h-9
             "
-        />
+          />
+          <div
+            onClick={clear}
+            className="
+              flex 
+              items-center
+              justify-center
+              cursor-pointer
+              hover:opacity-60
+              transition
+            "
+          >
+            <CloseIcon />
+          </div>
+        </div>
         {inpt && (
           <div
             className="
               bg-white
               absolute
               w-full
-              bottom-[-8.5em]
+              bottom-[-8em]
               h-32
               rounded-b-md
               overflow-auto
               border-2
+              transition
             "
           >
             {searchList.map((item) => (
@@ -126,6 +159,8 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
                   key={item.id}
                   className="
                   p-2
+                  cursor-pointer
+                  hover:bg-neutral-100
                 "
                 >
                   {item.name}
