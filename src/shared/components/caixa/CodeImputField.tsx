@@ -110,18 +110,28 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
         {inpt && (
           <div
             className="
-            bg-rose-400
+              bg-white
               absolute
               w-full
-              bottom-[-8em]
+              bottom-[-8.5em]
               h-32
               rounded-b-md
-          "
+              overflow-auto
+              border-2
+            "
           >
             {searchList.map((item) => (
-              <div key={item.id}>
-                {item.name}
-              </div>
+              <>
+                <div
+                  key={item.id}
+                  className="
+                  p-2
+                "
+                >
+                  {item.name}
+                </div>
+                <hr />
+              </>
             ))}
           </div>
         )}
