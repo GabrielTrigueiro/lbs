@@ -1,10 +1,33 @@
 import { Button, TextField } from "@mui/material";
-import { CodeImputField } from "../../shared/components/caixa/CodeImputField";
-import { CaixaList } from "../../shared/components/caixa/CaixaList";
+import CodeImputField from "../../shared/components/caixa/CodeImputField";
+import { useCallback, useEffect, useState } from "react";
+import CaixaList from "../../shared/components/caixa/CaixaList";
 
-//
+export interface IItem {
+  code: string;
+  quantidade: number;
+}
 
 export const CaixaPage = () => {
+
+  const [teste, setTeste] = useState<IItem[]>([]);
+
+  const addToList = useCallback((produto: IItem) => {
+    setTeste([...teste, produto])
+  }, [teste])
+ 
+  const rmvItem = useCallback((id: string) => {
+    let filtrado = teste.filter((item) => item.code !== id)
+    setTeste(filtrado)
+  }, [teste])
+
+  const clearList = useCallback(() => {
+    setTeste([])
+  }, [])
+
+  // useEffect(() => {
+  //   console.log(teste)
+  // }, [teste])
 
   return (
     <div
@@ -25,8 +48,8 @@ export const CaixaPage = () => {
           gap-3
         "
       >
-          <CodeImputField />
-          <CaixaList />
+          <CodeImputField add={addToList}/>
+          <CaixaList clear={clearList}/>
       </div>
 
       {/* infos */}

@@ -1,4 +1,9 @@
-import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
+import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
+import React from "react";
+
+interface ICaixaListProps{
+  clear: () => void;
+}
 
 function createData(
   name: string,
@@ -16,7 +21,7 @@ const rows = [
   createData('Eclair', 262, 16.0, 24, 6.0),
 ];
 
-export const CaixaList = () => {
+const CaixaList: React.FC<ICaixaListProps> = ({clear}) => {
   return (
     <div
       className="
@@ -76,7 +81,7 @@ export const CaixaList = () => {
            rounded-b-lg
           "
       >
-        <Button sx={{ height: "80%" }} variant="contained">Cancelar</Button>
+        <Button onClick={clear} sx={{ height: "80%" }} variant="contained">Cancelar</Button>
         <div
           className="
             flex
@@ -91,3 +96,5 @@ export const CaixaList = () => {
     </div>
   )
 }
+
+export default CaixaList;
