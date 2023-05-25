@@ -32,8 +32,8 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   const [tempProduct, setTempProduct] = useState<IDataProduct>();
 
   const onSubmit: SubmitHandler<ICodeInput> = (data) => {
-    
-    if(tempProduct){
+
+    if (tempProduct) {
       let estruturando: IItemLista = {
         produto: tempProduct,
         precoTotal: (data.quantidade * tempProduct.salerPrice),
@@ -190,12 +190,13 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
       </div>
       <div className="col-span-1 rounded-tr-xl flex">
         <button
-          className="
-              grow
-              bg-yellow-300
-              rounded-tr-xl
-              hover:bg-yellow-200
-            "
+          disabled={inpt === ""}
+          className={`
+            grow
+            rounded-tr-xl
+            ${inpt === "" ? "bg-neutral-300" : "bg-yellow-300"}
+            ${inpt === "" ? "hover:bg-neutral-300" : "hover:bg-yellow-200"}
+          `}
           onClick={handleSubmit(onSubmit)}
         >
           Adicionar
