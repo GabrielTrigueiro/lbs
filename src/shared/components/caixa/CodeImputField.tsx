@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, TextField, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IItem } from "../../../pages/caixa";
+import { IItem, IItemLista } from "../../../pages/caixa";
 import { useCallback, useEffect, useState } from "react";
 import { IDataProduct } from "../../models/product";
 import { ProductService } from "../../services/api/product";
@@ -14,7 +14,7 @@ interface ICodeInput {
 }
 
 interface ICodeIputProps {
-  add: (item: IItem) => void
+  add: (item: IItemLista) => void
 }
 
 const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
@@ -25,15 +25,31 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
       quantidade: 0
     }
   });
+
   const qtd = watch('quantidade', 0);
   const inpt = watch('code');
-  const [searchList, setSearchList] = useState<IDataProduct[]>([])
+  const [searchList, setSearchList] = useState<IDataProduct[]>([]);
+  const [tempProduct, setTempProduct] = useState<IDataProduct>();
 
   const onSubmit: SubmitHandler<ICodeInput> = (data) => {
-    add(data);
+    
+    if(tempProduct){
+      let estruturando: IItemLista = {
+        produto: tempProduct,
+        precoTotal: (data.quantidade * tempProduct.salerPrice),
+        quantidade: data.quantidade
+      }
+      add(estruturando);
+    }
+    setTempProduct(undefined)
     resetField("code");
     resetField("quantidade");
   };
+
+  const handleTemp = useCallback((item: IDataProduct) => {
+    setTempProduct(item)
+    setValue("code", item.codeBarras)
+  }, [setValue])
 
   const addOne = useCallback(() => {
     setValue("quantidade", (qtd + 1));
@@ -110,6 +126,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
             flex
             flex-col
             relative
+            p-1
           "
       >
         <Typography align={"center"}>Informe uma descrição ou um código de barras</Typography>
@@ -154,19 +171,19 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
             "
           >
             {searchList.map((item) => (
-              <>
+              <div key={item.id}>
                 <div
-                  key={item.id}
+                  onClick={() => handleTemp(item)}
                   className="
                   p-2
                   cursor-pointer
                   hover:bg-neutral-100
+                  border-b-2
                 "
                 >
                   {item.name}
                 </div>
-                <hr />
-              </>
+              </div>
             ))}
           </div>
         )}

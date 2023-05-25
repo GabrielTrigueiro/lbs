@@ -2,19 +2,27 @@ import { Button, TextField } from "@mui/material";
 import CodeImputField from "../../shared/components/caixa/CodeImputField";
 import { useCallback, useEffect, useState } from "react";
 import CaixaList from "../../shared/components/caixa/CaixaList";
+import { IDataProduct } from "../../shared/models/product";
 
 export interface IItem {
   code: string;
   quantidade: number;
 }
 
+export interface IItemLista {
+  produto?: IDataProduct;
+  quantidade?: number;
+  precoTotal?: number;
+}
+
 export const CaixaPage = () => {
 
   const [teste, setTeste] = useState<IItem[]>([]);
+  const [lista, setLista] = useState<IItemLista[]>([])
 
-  const addToList = useCallback((produto: IItem) => {
-    setTeste([...teste, produto])
-  }, [teste])
+  const addToList = useCallback((produto: IItemLista) => {
+    setLista([...lista, produto])
+  }, [lista])
  
   const rmvItem = useCallback((id: string) => {
     let filtrado = teste.filter((item) => item.code !== id)
@@ -25,9 +33,9 @@ export const CaixaPage = () => {
     setTeste([])
   }, [])
 
-  // useEffect(() => {
-  //   console.log(teste)
-  // }, [teste])
+  useEffect(() => {
+    console.log(lista)
+  }, [lista])
 
   return (
     <div

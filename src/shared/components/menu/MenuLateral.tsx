@@ -130,7 +130,7 @@ export const MenuLateral: React.FC = ({ children }) => {
   };
 
   return (
-    <div className="bg-neutral-100 h-screen w-screen flex flex-col">
+    <div className="bg-neutral-100 h-screen w-screen flex flex-col overflow-hidden">
       <div className="bg-neutral-600 h-16 z-20">
         <MenuIcon />
       </div>
