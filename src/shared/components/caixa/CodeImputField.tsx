@@ -181,7 +181,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
                   border-b-2
                 "
                 >
-                  {item.name}
+                  {item.codeBarras} - {item.description}
                 </div>
               </div>
             ))}

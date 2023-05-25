@@ -1,27 +1,13 @@
 import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
 import React from "react";
+import { IItemLista } from "../../../pages/caixa";
 
-interface ICaixaListProps{
+interface ICaixaListProps {
   clear: () => void;
+  lista: IItemLista[];
 }
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-];
-
-const CaixaList: React.FC<ICaixaListProps> = ({clear}) => {
+const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
   return (
     <div
       className="
@@ -37,38 +23,42 @@ const CaixaList: React.FC<ICaixaListProps> = ({clear}) => {
           grow
           h-[70vh]
           overflow-y-auto
+          flex
+          flex-col
         "
       >
-        <TableContainer>
-          <Table aria-label="simple table">
-            <TableHead sx={{ borderBotton: "2px solid #000" }}>
-              <TableRow>
-                <TableCell>IMG</TableCell>
-                <TableCell align="right">Quantidade</TableCell>
-                <TableCell align="right">Descrição</TableCell>
-                <TableCell align="right">Valor Unitário</TableCell>
-                <TableCell align="right">Valor Total</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        {/* header da tabela */}
+        <div
+          className="
+            grid
+            grid-cols-5
+            p-2
+            border-b-2
+          "
+        >
+          <div>Nome</div>
+          <div>Quantidade</div>
+          <div>Descrição</div>
+          <div>Valor unitário</div>
+          <div>Valor total</div>
+        </div>
+        {/* body da tabela */}
+        <div
+          className="
+            flex-grow
+          "
+        >
+          {lista.map((item) => (
+            item.produto &&
+            <div className="grid grid-cols-5 p-2 border-b-2">
+              <div>{item.produto.name}</div>
+              <div>{item.quantidade}</div>
+              <div>{item.produto.description}</div>
+              <div>{item.produto.salerPrice}</div>
+              <div>{item.precoTotal}</div>
+            </div>
+          ))}
+        </div>
       </div>
       <div
         className="

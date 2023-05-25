@@ -30,7 +30,7 @@ export const CaixaPage = () => {
   }, [teste])
 
   const clearList = useCallback(() => {
-    setTeste([])
+    setLista([])
   }, [])
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export const CaixaPage = () => {
         "
       >
           <CodeImputField add={addToList}/>
-          <CaixaList clear={clearList}/>
+          <CaixaList clear={clearList} lista={lista}/>
       </div>
 
       {/* infos */}
