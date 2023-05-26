@@ -24,10 +24,11 @@ export const CaixaPage = () => {
     setLista([...lista, produto])
   }, [lista])
  
-  const rmvItem = useCallback((id: string) => {
-    let filtrado = teste.filter((item) => item.code !== id)
-    setTeste(filtrado)
-  }, [teste])
+  const removeItem = useCallback((index: number) => {
+    const updatedItems = [...lista];
+    updatedItems.splice(index, 1);
+    setLista(updatedItems);
+  }, [lista])
 
   const clearList = useCallback(() => {
     setLista([])
@@ -57,7 +58,7 @@ export const CaixaPage = () => {
         "
       >
           <CodeImputField add={addToList}/>
-          <CaixaList clear={clearList} lista={lista}/>
+          <CaixaList rmvItem={removeItem} clear={clearList} lista={lista}/>
       </div>
 
       {/* infos */}

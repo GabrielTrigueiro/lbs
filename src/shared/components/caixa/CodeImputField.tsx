@@ -32,7 +32,6 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   const [tempProduct, setTempProduct] = useState<IDataProduct>();
 
   const onSubmit: SubmitHandler<ICodeInput> = (data) => {
-
     if (tempProduct) {
       let estruturando: IItemLista = {
         produto: tempProduct,
@@ -49,6 +48,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   const handleTemp = useCallback((item: IDataProduct) => {
     setTempProduct(item)
     setValue("code", item.codeBarras)
+    setValue("quantidade", 1)
   }, [setValue])
 
   const addOne = useCallback(() => {
@@ -84,9 +84,10 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
           grow-0
         bg-white
           grid
-          grid-cols-5
+          grid-cols-6
           rounded-t-xl
           relative
+          h-14
         "
     >
       {/* quantidade */}
@@ -124,16 +125,22 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
       {/* input */}
       <div
         className="
-            col-span-3
-            flex
-            flex-col
-            relative
-            p-1
-          "
+          col-span-4
+          flex
+          relative
+        "
       >
-        <Typography align={"center"}>Informe uma descrição ou um código de barras</Typography>
-        <div className="bg-neutral-200 flex px-1">
+        <div
+          className="
+            bg-neutral-200
+            flex
+            p-2
+            grow
+            align-center
+          "
+        >
           <input
+            placeholder="Digite um código ou uma palavra chave"
             onKeyUp={getList}
             autoComplete="off"
             {...register("code")}
@@ -158,6 +165,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
             <CloseIcon />
           </div>
         </div>
+        {/* search */}
         {inpt && (
           <div
             className="
@@ -171,6 +179,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
               overflow-auto
               border-2
               transition
+              z-50
             "
           >
             {searchList.map((item) => (

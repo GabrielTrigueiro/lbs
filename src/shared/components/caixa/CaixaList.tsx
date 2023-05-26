@@ -1,13 +1,15 @@
 import { Typography, Button } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { IItemLista } from "../../../pages/caixa";
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ICaixaListProps {
   clear: () => void;
+  rmvItem: (e: number) => void
   lista: IItemLista[];
 }
 
-const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
+const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
 
   const [total, setTotal] = useState(0);
 
@@ -60,18 +62,36 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
             overflow-auto
           "
         >
-          {lista.map((item) => (
+          {lista.map((item, index) => (
             item.produto &&
-            <div className="grid grid-cols-5 p-2 border-b-2">
+            //linha da tabela
+            <div className="grid grid-cols-5 p-2 border-b-2 relative z-0">
               <div>{item.produto.name}</div>
               <div>{item.quantidade}</div>
               <div>{item.produto.description}</div>
               <div>{item.produto.salerPrice}</div>
               <div>{item.precoTotal}</div>
+              <div 
+                onClick={() => rmvItem(index)}
+                className="
+                  absolute 
+                  right-2 
+                  bottom-2
+                  bg-red-500
+                  rounded-md
+                  text-white
+                  hover:bg-opacity-80
+                  cursor-pointer
+                "
+              >
+                <CloseIcon />
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* footer */}
       <div
         className="
           bg-neutral-500
@@ -83,7 +103,14 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
            rounded-b-lg
           "
       >
-        <Button disabled={lista.length === 0} onClick={clear} sx={{ height: "80%" }} variant="contained">Cancelar</Button>
+        <Button
+          disabled={lista.length === 0}
+          onClick={clear}
+          sx={{ height: "80%" }}
+          variant="contained"
+        >
+          Cancelar
+        </Button>
         <div
           className="
             flex
