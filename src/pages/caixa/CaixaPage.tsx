@@ -12,7 +12,7 @@ export interface IItem {
 export interface IItemLista {
   produto?: IDataProduct;
   quantidade?: number;
-  precoTotal?: number;
+  precoTotal: number;
 }
 
 export const CaixaPage = () => {

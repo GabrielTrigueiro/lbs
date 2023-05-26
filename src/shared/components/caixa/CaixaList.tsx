@@ -1,5 +1,5 @@
-import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
-import React, { useEffect } from "react";
+import { Typography, Button } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { IItemLista } from "../../../pages/caixa";
 
 interface ICaixaListProps {
@@ -9,7 +9,15 @@ interface ICaixaListProps {
 
 const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
 
-  
+  const [total, setTotal] = useState(0);
+
+  const calcularSoma = useCallback(() => {
+    return lista.reduce((soma, objeto) => soma + objeto.precoTotal, 0);
+  }, [lista])
+
+  useEffect(() => {
+    setTotal(calcularSoma)
+  }, [lista, calcularSoma])
 
   return (
     <div
@@ -84,7 +92,7 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
             items-center
           "
         >
-          <Typography color={"#fff"}>Venda: { }</Typography>
+          <Typography color={"#fff"}>Venda: {total}</Typography>
         </div>
       </div>
     </div>
