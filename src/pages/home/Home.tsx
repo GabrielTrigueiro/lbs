@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from "react-router";
+import { Route, Router, Routes, useNavigate } from "react-router";
 import { MenuLateral } from "../../shared/components";
 import { useSideBarContext } from "../../shared/contexts";
 import { useEffect, useState } from "react";
@@ -22,7 +22,6 @@ export default function Home() {
   const { setSideBarOption } = useSideBarContext();
 
   useEffect(() => {
-    //console.log(isAuthenticated)
     setSideBarOption([
       {
         label: "Clientes",

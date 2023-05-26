@@ -1,5 +1,5 @@
 import { TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Typography, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { IItemLista } from "../../../pages/caixa";
 
 interface ICaixaListProps {
@@ -8,6 +8,9 @@ interface ICaixaListProps {
 }
 
 const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
+
+  
+
   return (
     <div
       className="
@@ -46,6 +49,7 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
         <div
           className="
             flex-grow
+            overflow-auto
           "
         >
           {lista.map((item) => (
@@ -71,7 +75,7 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
            rounded-b-lg
           "
       >
-        <Button onClick={clear} sx={{ height: "80%" }} variant="contained">Cancelar</Button>
+        <Button disabled={lista.length === 0} onClick={clear} sx={{ height: "80%" }} variant="contained">Cancelar</Button>
         <div
           className="
             flex
@@ -80,7 +84,7 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista }) => {
             items-center
           "
         >
-          <Typography color={"#fff"}>Venda: valor total</Typography>
+          <Typography color={"#fff"}>Venda: { }</Typography>
         </div>
       </div>
     </div>

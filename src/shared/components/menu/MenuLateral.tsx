@@ -11,8 +11,8 @@ import {
 import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
-import { useState } from "react";
-import { Navigate, Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import styles from "../../../styles/SideBar/SideBar.module.scss";
 import { useSideBarContext } from "../../contexts";
 import { AppBarProps, IListItemLinkProps } from "../../models/appBar";
@@ -98,6 +98,11 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({
     navigate(to);
     onClick?.();
   };
+
+  useEffect(() => {
+    navigate("/clientes")
+  },[])
+
   return (
     <ListItemButton
       selected={!!match}
@@ -128,6 +133,8 @@ export const MenuLateral: React.FC = ({ children }) => {
   const handleDrawerOpenOrClose = () => {
     open ? setOpen(false) : setOpen(true);
   };
+
+
 
   return (
     <div className="bg-neutral-100 h-screen w-screen flex flex-col overflow-hidden">

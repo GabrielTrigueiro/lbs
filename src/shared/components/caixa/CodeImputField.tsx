@@ -89,6 +89,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
           relative
         "
     >
+      {/* quantidade */}
       <div
         className="
           bg-neutral-500
@@ -120,6 +121,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
         />
         <RemoveIcon onClick={rmvOne} sx={{ cursor: "pointer" }} />
       </div>
+      {/* input */}
       <div
         className="
             col-span-3
@@ -163,6 +165,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
               absolute
               w-full
               bottom-[-8em]
+              left-0
               h-32
               rounded-b-md
               overflow-auto
@@ -188,14 +191,15 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
           </div>
         )}
       </div>
+      {/* botão add */}
       <div className="col-span-1 rounded-tr-xl flex">
         <button
           disabled={inpt === ""}
           className={`
             grow
             rounded-tr-xl
-            ${inpt === "" ? "bg-neutral-300" : "bg-yellow-300"}
-            ${inpt === "" ? "hover:bg-neutral-300" : "hover:bg-yellow-200"}
+            ${inpt === "" || qtd === 0 ? "bg-neutral-300" : "bg-yellow-300"}
+            ${inpt === "" || qtd === 0 ? "hover:bg-neutral-300" : "hover:bg-yellow-200"}
           `}
           onClick={handleSubmit(onSubmit)}
         >
