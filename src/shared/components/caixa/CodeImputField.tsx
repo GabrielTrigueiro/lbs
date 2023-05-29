@@ -1,9 +1,8 @@
-import { Autocomplete, Box, Button, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IItem, IItemLista } from "../../../pages/caixa";
-import { useCallback, useEffect, useState } from "react";
+import { IItemLista } from "../../../pages/caixa";
+import { useCallback, useState } from "react";
 import { IDataProduct } from "../../models/product";
 import { ProductService } from "../../services/api/product";
 import CloseIcon from '@mui/icons-material/Close';
