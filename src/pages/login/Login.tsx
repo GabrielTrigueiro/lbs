@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import {
   FormControl,
   Grid,
@@ -13,6 +13,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Form } from '@unform/web';
+import { PuffLoader } from 'react-spinners';
 
 import mulher from 'images/login/Mulher.jpg';
 import { useAuthContext } from 'shared/contexts/AuthContext';
@@ -75,6 +76,7 @@ const CustomFormControl = styled(FormControl)`
 `;
 
 const CustomButton = styled(Button)`
+  position: relative;
   margin-top: 1em !important;
   width: 50% !important;
   height: 50px !important;
@@ -96,7 +98,7 @@ export const Login: React.FC = () => {
   const [values, setValues] = useState({
     password: '',
     username: '',
-    showPassword: false,
+    showPassword: true,
   });
 
   const handleClickShowPassword = () => {
@@ -117,13 +119,23 @@ export const Login: React.FC = () => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
+  const handleLogin = useCallback(
+    async (data: any) => {
+      setIsLoading(true);
+      await login(data)
+        .then(() => setIsLoading(false))
+        .catch(() => setIsLoading(false));
+    },
+    [login]
+  );
+
   return (
     <GridContainer>
       <Mulher />
       <LoginContainer>
         <Formulario>
           <h2>Login</h2>
-          <FormularioContainer onSubmit={async (dados) => login(dados)}>
+          <FormularioContainer onSubmit={async (dados) => handleLogin(dados)}>
             <CustomFormControl id="outlined-start-adornment">
               <InputLabel htmlFor="outlined-adornment-user">Usuario</InputLabel>
               <CustomInput
@@ -181,9 +193,12 @@ export const Login: React.FC = () => {
               variant="contained"
             >
               Login
-              {/* {loading && (
-                <CircularProgress className={styles.well} size={24} />
-              )} */}
+              <PuffLoader
+                style={{ position: 'absolute', right: '50px', bottom: '40px' }}
+                size={30}
+                color="#000"
+                loading={isLoading}
+              />
             </CustomButton>
           </FormularioContainer>
         </Formulario>
