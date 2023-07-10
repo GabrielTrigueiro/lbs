@@ -1,111 +1,46 @@
-import styled from '@emotion/styled';
-import { useState, useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { PuffLoader } from 'react-spinners';
+import { useAuthContext } from 'shared/contexts/AuthContext';
+import 'styles/GlobalVariables.module.scss';
+import loginValidationSchema from './LoginValidation';
 import {
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  Button,
-} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+  CustomButton,
+  CustomFormControl,
+  Formulario,
+  FormularioContainer,
+  GridContainer,
+  LoginContainer,
+  Logo,
+  Mulher,
+} from './LoginStyles';
+import { useFormik } from 'formik';
+import { InputAdornment, IconButton, TextField } from '@mui/material';
+import { useNavigate } from 'react-router';
+import AccountCircleIcon from '@mui/icons-material/AccountCircleOutlined';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Form } from '@unform/web';
-import { PuffLoader } from 'react-spinners';
 
-import mulher from 'images/login/Mulher.jpg';
-import { useAuthContext } from 'shared/contexts/AuthContext';
-import 'styles/GlobalVariables.module.scss';
-import {
-  amareloDefault,
-  fundoBranco,
-  amareloClaroDefault,
-} from 'styles/variables';
-import { ILogin } from 'shared/models/user';
-import { CustomInput } from 'shared/forms/forms-components/CustomImput';
-
-const GridContainer = styled(Grid)`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-`;
-
-const Mulher = styled.img`
-  flex: 2;
-  background-image: url(${mulher});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: right;
-`;
-
-const LoginContainer = styled(Grid)`
-  flex: 1;
-  background-color: ${fundoBranco};
-  text-align: center;
-  display: flex;
-
-  h2 {
-    font-weight: bold;
-    font-size: 2.5pc;
-  }
-`;
-
-const Formulario = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  padding: 0em 4em;
-`;
-
-const FormularioContainer = styled(Form)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CustomFormControl = styled(FormControl)`
-  width: 100%;
-  margin: 0.5em !important;
-`;
-
-const CustomButton = styled(Button)`
-  position: relative;
-  margin-top: 1em !important;
-  width: 50% !important;
-  height: 50px !important;
-  border-radius: 10px !important;
-  font-size: $normal !important;
-  box-shadow: none !important;
-  background-color: ${amareloDefault} !important;
-
-  :hover {
-    background-color: ${amareloClaroDefault} !important;
-    box-shadow: none;
-  }
-`;
-//----------------------------------------------
 export const Login: React.FC = () => {
-  const { login } = useAuthContext();
+  const { login, isAuthenticated } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+  const navigate = useNavigate();
 
-  const [values, setValues] = useState({
-    password: '',
-    username: '',
-    showPassword: true,
+  //form
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: loginValidationSchema,
+    onSubmit: (values) => {
+      handleLogin(values);
+    },
   });
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+    setShowPassword(!showPassword);
   };
 
   const handleMouseDownPassword = (
@@ -113,11 +48,6 @@ export const Login: React.FC = () => {
   ) => {
     event.preventDefault();
   };
-
-  const handleChange =
-    (prop: keyof ILogin) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
 
   const handleLogin = useCallback(
     async (data: any) => {
@@ -129,62 +59,78 @@ export const Login: React.FC = () => {
     [login]
   );
 
+  useEffect(() => {
+    if (isAuthenticated) navigate('/clientes');
+  }, [navigate, isAuthenticated]);
+
   return (
     <GridContainer>
+      <Logo />
       <Mulher />
       <LoginContainer>
         <Formulario>
           <h2>Login</h2>
-          <FormularioContainer onSubmit={async (dados) => handleLogin(dados)}>
-            <CustomFormControl id="outlined-start-adornment">
-              <InputLabel htmlFor="outlined-adornment-user">Usuario</InputLabel>
-              <CustomInput
-                name="username"
+          <FormularioContainer onSubmit={formik.handleSubmit}>
+            <CustomFormControl>
+              <TextField
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircleIcon />
+                    </InputAdornment>
+                  ),
+                }}
                 autoComplete="off"
-                type={'text'}
+                fullWidth
+                id="username"
+                name="username"
                 label="Usuário"
-                value={values.username}
-                onChange={handleChange('username')}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircleIcon />
-                  </InputAdornment>
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
                 }
+                helperText={formik.touched.username && formik.errors.username}
               />
             </CustomFormControl>
-            <CustomFormControl variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
-                Senha
-              </InputLabel>
-              <CustomInput
-                name="password"
+            <CustomFormControl>
+              <TextField
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 autoComplete="off"
-                id="outlined-adornment-password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <LockIcon />
-                  </InputAdornment>
-                }
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
+                fullWidth
+                id="password"
+                name="password"
                 label="Senha"
+                type={showPassword ? 'text' : 'password'}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
             </CustomFormControl>
             <CustomButton

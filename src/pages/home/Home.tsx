@@ -1,56 +1,54 @@
-import { Route, Router, Routes, useNavigate } from "react-router";
-import { MenuLateral } from "../../shared/components";
-import { useSideBarContext } from "../../shared/contexts";
-import { useEffect, useState } from "react";
-import styles from "../../styles/Home/Home.module.scss";
-import { ThemeProvider } from "@mui/material";
-import DefaultTheme from "../../shared/themes/DefaultTheme";
-import { ClientListPage } from "../clients";
-import { ProviderListPage } from "../providers";
-import { IndicationPage } from "../indications";
-import { BrowserRouter } from "react-router-dom";
-import ProtectedRoute from "./PrivateRoutes";
-import { Login } from "../login";
-import { CaixaPage } from "../caixa";
-import { ProductPage } from "../products/ProductPage";
-import { Categories } from "../categories";
-import { AuthProvider, useAuthContext } from "../../shared/contexts/AuthContext";
-import PrivateRoutes from "./PrivateRoutes";
+import { ThemeProvider } from '@mui/material';
+import { useEffect } from 'react';
+import { Route, Routes } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+import { MenuLateral } from '../../shared/components';
+import { useSideBarContext } from '../../shared/contexts';
+import { AuthProvider } from '../../shared/contexts/AuthContext';
+import DefaultTheme from '../../shared/themes/DefaultTheme';
+import { CaixaPage } from '../caixa';
+import { Categories } from '../categories';
+import { ClientListPage } from '../clients';
+import { IndicationPage } from '../indications';
+import { Login } from '../login';
+import { ProductPage } from '../products/ProductPage';
+import { ProviderListPage } from '../providers';
+import PrivateRoutes from './PrivateRoutes';
 
 export default function Home() {
-
   const { setSideBarOption } = useSideBarContext();
 
   useEffect(() => {
     setSideBarOption([
       {
-        label: "Clientes",
-        icon: "account_circle",
-        path: "/clientes",
+        label: 'Clientes',
+        icon: 'account_circle',
+        path: '/clientes',
       },
       {
-        label: "Fornecedores",
-        icon: "badge",
-        path: "/fornecedores",
+        label: 'Fornecedores',
+        icon: 'badge',
+        path: '/fornecedores',
       },
       {
-        label: "Indicações",
-        icon: "diversity_3",
-        path: "/indicacoes",
+        label: 'Indicações',
+        icon: 'diversity_3',
+        path: '/indicacoes',
       },
       {
-        label: "categorias",
-        icon: "local_offer",
-        path: "/categorias",
+        label: 'categorias',
+        icon: 'local_offer',
+        path: '/categorias',
       },
       {
-        label: "produtos",
-        icon: "shopping_bag",
-        path: "/produtos",
-      }, {
-        label: "caixa",
-        icon: "paid_icon",
-        path: "/caixa",
+        label: 'produtos',
+        icon: 'shopping_bag',
+        path: '/produtos',
+      },
+      {
+        label: 'caixa',
+        icon: 'paid_icon',
+        path: '/caixa',
       },
     ]);
   }, [setSideBarOption]);
@@ -74,6 +72,6 @@ export default function Home() {
           </Routes>
         </AuthProvider>
       </BrowserRouter>
-    </ThemeProvider >
-  )
+    </ThemeProvider>
+  );
 }
