@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
-import CodeImputField from 'shared/components/caixa/CodeImputField';
-import CaixaList from 'shared/components/caixa/CaixaList';
+import CaixaList from 'shared/components/caixa/CaixaList/CaixaList';
 import CaixaInfos from 'shared/components/caixa/CaixaInfos';
 import {
   CaixaContainer,
@@ -8,6 +7,7 @@ import {
   ListaContainer,
 } from './CaixaPageStyles';
 import { IItemLista } from 'shared/models/caixa';
+import CodeInputField from 'shared/components/caixa/CaixaInput/CodeInputField';
 
 export const CaixaPage = () => {
   const [lista, setLista] = useState<IItemLista[]>([]);
@@ -20,26 +20,10 @@ export const CaixaPage = () => {
   );
 
   const removeItem = useCallback(
-    (index: number) => {
+    (index: string) => {
       const updatedItems = [...lista];
-      updatedItems.splice(index, 1);
+      updatedItems.splice(Number(index), 1);
       setLista(updatedItems);
-    },
-    [lista]
-  );
-
-  const editQtd = useCallback(
-    (index: number, valor: number) => {
-      const updatedObjects = lista.map((obj, itemAt) => {
-        if (itemAt === index) {
-          return {
-            ...obj,
-            quantidade: valor,
-          };
-        }
-        return obj;
-      });
-      setLista(updatedObjects);
     },
     [lista]
   );
@@ -52,7 +36,7 @@ export const CaixaPage = () => {
     <CaixaContainer>
       {/* lista */}
       <ListaContainer>
-        <CodeImputField add={addToList} />
+        <CodeInputField add={addToList} />
         <CaixaList rmvItem={removeItem} clear={clearList} lista={lista} />
       </ListaContainer>
 

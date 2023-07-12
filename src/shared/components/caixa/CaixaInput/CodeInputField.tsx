@@ -2,10 +2,11 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useCallback, useState } from 'react';
-import { IDataProduct } from '../../models/product';
-import { ProductService } from '../../services/api/product';
+import { IDataProduct } from '../../../models/product';
+import { ProductService } from '../../../services/api/product';
 import CloseIcon from '@mui/icons-material/Close';
 import { IItemLista } from 'shared/models/caixa';
+import { v4 as uuid } from 'uuid';
 
 interface ICodeInput {
   quantidade: number;
@@ -16,7 +17,7 @@ interface ICodeIputProps {
   add: (item: IItemLista) => void;
 }
 
-const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
+const CodeInputField: React.FC<ICodeIputProps> = ({ add }) => {
   const { register, handleSubmit, resetField, setValue, watch } =
     useForm<ICodeInput>({
       defaultValues: {
@@ -33,6 +34,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   const onSubmit: SubmitHandler<ICodeInput> = (data) => {
     if (tempProduct) {
       let estruturando: IItemLista = {
+        id: uuid(),
         produto: tempProduct,
         precoTotal: data.quantidade * tempProduct.salerPrice,
         quantidade: data.quantidade,
@@ -226,4 +228,4 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
   );
 };
 
-export default CodeImputField;
+export default CodeInputField;

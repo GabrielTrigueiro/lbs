@@ -6,6 +6,7 @@ export interface IItem {
 }
 
 export interface IItemLista {
+  id: string;
   produto?: IDataProduct;
   quantidade: number;
   precoTotal: number;

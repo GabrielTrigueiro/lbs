@@ -24,7 +24,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 export const Login: React.FC = () => {
   const { login, isAuthenticated } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   //form
