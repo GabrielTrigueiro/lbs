@@ -1,11 +1,11 @@
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { IItemLista } from "../../../pages/caixa";
-import { useCallback, useState } from "react";
-import { IDataProduct } from "../../models/product";
-import { ProductService } from "../../services/api/product";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useCallback, useState } from 'react';
+import { IDataProduct } from '../../models/product';
+import { ProductService } from '../../services/api/product';
 import CloseIcon from '@mui/icons-material/Close';
+import { IItemLista } from 'shared/models/caixa';
 
 interface ICodeInput {
   quantidade: number;
@@ -13,17 +13,17 @@ interface ICodeInput {
 }
 
 interface ICodeIputProps {
-  add: (item: IItemLista) => void
+  add: (item: IItemLista) => void;
 }
 
 const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
-
-  const { register, handleSubmit, resetField, setValue, watch } = useForm<ICodeInput>({
-    defaultValues: {
-      code: "",
-      quantidade: 0
-    }
-  });
+  const { register, handleSubmit, resetField, setValue, watch } =
+    useForm<ICodeInput>({
+      defaultValues: {
+        code: '',
+        quantidade: 0,
+      },
+    });
 
   const qtd = watch('quantidade', 0);
   const inpt = watch('code');
@@ -34,48 +34,52 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
     if (tempProduct) {
       let estruturando: IItemLista = {
         produto: tempProduct,
-        precoTotal: (data.quantidade * tempProduct.salerPrice),
-        quantidade: data.quantidade
-      }
+        precoTotal: data.quantidade * tempProduct.salerPrice,
+        quantidade: data.quantidade,
+      };
       add(estruturando);
     }
-    setTempProduct(undefined)
-    resetField("code");
-    resetField("quantidade");
+    setTempProduct(undefined);
+    resetField('code');
+    resetField('quantidade');
   };
 
-  const handleTemp = useCallback((item: IDataProduct) => {
-    setTempProduct(item)
-    setValue("code", item.codeBarras)
-    setValue("quantidade", 1)
-  }, [setValue])
+  const handleTemp = useCallback(
+    (item: IDataProduct) => {
+      setTempProduct(item);
+      setValue('code', item.codeBarras);
+      setValue('quantidade', 1);
+    },
+    [setValue]
+  );
 
   const addOne = useCallback(() => {
-    setValue("quantidade", (qtd + 1));
-  }, [setValue, qtd])
+    setValue('quantidade', qtd + 1);
+  }, [setValue, qtd]);
 
   const rmvOne = useCallback(() => {
     if (qtd > 0) {
-      setValue("quantidade", (qtd - 1));
+      setValue('quantidade', qtd - 1);
     }
-  }, [setValue, qtd])
+  }, [setValue, qtd]);
 
   const clear = useCallback(() => {
-    setValue("code", "")
-  }, [setValue])
+    setValue('code', '');
+  }, [setValue]);
 
   const getList = useCallback(async () => {
     let search = {
       page: 0,
       pageSize: 5,
-      param: "name",
-      sortDirection: "DESC",
-      sortField: "name",
-      value: inpt
-    }
-    await ProductService.getAll(search)
-      .then((resp) => setSearchList(resp.data))
-  }, [inpt])
+      param: 'name',
+      sortDirection: 'DESC',
+      sortField: 'name',
+      value: inpt,
+    };
+    await ProductService.getAll(search).then((resp) =>
+      setSearchList(resp.data)
+    );
+  }, [inpt]);
 
   return (
     <div
@@ -103,12 +107,12 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
             rounded-tl-xl
           "
       >
-        <AddIcon onClick={addOne} sx={{ cursor: "pointer" }} />
+        <AddIcon onClick={addOne} sx={{ cursor: 'pointer' }} />
         <input
           autoComplete="off"
           placeholder="Qtd"
           type="number"
-          {...register("quantidade")}
+          {...register('quantidade')}
           className="
               w-12
               rounded-md
@@ -119,7 +123,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
               p-1
             "
         />
-        <RemoveIcon onClick={rmvOne} sx={{ cursor: "pointer" }} />
+        <RemoveIcon onClick={rmvOne} sx={{ cursor: 'pointer' }} />
       </div>
       {/* input */}
       <div
@@ -142,7 +146,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
             placeholder="Digite um código ou uma palavra chave"
             onKeyUp={getList}
             autoComplete="off"
-            {...register("code")}
+            {...register('code')}
             className="
               bg-transparent
               grow
@@ -202,12 +206,16 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
       {/* botão add */}
       <div className="col-span-1 rounded-tr-xl flex">
         <button
-          disabled={inpt === ""}
+          disabled={inpt === ''}
           className={`
             grow
             rounded-tr-xl
-            ${inpt === "" || qtd === 0 ? "bg-neutral-300" : "bg-yellow-300"}
-            ${inpt === "" || qtd === 0 ? "hover:bg-neutral-300" : "hover:bg-yellow-200"}
+            ${inpt === '' || qtd === 0 ? 'bg-neutral-300' : 'bg-yellow-300'}
+            ${
+              inpt === '' || qtd === 0
+                ? 'hover:bg-neutral-300'
+                : 'hover:bg-yellow-200'
+            }
           `}
           onClick={handleSubmit(onSubmit)}
         >
@@ -215,7 +223,7 @@ const CodeImputField: React.FC<ICodeIputProps> = ({ add }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CodeImputField;

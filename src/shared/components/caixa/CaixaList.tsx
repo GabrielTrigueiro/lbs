@@ -1,25 +1,24 @@
-import { Typography, Button } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
-import { IItemLista } from "../../../pages/caixa";
+import { Typography, Button } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import { IItemLista } from 'shared/models/caixa';
 
 interface ICaixaListProps {
   clear: () => void;
-  rmvItem: (e: number) => void
+  rmvItem: (e: number) => void;
   lista: IItemLista[];
 }
 
 const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
-
   const [total, setTotal] = useState(0);
 
   const calcularSoma = useCallback(() => {
     return lista.reduce((soma, objeto) => soma + objeto.precoTotal, 0);
-  }, [lista])
+  }, [lista]);
 
   useEffect(() => {
-    setTotal(calcularSoma)
-  }, [lista, calcularSoma])
+    setTotal(calcularSoma);
+  }, [lista, calcularSoma]);
 
   return (
     <div
@@ -62,18 +61,19 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
             overflow-auto
           "
         >
-          {lista.map((item, index) => (
-            item.produto &&
-            //linha da tabela
-            <div className="grid grid-cols-5 p-2 border-b-2 relative z-0">
-              <div>{item.produto.name}</div>
-              <div>{item.quantidade}</div>
-              <div>{item.produto.description}</div>
-              <div>{item.produto.salerPrice}</div>
-              <div>{item.precoTotal}</div>
-              <div 
-                onClick={() => rmvItem(index)}
-                className="
+          {lista.map(
+            (item, index) =>
+              item.produto && (
+                //linha da tabela
+                <div className="grid grid-cols-5 p-2 border-b-2 relative z-0">
+                  <div>{item.produto.name}</div>
+                  <div>{item.quantidade}</div>
+                  <div>{item.produto.description}</div>
+                  <div>{item.produto.salerPrice}</div>
+                  <div>{item.precoTotal}</div>
+                  <div
+                    onClick={() => rmvItem(index)}
+                    className="
                   absolute 
                   right-2 
                   bottom-2
@@ -83,11 +83,12 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
                   hover:bg-opacity-80
                   cursor-pointer
                 "
-              >
-                <CloseIcon />
-              </div>
-            </div>
-          ))}
+                  >
+                    <CloseIcon />
+                  </div>
+                </div>
+              )
+          )}
         </div>
       </div>
 
@@ -106,7 +107,7 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
         <Button
           disabled={lista.length === 0}
           onClick={clear}
-          sx={{ height: "80%" }}
+          sx={{ height: '80%' }}
           variant="contained"
         >
           Cancelar
@@ -119,11 +120,11 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
             items-center
           "
         >
-          <Typography color={"#fff"}>Venda: {total}</Typography>
+          <Typography color={'#fff'}>Venda: {total}</Typography>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CaixaList;
