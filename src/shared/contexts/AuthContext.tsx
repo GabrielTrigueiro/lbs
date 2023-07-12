@@ -4,7 +4,6 @@ import {
   useContext,
   useCallback,
   useEffect,
-  useMemo,
 } from 'react';
 import { AuthService } from '../services/api/auth/AuthService';
 import { ILogin } from '../models/user';

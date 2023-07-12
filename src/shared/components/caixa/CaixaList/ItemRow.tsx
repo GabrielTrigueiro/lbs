@@ -1,12 +1,13 @@
 import { IItemLista } from 'shared/models/caixa';
 import CloseIcon from '@mui/icons-material/Close';
 import { Item } from './CaixaListStyles';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
 
 interface ItemProps {
   item: IItemLista;
-  removerItem: (id: string) => void;
 }
-const ItemRow = ({ item, removerItem }: ItemProps) => {
+const ItemRow = ({ item }: ItemProps) => {
+  const { removerItemLista } = useCaixaContext();
   if (!item.produto) return null;
   return (
     <Item>
@@ -16,7 +17,7 @@ const ItemRow = ({ item, removerItem }: ItemProps) => {
       <div>{item.produto.salerPrice}</div>
       <div>{item.precoTotal}</div>
       <div
-        onClick={() => removerItem(item.id)}
+        onClick={() => removerItemLista(item.id)}
         className="
                   absolute 
                   right-2 

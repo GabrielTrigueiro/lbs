@@ -14,6 +14,7 @@ import { Login } from '../login';
 import { ProductPage } from '../products/ProductPage';
 import { ProviderListPage } from '../providers';
 import PrivateRoutes from './PrivateRoutes';
+import { CaixaContextProvider } from 'shared/contexts/CaixaContext';
 
 export default function Home() {
   const { setSideBarOption } = useSideBarContext();

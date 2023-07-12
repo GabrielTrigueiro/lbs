@@ -7,17 +7,14 @@ import { ProductService } from '../../../services/api/product';
 import CloseIcon from '@mui/icons-material/Close';
 import { IItemLista } from 'shared/models/caixa';
 import { v4 as uuid } from 'uuid';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
 
 interface ICodeInput {
   quantidade: number;
   code: string;
 }
 
-interface ICodeIputProps {
-  add: (item: IItemLista) => void;
-}
-
-const CodeInputField: React.FC<ICodeIputProps> = ({ add }) => {
+const CodeInputField = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
     useForm<ICodeInput>({
       defaultValues: {
@@ -25,11 +22,11 @@ const CodeInputField: React.FC<ICodeIputProps> = ({ add }) => {
         quantidade: 0,
       },
     });
-
   const qtd = watch('quantidade', 0);
   const inpt = watch('code');
   const [searchList, setSearchList] = useState<IDataProduct[]>([]);
   const [tempProduct, setTempProduct] = useState<IDataProduct>();
+  const { adicionarNaLista } = useCaixaContext();
 
   const onSubmit: SubmitHandler<ICodeInput> = (data) => {
     if (tempProduct) {
@@ -39,7 +36,7 @@ const CodeInputField: React.FC<ICodeIputProps> = ({ add }) => {
         precoTotal: data.quantidade * tempProduct.salerPrice,
         quantidade: data.quantidade,
       };
-      add(estruturando);
+      adicionarNaLista(estruturando);
     }
     setTempProduct(undefined);
     resetField('code');

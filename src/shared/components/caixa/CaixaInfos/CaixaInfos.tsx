@@ -1,15 +1,12 @@
-import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
+import { ImagemProduto } from './CaixaInfosStyles';
 
-const ImagemProduto = styled.div`
-  background-color: rgb(107 114 128 / 1);
-  width: 180px;
-  height: 180px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+interface InfosProps {
+  code: string;
+  description: string;
+  price: string;
+  cor: string;
+}
 
 export default function CaixaInfos() {
   return (

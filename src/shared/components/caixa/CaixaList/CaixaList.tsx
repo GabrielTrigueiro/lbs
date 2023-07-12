@@ -1,6 +1,5 @@
 import { Typography, Button } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import { IItemLista } from 'shared/models/caixa';
+import { useCallback, useEffect, useState } from 'react';
 import {
   CabecalhoTabela,
   Container,
@@ -9,23 +8,22 @@ import {
   Tabela,
 } from './CaixaListStyles';
 import ItemRow from './ItemRow';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
 
-interface ICaixaListProps {
-  clear: () => void;
-  rmvItem: (e: string) => void;
-  lista: IItemLista[];
-}
-
-const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
+const CaixaList = () => {
   const [total, setTotal] = useState(0);
+  const { produtosNaLista, limparLista } = useCaixaContext();
 
   const calcularSoma = useCallback(() => {
-    return lista.reduce((soma, objeto) => soma + objeto.precoTotal, 0);
-  }, [lista]);
+    return produtosNaLista.reduce(
+      (soma, objeto) => soma + objeto.precoTotal,
+      0
+    );
+  }, [produtosNaLista]);
 
   useEffect(() => {
     setTotal(calcularSoma);
-  }, [lista, calcularSoma]);
+  }, [produtosNaLista, calcularSoma]);
 
   return (
     <Container>
@@ -38,16 +36,16 @@ const CaixaList: React.FC<ICaixaListProps> = ({ clear, lista, rmvItem }) => {
           <h1>Valor total</h1>
         </CabecalhoTabela>
         <CorpoTabela>
-          {lista.map((item) => (
-            <ItemRow item={item} removerItem={rmvItem} />
+          {produtosNaLista.map((item) => (
+            <ItemRow item={item} />
           ))}
         </CorpoTabela>
       </Tabela>
 
       <FooterTabela>
         <Button
-          disabled={lista.length === 0}
-          onClick={clear}
+          disabled={produtosNaLista.length === 0}
+          onClick={limparLista}
           sx={{ height: '80%' }}
           variant="contained"
         >
