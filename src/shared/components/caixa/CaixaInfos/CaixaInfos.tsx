@@ -1,20 +1,22 @@
 import { Button, TextField } from '@mui/material';
 import { ImagemProduto } from './CaixaInfosStyles';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
-import { useEffect } from 'react';
+import Info from './Info';
 
 export default function CaixaInfos() {
   const { ultimoProduto } = useCaixaContext();
-  useEffect(() => console.log(ultimoProduto), [ultimoProduto]);
   return (
     <>
       <div className="bg-white flex flex-col items-center p-1">
         <ImagemProduto>imagem</ImagemProduto>
-        <div className="w-full grid grid-cols-2 gap-2">
-          <TextField autoComplete="off" label="Código" variant="standard" />
-          <TextField autoComplete="off" label="Descrição" variant="standard" />
-          <TextField autoComplete="off" label="Preço" variant="standard" />
-          <TextField autoComplete="off" label="Cor" variant="standard" />
+        <div className="w-full grid grid-cols-2 gap-2 p-3 mt-1">
+          <Info label="Código" value={ultimoProduto?.produto?.codeBarras} />
+          <Info label="Descrição" value={ultimoProduto?.produto?.description} />
+          <Info
+            label="Valor"
+            Dinheiro
+            value={ultimoProduto?.produto?.salerPrice}
+          />
         </div>
       </div>
       <div className="bg-white flex gap-2 p-1">
