@@ -1,14 +1,11 @@
 import { Button, TextField } from '@mui/material';
 import { ImagemProduto } from './CaixaInfosStyles';
-
-interface InfosProps {
-  code: string;
-  description: string;
-  price: string;
-  cor: string;
-}
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
+import { useEffect } from 'react';
 
 export default function CaixaInfos() {
+  const { ultimoProduto } = useCaixaContext();
+  useEffect(() => console.log(ultimoProduto), [ultimoProduto]);
   return (
     <>
       <div className="bg-white flex flex-col items-center p-1">

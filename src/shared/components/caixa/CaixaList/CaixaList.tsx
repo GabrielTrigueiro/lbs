@@ -37,7 +37,7 @@ const CaixaList = () => {
         </CabecalhoTabela>
         <CorpoTabela>
           {produtosNaLista.map((item) => (
-            <ItemRow item={item} />
+            <ItemRow key={item.id} item={item} />
           ))}
         </CorpoTabela>
       </Tabela>
