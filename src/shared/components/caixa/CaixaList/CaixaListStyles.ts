@@ -1,19 +1,17 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex: none;
+  height: 100%;
 `;
 
 export const Tabela = styled.div`
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   background-color: white;
-  height: 70vh;
+  height: 100%;
 `;
 
 export const CabecalhoTabela = styled.div`
@@ -24,7 +22,6 @@ export const CabecalhoTabela = styled.div`
 `;
 
 export const CorpoTabela = styled.div`
-  flex-grow: 1;
   overflow: auto;
 `;
 
@@ -48,4 +45,4 @@ export const FooterTabela = styled.div`
   padding-right: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-`
+`;

@@ -1,130 +1,85 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useCallback, useState } from 'react';
-import { IDataProduct } from '../../../models/product';
-import { ProductService } from '../../../services/api/product';
-import CloseIcon from '@mui/icons-material/Close';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import { IItemLista } from 'shared/models/caixa';
 import { v4 as uuid } from 'uuid';
-import { useCaixaContext } from 'shared/contexts/CaixaContext';
-
-interface ICodeInput {
-  quantidade: number;
-  code: string;
-}
+import { IDataProduct } from '../../../models/product';
+import { ProductService } from '../../../services/api/product';
+import {
+  BotaoQuantidade,
+  CampoQuantidade,
+  Container,
+  CustomSelect,
+  InputQuantidade,
+} from './CaixaInputStyles';
 
 const CodeInputField = () => {
-  const { register, handleSubmit, resetField, setValue, watch } =
-    useForm<ICodeInput>({
-      defaultValues: {
-        code: '',
-        quantidade: 0,
-      },
-    });
-  const qtd = watch('quantidade', 0);
-  const inpt = watch('code');
-  const [searchList, setSearchList] = useState<IDataProduct[]>([]);
+  const [quantidade, setQuantidade] = useState<number>(0);
+  const [codigo, setCodigo] = useState('');
   const [tempProduct, setTempProduct] = useState<IDataProduct>();
   const { adicionarNaLista } = useCaixaContext();
 
-  const onSubmit: SubmitHandler<ICodeInput> = (data) => {
+  const submitProduto = () => {
     if (tempProduct) {
       let estruturando: IItemLista = {
         id: uuid(),
         produto: tempProduct,
-        precoTotal: data.quantidade * tempProduct.salerPrice,
-        quantidade: data.quantidade,
+        precoTotal: quantidade * tempProduct.salerPrice,
+        quantidade: quantidade,
       };
       adicionarNaLista(estruturando);
     }
     setTempProduct(undefined);
-    resetField('code');
-    resetField('quantidade');
+    setQuantidade(0);
+    setCodigo('');
   };
 
-  const handleTemp = useCallback(
-    (item: IDataProduct) => {
-      setTempProduct(item);
-      setValue('code', item.codeBarras);
-      setValue('quantidade', 1);
-    },
-    [setValue]
-  );
+  const quantidadeManual = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantidade(Number(evento.target.value));
+  };
 
-  const addOne = useCallback(() => {
-    setValue('quantidade', qtd + 1);
-  }, [setValue, qtd]);
+  const adicionar = useCallback(() => {
+    setQuantidade(quantidade + 1);
+  }, [quantidade]);
 
-  const rmvOne = useCallback(() => {
-    if (qtd > 0) {
-      setValue('quantidade', qtd - 1);
+  const remover = useCallback(() => {
+    if (quantidade > 0) {
+      setQuantidade(quantidade - 1);
     }
-  }, [setValue, qtd]);
+  }, [quantidade]);
 
-  const clear = useCallback(() => {
-    setValue('code', '');
-  }, [setValue]);
-
-  const getList = useCallback(async () => {
+  const getOptions = useCallback(async () => {
     let search = {
       page: 0,
       pageSize: 5,
       param: 'name',
       sortDirection: 'DESC',
       sortField: 'name',
-      value: inpt,
+      value: codigo,
     };
-    await ProductService.getAll(search).then((resp) =>
-      setSearchList(resp.data)
-    );
-  }, [inpt]);
+    const resp = await ProductService.getAll(search);
+    return resp.data;
+  }, [codigo]);
 
   return (
-    <div
-      className="
-          grow-0
-        bg-white
-          grid
-          grid-cols-6
-          rounded-t-xl
-          relative
-          h-14
-        "
-    >
-      {/* quantidade */}
-      <div
-        className="
-          bg-neutral-500
-            text-white
-            col-span-1
-            flex
-            items-center
-            justify-center
-            gap-2
-            px-4
-            rounded-tl-xl
-          "
-      >
-        <AddIcon onClick={addOne} sx={{ cursor: 'pointer' }} />
-        <input
+    <Container>
+      <CampoQuantidade>
+        <BotaoQuantidade onClick={adicionar}>
+          <AddIcon />
+        </BotaoQuantidade>
+        <InputQuantidade
           autoComplete="off"
           placeholder="Qtd"
           type="number"
-          {...register('quantidade')}
-          className="
-              w-12
-              rounded-md
-              peer
-              text-center
-              text-black
-              outline-none
-              p-1
-            "
+          onChange={quantidadeManual}
+          value={quantidade}
         />
-        <RemoveIcon onClick={rmvOne} sx={{ cursor: 'pointer' }} />
-      </div>
-      {/* input */}
+        <BotaoQuantidade onClick={remover}>
+          <RemoveIcon />
+        </BotaoQuantidade>
+      </CampoQuantidade>
+
       <div
         className="
           col-span-4
@@ -132,96 +87,39 @@ const CodeInputField = () => {
           relative
         "
       >
-        <div
-          className="
-            bg-neutral-200
-            flex
-            p-2
-            grow
-            align-center
-          "
-        >
-          <input
-            placeholder="Digite um código ou uma palavra chave"
-            onKeyUp={getList}
-            autoComplete="off"
-            {...register('code')}
-            className="
-              bg-transparent
-              grow
-              outline-none
-              h-9
-            "
-          />
-          <div
-            onClick={clear}
-            className="
-              flex 
-              items-center
-              justify-center
-              cursor-pointer
-              hover:opacity-60
-              transition
-            "
-          >
-            <CloseIcon />
-          </div>
-        </div>
-        {/* search */}
-        {inpt && (
-          <div
-            className="
-              bg-white
-              absolute
-              w-full
-              bottom-[-8em]
-              left-0
-              h-32
-              rounded-b-md
-              overflow-auto
-              border-2
-              transition
-              z-50
-            "
-          >
-            {searchList.map((item) => (
-              <div key={item.id}>
-                <div
-                  onClick={() => handleTemp(item)}
-                  className="
-                  p-2
-                  cursor-pointer
-                  hover:bg-neutral-100
-                  border-b-2
-                "
-                >
-                  {item.codeBarras} - {item.description}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <CustomSelect
+          isClearable
+          cacheOptions
+          loadOptions={getOptions}
+          formatOptionLabel={(option: any) => (
+            <div
+              onClick={() => {
+                setTempProduct(option);
+              }}
+              className="flex flex-row items-center gap-3"
+            >
+              <div>Nome: {option.name}</div>
+              <div>Descrição: {option.description}</div>
+              <div>Preço: {option.salerPrice}</div>
+            </div>
+          )}
+        />
       </div>
       {/* botão add */}
-      <div className="col-span-1 rounded-tr-xl flex">
+      <div className="col-span-1 flex">
         <button
-          disabled={inpt === ''}
+          disabled={!tempProduct}
           className={`
             grow
-            rounded-tr-xl
-            ${inpt === '' || qtd === 0 ? 'bg-neutral-300' : 'bg-yellow-300'}
-            ${
-              inpt === '' || qtd === 0
-                ? 'hover:bg-neutral-300'
-                : 'hover:bg-yellow-200'
-            }
+            ${quantidade === 0 ? 'bg-neutral-300' : 'bg-yellow-300'}
+            ${quantidade === 0 ? 'hover:bg-neutral-300' : 'hover:bg-yellow-200'}
           `}
-          onClick={handleSubmit(onSubmit)}
+          onClick={() => submitProduto()}
         >
           Adicionar
         </button>
       </div>
-    </div>
+    </Container>
   );
 };
 
