@@ -5,3 +5,7 @@ export const fundoCinza = '#575A61';
 export const cinzaEscuro = '#494b4f';
 export const cinzaClaro = '#D9D9D9';
 export const brancoEscuro = '#EFEFEF';
+
+export const grande = '40px';
+export const media = '24px';
+export const pequena = '18px';
