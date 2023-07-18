@@ -1,35 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import { LayoutBasePage } from '../../shared/layouts'
-import { Add } from '@mui/icons-material'
-import { Box, Typography, Button, FormControl, Grid, InputLabel, MenuItem, Select, Pagination, SelectChangeEvent } from '@mui/material'
-import styles from "../../styles/Provider/Provider.module.scss"
-import { SearchInput } from '../../shared/components/search'
-import { ClientListPageSkeleton } from '../clients'
-import { ISendPagination } from '../../shared/models/client'
-import { ProviderService } from '../../shared/services/api/providers/ProviderService'
-import { IProviderCadastroInfo } from '../../shared/models/provider'
-import { TableProviders } from '../../shared/components/table/TableProviders'
-import { ProviderRegisterModal } from '../../shared/components/modal/Provider/ProviderRegisterModal'
+import React, { useEffect, useState } from 'react';
+import { Add } from '@mui/icons-material';
+import {
+  Box,
+  Typography,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Pagination,
+  SelectChangeEvent,
+} from '@mui/material';
+import styles from 'styles/Provider/Provider.module.scss';
+import { SearchInput } from 'shared/components/search';
+import { ClientListPageSkeleton } from '../clients';
+import { ISendPagination } from 'shared/models/client';
+import { ProviderService } from 'shared/services/api/providers/ProviderService';
+import { IProviderCadastroInfo } from 'shared/models/provider';
+import { TableProviders } from 'shared/components/table/TableProviders';
+import { ProviderRegisterModal } from 'shared/components/modal/Provider/ProviderRegisterModal';
 
 export const ProviderListPage: React.FC = () => {
-
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [rows, setRows] = useState<IProviderCadastroInfo[]>([]);
-  const [modalState, setModalState] = useState<true | false>(false);
+  const [modalState, setModalState] = useState(false);
   function handleModal() {
-    setModalState(!modalState)
+    setModalState(!modalState);
   }
-  const [pages, setPages] = useState<number>(0)
-  const [pageSize, setPageSize] = useState<number>(5)
-  const [actualpage, setActualPage] = useState<number>(0)
+  const [pages, setPages] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [actualpage, setActualPage] = useState(0);
   const [selectContent, setSelectContent] = useState('5');
   let ProviderPaginationConf: ISendPagination = {
     page: actualpage,
     pageSize: pageSize,
-    param: "name",
-    sortDirection: "DESC",
-    sortField: "name",
+    param: 'name',
+    sortDirection: 'DESC',
+    sortField: 'name',
     value: value,
   };
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -37,9 +46,9 @@ export const ProviderListPage: React.FC = () => {
   };
   const selectChange = (event: SelectChangeEvent) => {
     setSelectContent(event.target.value as string);
-    const translate = parseInt(event.target.value as string)
-    setActualPage(0)
-    setPageSize(translate)
+    const translate = parseInt(event.target.value as string);
+    setActualPage(0);
+    setPageSize(translate);
   };
   const update = () => {
     ProviderService.getAll(ProviderPaginationConf).then((result) => {
@@ -47,7 +56,7 @@ export const ProviderListPage: React.FC = () => {
         alert(result.message);
       } else {
         setIsLoading(false);
-        setPages(result.numberOfPages)
+        setPages(result.numberOfPages);
         setRows(result.data);
       }
     });
@@ -59,24 +68,30 @@ export const ProviderListPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-
       <Box className={styles.topContainer}>
         <Typography className={styles.topContainerTitle}>Fornecedor</Typography>
-        <Button className={styles.topButton} onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography className={styles.topButtonText}>Cadastrar fornecedor</Typography>
+        <Button
+          className={styles.topButton}
+          onClick={handleModal}
+          variant="contained"
+          startIcon={<Add />}
+        >
+          <Typography className={styles.topButtonText}>
+            Cadastrar fornecedor
+          </Typography>
         </Button>
       </Box>
 
       <Box className={styles.searchContainer}>
         <Grid className={styles.searchGrid}>
-          <Grid display={"flex"} sx={{ borderBottom: "4px solid #E4DB00" }}>
+          <Grid display={'flex'} sx={{ borderBottom: '4px solid #E4DB00' }}>
             <Typography
-              sx={{ color: "#3d3d3d", fontSize: "18px" }}
+              sx={{ color: '#3d3d3d', fontSize: '18px' }}
               variant="h5"
             >
               Lista de Fornecedores
             </Typography>
-            <Box position={"relative"} bottom={3}>
+            <Box position={'relative'} bottom={3}>
               <SearchInput
                 change={(value) => {
                   setValue(value.target.value);
@@ -88,18 +103,21 @@ export const ProviderListPage: React.FC = () => {
             justifyContent="flex-end"
             display="flex"
             flex={1}
-            sx={{ borderBottom: "3px solid #D9D9D9" }}
-          >
-          </Grid>
+            sx={{ borderBottom: '3px solid #D9D9D9' }}
+          ></Grid>
         </Grid>
       </Box>
 
       <Box className={styles.table}>
-        {isLoading ? <ClientListPageSkeleton /> : <TableProviders lista={rows} update={update} />}
+        {isLoading ? (
+          <ClientListPageSkeleton />
+        ) : (
+          <TableProviders lista={rows} update={update} />
+        )}
       </Box>
 
-      <Box display="flex" justifyContent="end" mt={1} alignItems={"center"}>
-        <FormControl sx={{ width: "100px", ml: 1, mb: 0.5 }} size="small">
+      <Box display="flex" justifyContent="end" mt={1} alignItems={'center'}>
+        <FormControl sx={{ width: '100px', ml: 1, mb: 0.5 }} size="small">
           <InputLabel id="demo-simple-select-label">nº itens</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -121,8 +139,11 @@ export const ProviderListPage: React.FC = () => {
         />
       </Box>
 
-      <ProviderRegisterModal modalState={modalState} update={update} handleModal={handleModal} />
-
+      <ProviderRegisterModal
+        modalState={modalState}
+        update={update}
+        handleModal={handleModal}
+      />
     </div>
-  )
-}
+  );
+};

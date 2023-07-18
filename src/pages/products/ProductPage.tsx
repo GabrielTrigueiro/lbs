@@ -16,21 +16,21 @@ import { ProductService } from 'shared/services/api/product';
 import { Cabecalho, Container, Footer, Tabela } from './ProductPageStyles';
 
 export const ProductPage = () => {
-  const [search, setSearch] = useState<string>('');
-  const [pages, setPages] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5);
-  const [actualpage, setActualPage] = useState<number>(0);
-  const [selectContent, setSelectContent] = useState('5');
+  const [search, setSearch] = useState('');
   const [productList, setProductList] = useState<IDataProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [estadoSwitch, setEstadoSwitch] = useState(false);
 
-  const capturarInput = useCallback(
-    (evento: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setSearch(evento.target.value);
-    },
-    []
-  );
+  const [pages, setPages] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [actualpage, setActualPage] = useState(0);
+  const [selectContent, setSelectContent] = useState('5');
+
+  const capturarInput = (
+    evento: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearch(evento.target.value);
+  };
 
   function mudarSwitch() {
     setEstadoSwitch(!estadoSwitch);
@@ -39,9 +39,9 @@ export const ProductPage = () => {
   let ProductPaginationConf: ISendPagination = {
     page: actualpage,
     pageSize: pageSize,
-    param: 'name',
-    sortDirection: 'DESC',
     sortField: 'name',
+    sortDirection: 'DESC',
+    param: 'name',
     value: search,
   };
 
@@ -64,6 +64,7 @@ export const ProductPage = () => {
         setIsLoading(false);
         setPages(result.numberOfPages);
         setProductList(result.data);
+        console.log(result.data);
       }
     });
   }

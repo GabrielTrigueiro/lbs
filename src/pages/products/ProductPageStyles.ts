@@ -4,12 +4,13 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Cabecalho = styled.header``;
 export const Tabela = styled.div`
-  flex-grow: 1;
-  max-height: 70vh;
+  height: 100%;
+  max-height: 60vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 5px;
@@ -30,6 +31,6 @@ export const Tabela = styled.div`
 export const Footer = styled.footer`
   margin-top: 1rem;
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
 `;

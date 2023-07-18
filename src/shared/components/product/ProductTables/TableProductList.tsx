@@ -1,38 +1,31 @@
 import styled from '@emotion/styled';
 import {
-  Table,
-  TableRow,
-  TableCell,
-  Avatar,
-  Box,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
+  TableRow,
 } from '@mui/material';
-import { IDataProduct } from '../../../models/product';
-import { TableSubMenu } from '../../client-submenu/TableSubMenu';
-import '../../../../styles/Client/ClientTable.css';
-import { ProductSubMenu } from '../product-submenu/ProductSubMenu';
+import {
+  CustomTableRow,
+  TableCellStyled,
+  TableStyled,
+  getBorderColor,
+} from 'shared/components/table/TableStyles';
+import 'styles/Client/ClientTable.css';
+import { IDataProduct, statusProduto } from '../../../models/product';
+import { ProductSubMenu } from '../productSubMenu/ProductSubMenu';
 
 interface props {
   lista: IDataProduct[];
   update: () => void;
 }
 
-const TableStyled = styled(Table)({
-  borderSpacing: '0px 8px',
-  borderCollapse: 'separate',
-  thead: {
-    borderSpacing: 0,
-  },
-});
-
-const TableCellStyled = styled(TableCell)({
-  borderColor: 'transparent',
-  padding: '10px 16px',
-  backgroundColor: '#fff',
-});
-
+const StatusTableRow = styled(CustomTableRow)<{ status: statusProduto }>`
+  td:first-of-type {
+    border-left: 6px solid ${(props) => getBorderColor(props.status)};
+  }
+`;
 export const TableProductList: React.FC<props> = ({ lista, update }) => {
   return (
     <TableContainer className="table-container">
@@ -50,7 +43,7 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
 
         <TableBody>
           {lista.map((row, index) => (
-            <TableRow key={index}>
+            <StatusTableRow status={row.status} key={index}>
               <TableCellStyled></TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
                 {row.name}
@@ -62,12 +55,12 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
                 {row.tagPrice}
               </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
-                {row.quantidade}
+                {row.quantity}
               </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
                 <ProductSubMenu product={row} update={update} />
               </TableCellStyled>
-            </TableRow>
+            </StatusTableRow>
           ))}
         </TableBody>
       </TableStyled>

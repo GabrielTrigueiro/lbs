@@ -1,44 +1,30 @@
-import {ProductCard} from "./ProductCard";
-import styled from "@emotion/styled";
-import {IDataProduct} from "../../../models/product";
-import {Box} from "@mui/material";
+import { ProductCard } from './ProductCard';
+import styled from '@emotion/styled';
+import { IDataProduct } from '../../../models/product';
 
-const BoxTable = styled(Box)({
-  height: "100%",
-  maxWidth: "100%",
-  overflowY: "scroll",
-  overflowX: "hidden",
-  display: "grid",
-  padding: "1em",
-  gridTemplateColumns: "repeat(auto-fit, minmax(25%, 1fr))",
-  "::-webkit-scrollbar": {
-    width: "15px",
-  },
-  "::-webkit-scrollbar-track": {
-    backgroundColor: "transparent"
-  },
-  "::-webkit-scrollbar-thumb": {
-    backgroundColor: "#d6dee1",
-    borderRadius: "20px",
-    border: "6px solid transparent",
-    backgroundClip: "content-box",
-  },
-  "::-webkit-scrollbar-thumb:hover": {
-    backgroundColor: "#a8bbbf"
-  },
-})
+const Lista = styled.section`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+`;
+
+const Item = styled.article`
+  height: 250px;
+`;
 
 interface props {
   lista: IDataProduct[];
   update: () => void;
 }
 
-export const TableProductBox: React.FC<props> = ({update, lista}) => {
+export const TableProductBox: React.FC<props> = ({ update, lista }) => {
   return (
-    <BoxTable>
+    <Lista>
       {lista.map((row, index) => (
-        <ProductCard key={index} data={row} update={update}/>
+        <Item key={index}>
+          <ProductCard data={row} update={update} />
+        </Item>
       ))}
-    </BoxTable>
-  )
-}
+    </Lista>
+  );
+};
