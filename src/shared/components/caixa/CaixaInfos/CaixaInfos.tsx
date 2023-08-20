@@ -1,10 +1,29 @@
 import { Button, TextField } from '@mui/material';
+import { useCallback, useState } from 'react';
 import { ImagemProduto } from './CaixaInfosStyles';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import Info from './Info';
+import { IndicationService } from 'shared/services/api/indication/IndicationService';
+import { CustomSelect } from '../CaixaInput/CaixaInputStyles';
 
 export default function CaixaInfos() {
-  const { ultimoProduto } = useCaixaContext();
+  const { ultimoProduto, setIndicationId, finalizarCompra } = useCaixaContext();
+
+  const [indicacao, setIndicacao] = useState('');
+
+  const getIndicacoes = useCallback(async () => {
+    let search = {
+      page: 0,
+      pageSize: 5,
+      param: 'name',
+      sortDirection: 'DESC',
+      sortField: 'name',
+      value: indicacao,
+    };
+    const resp = await IndicationService.getAllIndicacoes(search);
+    return resp.data.data;
+  }, [indicacao]);
+
   return (
     <>
       <div className="bg-white flex flex-col items-center p-1">
@@ -19,10 +38,17 @@ export default function CaixaInfos() {
           />
         </div>
       </div>
+
+      {/* infos da compra */}
       <div className="bg-white flex gap-2 p-1">
-        <TextField autoComplete="off" label="Indicações" variant="standard" />
-        <TextField autoComplete="off" label="Cliente" variant="standard" />
-        <TextField autoComplete="off" label="Vendedor" variant="standard" />
+        <CustomSelect
+          isClearable
+          cacheOptions
+          loadOptions={getIndicacoes}
+          formatOptionLabel={(option: any) => (
+            <div onClick={() => setIndicationId(option.id)}>{option.type}</div>
+          )}
+        />
       </div>
 
       {/* pagamentos */}
@@ -41,7 +67,9 @@ export default function CaixaInfos() {
       {/* finalizar */}
       <div className="bg-neutral-500 h-fit flex items-center justify-between p-2 text-white">
         Valor a ser pago: R$
-        <Button variant="contained">Confirmar</Button>
+        <Button onClick={() => finalizarCompra()} variant="contained">
+          Confirmar
+        </Button>
       </div>
     </>
   );

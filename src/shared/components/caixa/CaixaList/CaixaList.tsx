@@ -12,18 +12,20 @@ import { useCaixaContext } from 'shared/contexts/CaixaContext';
 
 const CaixaList = () => {
   const [total, setTotal] = useState(0);
-  const { produtosNaLista, limparLista } = useCaixaContext();
+  const { produtosNaLista, limparLista, setValuePayment } = useCaixaContext();
 
   const calcularSoma = useCallback(() => {
-    return produtosNaLista.reduce(
+    return produtosNaLista.produtos.reduce(
       (soma, objeto) => soma + objeto.precoTotal,
       0
     );
   }, [produtosNaLista]);
 
   useEffect(() => {
-    setTotal(calcularSoma);
-  }, [produtosNaLista, calcularSoma]);
+    let soma = calcularSoma;
+    setTotal(soma);
+    setValuePayment(soma);
+  }, [produtosNaLista, calcularSoma, setValuePayment]);
 
   return (
     <Container>
@@ -36,7 +38,7 @@ const CaixaList = () => {
           <h1>Valor total</h1>
         </CabecalhoTabela>
         <CorpoTabela>
-          {produtosNaLista.map((item) => (
+          {produtosNaLista.produtos.map((item) => (
             <ItemRow key={item.id} item={item} />
           ))}
         </CorpoTabela>
@@ -44,7 +46,7 @@ const CaixaList = () => {
 
       <FooterTabela>
         <Button
-          disabled={produtosNaLista.length === 0}
+          disabled={produtosNaLista.produtos.length === 0}
           onClick={limparLista}
           sx={{ height: '80%' }}
           variant="contained"

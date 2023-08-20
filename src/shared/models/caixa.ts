@@ -1,4 +1,4 @@
-import { IDataProduct } from "./product";
+import { IDataProduct } from './product';
 
 export interface IItem {
   code: string;
@@ -10,4 +10,23 @@ export interface IItemLista {
   produto?: IDataProduct;
   quantidade: number;
   precoTotal: number;
+}
+
+export interface ILista {
+  produtos: IItemLista[];
+}
+
+export interface IDadosProdutoCompra {
+  quantity: number;
+  productId: string;
+}
+
+export interface IDadosDaCompra {
+  clientId: string;
+  indicationId?: string;
+  products?: any;
+  sellerId: string;
+  statusSeller: 'CONFIRMADO';
+  typePaymentId: string;
+  valuePayment: number;
 }

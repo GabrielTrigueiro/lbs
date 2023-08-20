@@ -43,7 +43,7 @@ export const TableProviders: React.FC<{
                 </Box>
               </TableCellStyled>
               <TableCellStyled sx={{ fontWeight: '500' }}>
-                {row.cell}
+                {row.telephone}
               </TableCellStyled>
               <TableCellStyled sx={{ fontWeight: '500' }}>
                 {row.cnpj}
