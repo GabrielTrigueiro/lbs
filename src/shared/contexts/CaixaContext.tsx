@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Notification } from 'shared/components';
-import {
-  IDadosDaCompra,
-  IDadosProdutoCompra,
-  IItemLista,
-  ILista,
-} from 'shared/models/caixa';
+import jwtDecode from 'jwt-decode';
+import { IDadosDaCompra, IItemLista, ILista } from 'shared/models/caixa';
 import { CaixaService } from 'shared/services/api/caixa/Caixa_Service';
 
 interface CaixaContextProps {
@@ -116,6 +112,11 @@ export const useCaixaContext = () => {
     setValuePayment(0);
   }, [setProdutoNaLista, setUltimoProduto, setValuePayment]);
 
+  const getBoxSaleId = () => {
+    let tokenAtual: any = jwtDecode(localStorage.getItem('Acess_Token') || '');
+    return tokenAtual.sub;
+  };
+
   const finalizarCompra = useCallback(() => {
     const lista = produtosNaLista.produtos.map(
       (produto) =>
@@ -125,6 +126,7 @@ export const useCaixaContext = () => {
         }
     );
     let compra: IDadosDaCompra = {
+      boxSaleId: getBoxSaleId(),
       products: lista,
       statusSeller: 'CONFIRMADO',
       clientId,
@@ -137,7 +139,7 @@ export const useCaixaContext = () => {
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
-    //CaixaService.submitCompra(compra);
+    CaixaService.submitCompra(compra);
   }, [
     clientId,
     indicationId,

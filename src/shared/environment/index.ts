@@ -30,4 +30,8 @@ export const environment = {
 
   //caixa
   url_sale: URL + '/api/venda',
+
+  url_colab: URL + '/collaborator',
+
+  url_payment: URL + '/api/typePayment',
 };

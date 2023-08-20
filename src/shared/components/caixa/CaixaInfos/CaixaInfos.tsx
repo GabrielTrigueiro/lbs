@@ -1,15 +1,27 @@
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { ImagemProduto } from './CaixaInfosStyles';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import Info from './Info';
 import { IndicationService } from 'shared/services/api/indication/IndicationService';
 import { CustomSelect } from '../CaixaInput/CaixaInputStyles';
+import { ClienteService } from 'shared/services';
+import { CollaboratorService } from 'shared/services/api/colab';
+import { PaymentService } from 'shared/services/api/payment';
 
 export default function CaixaInfos() {
-  const { ultimoProduto, setIndicationId, finalizarCompra } = useCaixaContext();
+  const {
+    ultimoProduto,
+    setClientId,
+    setIndicationId,
+    finalizarCompra,
+    setTypePaymentId,
+    setSellerId,
+    valuePayment,
+  } = useCaixaContext();
 
   const [indicacao, setIndicacao] = useState('');
+  const [cliente, setClient] = useState('');
 
   const getIndicacoes = useCallback(async () => {
     let search = {
@@ -23,6 +35,29 @@ export default function CaixaInfos() {
     const resp = await IndicationService.getAllIndicacoes(search);
     return resp.data.data;
   }, [indicacao]);
+
+  const getClientes = useCallback(async () => {
+    let search = {
+      page: 0,
+      pageSize: 5,
+      param: 'name',
+      sortDirection: 'DESC',
+      sortField: 'name',
+      value: cliente,
+    };
+    const resp = await ClienteService.getAll(search);
+    return resp.data.data;
+  }, [cliente]);
+
+  const getVendedor = useCallback(async () => {
+    const resp = await CollaboratorService.getColaboradores();
+    return resp.data.data;
+  }, []);
+
+  const getPaymentTypes = useCallback(async () => {
+    const resp = await PaymentService.getFormasDePagamento();
+    return resp.data.data;
+  }, []);
 
   return (
     <>
@@ -40,8 +75,9 @@ export default function CaixaInfos() {
       </div>
 
       {/* infos da compra */}
-      <div className="bg-white flex gap-2 p-1">
+      <div className="bg-white flex gap-2 p-1 flex-col">
         <CustomSelect
+          placeholder="Indicação"
           isClearable
           cacheOptions
           loadOptions={getIndicacoes}
@@ -49,15 +85,43 @@ export default function CaixaInfos() {
             <div onClick={() => setIndicationId(option.id)}>{option.type}</div>
           )}
         />
+        <CustomSelect
+          placeholder="Cliente"
+          isClearable
+          cacheOptions
+          loadOptions={getClientes}
+          formatOptionLabel={(option: any) => (
+            <div onClick={() => setClientId(option.id)}>{option.name}</div>
+          )}
+        />
+        <CustomSelect
+          placeholder="Vendedor"
+          isClearable
+          cacheOptions
+          loadOptions={getVendedor}
+          formatOptionLabel={(option: any) => (
+            <div onClick={() => setSellerId(option.id)}>{option.name}</div>
+          )}
+        />
       </div>
 
       {/* pagamentos */}
       <div className="flex-grow grid grid-row-3">
         <div className="bg-neutral-500 text-white flex items-center px-2">
-          Saldo a pagar: R$ 0,00
+          Saldo a pagar: R$ {valuePayment}
         </div>
         <div className="bg-white flex items-center justify-center">
-          formas de pagamento
+          <CustomSelect
+            placeholder="Forma de pagamento"
+            isClearable
+            cacheOptions
+            loadOptions={getPaymentTypes}
+            formatOptionLabel={(option: any) => (
+              <div onClick={() => setTypePaymentId(option.id)}>
+                {option.name}
+              </div>
+            )}
+          />
         </div>
         <div className="bg-neutral-500 text-white flex items-center px-2">
           Desconto: R$ % ####
