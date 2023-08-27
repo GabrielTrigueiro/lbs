@@ -1,8 +1,9 @@
 import { Button } from '@mui/material';
 import { useCallback, useState } from 'react';
+
 import { ImagemProduto } from './CaixaInfosStyles';
-import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import Info from './Info';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import { IndicationService } from 'shared/services/api/indication/IndicationService';
 import { CustomSelect } from '../CaixaInput/CaixaInputStyles';
 import { ClienteService } from 'shared/services';

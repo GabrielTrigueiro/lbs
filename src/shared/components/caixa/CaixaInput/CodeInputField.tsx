@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import { IItemLista } from 'shared/models/caixa';
 import { v4 as uuid } from 'uuid';
@@ -13,12 +13,15 @@ import {
   CustomSelect,
   InputQuantidade,
 } from './CaixaInputStyles';
+import { Autocomplete, TextField, Box, CircularProgress } from '@mui/material';
 
 const CodeInputField = () => {
-  const [quantidade, setQuantidade] = useState<number>(0);
-  const [codigo, setCodigo] = useState('');
-  const [tempProduct, setTempProduct] = useState<IDataProduct>();
   const { adicionarNaLista } = useCaixaContext();
+  const [codigo, setCodigo] = useState('');
+  const [listaDeProdutos, setListaDeProdutos] = useState<IDataProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tempProduct, setTempProduct] = useState<IDataProduct | null>(null);
+  const [quantidade, setQuantidade] = useState<number>(0);
 
   const submitProduto = () => {
     if (tempProduct) {
@@ -30,7 +33,7 @@ const CodeInputField = () => {
       };
       adicionarNaLista(estruturando);
     }
-    setTempProduct(undefined);
+    setTempProduct(null);
     setQuantidade(0);
     setCodigo('');
   };
@@ -49,7 +52,8 @@ const CodeInputField = () => {
     }
   }, [quantidade]);
 
-  const getOptions = useCallback(async () => {
+  useEffect(() => {
+    let active = true;
     let search = {
       page: 0,
       pageSize: 5,
@@ -58,8 +62,23 @@ const CodeInputField = () => {
       sortField: 'name',
       value: codigo,
     };
-    const resp = await ProductService.getAll(search);
-    return resp.data;
+
+    if (codigo === '') {
+      setListaDeProdutos([]);
+      return undefined;
+    }
+
+    setLoading(true);
+
+    ProductService.getAll(search).then((response) => {
+      if (active) {
+        setListaDeProdutos(response.data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      active = false;
+    };
   }, [codigo]);
 
   return (
@@ -87,21 +106,43 @@ const CodeInputField = () => {
           relative
         "
       >
-        <CustomSelect
-          isClearable
-          cacheOptions
-          loadOptions={getOptions}
-          formatOptionLabel={(option: any) => (
-            <div
-              onClick={() => {
-                setTempProduct(option);
+        <Autocomplete
+          fullWidth
+          value={tempProduct}
+          options={listaDeProdutos}
+          getOptionLabel={(option) => option.name}
+          onChange={(event, newValue) => {
+            setTempProduct(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Digite algo"
+              variant="outlined"
+              fullWidth
+              onChange={(event) => setCodigo(event.target.value)}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
               }}
-              className="flex flex-row items-center gap-3"
-            >
-              <div>Nome: {option.name}</div>
-              <div>Descrição: {option.description}</div>
-              <div>Preço: {option.salerPrice}</div>
-            </div>
+            />
+          )}
+          renderOption={(props, option) => (
+            <Box component="li" {...props}>
+              <span style={{ fontWeight: 'bold', marginRight: 5 }}>
+                Código:{' '}
+              </span>{' '}
+              {option.codeBarras}{' '}
+              <span style={{ fontWeight: 'bold', marginRight: 5 }}>Nome: </span>{' '}
+              {option.name}
+            </Box>
           )}
         />
       </div>
