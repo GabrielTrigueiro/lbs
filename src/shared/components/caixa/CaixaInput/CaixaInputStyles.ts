@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { amareloDefault } from 'styles/variables';
 import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 
 export const Container = styled.div`
   flex-grow: 0;
@@ -44,6 +45,12 @@ export const BotaoQuantidade = styled.div`
 `;
 
 export const CustomSelect = styled(AsyncSelect)`
+  flex-grow: 1;
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
+export const CustomSelectSimples = styled(Select)`
   flex-grow: 1;
   margin-top: auto;
   margin-bottom: auto;

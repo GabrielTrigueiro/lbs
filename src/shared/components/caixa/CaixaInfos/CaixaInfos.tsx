@@ -1,14 +1,17 @@
 import { Button } from '@mui/material';
-import { useCallback, useState } from 'react';
-
+import { useCallback, useState, useEffect } from 'react';
 import { ImagemProduto } from './CaixaInfosStyles';
 import Info from './Info';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import { IndicationService } from 'shared/services/api/indication/IndicationService';
-import { CustomSelect } from '../CaixaInput/CaixaInputStyles';
 import { ClienteService } from 'shared/services';
 import { CollaboratorService } from 'shared/services/api/colab';
 import { PaymentService } from 'shared/services/api/payment';
+import {
+  CustomSelect,
+  CustomSelectSimples,
+} from '../CaixaInput/CaixaInputStyles';
+import { useParams } from 'react-router';
 
 export default function CaixaInfos() {
   const {
@@ -22,7 +25,9 @@ export default function CaixaInfos() {
   } = useCaixaContext();
 
   const [indicacao, setIndicacao] = useState('');
+  const [pagamentos, setPagamentos] = useState<any>([]);
   const [cliente, setClient] = useState('');
+  const { path } = useParams();
 
   const getIndicacoes = useCallback(async () => {
     let search = {
@@ -57,7 +62,11 @@ export default function CaixaInfos() {
 
   const getPaymentTypes = useCallback(async () => {
     const resp = await PaymentService.getFormasDePagamento();
-    return resp.data.data;
+    setPagamentos(resp.data.data);
+  }, []);
+
+  useEffect(() => {
+    getPaymentTypes();
   }, []);
 
   return (
@@ -112,11 +121,10 @@ export default function CaixaInfos() {
           Saldo a pagar: R$ {valuePayment}
         </div>
         <div className="bg-white flex items-center justify-center">
-          <CustomSelect
+          <CustomSelectSimples
             placeholder="Forma de pagamento"
             isClearable
-            cacheOptions
-            loadOptions={getPaymentTypes}
+            options={pagamentos}
             formatOptionLabel={(option: any) => (
               <div onClick={() => setTypePaymentId(option.id)}>
                 {option.name}
