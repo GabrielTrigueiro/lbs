@@ -340,6 +340,24 @@ export const ClientEditModal: React.FC<{
                     variant="standard"
                     size="small"
                     fullWidth
+                    id="cep"
+                    name="cep"
+                    label="CEP"
+                    inputProps={{ maxLength: '8' }}
+                    value={formik.values.cep.replace(
+                      /^(\d{5})(\d{3})$/,
+                      '$1-$2'
+                    )}
+                    onBlur={getCepData}
+                    onChange={formik.handleChange}
+                    error={formik.touched.cep && Boolean(formik.errors.cep)}
+                    helperText={formik.touched.cep && formik.errors.cep}
+                  />
+                  <FormikTextField
+                    autoComplete="off"
+                    variant="standard"
+                    size="small"
+                    fullWidth
                     id="uf"
                     name="uf"
                     label="UF"
@@ -362,24 +380,6 @@ export const ClientEditModal: React.FC<{
                       formik.touched.address && Boolean(formik.errors.address)
                     }
                     helperText={formik.touched.address && formik.errors.address}
-                  />
-                  <FormikTextField
-                    autoComplete="off"
-                    variant="standard"
-                    size="small"
-                    fullWidth
-                    id="cep"
-                    name="cep"
-                    label="CEP"
-                    inputProps={{ maxLength: '8' }}
-                    value={formik.values.cep.replace(
-                      /^(\d{5})(\d{3})$/,
-                      '$1-$2'
-                    )}
-                    onBlur={getCepData}
-                    onChange={formik.handleChange}
-                    error={formik.touched.cep && Boolean(formik.errors.cep)}
-                    helperText={formik.touched.cep && formik.errors.cep}
                   />
                   <FormikTextField
                     autoComplete="off"
