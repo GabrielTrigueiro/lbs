@@ -1,3 +1,5 @@
+import { Typography, Box } from '@mui/material';
+
 interface InfoProps {
   label: string;
   value: string | undefined | number;
@@ -6,10 +8,24 @@ interface InfoProps {
 
 export default function Info({ Dinheiro = false, label, value }: InfoProps) {
   return (
-    <div className="flex text-xs">
-      <h1>
-        <span className="font-bold">{label}:</span> {Dinheiro && 'R$'} {value}
-      </h1>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        maxWidth: '100%',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Typography sx={{ fontWeight: 'bold', marginRight: 0.5 }}>
+        {label}
+      </Typography>
+      <Typography
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value}
+      </Typography>
+    </Box>
   );
 }
