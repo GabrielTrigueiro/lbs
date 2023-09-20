@@ -1,40 +1,59 @@
+import { Card } from '@mui/material';
+import { useState } from 'react';
+
+import ProductInfos from './ProductInfos';
+import CustomAutocomplete from '../CaixaInput/GenericAutocomplete';
 import { InfoCard } from '../../../../pages/caixa/CaixaPageStyles';
-import Skeleton from '@mui/material/Skeleton';
-import { Card, Typography, Box } from '@mui/material';
-import Info from './Info';
+import { IndicationService } from 'shared/services/api/indication/IndicationService';
+import { ClienteService } from 'shared/services';
+import { CollaboratorService } from 'shared/services/api/colab';
+import { ISendPagination } from 'shared/models/client';
+import { dataOneIndication } from 'shared/models/indication';
 
 export default function CaixaInfos() {
+  const [indication, setIndication] = useState<any | null>(null);
+  const [cliente, setCliente] = useState<any | null>(null);
+  const [vendedor, setVendedor] = useState<any | null>(null);
+
+  const changeIndication = (value: dataOneIndication | null) => {
+    setIndication(value);
+  };
+
+  function handleIndication(conf: ISendPagination) {
+    return IndicationService.getAllIndicacoes(conf);
+  }
+
+  const changeCliente = (value: dataOneIndication | null) => {
+    setIndication(value);
+  };
+
+  function handleCliente(conf: ISendPagination) {
+    return ClienteService.getAll(conf);
+  }
+
   return (
     <InfoCard disableGutters>
+      <ProductInfos />
       <Card
         sx={{
+          padding: '0.5em',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          flexDirection: 'column',
+          gap: 1,
         }}
       >
-        <Skeleton
-          variant="rectangular"
-          sx={{
-            minWidth: 100,
-            minHeight: 100,
-          }}
+        <CustomAutocomplete<dataOneIndication>
+          label="Indicação"
+          placeholder="Digite alguma indicação"
+          fetchOptions={handleIndication}
+          onUpdateValue={changeIndication}
         />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-evenly',
-            overflow: 'hidden',
-            padding: '0 0.5em',
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <Info label="Código: " value={23} />
-          <Info label="Valor: " value={23} Dinheiro />
-          <Info label="Descrição:" value={'dmasdmsaldmsakdm'} />
-        </Box>
+        <CustomAutocomplete<dataOneIndication>
+          label="Cliente"
+          placeholder="Procurar cliente"
+          fetchOptions={handleCliente}
+          onUpdateValue={changeCliente}
+        />
       </Card>
     </InfoCard>
   );

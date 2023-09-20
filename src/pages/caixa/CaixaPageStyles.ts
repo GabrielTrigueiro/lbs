@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import {Card, Container} from "@mui/material";
+import styled from '@emotion/styled';
+import { Card, Container } from '@mui/material';
 
 export const CaixaContainer = styled.div`
   display: grid;
@@ -28,4 +28,7 @@ export const InfoCard = styled(Container)`
   height: 100%;
   background-color: #fff;
   padding: 0.5em;
-`
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+`;
