@@ -7,8 +7,9 @@ import { InfoCard } from '../../../../pages/caixa/CaixaPageStyles';
 import { IndicationService } from 'shared/services/api/indication/IndicationService';
 import { ClienteService } from 'shared/services';
 import { CollaboratorService } from 'shared/services/api/colab';
-import { ISendPagination } from 'shared/models/client';
+import { IInfoClient, ISendPagination } from 'shared/models/client';
 import { dataOneIndication } from 'shared/models/indication';
+import { IColab } from 'shared/models/colab';
 
 export default function CaixaInfos() {
   const [indication, setIndication] = useState<any | null>(null);
@@ -18,17 +19,20 @@ export default function CaixaInfos() {
   const changeIndication = (value: dataOneIndication | null) => {
     setIndication(value);
   };
-
+  const changeCliente = (value: IInfoClient | null) => {
+    setIndication(value);
+  };
+  const changeVendedor = (value: IColab | null) => {
+    setIndication(value);
+  };
   function handleIndication(conf: ISendPagination) {
     return IndicationService.getAllIndicacoes(conf);
   }
-
-  const changeCliente = (value: dataOneIndication | null) => {
-    setIndication(value);
-  };
-
   function handleCliente(conf: ISendPagination) {
     return ClienteService.getAll(conf);
+  }
+  function handleVendedor() {
+    return CollaboratorService.getColaboradores();
   }
 
   return (
@@ -48,11 +52,17 @@ export default function CaixaInfos() {
           fetchOptions={handleIndication}
           onUpdateValue={changeIndication}
         />
-        <CustomAutocomplete<dataOneIndication>
+        <CustomAutocomplete<IInfoClient>
           label="Cliente"
           placeholder="Procurar cliente"
           fetchOptions={handleCliente}
           onUpdateValue={changeCliente}
+        />
+        <CustomAutocomplete<IColab>
+          label="Vendedor"
+          placeholder="Procurar vendedor"
+          fetchOptions={handleVendedor}
+          onUpdateValue={changeVendedor}
         />
       </Card>
     </InfoCard>

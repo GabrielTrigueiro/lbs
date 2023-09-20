@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ISendPagination } from 'shared/models/client';
-import { Box, Typography } from '@mui/material';
 
 interface IProps<T> {
   fetchOptions: (conf: ISendPagination) => Promise<any[]>;
