@@ -34,8 +34,8 @@ function GenericAutocomplete<T>({
 
     const loadOptions = async () => {
       try {
-        const data = await fetchOptions(PaginationConf);
-        setOptions(data);
+        const data: any = await fetchOptions(PaginationConf);
+        setOptions(data.data);
       } catch (error) {
         console.error('Erro na busca de opções:', error);
       }

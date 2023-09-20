@@ -50,7 +50,7 @@ export const ClientRegisterModal: React.FC<{
 
   function getListaIndicacao() {
     IndicationService.getInficacoes().then((response) => {
-      setApiInd(response.data.data);
+      setApiInd(response.data);
     });
   }
 

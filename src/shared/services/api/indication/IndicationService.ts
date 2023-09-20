@@ -23,7 +23,7 @@ const getInficacoes = async (): Promise<any | Error> => {
       if (data instanceof AxiosError) {
         return data;
       }
-      return data;
+      return data.data;
     })
     .catch((err) => {
       console.error(err);
@@ -46,7 +46,7 @@ const getAllIndicacoes = async (
       if (data instanceof AxiosError) {
         return data;
       }
-      return data.data.data;
+      return data.data;
     })
     .catch((err) => {
       console.error(err);
