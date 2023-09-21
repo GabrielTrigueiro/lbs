@@ -11,7 +11,7 @@ const CaixaPayment = () => {
   const [descontoPorcentagem, setDescontoPorcentagem] = useState<number | string>('');
   const [descontoBruto, setDescontoBruto] = useState<number | string>('');
 
-  const changeValor = (
+  const changeDesconto = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     setState1: (value: React.SetStateAction<number | string>) => void,
   ) => {
@@ -51,14 +51,14 @@ const CaixaPayment = () => {
           autoComplete={"off"}
           inputProps={{min: 0}}
           value={descontoPorcentagem}
-          onChange={(event) => changeValor(event, setDescontoPorcentagem)}
+          onChange={(event) => changeDesconto(event, setDescontoPorcentagem)}
         />
         <TextField
           label={"Desconto R$"}
           autoComplete={"off"}
           inputProps={{min: 0}}
           value={descontoBruto}
-          onChange={(event) => changeValor(event, setDescontoBruto)}
+          onChange={(event) => changeDesconto(event, setDescontoBruto)}
         />
       </Box>
       <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1,}}>
