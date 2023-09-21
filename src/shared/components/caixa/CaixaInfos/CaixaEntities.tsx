@@ -1,7 +1,7 @@
 import { Card } from '@mui/material';
 import { useState } from 'react';
 
-import CustomAutocomplete from '../CaixaInput/GenericAutocomplete';
+import CustomAutocomplete from '../CaixaInput/CustomAutocomplete';
 import { IndicationService } from 'shared/services/api/indication/IndicationService';
 import { ClienteService } from 'shared/services';
 import { CollaboratorService } from 'shared/services/api/colab';
