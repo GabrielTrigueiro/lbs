@@ -24,7 +24,7 @@ export default function Info({ Dinheiro = false, label, value }: InfoProps) {
           textOverflow: 'ellipsis',
         }}
       >
-        {Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value}
+        { value ? Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value : ''}
       </Typography>
     </Box>
   );

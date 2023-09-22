@@ -1,8 +1,10 @@
 import Skeleton from '@mui/material/Skeleton';
 import { Card, Typography, Box } from '@mui/material';
 import Info from './Info';
+import {useCaixaContext} from "../../../contexts/CaixaContext";
 
 export default function ProductInfos() {
+  const {ultimoProduto} = useCaixaContext();
   return (
     <Card
       sx={{
@@ -29,9 +31,9 @@ export default function ProductInfos() {
           height: '100%',
         }}
       >
-        <Info label="Código: " value={23} />
-        <Info label="Valor: " value={23} Dinheiro />
-        <Info label="Descrição:" value={'dmasdmsaldmsakdm'} />
+        <Info label="Código: " value={ultimoProduto?.produto?.codeBarras} />
+        <Info label="Valor: " value={ultimoProduto?.produto?.salerPrice} Dinheiro />
+        <Info label="Descrição:" value={ultimoProduto?.produto?.name} />
       </Box>
     </Card>
   );
