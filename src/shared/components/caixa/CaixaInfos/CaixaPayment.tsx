@@ -1,13 +1,13 @@
 import CustomAutocomplete from "../CaixaInput/CustomAutocomplete";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Payment} from "../../../models/payment";
 import {PaymentService} from "../../../services/api/payment";
 import {Box, Card, Typography} from "@mui/material";
 import TextField from "@mui/material/TextField";
+import {useCaixaContext} from "../../../contexts/CaixaContext";
 
 const CaixaPayment = () => {
-  const [pagamento, setPagamento] = useState<any | null>(null);
-  const [valor, setValor] = useState<number | string>('');
+  const {tipoPagamento, setTipoPagamento, valorDaLista, valorComDesconto, setValorComDesconto} = useCaixaContext();
   const [descontoPorcentagem, setDescontoPorcentagem] = useState<number | string>('');
   const [descontoBruto, setDescontoBruto] = useState<number | string>('');
 
@@ -16,18 +16,33 @@ const CaixaPayment = () => {
     setState1: (value: React.SetStateAction<number | string>) => void,
   ) => {
     const newValue = event.target.value;
+    // Verifique se o valor é um número ou uma string vazia
     if (/^\d*$/.test(newValue) || newValue === '') {
-      setState1(newValue);
+      const numericValue = newValue === '' ? '' : parseInt(newValue, 10);
+      // Verifique se o valor não excede 100
+      if (numericValue !== undefined && numericValue <= 100) {
+        setState1(numericValue);
+      }
     }
   };
 
-  const changePagamento = (value: Payment | null) => {
-    setPagamento(value);
+  const changePagamento = (value: Payment | undefined) => {
+    setTipoPagamento(value);
   };
 
   function handleVendedor() {
     return PaymentService.getFormasDePagamento();
   }
+
+  function aplicarDesconto() {
+    setValorComDesconto(valorDaLista);
+    if (descontoBruto !== '') setValorComDesconto(valorDaLista - Number(descontoBruto))
+    if (descontoPorcentagem !== '') setValorComDesconto(valorDaLista - valorDaLista * Number(descontoPorcentagem) / 100)
+  }
+
+  useEffect(() => {
+    aplicarDesconto();
+  }, [descontoBruto, descontoPorcentagem]);
 
   return (
     <Card
@@ -47,22 +62,31 @@ const CaixaPayment = () => {
       />
       <Box sx={{display: 'flex', justifyContent: "space-between", alignItems: "center", gap: 1}}>
         <TextField
+          disabled={!(descontoBruto === '')}
+          size={"small"}
           label={"Desconto %"}
           autoComplete={"off"}
-          inputProps={{min: 0}}
           value={descontoPorcentagem}
           onChange={(event) => changeDesconto(event, setDescontoPorcentagem)}
         />
         <TextField
+          disabled={!(descontoPorcentagem === '')}
+          size={"small"}
           label={"Desconto R$"}
           autoComplete={"off"}
-          inputProps={{min: 0}}
           value={descontoBruto}
           onChange={(event) => changeDesconto(event, setDescontoBruto)}
         />
       </Box>
-      <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1,}}>
-        <Typography>Valor: R$ 0.00</Typography>
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1,
+        flexDirection: "column",
+      }}>
+        <Typography>Valor com desconto</Typography>
+        <Typography>R$ {valorComDesconto.toFixed(2)}</Typography>
       </Box>
     </Card>
   )

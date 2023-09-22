@@ -12,18 +12,16 @@ import {useCaixaContext} from "../../../contexts/CaixaContext";
 
 export default function CaixaEntities() {
 
-  const [indication, setIndication] = useState<any | null>(null);
-  const [cliente, setCliente] = useState<any | null>(null);
-  const [vendedor, setVendedor] = useState<any | null>(null);
+  const {indicacao, cliente, vendedor, setCliente, setIndicacao, setVendedor} = useCaixaContext();
 
-  const changeIndication = (value: dataOneIndication | null) => {
-    setIndication(value);
+  const changeIndication = (value: dataOneIndication | undefined) => {
+    setIndicacao(value);
   };
-  const changeCliente = (value: IInfoClient | null) => {
-    setIndication(value);
+  const changeCliente = (value: IInfoClient | undefined) => {
+    setCliente(value);
   };
-  const changeVendedor = (value: IColab | null) => {
-    setIndication(value);
+  const changeVendedor = (value: IColab | undefined) => {
+    setVendedor(value);
   };
 
   function handleIndication(conf: ISendPagination) {

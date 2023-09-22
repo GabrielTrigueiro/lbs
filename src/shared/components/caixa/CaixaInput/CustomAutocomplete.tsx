@@ -5,7 +5,7 @@ import { ISendPagination } from 'shared/models/client';
 
 interface IProps<T> {
   fetchOptions: (conf: ISendPagination) => Promise<any[]>;
-  onUpdateValue: (value: T | null) => void;
+  onUpdateValue: (value: T | undefined) => void;
   label: string;
   placeholder: string;
 }
@@ -56,6 +56,7 @@ function GenericAutocomplete<T>({
         <TextField
           {...params}
           label={label}
+          size={"small"}
           placeholder={placeholder}
           variant="outlined"
           fullWidth
