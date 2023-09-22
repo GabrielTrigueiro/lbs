@@ -1,22 +1,21 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useCallback, useEffect, useState } from 'react';
-import { useCaixaContext } from 'shared/contexts/CaixaContext';
-import { IItemLista } from 'shared/models/caixa';
-import { v4 as uuid } from 'uuid';
-import { IDataProduct } from '../../../models/product';
-import { ProductService } from '../../../services/api/product';
+import {useCallback, useEffect, useState} from 'react';
+import {useCaixaContext} from 'shared/contexts/CaixaContext';
+import {IItemLista} from 'shared/models/caixa';
+import {v4 as uuid} from 'uuid';
+import {IDataProduct} from '../../../models/product';
+import {ProductService} from '../../../services/api/product';
 import {
   BotaoQuantidade,
   CampoQuantidade,
   Container,
-  CustomSelect,
   InputQuantidade,
 } from './CaixaInputStyles';
-import { Autocomplete, TextField, Box, CircularProgress } from '@mui/material';
+import {Autocomplete, TextField, Box, CircularProgress, Typography, Divider} from '@mui/material';
 
 const CodeInputField = () => {
-  const { adicionarNaLista } = useCaixaContext();
+  const {adicionarNaLista} = useCaixaContext();
   const [codigo, setCodigo] = useState('');
   const [listaDeProdutos, setListaDeProdutos] = useState<IDataProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -85,7 +84,7 @@ const CodeInputField = () => {
     <Container>
       <CampoQuantidade>
         <BotaoQuantidade onClick={adicionar}>
-          <AddIcon />
+          <AddIcon/>
         </BotaoQuantidade>
         <InputQuantidade
           autoComplete="off"
@@ -95,7 +94,7 @@ const CodeInputField = () => {
           value={quantidade}
         />
         <BotaoQuantidade onClick={remover}>
-          <RemoveIcon />
+          <RemoveIcon/>
         </BotaoQuantidade>
       </CampoQuantidade>
 
@@ -126,7 +125,7 @@ const CodeInputField = () => {
                 endAdornment: (
                   <>
                     {loading ? (
-                      <CircularProgress color="inherit" size={20} />
+                      <CircularProgress color="inherit" size={20}/>
                     ) : null}
                     {params.InputProps.endAdornment}
                   </>
@@ -135,13 +134,22 @@ const CodeInputField = () => {
             />
           )}
           renderOption={(props, option) => (
-            <Box component="li" {...props}>
-              <span style={{ fontWeight: 'bold', marginRight: 5 }}>
-                Código:{' '}
-              </span>{' '}
-              {option.codeBarras}{' '}
-              <span style={{ fontWeight: 'bold', marginRight: 5 }}>Nome: </span>{' '}
-              {option.name}
+            <Box component="li" {...props} sx={{
+              display: 'flex',
+              width: '100%',
+              gap: 1,
+              padding: 1,
+              ":hover": {background: "#f3f3f3"},
+              cursor: 'pointer'
+            }}>
+              <Box sx={{display: 'flex', gap: 1}}>
+                <Typography sx={{fontWeight: 'bold', minWidth: 100}}>Código:</Typography>
+                <Typography sx={{width: 150, textAlign: "start"}}>{option.codeBarras}</Typography>
+              </Box>
+              <Box sx={{display: 'flex', gap: 1}}>
+                <Typography sx={{fontWeight: 'bold', minWidth: 100}}>Nome:</Typography>
+                <Typography sx={{width: 150, textAlign: "start"}}>{option.name}</Typography>
+              </Box>
             </Box>
           )}
         />
