@@ -1,15 +1,17 @@
-import { Card } from '@mui/material';
-import { useState } from 'react';
+import {Card} from '@mui/material';
+import {useState} from 'react';
 
 import CustomAutocomplete from '../CaixaInput/CustomAutocomplete';
-import { IndicationService } from 'shared/services/api/indication/IndicationService';
-import { ClienteService } from 'shared/services';
-import { CollaboratorService } from 'shared/services/api/colab';
-import { IInfoClient, ISendPagination } from 'shared/models/client';
-import { dataOneIndication } from 'shared/models/indication';
-import { IColab } from 'shared/models/colab';
+import {IndicationService} from 'shared/services/api/indication/IndicationService';
+import {ClienteService} from 'shared/services';
+import {CollaboratorService} from 'shared/services/api/colab';
+import {IInfoClient, ISendPagination} from 'shared/models/client';
+import {dataOneIndication} from 'shared/models/indication';
+import {IColab} from 'shared/models/colab';
+import {useCaixaContext} from "../../../contexts/CaixaContext";
 
 export default function CaixaEntities() {
+
   const [indication, setIndication] = useState<any | null>(null);
   const [cliente, setCliente] = useState<any | null>(null);
   const [vendedor, setVendedor] = useState<any | null>(null);
@@ -23,15 +25,19 @@ export default function CaixaEntities() {
   const changeVendedor = (value: IColab | null) => {
     setIndication(value);
   };
+
   function handleIndication(conf: ISendPagination) {
     return IndicationService.getAllIndicacoes(conf);
   }
+
   function handleCliente(conf: ISendPagination) {
     return ClienteService.getAll(conf);
   }
+
   function handleVendedor() {
     return CollaboratorService.getColaboradores();
   }
+
   return (
     <Card
       sx={{

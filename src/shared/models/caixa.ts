@@ -24,7 +24,7 @@ export interface IDadosProdutoCompra {
 export interface IDadosDaCompra {
   boxSaleId: string;
   clientId: string;
-  indicationId?: string;
+  indicationId?: string | undefined;
   products?: any;
   sellerId: string;
   statusSeller: 'CONFIRMADO';

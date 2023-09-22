@@ -149,7 +149,7 @@ const CodeInputField = () => {
       {/* botão add */}
       <div className="col-span-1 flex">
         <button
-          disabled={!tempProduct}
+          disabled={quantidade == 0}
           className={`
             grow
             ${quantidade === 0 ? 'bg-neutral-300' : 'bg-yellow-300'}

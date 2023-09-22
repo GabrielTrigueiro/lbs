@@ -12,7 +12,7 @@ import { useCaixaContext } from 'shared/contexts/CaixaContext';
 
 const CaixaList = () => {
   const [total, setTotal] = useState(0);
-  const { produtosNaLista, limparLista, setValuePayment } = useCaixaContext();
+  const { produtosNaLista, limparLista, setValorDaLista } = useCaixaContext();
 
   const calcularSoma = useCallback(() => {
     return produtosNaLista.produtos.reduce(
@@ -24,8 +24,8 @@ const CaixaList = () => {
   useEffect(() => {
     let soma = calcularSoma;
     setTotal(soma);
-    setValuePayment(soma);
-  }, [produtosNaLista, calcularSoma, setValuePayment]);
+    setValorDaLista(soma);
+  }, [produtosNaLista, calcularSoma, setValorDaLista]);
 
   return (
     <Container>
