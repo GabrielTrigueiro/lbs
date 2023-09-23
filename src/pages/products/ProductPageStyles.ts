@@ -10,7 +10,6 @@ export const Container = styled.div`
 export const Cabecalho = styled.header``;
 export const Tabela = styled.div`
   height: 100%;
-  max-height: 60vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 5px;

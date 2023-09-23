@@ -128,6 +128,7 @@ export const useCaixaContext = () => {
     setProdutoNaLista({produtos: []});
     setUltimoProduto(undefined);
     setValorDaLista(0);
+    setValorComDesconto(0)
   }, [setProdutoNaLista, setUltimoProduto, setValorDaLista]);
 
   const getBoxSaleId = () => {
@@ -143,21 +144,23 @@ export const useCaixaContext = () => {
           productId: produto.produto.id,
         }
     );
+
+
     let compra: IDadosDaCompra = {
       boxSaleId: getBoxSaleId(),
       products: lista,
       statusSeller: 'CONFIRMADO',
       clientId: cliente ? cliente.id ? cliente.id : '' : '',
-      valuePayment: valorDaLista,
+      valuePayment: valorComDesconto,
       sellerId: vendedor ? vendedor.id ? vendedor.id : '' : '',
       typePaymentId: tipoPagamento ? tipoPagamento.id ? tipoPagamento.id : '' : '',
       indicationId: indicacao ? indicacao.id ? indicacao.id : '' : '',
     };
-    console.log(compra);
+    console.log(tipoPagamento)
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
-    //CaixaService.submitCompra(compra);
+    CaixaService.submitCompra(compra);
   }, [
     getBoxSaleId,
     cliente,

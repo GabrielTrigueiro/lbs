@@ -10,6 +10,7 @@ const Lista = styled.section`
 
 const Item = styled.article`
   height: 250px;
+  max-width: 250px;
 `;
 
 interface props {

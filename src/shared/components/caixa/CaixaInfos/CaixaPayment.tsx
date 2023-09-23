@@ -42,7 +42,7 @@ const CaixaPayment = () => {
 
   useEffect(() => {
     aplicarDesconto();
-  }, [descontoBruto, descontoPorcentagem]);
+  }, [descontoBruto, descontoPorcentagem, valorDaLista]);
 
   return (
     <Card
@@ -88,6 +88,9 @@ const CaixaPayment = () => {
         <Typography>Valor com desconto</Typography>
         <Typography>R$ {valorComDesconto.toFixed(2)}</Typography>
       </Box>
+      {tipoPagamento && (
+        <Box>oi</Box>
+      )}
     </Card>
   )
 }
