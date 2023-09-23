@@ -7,27 +7,45 @@ import TextField from "@mui/material/TextField";
 import {useCaixaContext} from "../../../contexts/CaixaContext";
 
 const CaixaPayment = () => {
-  const {tipoPagamento, setTipoPagamento, valorDaLista, valorComDesconto, setValorComDesconto} = useCaixaContext();
+  const {
+    tipoPagamento,
+    setTipoPagamento,
+    valorDaLista,
+    valorComDesconto,
+    setValorComDesconto,
+    valorRecebido,
+    setValorRecebido
+  } = useCaixaContext();
   const [descontoPorcentagem, setDescontoPorcentagem] = useState<number | string>('');
   const [descontoBruto, setDescontoBruto] = useState<number | string>('');
 
   const changeDesconto = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     setState1: (value: React.SetStateAction<number | string>) => void,
+    porcent?: boolean
   ) => {
     const newValue = event.target.value;
-    // Verifique se o valor é um número ou uma string vazia
     if (/^\d*$/.test(newValue) || newValue === '') {
       const numericValue = newValue === '' ? '' : parseInt(newValue, 10);
-      // Verifique se o valor não excede 100
-      if (numericValue !== undefined && numericValue <= 100) {
-        setState1(numericValue);
+      if(porcent){
+        if (numericValue !== undefined && numericValue <= 100) {
+          setState1(numericValue);
+        }
       }
+      else setState1(numericValue);
     }
   };
 
   const changePagamento = (value: Payment | undefined) => {
     setTipoPagamento(value);
+  };
+
+  const changeValorRecebido = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const newValue = event.target.value;
+    if (/^\d*$/.test(newValue) || newValue === '') {
+      const numericValue = newValue === '' ? 0 : parseInt(newValue, 10);
+      setValorRecebido(numericValue);
+    }
   };
 
   function handleVendedor() {
@@ -67,7 +85,7 @@ const CaixaPayment = () => {
           label={"Desconto %"}
           autoComplete={"off"}
           value={descontoPorcentagem}
-          onChange={(event) => changeDesconto(event, setDescontoPorcentagem)}
+          onChange={(event) => changeDesconto(event, setDescontoPorcentagem, true)}
         />
         <TextField
           disabled={!(descontoPorcentagem === '')}
@@ -75,7 +93,7 @@ const CaixaPayment = () => {
           label={"Desconto R$"}
           autoComplete={"off"}
           value={descontoBruto}
-          onChange={(event) => changeDesconto(event, setDescontoBruto)}
+          onChange={(event) => changeDesconto(event, setDescontoBruto, false)}
         />
       </Box>
       <Box sx={{
@@ -88,8 +106,14 @@ const CaixaPayment = () => {
         <Typography>Valor com desconto</Typography>
         <Typography>R$ {valorComDesconto.toFixed(2)}</Typography>
       </Box>
-      {tipoPagamento && (
-        <Box>oi</Box>
+      {tipoPagamento?.id.match('64e412a64703aba6f616ce7a') && (
+        <TextField
+          size={"small"}
+          label={"Valor recebido"}
+          autoComplete={"off"}
+          value={valorRecebido}
+          onChange={(event) => changeValorRecebido(event)}
+        />
       )}
     </Card>
   )
