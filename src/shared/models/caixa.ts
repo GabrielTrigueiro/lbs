@@ -29,5 +29,8 @@ export interface IDadosDaCompra {
   sellerId: string;
   statusSeller: 'CONFIRMADO';
   typePaymentId: string;
-  valuePayment: number;
+  desconto: number;
+  amount: number;
+  amountPaid?: number;
+  amountReturn?: number;
 }

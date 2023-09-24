@@ -7,6 +7,7 @@ import {IInfoClient} from "../models/client";
 import {dataOneIndication} from "../models/indication";
 import {IColab} from "../models/colab";
 import {Payment} from "../models/payment";
+import {Button} from "@mui/material";
 
 interface CaixaContextProps {
   produtosNaLista: ILista;
@@ -62,6 +63,47 @@ export const useCaixaContext = () => {
     valorRecebido,
     setValorRecebido,
   } = useContext(CaixaContext)!;
+
+  function imprimirCupom() {
+    var dataAtual = new Date();
+    var dataFormatada = dataAtual.toISOString().slice(0, 19).replace('T', ' ');
+
+    var conteudoCupom = `
+    ********** Cupom Fiscal **********
+    Data: ${dataFormatada}
+    ==================================
+    Descrição           | Quantidade | Preço Unitário | Total
+    ----------------------------------
+  `;
+
+    produtosNaLista.produtos.forEach((item: IItemLista) => {
+      conteudoCupom += `
+${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | ${item.produto?.custePrice.toFixed(2).padEnd(15)} | ${item.precoTotal.toFixed(2)}
+`;
+    });
+
+    conteudoCupom += `
+    ==================================
+    Soma total: ${valorDaLista.toFixed(2)}
+    Desconto: ${(valorDaLista - valorComDesconto).toFixed(2)}
+    Total com desconto: ${valorComDesconto.toFixed(2)}
+  `;
+
+    var janelaImprimir = window.open('', '', 'width=600,height=600');
+
+    if (janelaImprimir) {
+      janelaImprimir.document.open();
+      janelaImprimir.document.write('<html lang="pt-br"><head><title>Cupom Fiscal</title></head><body>');
+      janelaImprimir.document.write('<pre>' + conteudoCupom + '</pre>');
+      janelaImprimir.document.write('</body></html>');
+      janelaImprimir.document.close();
+      janelaImprimir.print();
+      janelaImprimir.close();
+    } else {
+      alert('Por favor, habilite a janela pop-up para imprimir o cupom.');
+    }
+  }
+
 
   const adicionarNaLista = useCallback(
     (novoProduto: IItemLista) => {
@@ -124,6 +166,7 @@ export const useCaixaContext = () => {
     [produtosNaLista, setProdutoNaLista, setUltimoProduto]
   );
 
+
   const limparLista = useCallback(() => {
     setProdutoNaLista({produtos: []});
     setUltimoProduto(undefined);
@@ -151,12 +194,16 @@ export const useCaixaContext = () => {
       products: lista,
       statusSeller: 'CONFIRMADO',
       clientId: cliente ? cliente.id ? cliente.id : '' : '',
-      valuePayment: valorComDesconto,
       sellerId: vendedor ? vendedor.id ? vendedor.id : '' : '',
       typePaymentId: tipoPagamento ? tipoPagamento.id ? tipoPagamento.id : '' : '',
       indicationId: indicacao ? indicacao.id ? indicacao.id : '' : '',
+      amount: valorComDesconto,
+      amountPaid: valorRecebido,
+      amountReturn: valorRecebido ? valorRecebido - valorComDesconto : undefined,
+      desconto: valorDaLista - valorComDesconto
     };
-    console.log(tipoPagamento)
+    imprimirCupom()
+    console.log(compra)
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
@@ -170,7 +217,6 @@ export const useCaixaContext = () => {
     indicacao,
     produtosNaLista,
   ]);
-
   return {
     produtosNaLista,
     setProdutoNaLista,
