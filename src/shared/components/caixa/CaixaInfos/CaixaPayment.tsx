@@ -6,6 +6,7 @@ import { Box, Card, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useCaixaContext } from '../../../contexts/CaixaContext';
 import CurrencyInput from 'react-currency-input-field';
+import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 
 const CaixaPayment = () => {
   const {
@@ -66,10 +67,6 @@ const CaixaPayment = () => {
     aplicarDesconto();
   }, [descontoBruto, descontoPorcentagem, valorDaLista]);
 
-  const handleAmountChange = (value: any) => {
-    setValorRecebido(value);
-  };
-
   return (
     <Card
       sx={{
@@ -126,21 +123,10 @@ const CaixaPayment = () => {
         <Typography>R$ {valorComDesconto.toFixed(2)}</Typography>
       </Box>
       {tipoPagamento?.id.match('64e412a64703aba6f616ce7a') && (
-        <TextField
-          label={'Valor recebido'}
-          variant="outlined"
-          InputProps={{
-            inputComponent: CurrencyInput as any,
-            inputProps: {
-              prefix: 'R$ ',
-              decimalSeparator: ',',
-              groupSeparator: '.',
-              allowNegativeValue: false,
-              decimalScale: 2,
-              onValueChange: handleAmountChange,
-            },
-            value: valorRecebido,
-          }}
+        <CurrencyTextField
+          label="Valor recebido"
+          amount={valorRecebido}
+          stateFunction={setValorRecebido}
         />
       )}
     </Card>

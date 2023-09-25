@@ -7,7 +7,6 @@ import { IInfoClient } from '../models/client';
 import { dataOneIndication } from '../models/indication';
 import { IColab } from '../models/colab';
 import { Payment } from '../models/payment';
-import { Button } from '@mui/material';
 
 interface CaixaContextProps {
   produtosNaLista: ILista;
