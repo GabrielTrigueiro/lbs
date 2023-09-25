@@ -1,13 +1,13 @@
-import React, {createContext, useContext, useState, useCallback} from 'react';
-import {Notification} from 'shared/components';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { Notification } from 'shared/components';
 import jwtDecode from 'jwt-decode';
-import {IDadosDaCompra, IItemLista, ILista} from 'shared/models/caixa';
-import {CaixaService} from 'shared/services/api/caixa/Caixa_Service';
-import {IInfoClient} from "../models/client";
-import {dataOneIndication} from "../models/indication";
-import {IColab} from "../models/colab";
-import {Payment} from "../models/payment";
-import {Button} from "@mui/material";
+import { IDadosDaCompra, IItemLista, ILista } from 'shared/models/caixa';
+import { CaixaService } from 'shared/services/api/caixa/Caixa_Service';
+import { IInfoClient } from '../models/client';
+import { dataOneIndication } from '../models/indication';
+import { IColab } from '../models/colab';
+import { Payment } from '../models/payment';
+import { Button } from '@mui/material';
 
 interface CaixaContextProps {
   produtosNaLista: ILista;
@@ -17,11 +17,16 @@ interface CaixaContextProps {
     React.SetStateAction<IItemLista | undefined>
   >;
 
+  isPorcentage: boolean;
+  setIsPorcentage: React.Dispatch<React.SetStateAction<boolean>>;
+
   cliente: IInfoClient | undefined;
   setCliente: React.Dispatch<React.SetStateAction<IInfoClient | undefined>>;
 
   indicacao?: dataOneIndication | undefined;
-  setIndicacao: React.Dispatch<React.SetStateAction<dataOneIndication | undefined>>;
+  setIndicacao: React.Dispatch<
+    React.SetStateAction<dataOneIndication | undefined>
+  >;
 
   vendedor: IColab | undefined;
   setVendedor: React.Dispatch<React.SetStateAction<IColab | undefined>>;
@@ -35,8 +40,11 @@ interface CaixaContextProps {
   valorComDesconto: number;
   setValorComDesconto: React.Dispatch<React.SetStateAction<number>>;
 
-  valorRecebido?: number;
-  setValorRecebido: React.Dispatch<React.SetStateAction<number>>;
+  valorRecebido: string;
+  setValorRecebido: React.Dispatch<React.SetStateAction<string>>;
+
+  valorRetornado?: number;
+  setValorRetornado: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const CaixaContext = createContext<CaixaContextProps | null>(null);
@@ -62,8 +70,13 @@ export const useCaixaContext = () => {
     setValorComDesconto,
     valorRecebido,
     setValorRecebido,
+    isPorcentage,
+    setIsPorcentage,
+    valorRetornado,
+    setValorRetornado,
   } = useContext(CaixaContext)!;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function imprimirCupom() {
     var dataAtual = new Date();
     var dataFormatada = dataAtual.toISOString().slice(0, 19).replace('T', ' ');
@@ -78,7 +91,11 @@ export const useCaixaContext = () => {
 
     produtosNaLista.produtos.forEach((item: IItemLista) => {
       conteudoCupom += `
-${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | ${item.produto?.custePrice.toFixed(2).padEnd(15)} | ${item.precoTotal.toFixed(2)}
+${item.produto?.name.padStart(22)} | ${item.quantidade
+        .toString()
+        .padEnd(11)} | ${item.produto?.custePrice
+        .toFixed(2)
+        .padEnd(15)} | ${item.precoTotal.toFixed(2)}
 `;
     });
 
@@ -93,7 +110,9 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | 
 
     if (janelaImprimir) {
       janelaImprimir.document.open();
-      janelaImprimir.document.write('<html lang="pt-br"><head><title>Cupom Fiscal</title></head><body>');
+      janelaImprimir.document.write(
+        '<html lang="pt-br"><head><title>Cupom Fiscal</title></head><body>'
+      );
       janelaImprimir.document.write('<pre>' + conteudoCupom + '</pre>');
       janelaImprimir.document.write('</body></html>');
       janelaImprimir.document.close();
@@ -103,7 +122,6 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | 
       alert('Por favor, habilite a janela pop-up para imprimir o cupom.');
     }
   }
-
 
   const adicionarNaLista = useCallback(
     (novoProduto: IItemLista) => {
@@ -156,22 +174,21 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | 
       );
       const updatedItems = [...produtosNaLista.produtos];
       updatedItems.splice(indexId, 1);
-      setProdutoNaLista({produtos: updatedItems});
+      setProdutoNaLista({ produtos: updatedItems });
       updatedItems.length === 0
         ? setUltimoProduto(undefined)
         : setUltimoProduto(
-          produtosNaLista.produtos.at(produtosNaLista.produtos.length - 2)
-        );
+            produtosNaLista.produtos.at(produtosNaLista.produtos.length - 2)
+          );
     },
     [produtosNaLista, setProdutoNaLista, setUltimoProduto]
   );
 
-
   const limparLista = useCallback(() => {
-    setProdutoNaLista({produtos: []});
+    setProdutoNaLista({ produtos: [] });
     setUltimoProduto(undefined);
     setValorDaLista(0);
-    setValorComDesconto(0)
+    setValorComDesconto(0);
   }, [setProdutoNaLista, setUltimoProduto, setValorDaLista]);
 
   const getBoxSaleId = () => {
@@ -188,34 +205,44 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | 
         }
     );
 
+    const numeroComPonto = valorRecebido.replace(/,/g, '.');
 
     let compra: IDadosDaCompra = {
       boxSaleId: getBoxSaleId(),
       products: lista,
-      statusSeller: 'CONFIRMADO',
-      clientId: cliente ? cliente.id ? cliente.id : '' : '',
-      sellerId: vendedor ? vendedor.id ? vendedor.id : '' : '',
-      typePaymentId: tipoPagamento ? tipoPagamento.id ? tipoPagamento.id : '' : '',
-      indicationId: indicacao ? indicacao.id ? indicacao.id : '' : '',
+      clientId: cliente ? (cliente.id ? cliente.id : '') : '',
+      sellerId: vendedor ? (vendedor.id ? vendedor.id : '') : '',
+      typePaymentId: tipoPagamento
+        ? tipoPagamento.id
+          ? tipoPagamento.id
+          : ''
+        : '',
+      indicationId: indicacao ? (indicacao.id ? indicacao.id : '') : '',
       amount: valorComDesconto,
-      amountPaid: valorRecebido,
-      amountReturn: valorRecebido ? valorRecebido - valorComDesconto : undefined,
-      desconto: valorDaLista - valorComDesconto
+      amountPaid: Number(numeroComPonto),
+      discount: valorDaLista - valorComDesconto,
+      isDiscountPercentage: isPorcentage,
     };
-    imprimirCupom()
-    console.log(compra)
+    imprimirCupom();
+    console.log(compra);
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
-    CaixaService.submitCompra(compra);
+    CaixaService.submitCompra(compra).then((resposta) => {
+      setValorRetornado(resposta.data.amountReturn);
+    });
   }, [
-    getBoxSaleId,
+    produtosNaLista.produtos,
     cliente,
-    valorDaLista,
     vendedor,
     tipoPagamento,
     indicacao,
-    produtosNaLista,
+    valorComDesconto,
+    valorRecebido,
+    valorDaLista,
+    isPorcentage,
+    setValorRetornado,
+    imprimirCupom,
   ]);
   return {
     produtosNaLista,
@@ -240,21 +267,27 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade.toString().padEnd(11)} | 
     adicionarNaLista,
     removerItemLista,
     limparLista,
+    isPorcentage,
+    setIsPorcentage,
+    valorRetornado,
+    setValorRetornado,
   };
 };
 
-export const CaixaContextProvider: React.FC = ({children}) => {
+export const CaixaContextProvider: React.FC = ({ children }) => {
   const [produtosNaLista, setProdutoNaLista] = useState<ILista>({
     produtos: [],
   });
   const [cliente, setCliente] = useState<IInfoClient>();
+  const [isPorcentage, setIsPorcentage] = useState<boolean>(false);
   const [indicacao, setIndicacao] = useState<dataOneIndication>();
   const [vendedor, setVendedor] = useState<IColab>();
   const [tipoPagamento, setTipoPagamento] = useState<Payment>();
   const [ultimoProduto, setUltimoProduto] = useState<IItemLista>();
   const [valorDaLista, setValorDaLista] = useState<number>(0);
   const [valorComDesconto, setValorComDesconto] = useState<number>(0);
-  const [valorRecebido, setValorRecebido] = useState<number>(0);
+  const [valorRecebido, setValorRecebido] = useState<string>('');
+  const [valorRetornado, setValorRetornado] = useState<number>(0);
 
   return (
     <CaixaContext.Provider
@@ -277,6 +310,10 @@ export const CaixaContextProvider: React.FC = ({children}) => {
         setValorComDesconto,
         valorRecebido,
         setValorRecebido,
+        isPorcentage,
+        setIsPorcentage,
+        setValorRetornado,
+        valorRetornado,
       }}
     >
       {children}

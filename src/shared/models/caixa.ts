@@ -27,10 +27,9 @@ export interface IDadosDaCompra {
   indicationId?: string | undefined;
   products?: any;
   sellerId: string;
-  statusSeller: 'CONFIRMADO';
   typePaymentId: string;
-  desconto: number;
+  discount: number;
   amount: number;
   amountPaid?: number;
-  amountReturn?: number;
+  isDiscountPercentage: boolean;
 }
