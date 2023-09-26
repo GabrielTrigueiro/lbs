@@ -1,21 +1,29 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {useCallback, useEffect, useState} from 'react';
-import {useCaixaContext} from 'shared/contexts/CaixaContext';
-import {IItemLista} from 'shared/models/caixa';
-import {v4 as uuid} from 'uuid';
-import {IDataProduct} from '../../../models/product';
-import {ProductService} from '../../../services/api/product';
+import { useCallback, useEffect, useState } from 'react';
+import { useCaixaContext } from 'shared/contexts/CaixaContext';
+import { IItemLista } from 'shared/models/caixa';
+import { v4 as uuid } from 'uuid';
+import { IDataProduct } from '../../../models/product';
+import { ProductService } from '../../../services/api/product';
 import {
   BotaoQuantidade,
   CampoQuantidade,
   Container,
   InputQuantidade,
 } from './CaixaInputStyles';
-import {Autocomplete, TextField, Box, CircularProgress, Typography, Divider} from '@mui/material';
+import {
+  Autocomplete,
+  TextField,
+  Box,
+  CircularProgress,
+  Typography,
+  Divider,
+  Button,
+} from '@mui/material';
 
 const CodeInputField = () => {
-  const {adicionarNaLista} = useCaixaContext();
+  const { adicionarNaLista } = useCaixaContext();
   const [codigo, setCodigo] = useState('');
   const [listaDeProdutos, setListaDeProdutos] = useState<IDataProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -84,7 +92,7 @@ const CodeInputField = () => {
     <Container>
       <CampoQuantidade>
         <BotaoQuantidade onClick={adicionar}>
-          <AddIcon/>
+          <AddIcon />
         </BotaoQuantidade>
         <InputQuantidade
           autoComplete="off"
@@ -94,7 +102,7 @@ const CodeInputField = () => {
           value={quantidade}
         />
         <BotaoQuantidade onClick={remover}>
-          <RemoveIcon/>
+          <RemoveIcon />
         </BotaoQuantidade>
       </CampoQuantidade>
 
@@ -125,7 +133,7 @@ const CodeInputField = () => {
                 endAdornment: (
                   <>
                     {loading ? (
-                      <CircularProgress color="inherit" size={20}/>
+                      <CircularProgress color="inherit" size={20} />
                     ) : null}
                     {params.InputProps.endAdornment}
                   </>
@@ -134,40 +142,46 @@ const CodeInputField = () => {
             />
           )}
           renderOption={(props, option) => (
-            <Box component="li" {...props} sx={{
-              display: 'flex',
-              width: '100%',
-              gap: 1,
-              padding: 1,
-              ":hover": {background: "#f3f3f3"},
-              cursor: 'pointer'
-            }}>
-              <Box sx={{display: 'flex', gap: 1}}>
-                <Typography sx={{fontWeight: 'bold', minWidth: 100}}>Código:</Typography>
-                <Typography sx={{width: 150, textAlign: "start"}}>{option.codeBarras}</Typography>
+            <Box
+              component="li"
+              {...props}
+              sx={{
+                display: 'flex',
+                width: '100%',
+                gap: 1,
+                padding: 1,
+                ':hover': { background: '#f3f3f3' },
+                cursor: 'pointer',
+              }}
+            >
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Typography sx={{ fontWeight: 'bold', minWidth: 100 }}>
+                  Código:
+                </Typography>
+                <Typography sx={{ width: 150, textAlign: 'start' }}>
+                  {option.codeBarras}
+                </Typography>
               </Box>
-              <Box sx={{display: 'flex', gap: 1}}>
-                <Typography sx={{fontWeight: 'bold', minWidth: 100}}>Nome:</Typography>
-                <Typography sx={{width: 150, textAlign: "start"}}>{option.name}</Typography>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <Typography sx={{ fontWeight: 'bold', minWidth: 100 }}>
+                  Nome:
+                </Typography>
+                <Typography sx={{ width: 150, textAlign: 'start' }}>
+                  {option.name}
+                </Typography>
               </Box>
             </Box>
           )}
         />
       </div>
       {/* botão add */}
-      <div className="col-span-1 flex">
-        <button
-          disabled={quantidade == 0}
-          className={`
-            grow
-            ${quantidade === 0 ? 'bg-neutral-300' : 'bg-yellow-300'}
-            ${quantidade === 0 ? 'hover:bg-neutral-300' : 'hover:bg-yellow-200'}
-          `}
-          onClick={() => submitProduto()}
-        >
-          Adicionar
-        </button>
-      </div>
+      <Button
+        disabled={quantidade === 0 || tempProduct == null}
+        onClick={() => submitProduto()}
+        variant="contained"
+      >
+        Adicionar
+      </Button>
     </Container>
   );
 };

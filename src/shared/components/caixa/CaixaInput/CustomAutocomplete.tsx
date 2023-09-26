@@ -56,7 +56,6 @@ function GenericAutocomplete<T>({
         <TextField
           {...params}
           label={label}
-          size={"small"}
           placeholder={placeholder}
           variant="outlined"
           fullWidth

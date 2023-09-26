@@ -12,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const CampoQuantidade = styled.div`
-  background-color: rgb(115 115 115);
+  /* background-color: rgb(115 115 115); */
   color: rgb(255 255 255);
   grid-column: span 1;
   max-width: span 1;
@@ -39,6 +39,8 @@ export const BotaoQuantidade = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 0.2em;
+  background-color: rgb(115 115 115);
   :hover {
     background-color: ${amareloDefault};
   }

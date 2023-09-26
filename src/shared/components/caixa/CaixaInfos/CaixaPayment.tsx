@@ -86,14 +86,13 @@ const CaixaPayment = () => {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
           alignItems: 'center',
           gap: 1,
         }}
       >
         <TextField
+          fullWidth
           disabled={!(descontoBruto === '')}
-          size={'small'}
           label={'Desconto %'}
           autoComplete={'off'}
           value={descontoPorcentagem}
@@ -102,8 +101,8 @@ const CaixaPayment = () => {
           }
         />
         <TextField
+          fullWidth
           disabled={!(descontoPorcentagem === '')}
-          size={'small'}
           label={'Desconto R$'}
           autoComplete={'off'}
           value={descontoBruto}

@@ -1,19 +1,12 @@
 import {
-  Autocomplete,
   Box,
   Button,
   Dialog,
   DialogActions,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
   Table,
   TableCell,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
 import styles from 'styles/Product/ProductRegisterModal.module.scss';
@@ -24,13 +17,9 @@ import {
   oneInformation,
 } from '../../../models/product';
 import FormikTextField from '../../formik-text-field/FormikTextField';
-import React, { useEffect, useState } from 'react';
-import { SelectChangeEvent } from '@mui/material/Select';
+import React, { useState } from 'react';
 import { ProductService } from '../../../services/api/product';
-import { CategoryService } from '../../../services/api/categories/Categories_Service';
 import { ICategory } from '../../../models/categories';
-import { ProviderService } from '../../../services/api/providers/ProviderService';
-import { ISendPagination } from '../../../models/client';
 import { IProviderCadastroInfo } from '../../../models/provider';
 import { ProductRegisterInfos } from './ProductRegisterInfos';
 import TableContainer from '@mui/material/TableContainer';
@@ -39,7 +28,6 @@ import TableBody from '@mui/material/TableBody';
 import { Notification } from '../../notification';
 import AutoCompleteCategory from '../../auto-complete/AutoCompleteCategory';
 import AutoCompleteProvider from '../../auto-complete/AutoCompleteProvider';
-import { styled } from '@mui/material/styles';
 import {
   Container,
   Title,
