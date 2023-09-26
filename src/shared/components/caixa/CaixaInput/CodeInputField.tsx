@@ -118,8 +118,10 @@ const CodeInputField = () => {
           value={tempProduct}
           options={listaDeProdutos}
           getOptionLabel={(option) => option.name}
+          onKeyDown={submitProduto}
           onChange={(event, newValue) => {
             setTempProduct(newValue);
+            setQuantidade(quantidade + 1);
           }}
           renderInput={(params) => (
             <TextField
