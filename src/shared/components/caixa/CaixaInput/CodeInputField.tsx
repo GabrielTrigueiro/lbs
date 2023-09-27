@@ -179,7 +179,7 @@ const CodeInputField = () => {
       {/* botão add */}
       <Button
         disabled={quantidade === 0 || tempProduct == null}
-        onClick={() => submitProduto()}
+        onClick={submitProduto}
         variant="contained"
       >
         Adicionar

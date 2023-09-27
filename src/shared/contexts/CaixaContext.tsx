@@ -142,6 +142,7 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
               return {
                 ...produto,
                 quantidade: produto.quantidade + novoProduto.quantidade,
+                precoTotal: produto.precoTotal + novoProduto.precoTotal,
               };
             }
             return produto;
