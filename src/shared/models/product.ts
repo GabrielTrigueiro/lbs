@@ -14,7 +14,7 @@ export interface IDataProduct {
   tagPrice: number;
   codeBarras: string;
   codeInt: string;
-  informations?: oneInformation[];
+  informations?: IProductInformation[];
   category: ICategory;
   provider: IProviderCadastroInfo;
   status: statusProduto;
@@ -30,12 +30,12 @@ export interface IDataProductRegiser {
   tagPrice: number;
   codeBarras: string;
   codeInt?: string;
-  informations?: oneInformation[];
+  informations?: IProductInformation[];
   categoryId: string;
   providerId: string;
 }
 
-export interface oneInformation {
+export interface IProductInformation {
   id?: number;
   color: string;
   quantity: number;

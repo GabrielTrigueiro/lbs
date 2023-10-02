@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import styles from '../../../../styles/Product/ProductRegisterInfoTable.module.scss';
 import { useState } from 'react';
-import { oneInformation } from '../../../models/product';
+import { IProductInformation } from '../../../models/product';
 // import { TableSubMenu } from '../../client-submenu/TableSubMenu';
 import { Notification } from '../../notification';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
@@ -21,11 +21,11 @@ import { TableStyle, Title } from './TableComponents';
 import { TableContainer, TableHead, TableBody } from '@mui/material';
 
 interface props {
-  removerPorId: (newArray: oneInformation[]) => void;
+  removerPorId: (newArray: IProductInformation[]) => void;
   qtd: number;
   state: boolean;
-  infosAr?: oneInformation[];
-  onFormSubmit: (formValues: oneInformation) => void;
+  infosAr?: IProductInformation[];
+  onFormSubmit: (formValues: IProductInformation) => void;
   changeState: () => void;
 }
 
@@ -48,7 +48,7 @@ export const ProductRegisterInfos: React.FC<props> = ({
     changeState();
   }
 
-  const [formValues, setFormValues] = useState<oneInformation>({
+  const [formValues, setFormValues] = useState<IProductInformation>({
     color: '',
     size: '',
     quantity: 0,

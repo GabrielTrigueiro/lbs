@@ -15,7 +15,7 @@ import { useFormik } from 'formik';
 import {
   IDataProductRegiser,
   ProductValidationSchema,
-  oneInformation,
+  IProductInformation,
   IDataProduct,
 } from '../../../models/product';
 import FormikTextField from '../../formik-text-field/FormikTextField';
@@ -107,7 +107,7 @@ export const ProductEditModal = ({
     }
   }
 
-  function addInfo(newInfo: oneInformation) {
+  function addInfo(newInfo: IProductInformation) {
     if (formik.values.informations) {
       formik.setFieldValue('informations', [
         ...formik.values.informations,
@@ -116,7 +116,7 @@ export const ProductEditModal = ({
     }
   }
 
-  function removeInfo(newList: oneInformation[]) {
+  function removeInfo(newList: IProductInformation[]) {
     if (formik.values.informations) {
       formik.setFieldValue('informations', newList);
     }
