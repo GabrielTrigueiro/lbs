@@ -36,7 +36,7 @@ export interface IDataProductRegiser {
 }
 
 export interface IProductInformation {
-  id?: number;
+  id?: string;
   color: string;
   quantity: number;
   size: string;

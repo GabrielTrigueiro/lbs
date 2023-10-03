@@ -1,17 +1,17 @@
 import {Box, Button, Skeleton, TextField} from '@mui/material';
 import React from 'react';
-import {DataGrid} from "@mui/x-data-grid";
-import {IDataProduct, IProductInformation} from "../../../models/product";
+import {IProductInformation} from "../../../models/product";
+import {AboutFields, AboutForm, RegisterContainer, ValueFields, ValueForm} from "./ModalStyles";
+import InformationsGrid from "./InformationsGrid";
 
 interface IProductAbout {
   informacoes: IProductInformation[];
+  changeInformacoes: React.Dispatch<React.SetStateAction<IProductInformation[]>>;
 }
-
-export const ProductInfos = ({informacoes}: IProductAbout) => {
-
+export const ProductAbout = ({informacoes, changeInformacoes}: IProductAbout) => {
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'center'}}>
-      <Box sx={{display: 'flex', alignItems: 'center', width: '100%', gap: 2}}>
+    <RegisterContainer sx={{gap: 1}}>
+      <AboutForm sx={{ gap: 1}}>
         <Skeleton
           variant="rectangular"
           sx={{
@@ -20,7 +20,7 @@ export const ProductInfos = ({informacoes}: IProductAbout) => {
             borderRadius: 1,
           }}
         />
-        <Box sx={{display: 'flex', flexDirection: 'column', gap: 1, width: '100%'}}>
+        <AboutFields sx={{gap: 1}}>
           <TextField fullWidth size="small" label={'Código de barras'} autoComplete="off"/>
           <TextField fullWidth size="small" label={'Nome'} autoComplete="off"/>
           <TextField fullWidth size="small" label={'Descrição'} autoComplete="off"/>
@@ -34,28 +34,16 @@ export const ProductInfos = ({informacoes}: IProductAbout) => {
                      label={'Categoria'}
                      autoComplete="off"
           />
-        </Box>
-      </Box>
+        </AboutFields>
+      </AboutForm>
+
       <Box sx={{height: 250, display: 'flex', gap: 1}}>
         <Box sx={{display: 'flex', flexDirection: "column", gap: 1}}>
-          <DataGrid
-            disableColumnFilter={true}
-            disableColumnMenu={true}
-            disableColumnSelector={true}
-            hideFooter={true}
-            sx={{overflow: "hidden", width: 350}}
-            localeText={{noRowsLabel: "Nenhuma informação cadastrada"}}
-            rows={informacoes.map((info, index) => ({...info, id: index + 1}))}
-            columns={[
-              {field: "color", headerName: "Cor", flex: 1},
-              {field: "quantity", headerName: "Quantidade", flex: 1},
-              {field: "size", headerName: "Tamanho", flex: 1},
-            ]}
-          />
+          <InformationsGrid informacoes={informacoes} changeInformacoes={changeInformacoes}/>
           <Button variant={'contained'}>Adicionar informação</Button>
         </Box>
-        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-          <Box sx={{display: 'flex', flexDirection: 'column', gap: 1}}>
+        <ValueForm>
+          <ValueFields sx={{gap: 1}}>
             <TextField
               size="small"
               label={'Preço custo'}
@@ -71,10 +59,10 @@ export const ProductInfos = ({informacoes}: IProductAbout) => {
               label={'Preço venda'}
               autoComplete="off"
             />
-          </Box>
+          </ValueFields>
           <Button variant={'contained'}>Cadastrar</Button>
-        </Box>
+        </ValueForm>
       </Box>
-    </Box>
+    </RegisterContainer>
   );
 }

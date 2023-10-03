@@ -1,9 +1,11 @@
-import React from 'react';
-import { Container } from './TableComponents';
+import React, {useState} from 'react';
+import {Container} from './TableComponents';
 import useRegistrarProduto from 'shared/hooks/produtos/RegistrarProduto';
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
-import {ProductInfos} from './ProductAbout';
+import { Card } from '@mui/material';
+import {ProductAbout} from './ProductAbout';
 import ModalHeader from './ModalHeader';
+import {v4 as uuid} from "uuid";
+import {IProductInformation} from "../../../models/product";
 
 interface props {
   atualizarPagina: () => void;
@@ -26,9 +28,13 @@ interface props {
 //   "salerPrice": 0,
 //   "tagPrice": 0
 
-export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
-  const { isOpen, onClose } = useRegistrarProduto();
-
+export const ProductRegisterModal: React.FC<props> = ({atualizarPagina}) => {
+  const {isOpen, onClose} = useRegistrarProduto();
+  const [informacoes, setInformacoes] = useState<IProductInformation[]>([
+    {id: uuid(), color: 'azul', quantity: 23, size: 'M'},
+    {id: uuid(), color: 'preto', quantity: 10, size: 'M'},
+    {id: uuid(), color: 'vermelho', quantity: 3, size: 'M'}
+  ]);
   return (
     <>
       <Container sx={{outline: "none"}} open={isOpen}>
@@ -46,8 +52,9 @@ export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
             tittle={'Cadastrar Produto'}
             closeButtonFunction={onClose}
           />
-          <ProductInfos
-            informacoes={[{color: 'azul', quantity: 23, size: 'M'}, {color: 'preto', quantity: 10, size: 'M'}, {color: 'vermelho', quantity: 3, size: 'M'}]}
+          <ProductAbout
+            informacoes={informacoes}
+            changeInformacoes={setInformacoes}
           />
         </Card>
       </Container>
