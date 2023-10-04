@@ -14,11 +14,11 @@ import {
 import styles from '../../../../styles/Product/ProductRegisterInfoTable.module.scss';
 import { useState } from 'react';
 import { IProductInformation } from '../../../models/product';
-// import { TableSubMenu } from '../../client-submenu/TableSubMenu';
 import { Notification } from '../../notification';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import { TableStyle, Title } from './TableComponents';
 import { TableContainer, TableHead, TableBody } from '@mui/material';
+import {v4 as uuid} from "uuid";
 
 interface props {
   removerPorId: (newArray: IProductInformation[]) => void;
@@ -49,9 +49,11 @@ export const ProductRegisterInfos: React.FC<props> = ({
   }
 
   const [formValues, setFormValues] = useState<IProductInformation>({
+    id: uuid(),
     color: '',
-    size: '',
+    size: 0,
     quantity: 0,
+    isNew: false
   });
 
   function handleCorChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -59,7 +61,7 @@ export const ProductRegisterInfos: React.FC<props> = ({
   }
 
   function handleTamanhoChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setFormValues({ ...formValues, size: event.target.value });
+    setFormValues({ ...formValues, size: Number(event.target.value) });
   }
 
   function handleQuantidadeChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -67,7 +69,7 @@ export const ProductRegisterInfos: React.FC<props> = ({
   }
 
   function handlebutton() {
-    if (formValues.color == '' && formValues.size == '') {
+    if (formValues.color == '' && formValues.size == 0) {
       Notification('Preencha ao menos um campo de informação', 'error');
       return;
     }
@@ -76,7 +78,7 @@ export const ProductRegisterInfos: React.FC<props> = ({
       return;
     } else {
       onFormSubmit(formValues);
-      setFormValues({ color: '', size: '', quantity: 0 });
+      setFormValues({color: '', size: 0, quantity: 0, isNew: false });
     }
   }
 

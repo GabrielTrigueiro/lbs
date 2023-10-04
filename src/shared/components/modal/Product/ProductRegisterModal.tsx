@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Container} from './TableComponents';
 import useRegistrarProduto from 'shared/hooks/produtos/RegistrarProduto';
-import { Card } from '@mui/material';
+import {Card} from '@mui/material';
 import {ProductAbout} from './ProductAbout';
 import ModalHeader from './ModalHeader';
 import {v4 as uuid} from "uuid";
@@ -11,36 +11,21 @@ interface props {
   atualizarPagina: () => void;
 }
 
-//   "categoryId": "string",
-//   "codeBarras": "string",
-//   "custePrice": 0,
-//   "description": "string",
-//   "informations": [
-//     {
-//       "color": "string",
-//       "quantity": 0,
-//       "size": "string"
-//     }
-//   ],
-//   "name": "string",
-//   "providerId": "string",
-//   "quantity": 0,
-//   "salerPrice": 0,
-//   "tagPrice": 0
-
 export const ProductRegisterModal: React.FC<props> = ({atualizarPagina}) => {
+
   const {isOpen, onClose} = useRegistrarProduto();
-  const [informacoes, setInformacoes] = useState<IProductInformation[]>([
-    {id: uuid(), color: 'azul', quantity: 23, size: 'M'},
-    {id: uuid(), color: 'preto', quantity: 10, size: 'M'},
-    {id: uuid(), color: 'vermelho', quantity: 3, size: 'M'}
-  ]);
+  const [informacoes, setInformacoes] = useState<IProductInformation[]>([]);
+
+  const submitCadastroProduto = useCallback(() => {
+    console.log(informacoes);
+  },[])
+
   return (
     <>
       <Container sx={{outline: "none"}} open={isOpen}>
         <Card
           sx={{
-            padding: 1,
+            padding: 2,
             display: 'flex',
             flexDirection: 'column',
             textAlign: 'center',
@@ -53,6 +38,7 @@ export const ProductRegisterModal: React.FC<props> = ({atualizarPagina}) => {
             closeButtonFunction={onClose}
           />
           <ProductAbout
+            submitProdutos={submitCadastroProduto}
             informacoes={informacoes}
             changeInformacoes={setInformacoes}
           />

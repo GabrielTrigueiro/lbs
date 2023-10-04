@@ -37,9 +37,10 @@ export interface IDataProductRegiser {
 
 export interface IProductInformation {
   id?: string;
+  isNew: boolean;
   color: string;
   quantity: number;
-  size: string;
+  size: number;
 }
 
 export interface IProductSearch {

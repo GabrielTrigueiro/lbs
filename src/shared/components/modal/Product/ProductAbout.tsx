@@ -5,13 +5,16 @@ import {AboutFields, AboutForm, RegisterContainer, ValueFields, ValueForm} from 
 import InformationsGrid from "./InformationsGrid";
 
 interface IProductAbout {
+  submitProdutos: () => void;
   informacoes: IProductInformation[];
   changeInformacoes: React.Dispatch<React.SetStateAction<IProductInformation[]>>;
 }
-export const ProductAbout = ({informacoes, changeInformacoes}: IProductAbout) => {
+
+export const ProductAbout = ({informacoes, changeInformacoes, submitProdutos}: IProductAbout) => {
+
   return (
     <RegisterContainer sx={{gap: 1}}>
-      <AboutForm sx={{ gap: 1}}>
+      <AboutForm sx={{gap: 1}}>
         <Skeleton
           variant="rectangular"
           sx={{
@@ -24,24 +27,12 @@ export const ProductAbout = ({informacoes, changeInformacoes}: IProductAbout) =>
           <TextField fullWidth size="small" label={'Código de barras'} autoComplete="off"/>
           <TextField fullWidth size="small" label={'Nome'} autoComplete="off"/>
           <TextField fullWidth size="small" label={'Descrição'} autoComplete="off"/>
-          <TextField fullWidth
-                     size="small"
-                     label={'Quantidade em estoque'}
-                     autoComplete="off"
-          />
-          <TextField fullWidth
-                     size="small"
-                     label={'Categoria'}
-                     autoComplete="off"
-          />
+          <TextField fullWidth size="small" label={'Quantidade em estoque'} autoComplete="off"/>
+          <TextField fullWidth size="small" label={'Categoria'} autoComplete="off"/>
         </AboutFields>
       </AboutForm>
 
       <Box sx={{height: 250, display: 'flex', gap: 1}}>
-        <Box sx={{display: 'flex', flexDirection: "column", gap: 1}}>
-          <InformationsGrid informacoes={informacoes} changeInformacoes={changeInformacoes}/>
-          <Button variant={'contained'}>Adicionar informação</Button>
-        </Box>
         <ValueForm>
           <ValueFields sx={{gap: 1}}>
             <TextField
@@ -49,19 +40,28 @@ export const ProductAbout = ({informacoes, changeInformacoes}: IProductAbout) =>
               label={'Preço custo'}
               autoComplete="off"
             />
+            sadasdas
             <TextField
               size="small"
               label={'Preço etiqueta'}
               autoComplete="off"
             />
+            sadasd
             <TextField
               size="small"
               label={'Preço venda'}
               autoComplete="off"
             />
           </ValueFields>
-          <Button variant={'contained'}>Cadastrar</Button>
+          <Button onClick={submitProdutos} variant={'contained'}>Cadastrar</Button>
         </ValueForm>
+        {/*TABELA*/}
+        <Box sx={{display: 'flex', flexDirection: "column", gap: 1}}>
+          <InformationsGrid
+            informacoes={informacoes}
+            setListaInformacoes={changeInformacoes}
+          />
+        </Box>
       </Box>
     </RegisterContainer>
   );
