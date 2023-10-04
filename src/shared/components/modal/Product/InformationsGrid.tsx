@@ -2,27 +2,41 @@ import {
   IListaInformacoesProduto,
   IProductInformation,
 } from 'shared/models/product';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  GridRowsProp,
   GridRowModesModel,
   GridRowModes,
-  DataGrid,
-  GridColDef,
   GridToolbarContainer,
   GridActionsCellItem,
   GridEventListener,
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
+  GridColDef,
+  GridRowsProp,
+  DataGrid,
+  GridPreProcessEditCellProps,
+  GridEditInputCell,
+  GridRenderEditCellParams,
 } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+import { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
+
+const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+}));
 
 interface EditToolbarProps {
   changeInformacoes: (
@@ -63,12 +77,26 @@ function EditToolbar(props: EditToolbarProps, quantidade: number) {
         fullWidth
         variant="contained"
         startIcon={<AddIcon />}
-        onClick={() => console.log(quantidade)}
+        onClick={handleClick}
       >
         Adicionar Informação
       </Button>
     </GridToolbarContainer>
   );
+}
+
+function QuantityEditInputCell(props: GridRenderEditCellParams) {
+  const { error } = props;
+
+  return (
+    <StyledTooltip open={!!error} title={error}>
+      <GridEditInputCell {...props} />
+    </StyledTooltip>
+  );
+}
+
+function renderEditQuantity(params: GridRenderEditCellParams) {
+  return <QuantityEditInputCell {...params} />;
 }
 
 const InformationDataGrid = ({
@@ -77,6 +105,31 @@ const InformationDataGrid = ({
   informacoes,
 }: IDataToGrid) => {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+  let promiseTimeout: any;
+
+  function validateQuantidade(qtd: number): Promise<boolean> {
+    const quantidadeAtual = informacoes.reduce(
+      (total, row) => total + row.quantity,
+      0
+    );
+    const quantidadeSomada = quantidadeAtual + qtd;
+    const ultrapassou = quantidadeSomada > quantidade || qtd < 0;
+    return new Promise<any>((resolve) => {
+      promiseTimeout = setTimeout(() => {
+        resolve(ultrapassou ? `Invalido` : null);
+      }, Math.random() * 500 + 100);
+    });
+  }
+
+  const preProcessEditCellProps = async (
+    params: GridPreProcessEditCellProps
+  ) => {
+    const errorMessage = await validateQuantidade(
+      params.props.value!.toString()
+    );
+    return { ...params.props, error: errorMessage };
+  };
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
     params,
@@ -93,8 +146,6 @@ const InformationDataGrid = ({
 
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    const soma = informacoes.map((row) => row.quantity);
-    console.log(soma);
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -146,6 +197,8 @@ const InformationDataGrid = ({
       headerName: 'Quantidade',
       type: 'number',
       editable: true,
+      preProcessEditCellProps,
+      renderEditCell: renderEditQuantity,
     },
     {
       field: 'size',
@@ -215,6 +268,7 @@ const InformationDataGrid = ({
       onRowModesModelChange={handleRowModesModelChange}
       onRowEditStop={handleRowEditStop}
       processRowUpdate={processRowUpdate}
+      localeText={{ noRowsLabel: 'Nenhuma iformação cadastrada' }}
       slots={{
         toolbar: (event) => EditToolbar(event, quantidade),
       }}
