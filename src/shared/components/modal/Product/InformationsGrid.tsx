@@ -25,6 +25,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
 interface EditToolbarProps {
+  quantidade: number;
   changeInformacoes: (
     newRows: (oldRows: IListaInformacoesProduto) => IListaInformacoesProduto
   ) => void;
@@ -42,8 +43,8 @@ interface IDataToGrid {
 }
 
 function EditToolbar(props: EditToolbarProps) {
-  const { setRowModesModel, changeInformacoes } = props;
-
+  const { setRowModesModel, changeInformacoes, quantidade } = props;
+  const desabilitado = quantidade <= 0 ? false : true;
   const handleClick = () => {
     const id = uuid();
     changeInformacoes((oldRows) => [
@@ -59,6 +60,7 @@ function EditToolbar(props: EditToolbarProps) {
   return (
     <GridToolbarContainer>
       <Button
+        disabled={desabilitado}
         fullWidth
         variant="contained"
         startIcon={<AddIcon />}
