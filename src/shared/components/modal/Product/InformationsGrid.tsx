@@ -25,7 +25,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
 interface EditToolbarProps {
-  quantidade: number;
   changeInformacoes: (
     newRows: (oldRows: IListaInformacoesProduto) => IListaInformacoesProduto
   ) => void;
@@ -42,9 +41,9 @@ interface IDataToGrid {
   >;
 }
 
-function EditToolbar(props: EditToolbarProps) {
-  const { setRowModesModel, changeInformacoes, quantidade } = props;
-  const desabilitado = quantidade <= 0 ? false : true;
+function EditToolbar(props: EditToolbarProps, quantidade: number) {
+  const { setRowModesModel, changeInformacoes } = props;
+  const desabilitado = quantidade < 1 ? false : true;
   const handleClick = () => {
     const id = uuid();
     changeInformacoes((oldRows) => [
@@ -60,11 +59,11 @@ function EditToolbar(props: EditToolbarProps) {
   return (
     <GridToolbarContainer>
       <Button
-        disabled={desabilitado}
+        disabled={!desabilitado}
         fullWidth
         variant="contained"
         startIcon={<AddIcon />}
-        onClick={handleClick}
+        onClick={() => console.log(quantidade)}
       >
         Adicionar Informação
       </Button>
@@ -73,6 +72,7 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 const InformationDataGrid = ({
+  quantidade,
   changeInformacoes,
   informacoes,
 }: IDataToGrid) => {
@@ -93,6 +93,8 @@ const InformationDataGrid = ({
 
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    const soma = informacoes.map((row) => row.quantity);
+    console.log(soma);
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -214,7 +216,7 @@ const InformationDataGrid = ({
       onRowEditStop={handleRowEditStop}
       processRowUpdate={processRowUpdate}
       slots={{
-        toolbar: EditToolbar,
+        toolbar: (event) => EditToolbar(event, quantidade),
       }}
       slotProps={{
         toolbar: { changeInformacoes, setRowModesModel },
