@@ -1,11 +1,10 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Close";
-import {v4 as uuid} from "uuid";
+import {
+  IListaInformacoesProduto,
+  IProductInformation,
+} from 'shared/models/product';
+import { Button } from '@mui/material';
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -17,159 +16,209 @@ import {
   GridEventListener,
   GridRowId,
   GridRowModel,
-  GridRowEditStopReasons
-} from "@mui/x-data-grid";
-import {IProductInformation} from "../../../models/product";
+  GridRowEditStopReasons,
+} from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
 
 interface EditToolbarProps {
-  setListaInformacoes: (newRows: (oldRows: IProductInformation[]) => IProductInformation[]) => void;
+  changeInformacoes: (
+    newRows: (oldRows: IListaInformacoesProduto) => IListaInformacoesProduto
+  ) => void;
   setRowModesModel: (
-    newModel: (oldModel: IProductInformation[]) => IProductInformation[]
+    newModel: (oldModel: IListaInformacoesProduto) => IListaInformacoesProduto
   ) => void;
 }
-interface IProductAbout {
+
+interface IDataToGrid {
+  quantidade: number;
   informacoes: IProductInformation[];
-  setListaInformacoes: React.Dispatch<React.SetStateAction<IProductInformation[]>>;
+  changeInformacoes: React.Dispatch<
+    React.SetStateAction<IProductInformation[]>
+  >;
 }
+
 function EditToolbar(props: EditToolbarProps) {
-  const {setListaInformacoes, setRowModesModel} = props;
+  const { setRowModesModel, changeInformacoes } = props;
+
   const handleClick = () => {
     const id = uuid();
-    setListaInformacoes((oldRows) => [...oldRows, {id, color: "", quantity: 0, size: 0, isNew: true}]);
+    changeInformacoes((oldRows) => [
+      ...oldRows,
+      { id, color: '', quantity: 0, size: 0, isNew: true },
+    ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: {mode: GridRowModes.Edit, fieldToFocus: "color"}
-    } ));
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'color' },
+    }));
   };
+
   return (
     <GridToolbarContainer>
-      <Button fullWidth variant={"contained"} startIcon={<AddIcon/>} onClick={handleClick}>
-        Adicionar informação
+      <Button
+        fullWidth
+        variant="contained"
+        startIcon={<AddIcon />}
+        onClick={handleClick}
+      >
+        Adicionar Informação
       </Button>
     </GridToolbarContainer>
   );
 }
-export default function InformationDaraGrid({informacoes, setListaInformacoes}:IProductAbout) {
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-  const handleRowEditStop: GridEventListener<"rowEditStop"> = (params,event) => {
+
+const InformationDataGrid = ({
+  changeInformacoes,
+  informacoes,
+}: IDataToGrid) => {
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+  const handleRowEditStop: GridEventListener<'rowEditStop'> = (
+    params,
+    event
+  ) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
+
   const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
+
   const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
+
   const handleDeleteClick = (id: GridRowId) => () => {
-    setListaInformacoes(informacoes.filter((row) => row.id !== id));
+    changeInformacoes(informacoes.filter((row) => row.id !== id));
   };
+
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
       ...rowModesModel,
-      [id]: {mode: GridRowModes.View, ignoreModifications: true}
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
     const editedRow = informacoes.find((row) => row.id === id);
     if (editedRow!.isNew) {
-      setListaInformacoes(informacoes.filter((row) => row.id !== id));
+      changeInformacoes(informacoes.filter((row) => row.id !== id));
     }
   };
+
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = {...newRow, isNew: false};
-    function dsdsds(lista: IProductInformation[], novoItem: GridRowModel): IProductInformation[]{
-      lista.map((produto) => (produto.id === novoItem.id ? {...produto, color: novoItem.color, quantity: novoItem.quantity, size: novoItem.size} : produto))
-      return lista
-    }
-    setListaInformacoes(dsdsds(informacoes, newRow))
-    console.log('dentro da tabela: ' + informacoes)
+    const updatedRow = { ...newRow, isNew: false };
+    changeInformacoes(
+      informacoes.map((row) =>
+        row.id === newRow.id
+          ? {
+              ...row,
+              color: newRow.color,
+              quantity: newRow.quantity,
+              size: newRow.size,
+            }
+          : row
+      )
+    );
     return updatedRow;
   };
+
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
+
   const columns: GridColDef[] = [
     {
-      field: "color",
-      headerName: "Cor",
-      type: "string",
-      editable: true
+      field: 'color',
+      headerName: 'Cor',
+      type: 'string',
+      editable: true,
     },
     {
-      field: "quantity",
-      headerName: "Quantidade",
-      type: "number",
-      editable: true
+      field: 'quantity',
+      headerName: 'Quantidade',
+      type: 'number',
+      editable: true,
     },
     {
-      field: "size",
-      headerName: "Tamanho",
-      type: "number",
-      editable: true
+      field: 'size',
+      headerName: 'Tamanho',
+      editable: true,
+      type: 'number',
     },
     {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Opções',
       width: 100,
-      cellClassName: "actions",
-      getActions: ({id}) => {
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              icon={<SaveIcon/>}
+              icon={<SaveIcon />}
               label="Salvar"
               sx={{
-                color: "primary.main"
+                color: 'primary.main',
               }}
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              icon={<CancelIcon/>}
+              icon={<CancelIcon />}
               label="Cancelar"
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
-            />
+            />,
           ];
         }
 
         return [
           <GridActionsCellItem
-            icon={<EditIcon/>}
+            icon={<EditIcon />}
             label="Editar"
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon/>}
+            icon={<DeleteIcon />}
             label="Deletar"
             onClick={handleDeleteClick(id)}
             color="inherit"
-          />
+          />,
         ];
-      }
-    }
+      },
+    },
   ];
+
   return (
-      <DataGrid
-        rows={informacoes}
-        columns={columns}
-        editMode="row"
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        hideFooter={true}
-        onStateChange={(state) => setListaInformacoes(state...........ç)}
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: { setListaInformacoes, setRowModesModel },
-        }}
-      />
+    <DataGrid
+      disableColumnFilter={true}
+      disableColumnMenu={true}
+      disableColumnSelector={true}
+      disableDensitySelector={true}
+      hideFooter={true}
+      editMode="row"
+      rows={informacoes}
+      columns={columns}
+      rowModesModel={rowModesModel}
+      onRowModesModelChange={handleRowModesModelChange}
+      onRowEditStop={handleRowEditStop}
+      processRowUpdate={processRowUpdate}
+      slots={{
+        toolbar: EditToolbar,
+      }}
+      slotProps={{
+        toolbar: { changeInformacoes, setRowModesModel },
+      }}
+    />
   );
-}
+};
+
+export default InformationDataGrid;

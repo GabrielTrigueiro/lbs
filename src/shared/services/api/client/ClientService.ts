@@ -26,7 +26,6 @@ const getAll = async (dados: ISendPagination): Promise<any | Error> => {
       return data.data;
     })
     .catch((err) => {
-      console.log('aqui');
       console.error(err);
     });
 };

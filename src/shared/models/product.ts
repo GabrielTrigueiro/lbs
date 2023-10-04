@@ -35,6 +35,8 @@ export interface IDataProductRegiser {
   providerId: string;
 }
 
+export type IListaInformacoesProduto = IProductInformation[];
+
 export interface IProductInformation {
   id?: string;
   isNew: boolean;

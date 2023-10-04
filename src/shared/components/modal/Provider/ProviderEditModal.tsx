@@ -70,7 +70,6 @@ export const ProviderEditModal: React.FC<{
   }
 
   function editProvider(objeto: IProviderCadastroInfo) {
-    console.log(objeto);
     if (objeto.id) {
       ProviderService.UpdateById(objeto.id, objeto).then((response) => {
         Notification('Editado com sucesso', 'success');
