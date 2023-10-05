@@ -12,12 +12,6 @@ interface props {
 
 export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
   const { isOpen, onClose } = useRegistrarProduto();
-  const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
-  const [quantidade, setQuantidade] = useState<number>(12);
-
-  const submitCadastroProduto = useCallback(() => {
-    console.log(informacoes);
-  }, [informacoes]);
 
   return (
     <>
@@ -27,12 +21,7 @@ export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
             tittle={'Cadastrar Produto'}
             closeButtonFunction={onClose}
           />
-          <ProductAbout
-            quantidade={quantidade}
-            submitProdutos={submitCadastroProduto}
-            informacoes={informacoes}
-            changeInformacoes={setInformacoes}
-          />
+          <ProductAbout />
         </CardForm>
       </Container>
     </>

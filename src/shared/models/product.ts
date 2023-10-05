@@ -22,17 +22,16 @@ export interface IDataProduct {
 
 export interface IDataProductRegiser {
   id?: string;
+  codeBarras: string;
   name: string;
   description: string;
   quantity: number;
-  custePrice: number;
-  salerPrice: number;
-  tagPrice: number;
-  codeBarras: string;
-  codeInt?: string;
   informations?: IProductInformation[];
   categoryId: string;
   providerId: string;
+  custePrice: number;
+  salerPrice: number;
+  tagPrice: number;
 }
 
 export type IListaInformacoesProduto = IProductInformation[];
@@ -64,21 +63,15 @@ export type TProductList = {
   data: IProductPackage;
 };
 
-const oneInfoSchema = yup.object().shape({
-  color: yup.string(),
-  quantity: yup.string(),
-  size: yup.string(),
-});
-
-export const ProductValidationSchema = yup.object({
-  categoryId: yup.string(),
-  codeBarras: yup.string(),
-  custePrice: yup.number(),
-  description: yup.string(),
-  informations: yup.array(),
-  name: yup.string(),
-  providerId: yup.string(),
-  quantity: yup.number(),
-  salerPrice: yup.number(),
-  tagPrice: yup.number(),
+export const ProductValidationSchema = yup.object().shape({
+  categoryId: yup.string().required('Campo obrigatório'),
+  informations: yup.array().notRequired(),
+  codeBarras: yup.string().required('Campo obrigatório'),
+  custePrice: yup.number().required('Campo obrigatório'),
+  description: yup.string().required('Campo obrigatório'),
+  name: yup.string().required('Campo obrigatório'),
+  providerId: yup.string().required('Campo obrigatório'),
+  quantity: yup.number().required('Campo obrigatório'),
+  salerPrice: yup.number().required('Campo obrigatório'),
+  tagPrice: yup.number().required('Campo obrigatório'),
 });
