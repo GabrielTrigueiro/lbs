@@ -22,7 +22,6 @@ import FormikTextField from '../../formik-text-field/FormikTextField';
 import React, { useEffect, useState } from 'react';
 import { ProductService } from '../../../services/api/product';
 import { ICategory } from '../../../models/categories';
-import { ProductRegisterInfos } from './ProductRegisterInfos';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
@@ -377,15 +376,6 @@ export const ProductEditModal = ({
           </FormBody>
         </Card>
       </Container>
-
-      <ProductRegisterInfos
-        removerPorId={removeInfo}
-        infosAr={formik.values.informations}
-        onFormSubmit={addInfo}
-        qtd={formik.values.quantity}
-        changeState={handleInfos}
-        state={infosModal}
-      />
 
       <Dialog open={confirm}>
         <DialogTitle className={styles.confirmTitle}>

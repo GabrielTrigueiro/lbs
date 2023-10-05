@@ -64,7 +64,6 @@ export const ProductAbout = ({
           />
         </AboutFields>
       </AboutForm>
-
       <Box sx={{ height: 250, display: 'flex', gap: 1 }}>
         <ValueForm>
           <ValueFields sx={{ gap: 1 }}>
