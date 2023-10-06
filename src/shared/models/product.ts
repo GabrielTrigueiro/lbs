@@ -64,13 +64,13 @@ export type TProductList = {
 };
 
 export const ProductValidationSchema = yup.object().shape({
-  categoryId: yup.string().required('Campo obrigatório'),
+  // categoryId: yup.string().required('Campo obrigatório'),
   informations: yup.array().notRequired(),
   codeBarras: yup.string().required('Campo obrigatório'),
   custePrice: yup.number().required('Campo obrigatório'),
   description: yup.string().required('Campo obrigatório'),
   name: yup.string().required('Campo obrigatório'),
-  providerId: yup.string().required('Campo obrigatório'),
+  // providerId: yup.string().required('Campo obrigatório'),
   quantity: yup.number().required('Campo obrigatório'),
   salerPrice: yup.number().required('Campo obrigatório'),
   tagPrice: yup.number().required('Campo obrigatório'),

@@ -1,10 +1,9 @@
 import { Box, Button, Skeleton, TextField } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   IDataProductRegiser,
   IListaInformacoesProduto,
-  IProductInformation,
   ProductValidationSchema,
 } from '../../../models/product';
 import InformationDataGrid from './InformationsGrid';
@@ -12,34 +11,58 @@ import {
   AboutFields,
   AboutForm,
   FormularioRegistro,
-  RegisterContainer,
   ValueFields,
   ValueForm,
 } from './ModalStyles';
-
-const initialValues: IDataProductRegiser = {
-  codeBarras: '',
-  name: '',
-  description: '',
-  quantity: 0,
-  informations: [],
-  categoryId: '',
-  providerId: '',
-  custePrice: 0,
-  salerPrice: 0,
-  tagPrice: 0,
-};
+import { ICategory } from 'shared/models/categories';
+import { IProviderCadastroInfo } from 'shared/models/provider';
+import { CategoryService } from 'shared/services/api/categories/Categories_Service';
+import { ProviderService } from 'shared/services/api/providers/ProviderService';
+import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
+import { ISendPagination } from 'shared/models/client';
 
 export const ProductAbout = () => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
+  const [categoria, setCategoria] = useState<ICategory>();
+  const [fornecedor, setFornecedor] = useState<IProviderCadastroInfo>();
+
+  const changeCategoria = (value: ICategory | undefined) => {
+    setCategoria(value);
+  };
+  function handleCategoria() {
+    return CategoryService.getCategories();
+  }
+
+  const changeFornecedor = (value: IProviderCadastroInfo | undefined) => {
+    setFornecedor(value);
+  };
+  function handleFornecedor(conf: ISendPagination) {
+    return ProviderService.getAll(conf);
+  }
+
+  const initialValues: IDataProductRegiser = {
+    codeBarras: '',
+    name: '',
+    description: '',
+    quantity: 0,
+    informations: [],
+    categoryId: '',
+    providerId: '',
+    custePrice: 0,
+    salerPrice: 0,
+    tagPrice: 0,
+  };
 
   const formik = useFormik({
     initialValues,
     validationSchema: ProductValidationSchema,
     onSubmit: (values) => {
+      if (fornecedor && fornecedor.id) formik.values.providerId = fornecedor.id;
+      if (categoria && categoria.id) formik.values.categoryId = categoria.id;
       formik.values.informations = informacoes;
       console.log(values);
     },
+    validateOnBlur: true,
   });
 
   return (
@@ -106,34 +129,20 @@ export const ProductAbout = () => {
               size="small"
               autoComplete="off"
             />
-            <TextField
-              fullWidth
-              name="providerId"
-              label="Fornecedor"
-              value={formik.values.providerId}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.providerId && Boolean(formik.errors.providerId)
-              }
-              helperText={formik.touched.providerId && formik.errors.providerId}
+            <CustomAutocomplete
               size="small"
-              autoComplete="off"
+              label="Fornecedor"
+              placeholder="Procurar fornecedor"
+              fetchOptions={handleFornecedor}
+              onUpdateValue={changeFornecedor}
             />
           </Box>
-          <TextField
-            name="categoryId"
-            label="Categoria"
-            value={formik.values.categoryId}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.categoryId && Boolean(formik.errors.categoryId)
-            }
-            helperText={formik.touched.categoryId && formik.errors.categoryId}
-            fullWidth
+          <CustomAutocomplete
             size="small"
-            autoComplete="off"
+            label="Categoria"
+            placeholder="Procurar categoria"
+            fetchOptions={handleCategoria}
+            onUpdateValue={changeCategoria}
           />
         </AboutFields>
       </AboutForm>

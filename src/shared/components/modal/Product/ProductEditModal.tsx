@@ -70,7 +70,6 @@ export const ProductEditModal = ({
       if (formik.values.provider.id && formik.values.category.id) {
         const produto: IDataProductRegiser = {
           id: formik.values.id,
-          codeInt: formik.values.codeInt,
           codeBarras: formik.values.codeBarras,
           custePrice: formik.values.custePrice,
           description: formik.values.description,
