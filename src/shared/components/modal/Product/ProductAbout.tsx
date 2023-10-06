@@ -1,6 +1,7 @@
 import { Box, Button, Skeleton, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import * as Yup from 'yup';
 import {
   IDataProductRegiser,
   IListaInformacoesProduto,
@@ -20,22 +21,20 @@ import { CategoryService } from 'shared/services/api/categories/Categories_Servi
 import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
 import { ISendPagination } from 'shared/models/client';
+import { Notification } from 'shared/components/notification';
+
+interface erroYup {
+  path: string; // O caminho do campo que falhou na validação
+  message: string; // A mensagem de erro associada ao campo
+  type: string; // O tipo de erro, como "required", "min", "max", etc.
+}
 
 export const ProductAbout = () => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
-  const [categoria, setCategoria] = useState<ICategory>();
-  const [fornecedor, setFornecedor] = useState<IProviderCadastroInfo>();
 
-  const changeCategoria = (value: ICategory | undefined) => {
-    setCategoria(value);
-  };
   function handleCategoria() {
     return CategoryService.getCategories();
   }
-
-  const changeFornecedor = (value: IProviderCadastroInfo | undefined) => {
-    setFornecedor(value);
-  };
   function handleFornecedor(conf: ISendPagination) {
     return ProviderService.getAll(conf);
   }
@@ -55,14 +54,22 @@ export const ProductAbout = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: ProductValidationSchema,
-    onSubmit: (values) => {
-      if (fornecedor && fornecedor.id) formik.values.providerId = fornecedor.id;
-      if (categoria && categoria.id) formik.values.categoryId = categoria.id;
-      formik.values.informations = informacoes;
-      console.log(values);
-    },
     validateOnBlur: true,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        await ProductValidationSchema.validate(values, { abortEarly: false });
+        console.log('Sem erros, pode enviar o formulário!');
+      } catch (error) {
+        if (Yup.ValidationError.isError(error)) {
+          error.inner.forEach((validationError) => {
+            Notification(validationError.message, 'error');
+          });
+        } else {
+          console.error(error);
+        }
+      }
+      setSubmitting(false);
+    },
   });
 
   return (
@@ -86,7 +93,7 @@ export const ProductAbout = () => {
             error={
               formik.touched.codeBarras && Boolean(formik.errors.codeBarras)
             }
-            helperText={formik.touched.codeBarras && formik.errors.codeBarras}
+            // helperText={formik.touched.codeBarras && formik.errors.codeBarras}
             size="small"
             autoComplete="off"
           />
@@ -97,7 +104,7 @@ export const ProductAbout = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            // helperText={formik.touched.name && formik.errors.name}
             size="small"
             autoComplete="off"
           />
@@ -110,7 +117,7 @@ export const ProductAbout = () => {
             error={
               formik.touched.description && Boolean(formik.errors.description)
             }
-            helperText={formik.touched.description && formik.errors.description}
+            // helperText={formik.touched.description && formik.errors.description}
             fullWidth
             size="small"
             autoComplete="off"
@@ -125,7 +132,7 @@ export const ProductAbout = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-              helperText={formik.touched.quantity && formik.errors.quantity}
+              // helperText={formik.touched.quantity && formik.errors.quantity}
               size="small"
               autoComplete="off"
             />
@@ -134,7 +141,9 @@ export const ProductAbout = () => {
               label="Fornecedor"
               placeholder="Procurar fornecedor"
               fetchOptions={handleFornecedor}
-              onUpdateValue={changeFornecedor}
+              onUpdateValue={(newValue: any) => {
+                formik.setFieldValue('providerId', newValue.id);
+              }}
             />
           </Box>
           <CustomAutocomplete
@@ -142,7 +151,9 @@ export const ProductAbout = () => {
             label="Categoria"
             placeholder="Procurar categoria"
             fetchOptions={handleCategoria}
-            onUpdateValue={changeCategoria}
+            onUpdateValue={(newValue: any) => {
+              formik.setFieldValue('categoryId', newValue.id);
+            }}
           />
         </AboutFields>
       </AboutForm>
@@ -159,7 +170,7 @@ export const ProductAbout = () => {
               error={
                 formik.touched.custePrice && Boolean(formik.errors.custePrice)
               }
-              helperText={formik.touched.custePrice && formik.errors.custePrice}
+              // helperText={formik.touched.custePrice && formik.errors.custePrice}
               fullWidth
               size="small"
               autoComplete="off"
@@ -173,7 +184,7 @@ export const ProductAbout = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
-              helperText={formik.touched.tagPrice && formik.errors.tagPrice}
+              // helperText={formik.touched.tagPrice && formik.errors.tagPrice}
               fullWidth
               size="small"
               autoComplete="off"
@@ -189,7 +200,7 @@ export const ProductAbout = () => {
               error={
                 formik.touched.salerPrice && Boolean(formik.errors.salerPrice)
               }
-              helperText={formik.touched.salerPrice && formik.errors.salerPrice}
+              // helperText={formik.touched.salerPrice && formik.errors.salerPrice}
               fullWidth
               size="small"
               autoComplete="off"

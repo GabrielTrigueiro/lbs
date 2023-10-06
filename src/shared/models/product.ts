@@ -64,14 +64,23 @@ export type TProductList = {
 };
 
 export const ProductValidationSchema = yup.object().shape({
-  // categoryId: yup.string().required('Campo obrigatório'),
+  categoryId: yup.string().required('Categoria é obrigatório'),
   informations: yup.array().notRequired(),
-  codeBarras: yup.string().required('Campo obrigatório'),
-  custePrice: yup.number().required('Campo obrigatório'),
-  description: yup.string().required('Campo obrigatório'),
-  name: yup.string().required('Campo obrigatório'),
-  // providerId: yup.string().required('Campo obrigatório'),
-  quantity: yup.number().required('Campo obrigatório'),
-  salerPrice: yup.number().required('Campo obrigatório'),
-  tagPrice: yup.number().required('Campo obrigatório'),
+  codeBarras: yup.string().required('Código de barras é obrigatório'),
+  description: yup.string().required('Descrição é obrigatório'),
+  name: yup.string().required('Nome é obrigatório'),
+  providerId: yup.string().required('Fornecedor é obrigatório'),
+  quantity: yup.number().required('Quantidade é obrigatório'),
+  custePrice: yup
+    .number()
+    .required('Custo é obrigatório')
+    .min(10, 'Valor de custo muito baixo'),
+  salerPrice: yup
+    .number()
+    .required('Preço de venda é obrigatório')
+    .min(10, 'Valor de venda muito baixo'),
+  tagPrice: yup
+    .number()
+    .required('Preço de etiqueta é obrigatório')
+    .min(10, 'Valor de etiqueta muito baixo'),
 });
