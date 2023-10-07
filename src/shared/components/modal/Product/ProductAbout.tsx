@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import * as Yup from 'yup';
 import {
   IDataProductRegiser,
@@ -22,6 +22,8 @@ import { ISendPagination } from 'shared/models/client';
 import { Notification } from 'shared/components/notification';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 import { ProductService } from 'shared/services/api/product';
+import { IProviderCadastroInfo } from 'shared/models/provider';
+import { ICategory } from 'shared/models/categories';
 
 interface IProductAbout {
   close: () => void;
@@ -30,16 +32,19 @@ interface IProductAbout {
 
 export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
+  const [fornecedor, setFornecedor] = useState<string>();
+  const [categoria, setCategoria] = useState<string>();
   const [custo, setCusto] = useState<string>();
   const [tag, setTag] = useState<string>();
   const [sale, setSale] = useState<string>();
 
-  function handleCategoria() {
+  const handleCategoria = useCallback(() => {
     return CategoryService.getCategories();
-  }
-  function handleFornecedor(conf: ISendPagination) {
+  }, []);
+
+  const handleFornecedor = useCallback((conf: ISendPagination) => {
     return ProviderService.getAll(conf);
-  }
+  }, []);
 
   function lucro(initialPrice: string, finalPrice: string): string {
     let inicio = parseFloat(initialPrice.replace(',', '.'));
@@ -83,10 +88,12 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        if (custo && tag && sale) {
+        if (custo && tag && sale && fornecedor && categoria) {
           formik.values.custePrice = parseFloat(custo.replace(',', '.'));
           formik.values.tagPrice = parseFloat(tag.replace(',', '.'));
           formik.values.salerPrice = parseFloat(sale.replace(',', '.'));
+          formik.values.categoryId = categoria;
+          formik.values.providerId = fornecedor;
         }
         await ProductValidationSchema.validate(values, { abortEarly: false });
         ProductService.Create(values);
@@ -177,7 +184,7 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
               placeholder="Procurar fornecedor"
               fetchOptions={handleFornecedor}
               onUpdateValue={(newValue: any) => {
-                formik.setFieldValue('providerId', newValue.id);
+                setFornecedor(newValue.id);
               }}
             />
           </Box>
@@ -187,7 +194,7 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
             placeholder="Procurar categoria"
             fetchOptions={handleCategoria}
             onUpdateValue={(newValue: any) => {
-              formik.setFieldValue('categoryId', newValue.id);
+              setCategoria(newValue.id);
             }}
           />
         </AboutFields>
