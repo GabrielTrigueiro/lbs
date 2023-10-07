@@ -65,7 +65,7 @@ const CaixaPayment = () => {
 
   useEffect(() => {
     aplicarDesconto();
-  }, [descontoBruto, descontoPorcentagem, valorDaLista]);
+  }, [descontoBruto, descontoPorcentagem, valorDaLista, valorRecebido]);
 
   return (
     <Card

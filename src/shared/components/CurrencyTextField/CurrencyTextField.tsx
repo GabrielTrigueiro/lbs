@@ -4,14 +4,16 @@ import CurrencyInput from 'react-currency-input-field';
 
 interface ICurrencyTextFieldProps {
   label: string;
-  stateFunction: (value: React.SetStateAction<string>) => void;
-  amount: string;
+  stateFunction: (value: React.SetStateAction<string | undefined>) => void;
+  amount: string | undefined;
+  size?: 'small' | 'medium';
 }
 
 const CurrencyTextField = ({
   amount,
   stateFunction,
   label,
+  size,
 }: ICurrencyTextFieldProps) => {
   const handleAmountChange = (value: any) => {
     stateFunction(value);
@@ -19,6 +21,7 @@ const CurrencyTextField = ({
 
   return (
     <TextField
+      size={size}
       autoComplete="off"
       label={label}
       variant="outlined"

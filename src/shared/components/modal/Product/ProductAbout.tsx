@@ -1,4 +1,4 @@
-import { Box, Button, Skeleton, TextField } from '@mui/material';
+import { Box, Button, Skeleton, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
@@ -15,28 +15,54 @@ import {
   ValueFields,
   ValueForm,
 } from './ModalStyles';
-import { ICategory } from 'shared/models/categories';
-import { IProviderCadastroInfo } from 'shared/models/provider';
 import { CategoryService } from 'shared/services/api/categories/Categories_Service';
 import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
 import { ISendPagination } from 'shared/models/client';
 import { Notification } from 'shared/components/notification';
+import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
+import { ProductService } from 'shared/services/api/product';
 
-interface erroYup {
-  path: string; // O caminho do campo que falhou na validação
-  message: string; // A mensagem de erro associada ao campo
-  type: string; // O tipo de erro, como "required", "min", "max", etc.
+interface IProductAbout {
+  close: () => void;
+  atualizar: () => void;
 }
 
-export const ProductAbout = () => {
+export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
+  const [custo, setCusto] = useState<string>();
+  const [tag, setTag] = useState<string>();
+  const [sale, setSale] = useState<string>();
 
   function handleCategoria() {
     return CategoryService.getCategories();
   }
   function handleFornecedor(conf: ISendPagination) {
     return ProviderService.getAll(conf);
+  }
+
+  function lucro(initialPrice: string, finalPrice: string): string {
+    let inicio = parseFloat(initialPrice.replace(',', '.'));
+    let final = parseFloat(finalPrice.replace(',', '.'));
+    return (((final - inicio) / inicio) * 100).toFixed(2);
+  }
+
+  //mudar qual campo tem que tar preenchido para aparecer o calculo
+  function getPercentage(campo: 'tag' | 'venda'): string {
+    if (custo === undefined && tag === undefined && campo === 'tag') {
+      return '0';
+    }
+    if (tag === undefined && custo === undefined && campo === 'venda') {
+      return '0';
+    }
+    if (custo && sale && campo === 'tag') {
+      return lucro(custo, sale);
+    }
+    if (sale && tag && campo === 'venda') {
+      return lucro(sale, tag);
+    } else {
+      return '0';
+    }
   }
 
   const initialValues: IDataProductRegiser = {
@@ -57,9 +83,18 @@ export const ProductAbout = () => {
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting }) => {
       try {
+        if (custo && tag && sale) {
+          formik.values.custePrice = parseFloat(custo.replace(',', '.'));
+          formik.values.tagPrice = parseFloat(tag.replace(',', '.'));
+          formik.values.salerPrice = parseFloat(sale.replace(',', '.'));
+        }
         await ProductValidationSchema.validate(values, { abortEarly: false });
-        console.log('Sem erros, pode enviar o formulário!');
+        ProductService.Create(values);
+        formik.resetForm();
+        close();
+        atualizar();
       } catch (error) {
+        //mostrando os erros no yup em notificações
         if (Yup.ValidationError.isError(error)) {
           error.inner.forEach((validationError) => {
             Notification(validationError.message, 'error');
@@ -160,50 +195,32 @@ export const ProductAbout = () => {
       <Box sx={{ height: 250, display: 'flex', gap: 1 }}>
         <ValueForm>
           <ValueFields sx={{ gap: 1 }}>
-            <TextField
-              name="custePrice"
+            <CurrencyTextField
+              size={'small'}
               label="Preço de custo"
-              type="number"
-              value={formik.values.custePrice}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.custePrice && Boolean(formik.errors.custePrice)
-              }
-              // helperText={formik.touched.custePrice && formik.errors.custePrice}
-              fullWidth
-              size="small"
-              autoComplete="off"
+              amount={custo}
+              stateFunction={setCusto}
             />
-            sadasdas
-            <TextField
-              name="tagPrice"
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography>Lucro</Typography>
+              <Typography>{getPercentage('tag')}%</Typography>
+            </Box>
+            <CurrencyTextField
+              size={'small'}
               label="Preço de etiqueta"
-              type="number"
-              value={formik.values.tagPrice}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.tagPrice && Boolean(formik.errors.tagPrice)}
-              // helperText={formik.touched.tagPrice && formik.errors.tagPrice}
-              fullWidth
-              size="small"
-              autoComplete="off"
+              amount={sale}
+              stateFunction={setSale}
             />
-            sadasd
-            <TextField
-              name="salerPrice"
-              label="Preço de Venda"
-              type="number"
-              value={formik.values.salerPrice}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.salerPrice && Boolean(formik.errors.salerPrice)
-              }
-              // helperText={formik.touched.salerPrice && formik.errors.salerPrice}
-              fullWidth
-              size="small"
-              autoComplete="off"
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography>Lucro</Typography>
+              <Typography>{getPercentage('venda')}%</Typography>
+            </Box>
+
+            <CurrencyTextField
+              size={'small'}
+              label="Preço de venda"
+              amount={tag}
+              stateFunction={setTag}
             />
           </ValueFields>
           <Button type="submit" variant={'contained'}>

@@ -39,8 +39,8 @@ interface CaixaContextProps {
   valorComDesconto: number;
   setValorComDesconto: React.Dispatch<React.SetStateAction<number>>;
 
-  valorRecebido: string;
-  setValorRecebido: React.Dispatch<React.SetStateAction<string>>;
+  valorRecebido: string | undefined;
+  setValorRecebido: React.Dispatch<React.SetStateAction<string | undefined>>;
 
   valorRetornado?: number;
   setValorRetornado: React.Dispatch<React.SetStateAction<number>>;
@@ -205,7 +205,7 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
         }
     );
 
-    const numeroComPonto = valorRecebido.replace(/,/g, '.');
+    const numeroComPonto = valorRecebido?.replace(/,/g, '.');
 
     let compra: IDadosDaCompra = {
       boxSaleId: getBoxSaleId(),
@@ -223,13 +223,13 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
       discount: valorDaLista - valorComDesconto,
       isDiscountPercentage: isPorcentage,
     };
-    imprimirCupom();
     console.log(compra);
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
     CaixaService.submitCompra(compra).then((resposta) => {
       setValorRetornado(resposta.data.amountReturn);
+      imprimirCupom();
     });
   }, [
     produtosNaLista.produtos,
@@ -286,7 +286,7 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   const [ultimoProduto, setUltimoProduto] = useState<IItemLista>();
   const [valorDaLista, setValorDaLista] = useState<number>(0);
   const [valorComDesconto, setValorComDesconto] = useState<number>(0);
-  const [valorRecebido, setValorRecebido] = useState<string>('');
+  const [valorRecebido, setValorRecebido] = useState<string>();
   const [valorRetornado, setValorRetornado] = useState<number>(0);
 
   return (
