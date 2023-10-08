@@ -168,7 +168,15 @@ const CodeInputField = () => {
                 <Typography sx={{ fontWeight: 'bold', minWidth: 100 }}>
                   Nome:
                 </Typography>
-                <Typography sx={{ width: 150, textAlign: 'start' }}>
+                <Typography
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    width: 150,
+                    textAlign: 'start',
+                  }}
+                >
                   {option.name}
                 </Typography>
               </Box>

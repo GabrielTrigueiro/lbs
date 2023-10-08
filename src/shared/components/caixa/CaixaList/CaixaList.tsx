@@ -31,10 +31,11 @@ const CaixaList = () => {
     <Container>
       <Tabela>
         <CabecalhoTabela>
+          <h1>Cod. Barras</h1>
           <h1>Nome</h1>
-          <h1>Quantidade</h1>
+          <h1>Qtd.</h1>
           <h1>Descrição</h1>
-          <h1>Valor unitário</h1>
+          <h1>Valor unit.</h1>
           <h1>Valor total</h1>
         </CabecalhoTabela>
         <CorpoTabela>

@@ -20,11 +20,12 @@ export default function Info({ Dinheiro = false, label, value }: InfoProps) {
       </Typography>
       <Typography
         sx={{
-          overflow: 'hidden',
+          whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
+          overflow: 'hidden',
         }}
       >
-        { value ? Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value : ''}
+        {value ? (Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value) : ''}
       </Typography>
     </Box>
   );

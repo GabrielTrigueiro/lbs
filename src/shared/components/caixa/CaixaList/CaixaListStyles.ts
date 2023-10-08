@@ -16,7 +16,7 @@ export const Tabela = styled.div`
 
 export const CabecalhoTabela = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   padding: 0.5rem;
   border-bottom-width: 2px;
 `;
@@ -27,7 +27,7 @@ export const CorpoTabela = styled.div`
 
 export const Item = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   padding: 0.5rem;
   border-bottom-width: 2px;
   position: relative;
