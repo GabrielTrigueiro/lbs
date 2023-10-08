@@ -13,7 +13,6 @@ const Coluna = styled(Box)<{ valor?: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: flex;
 `;
 
 const ItemRow = ({ item }: ItemProps) => {
