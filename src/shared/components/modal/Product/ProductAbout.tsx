@@ -22,8 +22,6 @@ import { ISendPagination } from 'shared/models/client';
 import { Notification } from 'shared/components/notification';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 import { ProductService } from 'shared/services/api/product';
-import { IProviderCadastroInfo } from 'shared/models/provider';
-import { ICategory } from 'shared/models/categories';
 
 interface IProductAbout {
   close: () => void;

@@ -1,18 +1,24 @@
-import {Card} from '@mui/material';
-import {useState} from 'react';
+import { Card } from '@mui/material';
+import { useState } from 'react';
 
 import CustomAutocomplete from '../CaixaInput/CustomAutocomplete';
-import {IndicationService} from 'shared/services/api/indication/IndicationService';
-import {ClienteService} from 'shared/services';
-import {CollaboratorService} from 'shared/services/api/colab';
-import {IInfoClient, ISendPagination} from 'shared/models/client';
-import {dataOneIndication} from 'shared/models/indication';
-import {IColab} from 'shared/models/colab';
-import {useCaixaContext} from "../../../contexts/CaixaContext";
+import { IndicationService } from 'shared/services/api/indication/IndicationService';
+import { ClienteService } from 'shared/services';
+import { CollaboratorService } from 'shared/services/api/colab';
+import { IInfoClient, ISendPagination } from 'shared/models/client';
+import { dataOneIndication } from 'shared/models/indication';
+import { IColab } from 'shared/models/colab';
+import { useCaixaContext } from '../../../contexts/CaixaContext';
 
 export default function CaixaEntities() {
-
-  const {indicacao, cliente, vendedor, setCliente, setIndicacao, setVendedor} = useCaixaContext();
+  const {
+    indicacao,
+    cliente,
+    vendedor,
+    setCliente,
+    setIndicacao,
+    setVendedor,
+  } = useCaixaContext();
 
   const changeIndication = (value: dataOneIndication | undefined) => {
     setIndicacao(value);
@@ -50,18 +56,21 @@ export default function CaixaEntities() {
         placeholder="Digite alguma indicação"
         fetchOptions={handleIndication}
         onUpdateValue={changeIndication}
+        size="small"
       />
       <CustomAutocomplete<IInfoClient>
         label="Cliente"
         placeholder="Procurar cliente"
         fetchOptions={handleCliente}
         onUpdateValue={changeCliente}
+        size="small"
       />
       <CustomAutocomplete<IColab>
         label="Vendedor"
         placeholder="Procurar vendedor"
         fetchOptions={handleVendedor}
         onUpdateValue={changeVendedor}
+        size="small"
       />
     </Card>
   );

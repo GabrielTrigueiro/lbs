@@ -82,6 +82,7 @@ const CaixaPayment = () => {
         placeholder="Procurar forma de pagamento"
         fetchOptions={handleVendedor}
         onUpdateValue={changePagamento}
+        size="small"
       />
       <Box
         sx={{
@@ -99,6 +100,7 @@ const CaixaPayment = () => {
           onChange={(event) =>
             changeDesconto(event, setDescontoPorcentagem, true)
           }
+          size="small"
         />
         <TextField
           fullWidth
@@ -107,6 +109,7 @@ const CaixaPayment = () => {
           autoComplete={'off'}
           value={descontoBruto}
           onChange={(event) => changeDesconto(event, setDescontoBruto, false)}
+          size="small"
         />
       </Box>
       <Box
@@ -126,6 +129,7 @@ const CaixaPayment = () => {
           label="Valor recebido"
           amount={valorRecebido}
           stateFunction={setValorRecebido}
+          size="small"
         />
       )}
     </Card>

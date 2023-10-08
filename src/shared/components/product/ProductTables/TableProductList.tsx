@@ -28,11 +28,11 @@ const StatusTableRow = styled(CustomTableRow)<{ status: statusProduto }>`
 `;
 export const TableProductList: React.FC<props> = ({ lista, update }) => {
   return (
-    <TableContainer className="table-container">
+    <TableContainer>
       <TableStyled sx={{ minWidth: 700 }}>
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
+            <TableCell sx={{ color: '#8e8e8e' }}>Código de barras</TableCell>
             <TableCell sx={{ color: '#8e8e8e' }}>Produto</TableCell>
             <TableCell sx={{ color: '#8e8e8e' }}>Venda</TableCell>
             <TableCell sx={{ color: '#8e8e8e' }}>Etiqueta</TableCell>
@@ -44,7 +44,9 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
         <TableBody>
           {lista.map((row, index) => (
             <StatusTableRow status={row.status} key={index}>
-              <TableCellStyled></TableCellStyled>
+              <TableCellStyled sx={{ color: '#8e8e8e' }}>
+                {row.codeBarras}
+              </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
                 {row.name}
               </TableCellStyled>
