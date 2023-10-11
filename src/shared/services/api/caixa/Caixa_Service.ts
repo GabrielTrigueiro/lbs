@@ -4,6 +4,11 @@ import { environment } from 'shared/environment';
 import { AxiosError } from 'axios';
 import { Notification } from 'shared/components';
 
+interface IErroDaApi {
+  field: string;
+  message: string;
+}
+
 const submitCompra = async (dados: IDadosDaCompra): Promise<any | Error> => {
   const token = {
     headers: {
@@ -18,10 +23,14 @@ const submitCompra = async (dados: IDadosDaCompra): Promise<any | Error> => {
       if (data instanceof AxiosError) {
         return data.response?.data;
       }
+      Notification(data.data.message, 'success');
       return data.data;
     })
     .catch((err) => {
-      Notification(`${err.response.data.message}`, 'error');
+      err.response.data.errors.forEach((element: IErroDaApi) => {
+        Notification(element.message, 'error');
+      });
+      console.log(err.response.data.errors);
     });
 };
 

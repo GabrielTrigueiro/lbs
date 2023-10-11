@@ -78,7 +78,6 @@ const CodeInputField = () => {
     ProductService.getAll(search).then((response) => {
       if (active) {
         setListaDeProdutos(response.data);
-        console.log(response.data);
         setLoading(false);
       }
     });
