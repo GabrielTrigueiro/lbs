@@ -74,12 +74,11 @@ const CodeInputField = () => {
       setListaDeProdutos([]);
       return undefined;
     }
-
     setLoading(true);
-
     ProductService.getAll(search).then((response) => {
       if (active) {
         setListaDeProdutos(response.data);
+        console.log(response.data);
         setLoading(false);
       }
     });
@@ -114,6 +113,8 @@ const CodeInputField = () => {
         "
       >
         <Autocomplete
+          filterOptions={(x) => x}
+          noOptionsText="Nenhum produto encontrado"
           fullWidth
           value={tempProduct}
           options={listaDeProdutos}
@@ -145,6 +146,7 @@ const CodeInputField = () => {
           )}
           renderOption={(props, option) => (
             <Box
+              key={uuid()}
               component="li"
               {...props}
               sx={{
