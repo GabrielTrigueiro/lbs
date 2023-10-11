@@ -9,10 +9,13 @@ import {
 } from './CaixaListStyles';
 import ItemRow from './ItemRow';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
+import useDialogConfirmation from 'shared/hooks/dialogs/DialogConfirmation';
+import GenericDialog from 'shared/components/modal/Dialog/Dialog';
 
 const CaixaList = () => {
   const [total, setTotal] = useState(0);
   const { produtosNaLista, limparLista, setValorDaLista } = useCaixaContext();
+  const { onOpenDialog, onCloseDialog } = useDialogConfirmation();
 
   const calcularSoma = useCallback(() => {
     return produtosNaLista.produtos.reduce(
@@ -48,7 +51,7 @@ const CaixaList = () => {
       <FooterTabela>
         <Button
           disabled={produtosNaLista.produtos.length === 0}
-          onClick={limparLista}
+          onClick={onOpenDialog}
           sx={{ height: '80%' }}
           variant="contained"
         >
@@ -65,6 +68,7 @@ const CaixaList = () => {
           <Typography color={'#fff'}>Venda: {total}</Typography>
         </div>
       </FooterTabela>
+      <GenericDialog title="Limpar lista?" confirmAction={limparLista} />
     </Container>
   );
 };
