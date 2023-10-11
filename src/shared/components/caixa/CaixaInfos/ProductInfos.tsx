@@ -1,5 +1,5 @@
 import Skeleton from '@mui/material/Skeleton';
-import { Card, Typography, Box } from '@mui/material';
+import { Card, Box } from '@mui/material';
 import Info from './Info';
 import { useCaixaContext } from '../../../contexts/CaixaContext';
 

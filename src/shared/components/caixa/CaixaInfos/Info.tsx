@@ -1,4 +1,5 @@
 import { Typography, Box } from '@mui/material';
+import { transformNumberToBr } from '../CaixaList/CaixaList';
 
 interface InfoProps {
   label: string;
@@ -25,7 +26,7 @@ export default function Info({ Dinheiro = false, label, value }: InfoProps) {
           overflow: 'hidden',
         }}
       >
-        {value ? (Dinheiro ? 'R$ ' + Number(value).toFixed(2) : value) : ''}
+        {value ? (Dinheiro ? 'R$ ' + transformNumberToBr(value) : value) : ''}
       </Typography>
     </Box>
   );

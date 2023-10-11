@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Item } from './CaixaListStyles';
 import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import { Box } from '@mui/material';
+import { transformNumberToBr } from './CaixaList';
 import styled from '@emotion/styled';
 
 interface ItemProps {
@@ -24,8 +25,8 @@ const ItemRow = ({ item }: ItemProps) => {
       <Coluna>{item.produto.name}</Coluna>
       <Coluna>{item.quantidade}</Coluna>
       <Coluna>{item.produto.description}</Coluna>
-      <Coluna>{item.produto.salerPrice}</Coluna>
-      <Coluna>{item.precoTotal}</Coluna>
+      <Coluna>R$ {transformNumberToBr(item.produto.salerPrice)}</Coluna>
+      <Coluna>R$ {transformNumberToBr(item.precoTotal)}</Coluna>
       <Coluna
         onClick={() => removerItemLista(item.id)}
         className="

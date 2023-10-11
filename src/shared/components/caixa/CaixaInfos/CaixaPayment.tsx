@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { useCaixaContext } from '../../../contexts/CaixaContext';
 import CurrencyInput from 'react-currency-input-field';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
+import { transformNumberToBr } from '../CaixaList/CaixaList';
 
 const CaixaPayment = () => {
   const {
@@ -122,7 +123,7 @@ const CaixaPayment = () => {
         }}
       >
         <Typography>Valor com desconto</Typography>
-        <Typography>R$ {valorComDesconto.toFixed(2)}</Typography>
+        <Typography>R$ {transformNumberToBr(valorComDesconto)}</Typography>
       </Box>
       {tipoPagamento?.id.match('64e412a64703aba6f616ce7a') && (
         <CurrencyTextField

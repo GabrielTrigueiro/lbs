@@ -12,10 +12,25 @@ import { useCaixaContext } from 'shared/contexts/CaixaContext';
 import useDialogConfirmation from 'shared/hooks/dialogs/DialogConfirmation';
 import GenericDialog from 'shared/components/modal/Dialog/Dialog';
 
+export const transformNumberToBr = (numero: number | string): string => {
+  // Converte para um número, se for uma string
+  const num = typeof numero === 'string' ? parseFloat(numero) : numero;
+
+  if (isNaN(num)) {
+    // Lidar com casos inválidos
+    return 'Número inválido';
+  }
+
+  return num.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
+
 const CaixaList = () => {
   const [total, setTotal] = useState(0);
   const { produtosNaLista, limparLista, setValorDaLista } = useCaixaContext();
-  const { onOpenDialog, onCloseDialog } = useDialogConfirmation();
+  const { onOpenDialog } = useDialogConfirmation();
 
   const calcularSoma = useCallback(() => {
     return produtosNaLista.produtos.reduce(
@@ -65,7 +80,9 @@ const CaixaList = () => {
             items-center
           "
         >
-          <Typography color={'#fff'}>Venda: {total}</Typography>
+          <Typography color={'#fff'}>
+            Venda: R$ {transformNumberToBr(total)}
+          </Typography>
         </div>
       </FooterTabela>
       <GenericDialog title="Limpar lista?" confirmAction={limparLista} />

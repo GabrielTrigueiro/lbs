@@ -19,6 +19,7 @@ export const CabecalhoTabela = styled.div`
   grid-template-columns: repeat(6, minmax(0, 1fr));
   padding: 0.5rem;
   border-bottom-width: 2px;
+  gap: 0.5em;
 `;
 
 export const CorpoTabela = styled.div`
@@ -32,6 +33,7 @@ export const Item = styled.div`
   border-bottom-width: 2px;
   position: relative;
   z-index: 0;
+  gap: 0.5em;
 `;
 
 export const FooterTabela = styled.div`
