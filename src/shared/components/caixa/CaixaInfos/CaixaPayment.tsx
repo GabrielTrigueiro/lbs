@@ -1,5 +1,5 @@
 import CustomAutocomplete from '../CaixaInput/CustomAutocomplete';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Payment } from '../../../models/payment';
 import { PaymentService } from '../../../services/api/payment';
 import { Box, Card, Typography } from '@mui/material';
@@ -19,7 +19,6 @@ const CaixaPayment = () => {
     valorRecebido,
     setValorRecebido,
     setIsPorcentage,
-    valorRetornado,
   } = useCaixaContext();
   const [descontoPorcentagem, setDescontoPorcentagem] = useState<
     number | string
@@ -50,9 +49,9 @@ const CaixaPayment = () => {
     setTipoPagamento(value);
   };
 
-  function handleVendedor() {
+  const handleVendedor = useCallback(() => {
     return PaymentService.getFormasDePagamento();
-  }
+  }, []);
 
   function aplicarDesconto() {
     setValorComDesconto(valorDaLista);
@@ -66,7 +65,13 @@ const CaixaPayment = () => {
 
   useEffect(() => {
     aplicarDesconto();
-  }, [descontoBruto, descontoPorcentagem, valorDaLista, valorRecebido]);
+  }, [
+    descontoBruto,
+    descontoPorcentagem,
+    valorDaLista,
+    valorRecebido,
+    tipoPagamento,
+  ]);
 
   return (
     <Card

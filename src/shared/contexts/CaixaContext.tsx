@@ -75,6 +75,13 @@ export const useCaixaContext = () => {
     setValorRetornado,
   } = useContext(CaixaContext)!;
 
+  const initialState = {
+    cliente: undefined,
+    indicacao: undefined,
+    vendedor: undefined,
+    valorRecebido: undefined,
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function imprimirCupom() {
     var dataAtual = new Date();
@@ -191,6 +198,23 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
     setValorComDesconto(0);
   }, [setProdutoNaLista, setUltimoProduto, setValorDaLista]);
 
+  //resetar compra (não funcionando)
+  const resetarCompra = useCallback(() => {
+    setCliente(initialState.cliente);
+    setIndicacao(initialState.indicacao);
+    setVendedor(initialState.vendedor);
+    setValorRecebido(initialState.valorRecebido);
+  }, [
+    initialState.cliente,
+    initialState.indicacao,
+    initialState.valorRecebido,
+    initialState.vendedor,
+    setCliente,
+    setIndicacao,
+    setValorRecebido,
+    setVendedor,
+  ]);
+
   const getBoxSaleId = () => {
     let tokenAtual: any = jwtDecode(localStorage.getItem('Acess_Token') || '');
     return tokenAtual.sub;
@@ -223,26 +247,33 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
       discount: valorDaLista - valorComDesconto,
       isDiscountPercentage: isPorcentage,
     };
-    console.log(compra);
+
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
-    CaixaService.submitCompra(compra).then((resposta) => {
-      setValorRetornado(resposta.data.amountReturn);
-      imprimirCupom();
-    });
+    CaixaService.submitCompra(compra)
+      .then((resposta) => {
+        setValorRetornado(resposta.data.amountReturn);
+        imprimirCupom();
+      })
+      .then(() => {
+        limparLista();
+        resetarCompra();
+      });
   }, [
     produtosNaLista.produtos,
+    valorRecebido,
     cliente,
     vendedor,
     tipoPagamento,
     indicacao,
     valorComDesconto,
-    valorRecebido,
     valorDaLista,
     isPorcentage,
     setValorRetornado,
     imprimirCupom,
+    limparLista,
+    resetarCompra,
   ]);
   return {
     produtosNaLista,
