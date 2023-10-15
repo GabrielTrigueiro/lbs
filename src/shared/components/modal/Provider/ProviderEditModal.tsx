@@ -79,6 +79,12 @@ export const ProviderEditModal: React.FC<{
     }
   }
 
+  function formatarDocumento(doc: string) {
+    doc = doc.replace(/\D/g, '');
+    doc = doc.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    return doc;
+  }
+
   return (
     <>
       <Modal
@@ -149,8 +155,9 @@ export const ProviderEditModal: React.FC<{
                     fullWidth
                     id="cnpj"
                     name="cnpj"
+                    inputProps={{ maxLength: '15' }}
                     label="CNPJ"
-                    value={formik.values.cnpj}
+                    value={formatarDocumento(formik.values.cnpj)}
                     onChange={formik.handleChange}
                     error={formik.touched.cnpj && Boolean(formik.errors.cnpj)}
                     helperText={formik.touched.cnpj && formik.errors.cnpj}
