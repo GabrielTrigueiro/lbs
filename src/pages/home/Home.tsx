@@ -56,23 +56,25 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={DefaultTheme}>
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/" element={<MenuLateral />}>
-                <Route path="/clientes" element={<ClientListPage />} />
-                <Route path="/fornecedores" element={<ProviderListPage />} />
-                <Route path="/indicacoes" element={<IndicationPage />} />
-                <Route path="/categorias" element={<Categories />} />
-                <Route path="/produtos" element={<ProductPage />} />
-                <Route path="/caixa" element={<CaixaPage />} />
+      <CaixaContextProvider>
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/" element={<MenuLateral />}>
+                  <Route path="/clientes" element={<ClientListPage />} />
+                  <Route path="/fornecedores" element={<ProviderListPage />} />
+                  <Route path="/indicacoes" element={<IndicationPage />} />
+                  <Route path="/categorias" element={<Categories />} />
+                  <Route path="/produtos" element={<ProductPage />} />
+                  <Route path="/caixa" element={<CaixaPage />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </CaixaContextProvider>
     </ThemeProvider>
   );
 }

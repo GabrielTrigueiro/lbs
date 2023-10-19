@@ -10,16 +10,14 @@ import { CaixaContextProvider } from 'shared/contexts/CaixaContext';
 
 export const CaixaPage = () => {
   return (
-    <CaixaContextProvider>
-      <CaixaContainer>
-        <ListaContainer>
-          <CodeInputField />
-          <CaixaList />
-        </ListaContainer>
-        <InfosContainer>
-          <CaixaInfos />
-        </InfosContainer>
-      </CaixaContainer>
-    </CaixaContextProvider>
+    <CaixaContainer>
+      <ListaContainer>
+        <CodeInputField />
+        <CaixaList />
+      </ListaContainer>
+      <InfosContainer>
+        <CaixaInfos />
+      </InfosContainer>
+    </CaixaContainer>
   );
 };
