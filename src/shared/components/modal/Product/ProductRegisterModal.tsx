@@ -6,7 +6,7 @@ import ModalHeader from './ModalHeader';
 import { IListaInformacoesProduto } from '../../../models/product';
 import { CardForm } from './ModalStyles';
 import GenericDialog from '../Dialog/Dialog';
-import useDialogConfirmation from 'shared/hooks/dialogs/DialogConfirmation';
+import useDialogProduct from 'shared/hooks/dialogs/DialogProduct';
 
 interface props {
   atualizarPagina: () => void;
@@ -14,7 +14,7 @@ interface props {
 
 export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
   const { isOpen, onClose } = useRegistrarProduto();
-  const { onOpenDialog, onCloseDialog } = useDialogConfirmation();
+  const { onOpenDialog, onCloseDialog, isOpenDialog } = useDialogProduct();
 
   function cancelRegister() {
     onCloseDialog();
@@ -33,6 +33,8 @@ export const ProductRegisterModal: React.FC<props> = ({ atualizarPagina }) => {
         </CardForm>
       </Container>
       <GenericDialog
+        isOpenDialog={isOpenDialog}
+        onCloseDialog={onCloseDialog}
         title="Cancelar cadastro?"
         confirmAction={cancelRegister}
       />
