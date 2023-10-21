@@ -1,6 +1,13 @@
 import { Box, Button, Skeleton, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
+import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
+import { Notification } from 'shared/components/notification';
+import { ISendPagination } from 'shared/models/client';
+import { CategoryService } from 'shared/services/api/categories/Categories_Service';
+import { ProductService } from 'shared/services/api/product';
+import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import * as Yup from 'yup';
 import {
   IDataProductRegiser,
@@ -15,13 +22,6 @@ import {
   ValueFields,
   ValueForm,
 } from './ModalStyles';
-import { CategoryService } from 'shared/services/api/categories/Categories_Service';
-import { ProviderService } from 'shared/services/api/providers/ProviderService';
-import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
-import { ISendPagination } from 'shared/models/client';
-import { Notification } from 'shared/components/notification';
-import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
-import { ProductService } from 'shared/services/api/product';
 
 interface IProductAbout {
   close: () => void;
@@ -58,10 +58,10 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
     if (tag === undefined && custo === undefined && campo === 'venda') {
       return '0';
     }
-    if (custo && sale && campo === 'tag') {
+    if (custo && sale && campo === 'venda') {
       return lucro(custo, sale);
     }
-    if (sale && tag && campo === 'venda') {
+    if (sale && tag && campo === 'tag') {
       return lucro(sale, tag);
     } else {
       return '0';
@@ -208,22 +208,21 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
             />
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography>Lucro</Typography>
-              <Typography>{getPercentage('tag')}%</Typography>
+              <Typography>{getPercentage('venda')}%</Typography>
             </Box>
             <CurrencyTextField
               size={'small'}
-              label="Preço de etiqueta"
+              label="Preço de venda"
               amount={sale}
               stateFunction={setSale}
             />
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography>Lucro</Typography>
-              <Typography>{getPercentage('venda')}%</Typography>
+              <Typography>{getPercentage('tag')}%</Typography>
             </Box>
-
             <CurrencyTextField
               size={'small'}
-              label="Preço de venda"
+              label="Preço de etiqueta"
               amount={tag}
               stateFunction={setTag}
             />
