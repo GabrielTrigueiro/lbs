@@ -88,13 +88,8 @@ export const IndicationPage: React.FC = () => {
     <div className={styles.container}>
       <Box className={styles.topContainer}>
         <Typography className={styles.topContainerTitle}>Indicações</Typography>
-        <Button
-          className={styles.topButton}
-          onClick={handleModal}
-          variant="contained"
-          startIcon={<Add />}
-        >
-          <Typography className={styles.topButtonText}>
+        <Button onClick={handleModal} variant="contained" startIcon={<Add />}>
+          <Typography fontWeight={700} fontSize={'12px'}>
             Cadastrar Indicação
           </Typography>
         </Button>

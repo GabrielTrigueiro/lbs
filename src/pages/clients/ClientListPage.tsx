@@ -12,14 +12,13 @@ import {
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useEffect, useState } from 'react';
-import { SearchInput } from '../../shared/components/search';
-import { LayoutBasePage } from '../../shared/layouts';
-import { ClienteService } from '../../shared/services';
-import { ClientListPageSkeleton } from './ClientListPageSkeleton';
-import styles from '../../styles/Client/ClientPage.module.scss';
-import { ClientRegisterModal } from '../../shared/components/modal/Client/ClientRegisterModal';
-import { ISendPagination, RegisterClient } from '../../shared/models/client';
 import { TableClients } from '../../shared/components';
+import { ClientRegisterModal } from '../../shared/components/modal/Client/ClientRegisterModal';
+import { SearchInput } from '../../shared/components/search';
+import { ISendPagination, RegisterClient } from '../../shared/models/client';
+import { ClienteService } from '../../shared/services';
+import styles from '../../styles/Client/ClientPage.module.scss';
+import { ClientListPageSkeleton } from './ClientListPageSkeleton';
 
 export const ClientListPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,13 +78,8 @@ export const ClientListPage: React.FC = () => {
     <div className={styles.container}>
       <Box className={styles.topContainer}>
         <Typography className={styles.topTitle}>Clientes</Typography>
-        <Button
-          className={styles.topButton}
-          onClick={handleModal}
-          variant="contained"
-          startIcon={<Add />}
-        >
-          <Typography className={styles.topButtonText}>
+        <Button onClick={handleModal} variant="contained" startIcon={<Add />}>
+          <Typography fontWeight={700} fontSize={'12px'}>
             Cadastrar Clientes
           </Typography>
         </Button>

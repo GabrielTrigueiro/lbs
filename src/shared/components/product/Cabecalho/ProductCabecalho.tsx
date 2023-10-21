@@ -34,7 +34,9 @@ export default function ProductCabecalho({
       <Titulo>
         <h1>Produtos</h1>
         <Button onClick={onOpen} variant="contained" startIcon={<Add />}>
-          Cadastrar Produtos
+          <Typography fontWeight={700} fontSize={'12px'}>
+            Cadastrar Produtos
+          </Typography>
         </Button>
       </Titulo>
 
