@@ -5,9 +5,10 @@ import { PaymentService } from '../../../services/api/payment';
 import { Box, Card, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useCaixaContext } from '../../../contexts/CaixaContext';
-import CurrencyInput from 'react-currency-input-field';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 import { transformNumberToBr } from '../CaixaList/CaixaList';
+import CurrencyInput from 'react-currency-input-field';
+import { log } from 'console';
 
 const CaixaPayment = () => {
   const {
@@ -23,54 +24,50 @@ const CaixaPayment = () => {
   const [descontoPorcentagem, setDescontoPorcentagem] = useState<
     number | string
   >('');
-  const [descontoBruto, setDescontoBruto] = useState<number | string>('');
+  const [teste, setTeste] = useState<string>('');
 
-  const changeDesconto = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    setState1: (value: React.SetStateAction<number | string>) => void,
-    porcent?: boolean
+  const changeDescontoPorcent = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const newValue = event.target.value.replace(/[^0-9.]/g, '');
     if (/^\d*$/.test(newValue) || newValue === '') {
       const numericValue = newValue === '' ? '' : parseInt(newValue, 10);
-      if (porcent) {
-        setIsPorcentage(true);
-        if (numericValue !== undefined && Number(numericValue) <= 100) {
-          setState1(numericValue);
-        }
-      } else {
-        setState1(numericValue);
-        setIsPorcentage(false);
+      setIsPorcentage(true);
+      if (numericValue !== undefined && Number(numericValue) <= 100) {
+        setDescontoPorcentagem(numericValue);
       }
     }
   };
-
+  const handleAmountChange = (value: any) => {
+    setTeste(value);
+  };
   const changePagamento = (value: Payment | undefined) => {
     setTipoPagamento(value);
   };
-
   const handleVendedor = useCallback(() => {
     return PaymentService.getFormasDePagamento();
   }, []);
-
   function aplicarDesconto() {
     setValorComDesconto(valorDaLista);
-    if (descontoBruto !== '')
-      setValorComDesconto(valorDaLista - Number(descontoBruto));
+    console.log(teste);
+    if (teste !== '' && teste !== undefined) {
+      let bruto = parseFloat(teste.replace(',', '.'));
+      setValorComDesconto(valorDaLista - Number(bruto));
+    }
     if (descontoPorcentagem !== '')
       setValorComDesconto(
         valorDaLista - (valorDaLista * Number(descontoPorcentagem)) / 100
       );
   }
-
   useEffect(() => {
     aplicarDesconto();
   }, [
-    descontoBruto,
     descontoPorcentagem,
     valorDaLista,
     valorRecebido,
     tipoPagamento,
+    setTeste,
+    teste,
   ]);
 
   return (
@@ -99,23 +96,32 @@ const CaixaPayment = () => {
       >
         <TextField
           fullWidth
-          disabled={!(descontoBruto === '')}
+          disabled={!(teste === '' || teste === undefined)}
           label={'Desconto %'}
           autoComplete={'off'}
           value={descontoPorcentagem}
-          onChange={(event) =>
-            changeDesconto(event, setDescontoPorcentagem, true)
-          }
+          onChange={(event) => changeDescontoPorcent(event)}
           size="small"
         />
         <TextField
           fullWidth
           disabled={!(descontoPorcentagem === '')}
-          label={'Desconto R$'}
-          autoComplete={'off'}
-          value={descontoBruto}
-          onChange={(event) => changeDesconto(event, setDescontoBruto, false)}
           size="small"
+          autoComplete="off"
+          label={'Desconto $'}
+          variant="outlined"
+          InputProps={{
+            inputComponent: CurrencyInput as any,
+            inputProps: {
+              prefix: 'R$ ',
+              decimalSeparator: ',',
+              groupSeparator: '.',
+              allowNegativeValue: false,
+              decimalScale: 2,
+              onValueChange: handleAmountChange,
+            },
+            value: teste,
+          }}
         />
       </Box>
       <Box
