@@ -71,16 +71,7 @@ export const ProductValidationSchema = yup.object().shape({
   name: yup.string().required('Nome é obrigatório'),
   providerId: yup.string().required('Fornecedor é obrigatório'),
   quantity: yup.number().required('Quantidade é obrigatório'),
-  custePrice: yup
-    .number()
-    .required('Custo é obrigatório')
-    .min(10, 'Valor de custo muito baixo'),
-  salerPrice: yup
-    .number()
-    .required('Preço de venda é obrigatório')
-    .min(10, 'Valor de venda muito baixo'),
-  tagPrice: yup
-    .number()
-    .required('Preço de etiqueta é obrigatório')
-    .min(10, 'Valor de etiqueta muito baixo'),
+  custePrice: yup.number().required('Custo é obrigatório'),
+  salerPrice: yup.number().required('Preço de venda é obrigatório'),
+  tagPrice: yup.number().required('Preço de etiqueta é obrigatório'),
 });
