@@ -6,7 +6,6 @@ export const CardForm = styled(Card)`
   padding: 1em;
   display: 'flex';
   flex-direction: 'column';
-  gap: 1em;
   position: relative;
 `;
 

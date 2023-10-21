@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { title } from 'process';
 
@@ -12,17 +12,19 @@ export default function ModalHeader({
   tittle,
 }: IHeaderProps) {
   return (
-    <>
+    <Box sx={{ marginBottom: 1 }}>
       <Button
         onClick={closeButtonFunction}
-        sx={{ position: 'absolute', right: 5, top: 5 }}
+        sx={{ position: 'absolute', right: 15, top: 15 }}
         variant="contained"
       >
         <CloseIcon />
       </Button>
-      <Typography sx={{ fontWeight: 'bold', fontSize: 21 }}>
+      <Typography
+        sx={{ fontWeight: 'bold', fontSize: '1.8rem', textAlign: 'center' }}
+      >
         {tittle}
       </Typography>
-    </>
+    </Box>
   );
 }
