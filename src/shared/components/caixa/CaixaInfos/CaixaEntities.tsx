@@ -11,18 +11,7 @@ import { IColab } from 'shared/models/colab';
 import { useCaixaContext } from '../../../contexts/CaixaContext';
 
 export default function CaixaEntities() {
-  const {
-    cliente,
-    indicacao,
-    vendedor,
-    setCliente,
-    setIndicacao,
-    setVendedor,
-  } = useCaixaContext();
-
-  const handleIndication = useCallback((conf: ISendPagination) => {
-    return IndicationService.getAllIndicacoes(conf);
-  }, []);
+  const { cliente, vendedor, setCliente, setVendedor } = useCaixaContext();
 
   const handleCliente = useCallback((conf: ISendPagination) => {
     return ClienteService.getAll(conf);
@@ -32,7 +21,7 @@ export default function CaixaEntities() {
     return CollaboratorService.getColaboradores();
   }, []);
 
-  useEffect(() => {}, [cliente, indicacao, vendedor]);
+  useEffect(() => {}, [cliente, vendedor]);
 
   return (
     <Card
@@ -43,13 +32,6 @@ export default function CaixaEntities() {
         gap: 1,
       }}
     >
-      <CustomAutocomplete<dataOneIndication>
-        label="Indicação"
-        placeholder="Digite alguma indicação"
-        fetchOptions={handleIndication}
-        onUpdateValue={setIndicacao}
-        size="small"
-      />
       <CustomAutocomplete<IInfoClient>
         label="Cliente"
         placeholder="Procurar cliente"
