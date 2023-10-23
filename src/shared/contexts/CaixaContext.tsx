@@ -4,11 +4,8 @@ import jwtDecode from 'jwt-decode';
 import { IDadosDaCompra, IItemLista, ILista } from 'shared/models/caixa';
 import { CaixaService } from 'shared/services/api/caixa/Caixa_Service';
 import { IInfoClient } from '../models/client';
-import { dataOneIndication } from '../models/indication';
 import { IColab } from '../models/colab';
 import { Payment } from '../models/payment';
-import { DialogConfirm } from 'shared/components/confirmation-button/DialogConfirm';
-import useDialogConfirmation from 'shared/hooks/dialogs/DialogConfirmation';
 import GenericDialog from 'shared/components/modal/Dialog/Dialog';
 import useDialogPayment from 'shared/hooks/dialogs/DialogPayment';
 import { transformNumberToBr } from 'shared/components/caixa/CaixaList/CaixaList';
@@ -26,11 +23,6 @@ interface CaixaContextProps {
 
   cliente: IInfoClient | undefined;
   setCliente: React.Dispatch<React.SetStateAction<IInfoClient | undefined>>;
-
-  indicacao?: dataOneIndication | undefined;
-  setIndicacao: React.Dispatch<
-    React.SetStateAction<dataOneIndication | undefined>
-  >;
 
   vendedor: IColab | undefined;
   setVendedor: React.Dispatch<React.SetStateAction<IColab | undefined>>;
@@ -62,8 +54,6 @@ export const useCaixaContext = () => {
     ultimoProduto,
     cliente,
     setCliente,
-    indicacao,
-    setIndicacao,
     vendedor,
     setVendedor,
     tipoPagamento,
@@ -160,7 +150,6 @@ export const useCaixaContext = () => {
   //resetar compra (não funcionando)
   const resetarCompra = useCallback(() => {
     setCliente(initialState.cliente);
-    setIndicacao(initialState.indicacao);
     setVendedor(initialState.vendedor);
     setValorRecebido(initialState.valorRecebido);
   }, [
@@ -169,7 +158,6 @@ export const useCaixaContext = () => {
     initialState.valorRecebido,
     initialState.vendedor,
     setCliente,
-    setIndicacao,
     setValorRecebido,
     setVendedor,
   ]);
@@ -200,7 +188,6 @@ export const useCaixaContext = () => {
           ? tipoPagamento.id
           : ''
         : '',
-      indicationId: indicacao ? (indicacao.id ? indicacao.id : '') : '',
       amount: valorComDesconto,
       amountPaid: Number(numeroComPonto),
       discount: valorDaLista - valorComDesconto,
@@ -225,7 +212,6 @@ export const useCaixaContext = () => {
     cliente,
     vendedor,
     tipoPagamento,
-    indicacao,
     valorComDesconto,
     valorDaLista,
     isPorcentage,
@@ -241,8 +227,6 @@ export const useCaixaContext = () => {
     ultimoProduto,
     cliente,
     setCliente,
-    indicacao,
-    setIndicacao,
     vendedor,
     setVendedor,
     tipoPagamento,
@@ -270,7 +254,6 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   });
   const [cliente, setCliente] = useState<IInfoClient>();
   const [isPorcentage, setIsPorcentage] = useState<boolean>(false);
-  const [indicacao, setIndicacao] = useState<dataOneIndication>();
   const [vendedor, setVendedor] = useState<IColab>();
   const [tipoPagamento, setTipoPagamento] = useState<Payment>();
   const [ultimoProduto, setUltimoProduto] = useState<IItemLista>();
@@ -337,8 +320,6 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
         valorDaLista,
         cliente,
         setCliente,
-        indicacao,
-        setIndicacao,
         vendedor,
         setVendedor,
         tipoPagamento,
