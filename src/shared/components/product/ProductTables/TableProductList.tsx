@@ -51,10 +51,10 @@ export const TableProductList: React.FC<props> = ({ lista, update }) => {
                 {row.name}
               </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
-                {row.salerPrice}
+                R$ {row.salerPrice}
               </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
-                {row.tagPrice}
+                R$ {row.tagPrice}
               </TableCellStyled>
               <TableCellStyled sx={{ color: '#8e8e8e' }}>
                 {row.quantity}
