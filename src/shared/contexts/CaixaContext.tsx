@@ -197,15 +197,12 @@ export const useCaixaContext = () => {
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
-    CaixaService.submitCompra(compra)
-      .then((resposta) => {
-        setValorRetornado(resposta.data.amountReturn);
-        onOpenDialog();
-      })
-      .then(() => {
-        limparLista();
-        resetarCompra();
-      });
+    CaixaService.submitCompra(compra).then((resposta) => {
+      setValorRetornado(resposta.data.amountReturn);
+      onOpenDialog();
+      limparLista();
+      resetarCompra();
+    });
   }, [
     produtosNaLista.produtos,
     valorRecebido,
@@ -221,6 +218,8 @@ export const useCaixaContext = () => {
     resetarCompra,
   ]);
   return {
+    resetarCompra,
+    limparLista,
     produtosNaLista,
     setProdutoNaLista,
     setUltimoProduto,
@@ -240,7 +239,6 @@ export const useCaixaContext = () => {
     finalizarCompra,
     adicionarNaLista,
     removerItemLista,
-    limparLista,
     isPorcentage,
     setIsPorcentage,
     valorRetornado,
@@ -261,11 +259,10 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   const [valorComDesconto, setValorComDesconto] = useState<number>(0);
   const [valorRecebido, setValorRecebido] = useState<string>();
   const [valorRetornado, setValorRetornado] = useState<number>(0);
-
-  function imprimirCupom() {
+  const { isOpenDialog, onCloseDialog } = useDialogPayment();
+  const imprimirCupom = useCallback(() => {
     var dataAtual = new Date();
     var dataFormatada = dataAtual.toISOString().slice(0, 19).replace('T', ' ');
-
     var conteudoCupom = `
     ********** Cupom Fiscal **********
     Data: ${dataFormatada}
@@ -273,7 +270,6 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
     Descrição           | Quantidade | Preço Unitário | Total
     ----------------------------------
   `;
-
     produtosNaLista.produtos.forEach((item: IItemLista) => {
       conteudoCupom += `
 ${item.produto?.name.padStart(22)} | ${item.quantidade
@@ -283,16 +279,13 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
         .padEnd(15)} | ${item.precoTotal.toFixed(2)}
 `;
     });
-
     conteudoCupom += `
     ==================================
     Soma total: ${valorDaLista.toFixed(2)}
     Desconto: ${(valorDaLista - valorComDesconto).toFixed(2)}
     Total com desconto: ${valorComDesconto.toFixed(2)}
   `;
-
-    var janelaImprimir = window.open('', '', 'width=600,height=600');
-
+    var janelaImprimir = window.open('', '', 'width=1000,height=700');
     if (janelaImprimir) {
       janelaImprimir.document.open();
       janelaImprimir.document.write(
@@ -306,10 +299,7 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
     } else {
       alert('Por favor, habilite a janela pop-up para imprimir o cupom.');
     }
-  }
-
-  const { isOpenDialog, onCloseDialog } = useDialogPayment();
-
+  }, [produtosNaLista.produtos, valorComDesconto, valorDaLista]);
   return (
     <CaixaContext.Provider
       value={{
@@ -341,7 +331,7 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
         onCloseDialog={onCloseDialog}
         oneOption
         oneOptionLabel="Imprimir nota"
-        confirmAction={imprimirCupom}
+        confirmAction={() => imprimirCupom()}
         title={`Valor a ser retornado: R$ ${transformNumberToBr(
           valorRetornado
         )}`}

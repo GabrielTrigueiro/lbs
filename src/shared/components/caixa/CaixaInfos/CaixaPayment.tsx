@@ -49,7 +49,6 @@ const CaixaPayment = () => {
   }, []);
   function aplicarDesconto() {
     setValorComDesconto(valorDaLista);
-    console.log(teste);
     if (teste !== '' && teste !== undefined) {
       let bruto = parseFloat(teste.replace(',', '.'));
       setValorComDesconto(valorDaLista - Number(bruto));

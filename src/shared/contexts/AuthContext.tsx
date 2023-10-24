@@ -32,6 +32,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     let acessToken = localStorage.getItem(Jwt);
     if (acessToken) {
       setToken(acessToken);
+      let user: any = jwtDecode(localStorage.getItem('Acess_Token') || '');
+      setUsername(user.name);
     } else {
       setToken(undefined);
     }
