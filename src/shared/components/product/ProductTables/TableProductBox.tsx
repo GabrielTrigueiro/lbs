@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { IDataProduct } from '../../../models/product';
 
 const Lista = styled.section`
+  padding-top: 1em;
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

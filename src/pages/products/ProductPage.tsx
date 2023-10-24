@@ -14,6 +14,8 @@ import { ISendPagination } from 'shared/models/client';
 import { IDataProduct } from 'shared/models/product';
 import { ProductService } from 'shared/services/api/product';
 import { Cabecalho, Container, Footer, Tabela } from './ProductPageStyles';
+import TitlePageContainer from 'shared/components/pages-components/TitlePageContainer';
+import useRegistrarProduto from 'shared/hooks/produtos/RegistrarProduto';
 
 export const ProductPage = () => {
   const [search, setSearch] = useState('');
@@ -25,6 +27,7 @@ export const ProductPage = () => {
   const [pageSize, setPageSize] = useState(5);
   const [actualpage, setActualPage] = useState(0);
   const [selectContent, setSelectContent] = useState('5');
+  const { onOpen } = useRegistrarProduto();
 
   const capturarInput = (
     evento: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -74,14 +77,17 @@ export const ProductPage = () => {
 
   return (
     <Container>
-      <Cabecalho>
-        <ProductCabecalho
-          atualizarPagina={update}
-          changeSearch={capturarInput}
-          mudarSwicth={mudarSwitch}
-          estadoSwitch={estadoSwitch}
-        />
-      </Cabecalho>
+      <TitlePageContainer
+        handleMainButton={onOpen}
+        mainButtonLabel="Cadastrar produtos"
+        pageTitle="Produtos"
+      />
+      <ProductCabecalho
+        atualizarPagina={update}
+        changeSearch={capturarInput}
+        mudarSwicth={mudarSwitch}
+        estadoSwitch={estadoSwitch}
+      />
       <Tabela>
         {estadoSwitch ? (
           <TableProductBox lista={productList} update={update} />

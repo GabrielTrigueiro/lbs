@@ -28,16 +28,8 @@ export default function ProductCabecalho({
   changeSearch,
   atualizarPagina,
 }: CabecalhoProps) {
-  const { onOpen } = useRegistrarProduto();
-
   return (
-    <Container>
-      <TitlePageContainer
-        handleMainButton={onOpen}
-        mainButtonLabel="Cadastrar produtos"
-        pageTitle="Produtos"
-      />
-
+    <>
       <CorpoCabecalho>
         <ItemCabecalho>
           <h1>Lista de Produtos</h1>
@@ -59,8 +51,7 @@ export default function ProductCabecalho({
           </Info>
         </ItemCabecalho>
       </CorpoCabecalho>
-
       <ProductRegisterModal atualizarPagina={atualizarPagina} />
-    </Container>
+    </>
   );
 }
