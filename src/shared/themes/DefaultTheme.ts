@@ -25,7 +25,6 @@ const DefaultTheme = createTheme({
           style: ({ theme }) => ({
             boxShadow: 'none',
             fontSize: '1pc',
-            height: '2.5em',
             borderColor: 'transparent',
             '&:hover': {
               boxShadow: 'none',

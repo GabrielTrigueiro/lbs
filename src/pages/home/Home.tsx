@@ -15,6 +15,8 @@ import { ProductPage } from '../products/ProductPage';
 import { ProviderListPage } from '../providers';
 import PrivateRoutes from './PrivateRoutes';
 import { CaixaContextProvider } from 'shared/contexts/CaixaContext';
+import ColaboratorsPage from 'pages/colaborators/ColaboratorsPage';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 
 export default function Home() {
   const { setSideBarOption } = useSideBarContext();
@@ -47,6 +49,11 @@ export default function Home() {
         path: '/produtos',
       },
       {
+        label: 'colaboradores',
+        icon: 'handshake',
+        path: '/colaboradores',
+      },
+      {
         label: 'caixa',
         icon: 'paid_icon',
         path: '/caixa',
@@ -68,6 +75,7 @@ export default function Home() {
                   <Route path="/indicacoes" element={<IndicationPage />} />
                   <Route path="/categorias" element={<Categories />} />
                   <Route path="/produtos" element={<ProductPage />} />
+                  <Route path="/colaboradores" element={<ColaboratorsPage />} />
                   <Route path="/caixa" element={<CaixaPage />} />
                 </Route>
               </Route>
