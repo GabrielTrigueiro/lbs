@@ -19,6 +19,7 @@ import { ISendPagination, RegisterClient } from '../../shared/models/client';
 import { ClienteService } from '../../shared/services';
 import styles from '../../styles/Client/ClientPage.module.scss';
 import { ClientListPageSkeleton } from './ClientListPageSkeleton';
+import TitlePageContainer from 'shared/components/pages-components/TitlePageContainer';
 
 export const ClientListPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,15 +77,11 @@ export const ClientListPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Box className={styles.topContainer}>
-        <Typography className={styles.topTitle}>Clientes</Typography>
-        <Button onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography fontWeight={700} fontSize={'12px'}>
-            Cadastrar Clientes
-          </Typography>
-        </Button>
-      </Box>
-
+      <TitlePageContainer
+        handleMainButton={handleModal}
+        mainButtonLabel="Cadastrar cliente"
+        pageTitle="Clientes"
+      />
       <Box className={styles.midContainer}>
         <Grid className={styles.midGrid}>
           <Grid className={styles.midLeft}>

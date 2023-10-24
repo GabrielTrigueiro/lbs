@@ -20,6 +20,7 @@ import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import { IProviderCadastroInfo } from 'shared/models/provider';
 import { TableProviders } from 'shared/components/table/TableProviders';
 import { ProviderRegisterModal } from 'shared/components/modal/Provider/ProviderRegisterModal';
+import TitlePageContainer from 'shared/components/pages-components/TitlePageContainer';
 
 export const ProviderListPage: React.FC = () => {
   const [value, setValue] = useState('');
@@ -68,14 +69,11 @@ export const ProviderListPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Box className={styles.topContainer}>
-        <Typography className={styles.topContainerTitle}>Fornecedor</Typography>
-        <Button onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography fontWeight={700} fontSize={'12px'}>
-            Cadastrar fornecedor
-          </Typography>
-        </Button>
-      </Box>
+      <TitlePageContainer
+        handleMainButton={handleModal}
+        mainButtonLabel="Cadastrar fornecedor"
+        pageTitle="Fornecedores"
+      />
 
       <Box className={styles.searchContainer}>
         <Grid className={styles.searchGrid}>

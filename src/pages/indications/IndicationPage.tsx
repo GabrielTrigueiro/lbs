@@ -22,6 +22,7 @@ import { IndicationService } from '../../shared/services/api/indication/Indicati
 import { TableIndications } from '../../shared/components/table/TableIndications';
 import { IndicationRegisterModal } from '../../shared/components/modal/Indication/IndicationRegisterModal';
 import { ISendPagination } from '../../shared/models/client';
+import TitlePageContainer from 'shared/components/pages-components/TitlePageContainer';
 
 export const IndicationPage: React.FC = () => {
   const [value, setValue] = useState<string>('');
@@ -86,14 +87,11 @@ export const IndicationPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Box className={styles.topContainer}>
-        <Typography className={styles.topContainerTitle}>Indicações</Typography>
-        <Button onClick={handleModal} variant="contained" startIcon={<Add />}>
-          <Typography fontWeight={700} fontSize={'12px'}>
-            Cadastrar Indicação
-          </Typography>
-        </Button>
-      </Box>
+      <TitlePageContainer
+        handleMainButton={handleModal}
+        mainButtonLabel="Cadastrar Indicação"
+        pageTitle="Indicações"
+      />
 
       <Box className={styles.searchContainer}>
         <Grid className={styles.searchGrid}>

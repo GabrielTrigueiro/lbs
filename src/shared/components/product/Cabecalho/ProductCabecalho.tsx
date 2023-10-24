@@ -11,6 +11,7 @@ import {
   ItemCabecalho,
   Titulo,
 } from './ProductCabecalhoStyles';
+import TitlePageContainer from 'shared/components/pages-components/TitlePageContainer';
 
 interface CabecalhoProps {
   mudarSwicth: () => void;
@@ -31,14 +32,11 @@ export default function ProductCabecalho({
 
   return (
     <Container>
-      <Titulo>
-        <h1>Produtos</h1>
-        <Button onClick={onOpen} variant="contained" startIcon={<Add />}>
-          <Typography fontWeight={700} fontSize={'12px'}>
-            Cadastrar Produtos
-          </Typography>
-        </Button>
-      </Titulo>
+      <TitlePageContainer
+        handleMainButton={onOpen}
+        mainButtonLabel="Cadastrar produtos"
+        pageTitle="Produtos"
+      />
 
       <CorpoCabecalho>
         <ItemCabecalho>
