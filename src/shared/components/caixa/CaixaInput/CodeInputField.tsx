@@ -88,6 +88,7 @@ const CodeInputField = () => {
 
   return (
     <Container>
+      1
       <CampoQuantidade>
         <BotaoQuantidade onClick={adicionar}>
           <AddIcon />
@@ -103,7 +104,6 @@ const CodeInputField = () => {
           <RemoveIcon />
         </BotaoQuantidade>
       </CampoQuantidade>
-
       <div
         className="
           col-span-4

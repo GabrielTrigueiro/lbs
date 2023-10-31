@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Notification } from 'shared/components';
 import jwtDecode from 'jwt-decode';
-import { IDadosDaCompra, IItemLista, ILista } from 'shared/models/caixa';
+import { IDadosDaCompra, IItem, IItemLista, ILista } from 'shared/models/caixa';
 import { CaixaService } from 'shared/services/api/caixa/Caixa_Service';
 import { IInfoClient } from '../models/client';
 import { IColab } from '../models/colab';
@@ -78,16 +78,47 @@ export const useCaixaContext = () => {
     valorRecebido: undefined,
   };
 
+  function produtoExiste(novoProduto: IItemLista): boolean {
+    if (
+      produtosNaLista.produtos.find(
+        (item) =>
+          item.produto &&
+          novoProduto.produto &&
+          item.produto.id === novoProduto.produto.id
+      )
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const mudarQuantidadeManualmenteNaCelula = useCallback(
+    (produtoAntigo: IItemLista, quantidade: number) => {
+      if (produtoExiste(produtoAntigo))
+        setProdutoNaLista((prevState) => ({
+          produtos: prevState.produtos.map((produto) => {
+            if (
+              produto.produto &&
+              produtoAntigo.produto &&
+              produto.produto.id === produtoAntigo.produto.id
+            ) {
+              return {
+                ...produto,
+                quantidade: quantidade,
+                precoTotal: produto.produto.salerPrice * quantidade,
+              };
+            }
+            return produto;
+          }),
+        }));
+    },
+    []
+  );
+
   const adicionarNaLista = useCallback(
     (novoProduto: IItemLista) => {
-      if (
-        produtosNaLista.produtos.find(
-          (item) =>
-            item.produto &&
-            novoProduto.produto &&
-            item.produto.id === novoProduto.produto.id
-        )
-      ) {
+      if (produtoExiste(novoProduto)) {
         setProdutoNaLista((prevState) => ({
           produtos: prevState.produtos.map((produto) => {
             if (
@@ -218,6 +249,7 @@ export const useCaixaContext = () => {
     resetarCompra,
   ]);
   return {
+    mudarQuantidadeManualmenteNaCelula,
     resetarCompra,
     limparLista,
     produtosNaLista,
