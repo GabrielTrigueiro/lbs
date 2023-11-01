@@ -24,7 +24,7 @@ const ItemRow = ({ item }: ItemProps) => {
 
   function analisarEntrada(entrada: string): number {
     if (entrada === '') {
-      return 0;
+      return 1;
     } else {
       return Number(entrada);
     }
