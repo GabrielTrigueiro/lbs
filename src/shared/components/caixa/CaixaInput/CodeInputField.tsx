@@ -88,7 +88,6 @@ const CodeInputField = () => {
 
   return (
     <Container>
-      1
       <CampoQuantidade>
         <BotaoQuantidade onClick={adicionar}>
           <AddIcon />
