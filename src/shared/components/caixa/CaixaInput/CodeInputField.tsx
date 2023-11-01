@@ -28,34 +28,34 @@ const CodeInputField = () => {
   const [listaDeProdutos, setListaDeProdutos] = useState<IDataProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [tempProduct, setTempProduct] = useState<IDataProduct | null>(null);
-  const [quantidade, setQuantidade] = useState<number>(0);
+  const [quantidade, setQuantidade] = useState<string>('');
 
   const submitProduto = () => {
     if (tempProduct) {
       let estruturando: IItemLista = {
         id: uuid(),
         produto: tempProduct,
-        precoTotal: quantidade * tempProduct.salerPrice,
+        precoTotal: Number(quantidade) * tempProduct.salerPrice,
         quantidade: quantidade,
       };
       adicionarNaLista(estruturando);
     }
     setTempProduct(null);
-    setQuantidade(0);
+    setQuantidade('0');
     setCodigo('');
   };
 
   const quantidadeManual = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantidade(Number(evento.target.value));
+    setQuantidade(evento.target.value);
   };
 
   const adicionar = useCallback(() => {
-    setQuantidade(quantidade + 1);
+    setQuantidade(String(Number(quantidade) + 1));
   }, [quantidade]);
 
   const remover = useCallback(() => {
-    if (quantidade > 0) {
-      setQuantidade(quantidade - 1);
+    if (Number(quantidade) > 0) {
+      setQuantidade(String(Number(quantidade) - 1));
     }
   }, [quantidade]);
 
@@ -120,7 +120,7 @@ const CodeInputField = () => {
           onKeyDown={submitProduto}
           onChange={(event, newValue) => {
             setTempProduct(newValue);
-            setQuantidade(quantidade + 1);
+            setQuantidade(String(Number(quantidade) + 1));
           }}
           renderInput={(params) => (
             <TextField
@@ -186,7 +186,7 @@ const CodeInputField = () => {
       </div>
       {/* botão add */}
       <Button
-        disabled={quantidade === 0 || tempProduct == null}
+        disabled={quantidade === '0' || tempProduct == null}
         onClick={submitProduto}
         variant="contained"
       >

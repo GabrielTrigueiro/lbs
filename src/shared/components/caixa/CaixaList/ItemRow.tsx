@@ -22,23 +22,18 @@ const ItemRow = ({ item }: ItemProps) => {
   const { removerItemLista, mudarQuantidadeManualmenteNaCelula } =
     useCaixaContext();
 
-  function analisarEntrada(entrada: string): number {
-    if (entrada === '') {
-      return 1;
-    } else {
-      return Number(entrada);
-    }
-  }
-
   const capturarQuantidade = useCallback(
     (evento: React.ChangeEvent<HTMLInputElement>) => {
-      mudarQuantidadeManualmenteNaCelula(
-        item,
-        analisarEntrada(evento.target.value)
-      );
+      mudarQuantidadeManualmenteNaCelula(item, evento.target.value);
     },
-    []
+    [item, mudarQuantidadeManualmenteNaCelula]
   );
+
+  const handleBlur = () => {
+    if (item.quantidade === '0') {
+      mudarQuantidadeManualmenteNaCelula(item, '0');
+    }
+  };
 
   if (!item.produto) return null;
   return (
@@ -48,7 +43,6 @@ const ItemRow = ({ item }: ItemProps) => {
       <Coluna>
         <InputQuantidade
           autoComplete="off"
-          type="number"
           onChange={capturarQuantidade}
           value={item.quantidade}
         />
@@ -57,14 +51,13 @@ const ItemRow = ({ item }: ItemProps) => {
       <Coluna>R$ {transformNumberToBr(item.produto.salerPrice)}</Coluna>
       <Coluna>R$ {transformNumberToBr(item.precoTotal)}</Coluna>
       <Coluna
+        sx={{
+          right: '0.5em',
+          position: 'absolute',
+          color: 'black',
+          cursor: 'pointer',
+        }}
         onClick={() => removerItemLista(item.id)}
-        className="
-          absolute  
-          right-2 
-          bottom-2
-          text-black
-          cursor-pointer
-        "
       >
         <CloseIcon />
       </Coluna>

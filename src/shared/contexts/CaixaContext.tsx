@@ -94,7 +94,8 @@ export const useCaixaContext = () => {
   }
 
   const mudarQuantidadeManualmenteNaCelula = useCallback(
-    (produtoAntigo: IItemLista, quantidade: number) => {
+    (produtoAntigo: IItemLista, quantidade: string) => {
+      let qtdNumero = quantidade === '' ? 1 : Number(quantidade);
       if (produtoExiste(produtoAntigo))
         setProdutoNaLista((prevState) => ({
           produtos: prevState.produtos.map((produto) => {
@@ -106,7 +107,7 @@ export const useCaixaContext = () => {
               return {
                 ...produto,
                 quantidade: quantidade,
-                precoTotal: produto.produto.salerPrice * quantidade,
+                precoTotal: produto.produto.salerPrice * qtdNumero,
               };
             }
             return produto;

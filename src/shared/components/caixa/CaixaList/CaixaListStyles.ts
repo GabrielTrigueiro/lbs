@@ -34,6 +34,8 @@ export const Item = styled.div`
   position: relative;
   z-index: 0;
   gap: 0.5em;
+  align-items: center;
+  padding: 0.5em;
 `;
 
 export const FooterTabela = styled.div`

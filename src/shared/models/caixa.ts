@@ -8,7 +8,7 @@ export interface IItem {
 export interface IItemLista {
   id: string;
   produto?: IDataProduct;
-  quantidade: number;
+  quantidade: string;
   precoTotal: number;
 }
 
