@@ -25,12 +25,13 @@ const ItemRow = ({ item }: ItemProps) => {
   const capturarQuantidade = useCallback(
     (evento: React.ChangeEvent<HTMLInputElement>) => {
       mudarQuantidadeManualmenteNaCelula(item, evento.target.value);
+      console.log(item.quantidade);
     },
     [item, mudarQuantidadeManualmenteNaCelula]
   );
 
   const handleBlur = () => {
-    if (item.quantidade === '0') {
+    if (item.quantidade === '') {
       mudarQuantidadeManualmenteNaCelula(item, '0');
     }
   };
@@ -45,6 +46,7 @@ const ItemRow = ({ item }: ItemProps) => {
           autoComplete="off"
           onChange={capturarQuantidade}
           value={item.quantidade}
+          onBlur={handleBlur}
         />
       </Coluna>
       <Coluna>{item.produto.description}</Coluna>
