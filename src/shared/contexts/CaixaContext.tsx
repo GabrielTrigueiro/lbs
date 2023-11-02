@@ -70,7 +70,7 @@ export const useCaixaContext = () => {
     setValorRetornado,
   } = useContext(CaixaContext)!;
   const { onOpenDialog } = useDialogPayment();
-
+  const [tempCupom, setTempCupom] = useState<IDadosDaCompra>();
   const initialState = {
     cliente: undefined,
     indicacao: undefined,
@@ -181,7 +181,6 @@ export const useCaixaContext = () => {
     setValorComDesconto(0);
   }, [setProdutoNaLista, setUltimoProduto, setValorDaLista]);
 
-  //resetar compra (não funcionando)
   const resetarCompra = useCallback(() => {
     setCliente(initialState.cliente);
     setVendedor(initialState.vendedor);
@@ -200,6 +199,48 @@ export const useCaixaContext = () => {
     let tokenAtual: any = jwtDecode(localStorage.getItem('Acess_Token') || '');
     return tokenAtual.sub;
   };
+
+  function imprimirCupom(compra: IDadosDaCompra, lista: ILista) {
+    var dataAtual = new Date();
+    var dataFormatada = dataAtual.toISOString().slice(0, 19).replace('T', ' ');
+    var conteudoCupom = `
+    ********** Cupom Fiscal **********
+    Data: ${dataFormatada}
+    =========================================================
+    Descrição           | Quantidade | Preço Unitário | Total
+    ---------------------------------------------------------
+  `;
+    lista.produtos.forEach((item: IItemLista) => {
+      if (item.produto)
+        conteudoCupom += `
+      ${item.produto.name.padStart(22)} | ${item.quantidade
+          .toString()
+          .padEnd(11)} | ${item.produto?.custePrice.toFixed(2).padEnd(15)} | ${(
+          Number(item.quantidade) * item.produto.custePrice
+        ).toFixed(2)}
+      `;
+    });
+    conteudoCupom += `
+      ==================================
+      Soma total: ${compra?.amount.toFixed(2)}
+      Desconto: ${compra.discount.toFixed(2)}
+      Total com desconto: ${(compra.amount - compra.discount).toFixed(2)}
+  `;
+    var janelaImprimir = window.open('', '', 'width=1000,height=700');
+    if (janelaImprimir) {
+      janelaImprimir.document.open();
+      janelaImprimir.document.write(
+        '<html lang="pt-br"><head><title>Cupom Fiscal</title></head><body>'
+      );
+      janelaImprimir.document.write('<pre>' + conteudoCupom + '</pre>');
+      janelaImprimir.document.write('</body></html>');
+      janelaImprimir.document.close();
+      janelaImprimir.print();
+      janelaImprimir.close();
+    } else {
+      alert('Por favor, habilite a janela pop-up para imprimir o cupom.');
+    }
+  }
 
   const finalizarCompra = useCallback(() => {
     const lista = produtosNaLista.produtos.map(
@@ -228,14 +269,15 @@ export const useCaixaContext = () => {
       isDiscountPercentage: isPorcentage,
     };
 
+    imprimirCupom(compra, produtosNaLista);
+
     if (produtosNaLista.produtos.length === 0) {
       return Notification('Adicione ao menos um item.', 'error');
     }
+
     CaixaService.submitCompra(compra).then((resposta) => {
       setValorRetornado(resposta.data.amountReturn);
       onOpenDialog();
-      limparLista();
-      resetarCompra();
     });
   }, [
     produtosNaLista.produtos,
@@ -251,7 +293,9 @@ export const useCaixaContext = () => {
     limparLista,
     resetarCompra,
   ]);
+
   return {
+    imprimirCupom,
     mudarQuantidadeManualmenteNaCelula,
     resetarCompra,
     limparLista,
@@ -295,46 +339,7 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   const [valorRecebido, setValorRecebido] = useState<string>();
   const [valorRetornado, setValorRetornado] = useState<number>(0);
   const { isOpenDialog, onCloseDialog } = useDialogPayment();
-  const imprimirCupom = useCallback(() => {
-    var dataAtual = new Date();
-    var dataFormatada = dataAtual.toISOString().slice(0, 19).replace('T', ' ');
-    var conteudoCupom = `
-    ********** Cupom Fiscal **********
-    Data: ${dataFormatada}
-    ==================================
-    Descrição           | Quantidade | Preço Unitário | Total
-    ----------------------------------
-  `;
-    produtosNaLista.produtos.forEach((item: IItemLista) => {
-      conteudoCupom += `
-${item.produto?.name.padStart(22)} | ${item.quantidade
-        .toString()
-        .padEnd(11)} | ${item.produto?.custePrice
-        .toFixed(2)
-        .padEnd(15)} | ${item.precoTotal.toFixed(2)}
-`;
-    });
-    conteudoCupom += `
-    ==================================
-    Soma total: ${valorDaLista.toFixed(2)}
-    Desconto: ${(valorDaLista - valorComDesconto).toFixed(2)}
-    Total com desconto: ${valorComDesconto.toFixed(2)}
-  `;
-    var janelaImprimir = window.open('', '', 'width=1000,height=700');
-    if (janelaImprimir) {
-      janelaImprimir.document.open();
-      janelaImprimir.document.write(
-        '<html lang="pt-br"><head><title>Cupom Fiscal</title></head><body>'
-      );
-      janelaImprimir.document.write('<pre>' + conteudoCupom + '</pre>');
-      janelaImprimir.document.write('</body></html>');
-      janelaImprimir.document.close();
-      janelaImprimir.print();
-      janelaImprimir.close();
-    } else {
-      alert('Por favor, habilite a janela pop-up para imprimir o cupom.');
-    }
-  }, [produtosNaLista.produtos, valorComDesconto, valorDaLista]);
+
   return (
     <CaixaContext.Provider
       value={{
@@ -361,16 +366,16 @@ ${item.produto?.name.padStart(22)} | ${item.quantidade
       }}
     >
       {children}
-      <GenericDialog
+      {/* <GenericDialog
         isOpenDialog={isOpenDialog}
         onCloseDialog={onCloseDialog}
         oneOption
         oneOptionLabel="Imprimir nota"
-        confirmAction={() => imprimirCupom()}
+        confirmAction={() => imprimirCupom}
         title={`Valor a ser retornado: R$ ${transformNumberToBr(
           valorRetornado
         )}`}
-      />
+      /> */}
     </CaixaContext.Provider>
   );
 };
