@@ -279,8 +279,6 @@ export const useCaixaContext = () => {
     CaixaService.submitCompra(compra).then((resposta) => {
       setValorRetornado(resposta.data.amountReturn);
       onOpenDialog();
-      limparLista();
-      resetarCompra();
     });
   }, [
     produtosNaLista.produtos,
@@ -342,6 +340,7 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   const [valorRecebido, setValorRecebido] = useState<string>();
   const [valorRetornado, setValorRetornado] = useState<number>(0);
   const { isOpenDialog, onCloseDialog } = useDialogPayment();
+  const { imprimirCupom } = useCaixaContext();
 
   return (
     <CaixaContext.Provider
@@ -374,7 +373,7 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
         onCloseDialog={onCloseDialog}
         oneOption
         oneOptionLabel="Imprimir nota"
-        confirmAction={imprimirCupom}
+        confirmAction={() => imprimirCupom}
         title={`Valor a ser retornado: R$ ${transformNumberToBr(
           valorRetornado
         )}`}
