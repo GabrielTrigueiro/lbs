@@ -28,21 +28,47 @@ const CodeInputField = () => {
   const [listaDeProdutos, setListaDeProdutos] = useState<IDataProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [tempProduct, setTempProduct] = useState<IDataProduct | null>(null);
-  const [quantidade, setQuantidade] = useState<string>('');
+  const [quantidade, setQuantidade] = useState<string>('0');
 
-  const submitProduto = () => {
-    if (tempProduct) {
+  const submitProduto = (enter: boolean) => {
+    let produtoToSubmit = enter ? listaDeProdutos.at(0) : tempProduct;
+    if (produtoToSubmit) {
       let estruturando: IItemLista = {
         id: uuid(),
-        produto: tempProduct,
-        precoTotal: Number(quantidade) * tempProduct.salerPrice,
-        quantidade: quantidade,
+        produto: produtoToSubmit,
+        precoTotal:
+          Number(quantidade === '' || '0' ? '1' : quantidade) *
+          produtoToSubmit.salerPrice,
+        quantidade: quantidade === '0' ? '1' : quantidade,
       };
       adicionarNaLista(estruturando);
     }
     setTempProduct(null);
     setQuantidade('0');
     setCodigo('');
+  };
+
+  const lerSearch = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setCodigo(event.target.value);
+  };
+
+  //seta o produto temporário e se qtd for 0 add 1
+  const clicarNaOpcao = useCallback(
+    (produtoSelecionado: IDataProduct | null) => {
+      if (quantidade === '0' || '') {
+        adicionar();
+      }
+      setTempProduct(produtoSelecionado);
+    },
+    [quantidade, tempProduct, setQuantidade, setTempProduct]
+  );
+
+  const enterToSubmit = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      submitProduto(true);
+    }
   };
 
   const quantidadeManual = (evento: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,18 +143,15 @@ const CodeInputField = () => {
           value={tempProduct}
           options={listaDeProdutos}
           getOptionLabel={(option) => option.name}
-          onKeyDown={submitProduto}
-          onChange={(event, newValue) => {
-            setTempProduct(newValue);
-            setQuantidade(String(Number(quantidade) + 1));
-          }}
+          onChange={(event, newValue) => clicarNaOpcao(newValue)}
           renderInput={(params) => (
             <TextField
               {...params}
+              onKeyPress={enterToSubmit}
               label="Digite algo"
               variant="outlined"
               fullWidth
-              onChange={(event) => setCodigo(event.target.value)}
+              onChange={lerSearch}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -187,7 +210,7 @@ const CodeInputField = () => {
       {/* botão add */}
       <Button
         disabled={quantidade === '0' || tempProduct == null}
-        onClick={submitProduto}
+        onClick={() => submitProduto(false)}
         variant="contained"
       >
         Adicionar

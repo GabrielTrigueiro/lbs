@@ -129,7 +129,9 @@ export const useCaixaContext = () => {
             ) {
               return {
                 ...produto,
-                quantidade: produto.quantidade + novoProduto.quantidade,
+                quantidade: String(
+                  Number(produto.quantidade) + Number(novoProduto.quantidade)
+                ),
                 precoTotal: produto.precoTotal + novoProduto.precoTotal,
               };
             }
