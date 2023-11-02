@@ -9,6 +9,7 @@ import { Payment } from '../models/payment';
 import GenericDialog from 'shared/components/modal/Dialog/Dialog';
 import useDialogPayment from 'shared/hooks/dialogs/DialogPayment';
 import { transformNumberToBr } from 'shared/components/caixa/CaixaList/CaixaList';
+import imprimirCupom from './Cupom';
 
 interface CaixaContextProps {
   produtosNaLista: ILista;
@@ -339,6 +340,10 @@ export const CaixaContextProvider: React.FC = ({ children }) => {
   const [valorRecebido, setValorRecebido] = useState<string>();
   const [valorRetornado, setValorRetornado] = useState<number>(0);
   const { isOpenDialog, onCloseDialog } = useDialogPayment();
+<<<<<<< HEAD
+=======
+  const { imprimirCupom } = useCaixaContext();
+>>>>>>> b0cc42970f3ac08ea788d6445fff044439d63590
 
   return (
     <CaixaContext.Provider
