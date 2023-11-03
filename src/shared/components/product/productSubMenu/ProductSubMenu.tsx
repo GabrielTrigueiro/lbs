@@ -9,7 +9,8 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import modal from 'styles/Client/ClientSubMenu.module.scss';
 import { ProductService } from '../../../services/api/product';
-import { ProductEditModal } from '../../modal/Product/Edit/ProductEditModal';
+import ProductEditModal from 'shared/components/modal/Product/Edit/ProductEditModal';
+import useEditarProduto from 'shared/hooks/produtos/EditarProduto';
 
 interface props {
   product: IDataProduct;
@@ -17,26 +18,24 @@ interface props {
 }
 
 export const ProductSubMenu: React.FC<props> = ({ update, product }) => {
+  const { onOpen } = useEditarProduto();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [confirm, setConfirm] = useState<true | false>(false);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const [editModal, setEditModal] = useState<true | false>(false);
-  const [confirm, setConfirm] = useState<true | false>(false);
-  function handleEdit() {
-    setEditModal(!editModal);
-  }
   function handleClose() {
     setAnchorEl(null);
   }
+
   function handleConfirm() {
     setConfirm(!confirm);
     removerProduto(product);
   }
 
-  //funções do CRUD
   function removerProduto(produto: IDataProduct) {
     if (produto.id) {
       ProductService.DeleteById(produto.id).then((result) => {
@@ -95,7 +94,7 @@ export const ProductSubMenu: React.FC<props> = ({ update, product }) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => handleEdit()}>Editar</MenuItem>
+        <MenuItem onClick={onOpen}>Editar</MenuItem>
         <MenuItem onClick={() => setConfirm(!confirm)}>Apagar</MenuItem>
       </Menu>
 
@@ -113,12 +112,7 @@ export const ProductSubMenu: React.FC<props> = ({ update, product }) => {
         </DialogActions>
       </Dialog>
 
-      <ProductEditModal
-        data={product}
-        state={editModal}
-        handleModal={handleEdit}
-        update={update}
-      />
+      <ProductEditModal produto={product} atualizarPagina={update} />
     </>
   );
 };
