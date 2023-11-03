@@ -10,7 +10,8 @@ import { ProductService } from 'shared/services/api/product';
 import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import * as Yup from 'yup';
 import {
-  IDataProductRegiser,
+  IDataProduct,
+  IDataProductRegister,
   IListaInformacoesProduto,
   ProductValidationSchema,
 } from '../../../models/product';
@@ -26,9 +27,10 @@ import {
 interface IProductAbout {
   close: () => void;
   atualizar: () => void;
+  produto?: IDataProduct;
 }
 
-export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
+export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
   const [fornecedor, setFornecedor] = useState<string>();
   const [categoria, setCategoria] = useState<string>();
@@ -68,18 +70,20 @@ export const ProductAbout = ({ close, atualizar }: IProductAbout) => {
     }
   }
 
-  const initialValues: IDataProductRegiser = {
-    codeBarras: '',
-    name: '',
-    description: '',
-    quantity: 0,
-    informations: [],
-    categoryId: '',
-    providerId: '',
-    custePrice: 0,
-    salerPrice: 0,
-    tagPrice: 0,
-  };
+  const initialValues: any = produto
+    ? produto
+    : {
+        codeBarras: '',
+        name: '',
+        description: '',
+        quantity: 0,
+        informations: [],
+        categoryId: '',
+        providerId: '',
+        custePrice: 0,
+        salerPrice: 0,
+        tagPrice: 0,
+      };
 
   const formik = useFormik({
     initialValues,
