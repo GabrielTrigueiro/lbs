@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import modal from 'styles/Client/ClientSubMenu.module.scss';
 import { ProductService } from '../../../services/api/product';
-import { ProductEditModal } from '../../modal/Product/ProductEditModal';
+import { ProductEditModal } from '../../modal/Product/Edit/ProductEditModal';
 
 interface props {
   product: IDataProduct;

@@ -1,6 +1,6 @@
 import { Add } from '@mui/icons-material';
 import { Box, Typography, Button, Grid, Icon } from '@mui/material';
-import { ProductRegisterModal } from 'shared/components/modal/Product/ProductRegisterModal';
+import { ProductRegisterModal } from 'shared/components/modal/Product/Register/ProductRegisterModal';
 import { SearchInput } from 'shared/components/search';
 import { SwitchProductList } from '../switchProductList/SwitchProductList';
 import useRegistrarProduto from 'shared/hooks/produtos/RegistrarProduto';

@@ -17,24 +17,24 @@ import {
   ProductValidationSchema,
   IProductInformation,
   IDataProduct,
-} from '../../../models/product';
-import FormikTextField from '../../formik-text-field/FormikTextField';
+} from '../../../../models/product';
+import FormikTextField from '../../../formik-text-field/FormikTextField';
 import React, { useEffect, useState } from 'react';
-import { ProductService } from '../../../services/api/product';
-import { ICategory } from '../../../models/categories';
+import { ProductService } from '../../../../services/api/product';
+import { ICategory } from '../../../../models/categories';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
-import { IProviderCadastroInfo } from '../../../models/provider';
-import AutoCompleteProvider from '../../auto-complete/AutoCompleteProvider';
-import AutoCompleteCategory from '../../auto-complete/AutoCompleteCategory';
+import { IProviderCadastroInfo } from '../../../../models/provider';
+import AutoCompleteProvider from '../../../auto-complete/AutoCompleteProvider';
+import AutoCompleteCategory from '../../../auto-complete/AutoCompleteCategory';
 import {
   Card,
   Container,
   FormBody,
   TableStyle,
   Title,
-} from './TableComponents';
+} from '../TableComponents';
 
 interface Iprops {
   data: IDataProduct;
