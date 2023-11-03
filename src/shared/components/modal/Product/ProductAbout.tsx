@@ -23,8 +23,6 @@ import {
   ValueFields,
   ValueForm,
 } from './ModalStyles';
-import { MoonLoader } from 'react-spinners';
-import { ICategory } from 'shared/models/categories';
 
 interface IProductAbout {
   close: () => void;
@@ -39,15 +37,20 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
   const [custo, setCusto] = useState<string>();
   const [tag, setTag] = useState<string>();
   const [sale, setSale] = useState<string>();
-  const [loadingInfos, setLoadingInfos] = useState(false);
 
-  const handleCategoria = useCallback(() => {
-    return CategoryService.getCategories();
-  }, []);
+  const handleCategoria = useCallback(
+    (conf: ISendPagination) => {
+      return CategoryService.getAllCategories(conf);
+    },
+    [categoria]
+  );
 
-  const handleFornecedor = useCallback((conf: ISendPagination) => {
-    return ProviderService.getAll(conf);
-  }, []);
+  const handleFornecedor = useCallback(
+    (conf: ISendPagination) => {
+      return ProviderService.getAll(conf);
+    },
+    [fornecedor]
+  );
 
   function lucro(initialPrice: string, finalPrice: string): string {
     let inicio = parseFloat(initialPrice.replace(',', '.'));

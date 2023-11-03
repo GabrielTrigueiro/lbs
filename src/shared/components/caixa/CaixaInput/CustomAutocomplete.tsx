@@ -25,27 +25,23 @@ function GenericAutocomplete<T>({
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<any[]>([]);
 
-  useEffect(() => {
-    let PaginationConf: ISendPagination = {
-      page: actualPage,
-      pageSize: pageSize,
-      param: 'name',
-      sortDirection: 'DESC',
-      sortField: 'name',
-      value: inputValue,
-    };
+  let PaginationConf: ISendPagination = {
+    page: actualPage,
+    pageSize: pageSize,
+    param: 'name',
+    sortDirection: 'DESC',
+    sortField: 'name',
+    value: inputValue,
+  };
 
-    const loadOptions = async () => {
-      try {
-        const data: any = await fetchOptions(PaginationConf);
-        setOptions(data.data);
-      } catch (error) {
-        console.error('Erro na busca de opções:', error);
-      }
-    };
-
-    loadOptions();
-  }, [actualPage, fetchOptions, inputValue, pageSize]);
+  const loadOptions = async () => {
+    try {
+      const data: any = await fetchOptions(PaginationConf);
+      setOptions(data.data);
+    } catch (error) {
+      console.error('Erro na busca de opções:', error);
+    }
+  };
 
   return (
     <Autocomplete
@@ -62,6 +58,7 @@ function GenericAutocomplete<T>({
       renderInput={(params) => (
         <TextField
           {...params}
+          onChange={loadOptions}
           label={label}
           placeholder={placeholder}
           variant="outlined"

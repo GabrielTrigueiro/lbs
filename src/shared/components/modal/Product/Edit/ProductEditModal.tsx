@@ -6,6 +6,7 @@ import ModalHeader from '../ModalHeader';
 import { ProductAbout } from '../ProductAbout';
 import GenericDialog from '../../Dialog/Dialog';
 import { IDataProduct } from 'shared/models/product';
+import { useEffect } from 'react';
 
 interface props {
   atualizarPagina: () => void;
