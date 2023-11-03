@@ -9,6 +9,7 @@ interface IProps<T> {
   label: string;
   placeholder: string;
   size?: 'small' | 'medium';
+  initialValue?: T;
 }
 
 function GenericAutocomplete<T>({
@@ -17,6 +18,7 @@ function GenericAutocomplete<T>({
   label,
   placeholder,
   size,
+  initialValue,
 }: IProps<T>) {
   const [actualPage, setActualPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
@@ -47,6 +49,7 @@ function GenericAutocomplete<T>({
 
   return (
     <Autocomplete
+      value={initialValue}
       fullWidth
       size={size}
       options={options}

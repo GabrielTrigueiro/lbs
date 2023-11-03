@@ -24,6 +24,7 @@ import {
   ValueForm,
 } from './ModalStyles';
 import { MoonLoader } from 'react-spinners';
+import { ICategory } from 'shared/models/categories';
 
 interface IProductAbout {
   close: () => void;
@@ -38,7 +39,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
   const [custo, setCusto] = useState<string>();
   const [tag, setTag] = useState<string>();
   const [sale, setSale] = useState<string>();
-  const [loadingInfos, setLoadingInfos] = useState(true);
+  const [loadingInfos, setLoadingInfos] = useState(false);
 
   const handleCategoria = useCallback(() => {
     return CategoryService.getCategories();
@@ -117,22 +118,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
     },
   });
 
-  return loadingInfos && produto ? (
-    <Box
-      sx={{
-        height: '490px',
-        width: '620px',
-        display: 'flex',
-        alignContent: 'center',
-      }}
-    >
-      <MoonLoader
-        cssOverride={{ margin: 'auto' }}
-        loading={loadingInfos}
-        speedMultiplier={0.5}
-      />
-    </Box>
-  ) : (
+  return (
     <FormularioRegistro onSubmit={formik.handleSubmit}>
       <AboutForm sx={{ gap: 1 }}>
         <Skeleton
@@ -197,6 +183,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
               autoComplete="off"
             />
             <CustomAutocomplete
+              initialValue={produto?.provider}
               size="small"
               label="Fornecedor"
               placeholder="Procurar fornecedor"
@@ -207,6 +194,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
             />
           </Box>
           <CustomAutocomplete
+            initialValue={produto?.category}
             size="small"
             label="Categoria"
             placeholder="Procurar categoria"
@@ -248,7 +236,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
             />
           </ValueFields>
           <Button type="submit" variant={'contained'}>
-            Cadastrar
+            {produto ? 'SALVAR' : 'CADASTRAR'}
           </Button>
         </ValueForm>
         {/*TABELA*/}
