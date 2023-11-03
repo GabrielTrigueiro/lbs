@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
 import { Notification } from 'shared/components/notification';
@@ -11,7 +11,6 @@ import { ProviderService } from 'shared/services/api/providers/ProviderService';
 import * as Yup from 'yup';
 import {
   IDataProduct,
-  IDataProductRegister,
   IListaInformacoesProduto,
   ProductValidationSchema,
 } from '../../../models/product';
@@ -29,6 +28,8 @@ interface IProductAbout {
   atualizar: () => void;
   produto?: IDataProduct;
 }
+
+//fazer os valores atualizarem no initial value do formik
 
 export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
   const [informacoes, setInformacoes] = useState<IListaInformacoesProduto>([]);
@@ -120,6 +121,8 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
       setSubmitting(false);
     },
   });
+
+  console.log(produto);
 
   return (
     <FormularioRegistro onSubmit={formik.handleSubmit}>
