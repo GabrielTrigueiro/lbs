@@ -25,6 +25,7 @@ const ProductEditModal = ({ atualizarPagina, produto }: props) => {
   return (
     <>
       <Container
+        BackdropProps={{ hidden: true }}
         sx={{ outline: 'none' }}
         open={isOpen}
         onClose={onOpenDialogEdit}

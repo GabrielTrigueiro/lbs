@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CurrencyTextField from 'shared/components/CurrencyTextField/CurrencyTextField';
 import CustomAutocomplete from 'shared/components/caixa/CaixaInput/CustomAutocomplete';
 import { Notification } from 'shared/components/notification';
@@ -23,6 +23,7 @@ import {
   ValueFields,
   ValueForm,
 } from './ModalStyles';
+import { MoonLoader } from 'react-spinners';
 
 interface IProductAbout {
   close: () => void;
@@ -37,6 +38,7 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
   const [custo, setCusto] = useState<string>();
   const [tag, setTag] = useState<string>();
   const [sale, setSale] = useState<string>();
+  const [loadingInfos, setLoadingInfos] = useState(true);
 
   const handleCategoria = useCallback(() => {
     return CategoryService.getCategories();
@@ -52,7 +54,6 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
     return (((final - inicio) / inicio) * 100).toFixed(2);
   }
 
-  //mudar qual campo tem que tar preenchido para aparecer o calculo
   function getPercentage(campo: 'tag' | 'venda'): string {
     if (custo === undefined && tag === undefined && campo === 'tag') {
       return '0';
@@ -116,7 +117,22 @@ export const ProductAbout = ({ close, atualizar, produto }: IProductAbout) => {
     },
   });
 
-  return (
+  return loadingInfos && produto ? (
+    <Box
+      sx={{
+        height: '490px',
+        width: '620px',
+        display: 'flex',
+        alignContent: 'center',
+      }}
+    >
+      <MoonLoader
+        cssOverride={{ margin: 'auto' }}
+        loading={loadingInfos}
+        speedMultiplier={0.5}
+      />
+    </Box>
+  ) : (
     <FormularioRegistro onSubmit={formik.handleSubmit}>
       <AboutForm sx={{ gap: 1 }}>
         <Skeleton
