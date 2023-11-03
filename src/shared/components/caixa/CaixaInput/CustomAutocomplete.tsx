@@ -20,14 +20,12 @@ function GenericAutocomplete<T>({
   size,
   initialValue,
 }: IProps<T>) {
-  const [actualPage, setActualPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<any[]>([]);
 
   let PaginationConf: ISendPagination = {
-    page: actualPage,
-    pageSize: pageSize,
+    page: 0,
+    pageSize: 5,
     param: 'name',
     sortDirection: 'DESC',
     sortField: 'name',
@@ -45,7 +43,7 @@ function GenericAutocomplete<T>({
 
   return (
     <Autocomplete
-      value={initialValue}
+      defaultValue={initialValue}
       fullWidth
       size={size}
       options={options}
