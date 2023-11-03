@@ -20,7 +20,7 @@ export interface IDataProduct {
   status: statusProduto;
 }
 
-export interface IDataProductRegiser {
+export interface IDataProductRegister {
   id?: string;
   codeBarras: string;
   name: string;
@@ -53,7 +53,7 @@ export interface IProductSearch {
 }
 
 export interface IProductPackage {
-  data: IDataProductRegiser[];
+  data: IDataProductRegister[];
   message: string;
   errors: string;
   success: boolean;

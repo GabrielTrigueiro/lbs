@@ -1,9 +1,7 @@
-import React, { useCallback, useState } from 'react';
 import { Container } from '../TableComponents';
 import useRegistrarProduto from 'shared/hooks/produtos/RegistrarProduto';
 import { ProductAbout } from '../ProductAbout';
 import ModalHeader from '../ModalHeader';
-import { IListaInformacoesProduto } from '../../../../models/product';
 import { CardForm } from '../ModalStyles';
 import GenericDialog from '../../Dialog/Dialog';
 import useDialogProduct from 'shared/hooks/dialogs/DialogProduct';

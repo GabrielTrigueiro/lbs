@@ -5,7 +5,7 @@ import { Notification } from '../../../components';
 import { ISendPagination } from '../../../models/client';
 import {
   IDataProduct,
-  IDataProductRegiser,
+  IDataProductRegister,
   IProductPackage,
   IProductSearch,
 } from '../../../models/product';
@@ -54,7 +54,7 @@ const getByIDd = async (id: string): Promise<any | Error> => {
 
 const UpdateById = async (
   id: string,
-  dados: IDataProductRegiser
+  dados: IDataProductRegister
 ): Promise<string | Error> => {
   const token = {
     headers: {
@@ -99,7 +99,7 @@ const DeleteById = async (id: string): Promise<void | Error> => {
     });
 };
 
-const Create = async (dados: IDataProductRegiser): Promise<any | Error> => {
+const Create = async (dados: IDataProductRegister): Promise<any | Error> => {
   const token = {
     headers: {
       Authorization: `Bearer ${localStorage
